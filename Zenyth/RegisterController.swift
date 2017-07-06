@@ -49,9 +49,14 @@ class RegisterController: UIViewController {
         Alamofire.request(url!, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON {
             response in
             
-            if let JSON = response.result.value as? [String:[String]] {
+            let JSON = response.result.value as? [String:Bool]
+            if JSON?["register"] == true {
+                print(JSON)
+            } else {
+                let JSON = response.result.value as? [String:[String]]
+                let errorsArray = JSON?["errors"]
                 self.self.errorMessages.text = ""
-                for value in JSON["errors"]! {
+                for value in errorsArray! {
                     self.self.errorMessages.insertText(value + "\n")
                 }
                 self.self.errorMessages.isHidden = false
@@ -84,21 +89,17 @@ class RegisterController: UIViewController {
         password.backgroundColor = .clear
         confirmPassword.backgroundColor = .clear
         
-        firstName.layer.borderColor = twitterBlue.cgColor
-        lastName.layer.borderColor = twitterBlue.cgColor
-        email.layer.borderColor = twitterBlue.cgColor
-        password.layer.borderColor = twitterBlue.cgColor
-        confirmPassword.layer.borderColor = twitterBlue.cgColor
-        
         maleButton.layer.borderWidth = 1
         maleButton.layer.cornerRadius = 5
-        maleButton.layer.borderColor = twitterBlue.cgColor
+        maleButton.layer.borderColor = UIColor.white.cgColor
         
         femaleButton.layer.borderWidth = 1
         femaleButton.layer.cornerRadius = 5
-        femaleButton.layer.borderColor = twitterBlue.cgColor
+        femaleButton.layer.borderColor = UIColor.white.cgColor
         
         registerButton.backgroundColor = buttonBlue
+        registerButton.layer.cornerRadius = 20
+        
         errorMessages.isHidden = true
         errorMessages.backgroundColor = .clear
         

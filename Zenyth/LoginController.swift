@@ -31,18 +31,17 @@ class LoginController: UIViewController {
         Alamofire.request(url!, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON {
             response in
             
-            if let JSON = response.result.value as? [String:[String]] {
+            let JSON = response.result.value as? [String:Bool]
+            if JSON?["login"] == true {
+                print(JSON)
+            } else {
+                let JSON = response.result.value as? [String:[String]]
+                let errorsArray = JSON?["errors"]
                 self.self.errorMessages.text = ""
-                for value in JSON["errors"]! {
+                for value in errorsArray! {
                     self.self.errorMessages.insertText(value + "\n")
                 }
                 self.self.errorMessages.isHidden = false
-            } else {
-                let JSON = response.result.value as? [String:String]
-                if JSON?["login"] == "successful" {
-                    print(JSON)
-                    // TODO: perform segue transition to the home page of the app if logged in successful
-                }
             }
             
         }
@@ -78,6 +77,7 @@ class LoginController: UIViewController {
         passwordField.backgroundColor = .clear
         
         signinButton.backgroundColor = buttonBlue
+        signinButton.layer.cornerRadius = 20
         
         errorMessages.isHidden = true
         errorMessages.backgroundColor = .clear
