@@ -21,7 +21,8 @@ class LoginController: UIViewController {
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var signinButton: UIButton!
-    @IBOutlet weak var errorMessages: UITextView!
+    
+    
     
     @IBAction func loginButtonAction(_ sender: UIButton) {
         var parameters = [String:String]()
@@ -42,11 +43,21 @@ class LoginController: UIViewController {
                     
                 } else if let errors = json["errors"].array {
                     
-                    self.self.errorMessages.text = ""
+                    var errorString = ""
                     for value in errors {
-                        self.self.errorMessages.insertText(value.string! + "\n")
+                        errorString.append(value.string! + "\n")
                     }
-                    self.self.errorMessages.isHidden = false
+                    // strip the newline character at the end
+                    errorString.remove(at: errorString.index(before: errorString.endIndex))
+                    
+                    // create the alert
+                    let alert = UIAlertController(title: "Login Failed", message: errorString, preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    // add an action (button)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                    
+                    // show the alert
+                    self.present(alert, animated: true, completion: nil)
                     
                 }
                 
@@ -72,6 +83,9 @@ class LoginController: UIViewController {
         self.view.insertSubview(backgroundView, at: 0)
         
         setupViews()
+        emailField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        passwordField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        
     }
     
     func setupViews() {
@@ -86,11 +100,9 @@ class LoginController: UIViewController {
         emailField.backgroundColor = .clear
         passwordField.backgroundColor = .clear
         
-        signinButton.backgroundColor = buttonBlue
+        signinButton.backgroundColor = disabledButtonBlue
         signinButton.layer.cornerRadius = 20
-        
-        errorMessages.isHidden = true
-        errorMessages.backgroundColor = .clear
+        signinButton.isEnabled = false
         
         formatTextField(textField: emailField)
         formatTextField(textField: passwordField)
@@ -114,6 +126,25 @@ class LoginController: UIViewController {
         
         // Hide the navigation bar on the this view controller
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    func editingChanged(_ textField: UITextField) {
+        if textField.text?.characters.count == 1 {
+            if textField.text?.characters.first == " " {
+                textField.text = ""
+                return
+            }
+        }
+        guard
+            let email = emailField.text, !email.isEmpty,
+            let password = passwordField.text, !password.isEmpty
+            else {
+                signinButton.isEnabled = false
+                signinButton.backgroundColor = disabledButtonBlue
+                return
+        }
+        signinButton.isEnabled = true
+        signinButton.backgroundColor = buttonBlue
     }
     
 }

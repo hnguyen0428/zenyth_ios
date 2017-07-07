@@ -10,6 +10,7 @@ import LBTAComponents
 
 let twitterBlue = UIColor(r: 61, g: 167, b: 244)
 let buttonBlue = UIColor(r: 78, g: 141, b: 208)
+let disabledButtonBlue = UIColor(r: 70, g: 132, b: 200)
 let background = UIImage(named: "background2")
 //let serverAddress = "http://127.0.0.1/api/"
 let serverAddress = "http://54.219.134.56/api/"

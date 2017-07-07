@@ -18,3 +18,4 @@ func formatTextField(textField: UITextField) {
     textField.layer.addSublayer(border)
     textField.layer.masksToBounds = true
 }
+

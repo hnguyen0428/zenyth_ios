@@ -15,35 +15,36 @@ class RegisterController: UIViewController {
     
     var gender:String? = nil
     
-    @IBOutlet weak var firstName: UITextField!
-    @IBOutlet weak var lastName: UITextField!
-    @IBOutlet weak var email: UITextField!
-    @IBOutlet weak var password: UITextField!
-    @IBOutlet weak var confirmPassword: UITextField!
+    @IBOutlet weak var firstNameField: UITextField!
+    @IBOutlet weak var lastNameField: UITextField!
+    @IBOutlet weak var emailField: UITextField!
+    @IBOutlet weak var passwordField: UITextField!
+    @IBOutlet weak var confirmPasswordField: UITextField!
     @IBOutlet weak var maleButton: UIButton!
     @IBOutlet weak var femaleButton: UIButton!
     @IBOutlet weak var registerButton: UIButton!
-    @IBOutlet weak var errorMessages: UITextView!
     
     @IBAction func maleButtonAction(_ sender: UIButton) {
         femaleButton.backgroundColor = .clear
         maleButton.backgroundColor = buttonBlue
         gender = "Male"
+        fieldCheck()
     }
     
     @IBAction func femaleButtonAction(_ sender: UIButton) {
         maleButton.backgroundColor = .clear
         femaleButton.backgroundColor = buttonBlue
         gender = "Female"
+        fieldCheck()
     }
     
     @IBAction func registerButtonAction(_ sender: UIButton) {
         var parameters = [String:String]()
-        parameters["first_name"] = firstName.text
-        parameters["last_name"] = lastName.text
-        parameters["email"] = email.text
-        parameters["password"] = password.text
-        parameters["password_confirmation"] = confirmPassword.text
+        parameters["first_name"] = firstNameField.text
+        parameters["last_name"] = lastNameField.text
+        parameters["email"] = emailField.text
+        parameters["password"] = passwordField.text
+        parameters["password_confirmation"] = confirmPasswordField.text
         parameters["gender"] = gender
         
         let route = "register"
@@ -61,11 +62,21 @@ class RegisterController: UIViewController {
                     
                 } else if let errors = json["errors"].array {
                     
-                    self.self.errorMessages.text = ""
+                    var errorString = ""
                     for value in errors {
-                        self.self.errorMessages.insertText(value.string! + "\n")
+                        errorString.append(value.string! + "\n")
                     }
-                    self.self.errorMessages.isHidden = false
+                    // strip the newline character at the end
+                    errorString.remove(at: errorString.index(before: errorString.endIndex))
+                    
+                    // create the alert
+                    let alert = UIAlertController(title: "Register Failed", message: errorString, preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    // add an action (button)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                    
+                    // show the alert
+                    self.present(alert, animated: true, completion: nil)
                     
                 }
             
@@ -91,15 +102,20 @@ class RegisterController: UIViewController {
         
         self.view.insertSubview(backgroundView, at: 0)
         setupViews()
+        firstNameField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        lastNameField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        emailField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        passwordField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        confirmPasswordField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         
     }
     
     func setupViews() {
-        firstName.backgroundColor = .clear
-        lastName.backgroundColor = .clear
-        email.backgroundColor = .clear
-        password.backgroundColor = .clear
-        confirmPassword.backgroundColor = .clear
+        firstNameField.backgroundColor = .clear
+        lastNameField.backgroundColor = .clear
+        emailField.backgroundColor = .clear
+        passwordField.backgroundColor = .clear
+        confirmPasswordField.backgroundColor = .clear
         
         maleButton.layer.borderWidth = 1
         maleButton.layer.cornerRadius = 5
@@ -109,16 +125,45 @@ class RegisterController: UIViewController {
         femaleButton.layer.cornerRadius = 5
         femaleButton.layer.borderColor = UIColor.white.cgColor
         
-        registerButton.backgroundColor = buttonBlue
+        registerButton.backgroundColor = disabledButtonBlue
         registerButton.layer.cornerRadius = 20
+        registerButton.isEnabled = false
         
-        errorMessages.isHidden = true
-        errorMessages.backgroundColor = .clear
-        
-        formatTextField(textField: firstName)
-        formatTextField(textField: lastName)
-        formatTextField(textField: email)
-        formatTextField(textField: password)
-        formatTextField(textField: confirmPassword)
+        formatTextField(textField: firstNameField)
+        formatTextField(textField: lastNameField)
+        formatTextField(textField: emailField)
+        formatTextField(textField: passwordField)
+        formatTextField(textField: confirmPasswordField)
     }
+    
+    func editingChanged(_ textField: UITextField) {
+        if textField.text?.characters.count == 1 {
+            if textField.text?.characters.first == " " {
+                textField.text = ""
+                return
+            }
+        }
+        fieldCheck()
+        
+    }
+    
+    func fieldCheck() {
+        
+        guard
+            let firstName = firstNameField.text, !firstName.isEmpty,
+            let lastName = lastNameField.text, !lastName.isEmpty,
+            let email = emailField.text, !email.isEmpty,
+            let password = passwordField.text, !password.isEmpty,
+            let confirmPassword = confirmPasswordField.text, !confirmPassword.isEmpty,
+            gender != nil
+            else {
+                registerButton.isEnabled = false
+                registerButton.backgroundColor = disabledButtonBlue
+                return
+        }
+        registerButton.isEnabled = true
+        registerButton.backgroundColor = buttonBlue
+        
+    }
+    
 }
