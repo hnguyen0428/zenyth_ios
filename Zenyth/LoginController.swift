@@ -8,6 +8,7 @@
 
 import LBTAComponents
 import Alamofire
+import SwiftyJSON
 
 class LoginController: UIViewController {
     
@@ -26,22 +27,31 @@ class LoginController: UIViewController {
         var parameters = [String:String]()
         parameters["email"] = emailField.text
         parameters["password"] = passwordField.text
-        let urlString = serverAddress + "login"
+        
+        let route = "login"
+        let urlString = serverAddress + route
         let url = URL(string: urlString)
         Alamofire.request(url!, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON {
-            response in
-            
-            let JSON = response.result.value as? [String:Bool]
-            if JSON?["login"] == true {
-                print(JSON)
-            } else {
-                let JSON = response.result.value as? [String:[String]]
-                let errorsArray = JSON?["errors"]
-                self.self.errorMessages.text = ""
-                for value in errorsArray! {
-                    self.self.errorMessages.insertText(value + "\n")
+            response in switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                
+                if json["login"].boolValue {
+                    
+                    print("JSON: \(json)")
+                    
+                } else if let errors = json["errors"].array {
+                    
+                    self.self.errorMessages.text = ""
+                    for value in errors {
+                        self.self.errorMessages.insertText(value.string! + "\n")
+                    }
+                    self.self.errorMessages.isHidden = false
+                    
                 }
-                self.self.errorMessages.isHidden = false
+                
+            case .failure(let error):
+                print(error)
             }
             
         }

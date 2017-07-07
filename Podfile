@@ -18,6 +18,7 @@ target 'Zenyth' do
   end
 
   pod 'LBTAComponents'
-	pod 'Alamofire', '~> 4.4'
+  pod 'Alamofire', '~> 4.4'
+  pod 'SwiftyJSON'
 
 end

@@ -9,6 +9,7 @@
 
 import LBTAComponents
 import Alamofire
+import SwiftyJSON
 
 class RegisterController: UIViewController {
     
@@ -44,27 +45,38 @@ class RegisterController: UIViewController {
         parameters["password"] = password.text
         parameters["password_confirmation"] = confirmPassword.text
         parameters["gender"] = gender
-        let urlString = serverAddress + "register"
+        
+        let route = "register"
+        let urlString = serverAddress + route
         let url = URL(string: urlString)
         Alamofire.request(url!, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON {
-            response in
+            response in switch response.result {
             
-            let JSON = response.result.value as? [String:Bool]
-            if JSON?["register"] == true {
-                print(JSON)
-            } else {
-                let JSON = response.result.value as? [String:[String]]
-                let errorsArray = JSON?["errors"]
-                self.self.errorMessages.text = ""
-                for value in errorsArray! {
-                    self.self.errorMessages.insertText(value + "\n")
+            case .success(let value):
+                let json = JSON(value)
+                
+                if json["register"].boolValue {
+                    
+                    print("JSON: \(json)")
+                    
+                } else if let errors = json["errors"].array {
+                    
+                    self.self.errorMessages.text = ""
+                    for value in errors {
+                        self.self.errorMessages.insertText(value.string! + "\n")
+                    }
+                    self.self.errorMessages.isHidden = false
+                    
                 }
-                self.self.errorMessages.isHidden = false
-            }
             
+            case .failure(let error):
+                print(error)
+                
+            }
+        
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
