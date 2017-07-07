@@ -100,7 +100,7 @@ class LoginController: UIViewController {
         emailField.backgroundColor = .clear
         passwordField.backgroundColor = .clear
         
-        signinButton.backgroundColor = disabledButtonBlue
+        signinButton.backgroundColor = disabledButtonColor
         signinButton.layer.cornerRadius = 20
         signinButton.isEnabled = false
         
@@ -140,11 +140,11 @@ class LoginController: UIViewController {
             let password = passwordField.text, !password.isEmpty
             else {
                 signinButton.isEnabled = false
-                signinButton.backgroundColor = disabledButtonBlue
+                signinButton.backgroundColor = disabledButtonColor
                 return
         }
         signinButton.isEnabled = true
-        signinButton.backgroundColor = buttonBlue
+        signinButton.backgroundColor = buttonColor
     }
     
 }
