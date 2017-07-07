@@ -33,7 +33,7 @@ class LoginController: UIViewController {
             
             let JSON = response.result.value as? [String:Bool]
             if JSON?["login"] == true {
-                print(JSON)
+                print(JSON as Any)
             } else {
                 let JSON = response.result.value as? [String:[String]]
                 let errorsArray = JSON?["errors"]
