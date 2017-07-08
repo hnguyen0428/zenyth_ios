@@ -18,15 +18,13 @@ class LoginController: UIViewController {
     @IBOutlet weak var twitterButton: UIButton!
     @IBOutlet weak var forgotPasswordButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
-    @IBOutlet weak var emailField: UITextField!
+    @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var signinButton: UIButton!
     
-    
-    
     @IBAction func loginButtonAction(_ sender: UIButton) {
         var parameters = [String:String]()
-        parameters["email"] = emailField.text
+        parameters["username"] = usernameField.text
         parameters["password"] = passwordField.text
         
         let route = "login"
@@ -37,7 +35,7 @@ class LoginController: UIViewController {
             case .success(let value):
                 let json = JSON(value)
                 
-                if json["login"].boolValue {
+                if json["success"].boolValue {
                     
                     print("JSON: \(json)")
                     
@@ -83,7 +81,7 @@ class LoginController: UIViewController {
         self.view.insertSubview(backgroundView, at: 0)
         
         setupViews()
-        emailField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        usernameField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         passwordField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         
     }
@@ -101,9 +99,9 @@ class LoginController: UIViewController {
         signinButton.layer.cornerRadius = 20
         signinButton.isEnabled = false
         
-        emailField.autocorrectionType = UITextAutocorrectionType.no
+        usernameField.autocorrectionType = UITextAutocorrectionType.no
         
-        formatTextField(textField: emailField)
+        formatTextField(textField: usernameField)
         formatTextField(textField: passwordField)
     }
     
@@ -135,7 +133,7 @@ class LoginController: UIViewController {
             }
         }
         guard
-            let email = emailField.text, !email.isEmpty,
+            let username = usernameField.text, !username.isEmpty,
             let password = passwordField.text, !password.isEmpty
             else {
                 signinButton.isEnabled = false
