@@ -21,4 +21,9 @@ target 'Zenyth' do
   pod 'Alamofire', '~> 4.4'
   pod 'SwiftyJSON'
 
+  #the following are used for facebook oauth
+  pod 'FBSDKCoreKit'
+  pod 'FBSDKShareKit'
+  pod 'FBSDKLoginKit'
+
 end

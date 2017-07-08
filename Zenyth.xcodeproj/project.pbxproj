@@ -58,6 +58,7 @@
 		47C622F61F0A347F003BBC16 /* RegisterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
 		4950B87A454879669AE8F046 /* Pods_ZenythUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZenythUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BB6326B7B70E7CF186F4AB1 /* Pods_ZenythTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZenythTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		82AFE11E1F0F16AD00605905 /* Zenyth.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Zenyth.entitlements; sourceTree = "<group>"; };
 		9BF5C92438833D8106466321 /* Pods-Zenyth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zenyth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Zenyth/Pods-Zenyth.debug.xcconfig"; sourceTree = "<group>"; };
 		9D0A28DC766F4B241B225079 /* Pods-ZenythTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZenythTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ZenythTests/Pods-ZenythTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AF3772E19C15E48808910B4B /* Pods-ZenythUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZenythUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ZenythUITests/Pods-ZenythUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -130,6 +131,7 @@
 		47C622C71F0A341A003BBC16 /* Zenyth */ = {
 			isa = PBXGroup;
 			children = (
+				82AFE11E1F0F16AD00605905 /* Zenyth.entitlements */,
 				47C622C81F0A341A003BBC16 /* AppDelegate.swift */,
 				47C622CC1F0A341A003BBC16 /* Main.storyboard */,
 				47C622CF1F0A341A003BBC16 /* Assets.xcassets */,
@@ -251,7 +253,13 @@
 				TargetAttributes = {
 					47C622C41F0A341A003BBC16 = {
 						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = JGM83HBADX;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 					47C622D81F0A341A003BBC16 = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -614,9 +622,11 @@
 			baseConfigurationReference = 9BF5C92438833D8106466321 /* Pods-Zenyth.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Zenyth/Zenyth.entitlements;
+				DEVELOPMENT_TEAM = JGM83HBADX;
 				INFOPLIST_FILE = Zenyth/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Hoang.Zenyth;
+				PRODUCT_BUNDLE_IDENTIFIER = "-05Industries.Zenyth";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -627,9 +637,11 @@
 			baseConfigurationReference = CA4871FF56084440AE442D2C /* Pods-Zenyth.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Zenyth/Zenyth.entitlements;
+				DEVELOPMENT_TEAM = JGM83HBADX;
 				INFOPLIST_FILE = Zenyth/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Hoang.Zenyth;
+				PRODUCT_BUNDLE_IDENTIFIER = "-05Industries.Zenyth";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
