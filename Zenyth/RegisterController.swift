@@ -76,6 +76,7 @@ class RegisterController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
         
         let backgroundView: UIImageView = {
             let imageView = UIImageView(frame: view.frame)
