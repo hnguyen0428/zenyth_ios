@@ -13,10 +13,9 @@ import SwiftyJSON
 
 class RegisterController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    let genderData = ["Male", "Female", "Non-binary"]
+    let genderData = ["", "Male", "Female", "Non-binary"]
     
-    @IBOutlet weak var firstNameField: UITextField!
-    @IBOutlet weak var lastNameField: UITextField!
+    @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var confirmPasswordField: UITextField!
@@ -25,12 +24,13 @@ class RegisterController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     
     @IBAction func registerButtonAction(_ sender: UIButton) {
         var parameters = [String:String]()
-        parameters["first_name"] = firstNameField.text
-        parameters["last_name"] = lastNameField.text
+        parameters["username"] = usernameField.text
         parameters["email"] = emailField.text
         parameters["password"] = passwordField.text
         parameters["password_confirmation"] = confirmPasswordField.text
         parameters["gender"] = genderField.text
+        
+        //print(parameters)
         
         let route = "register"
         let urlString = serverAddress + route
@@ -66,6 +66,7 @@ class RegisterController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
                 }
             
             case .failure(let error):
+                print(parameters)
                 print(error)
                 
             }
@@ -87,8 +88,7 @@ class RegisterController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         
         self.view.insertSubview(backgroundView, at: 0)
         setupViews()
-        firstNameField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
-        lastNameField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        usernameField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         emailField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         passwordField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         confirmPasswordField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
@@ -96,18 +96,11 @@ class RegisterController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     }
     
     func setupViews() {
-        firstNameField.backgroundColor = .clear
-        lastNameField.backgroundColor = .clear
-        emailField.backgroundColor = .clear
-        passwordField.backgroundColor = .clear
-        confirmPasswordField.backgroundColor = .clear
-        
         registerButton.backgroundColor = disabledButtonColor
         registerButton.layer.cornerRadius = 20
         registerButton.isEnabled = false
         
-        formatTextField(textField: firstNameField)
-        formatTextField(textField: lastNameField)
+        formatTextField(textField: usernameField)
         formatTextField(textField: emailField)
         formatTextField(textField: passwordField)
         formatTextField(textField: confirmPasswordField)
@@ -136,7 +129,9 @@ class RegisterController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     }
     
     func donePicker(sender: UIBarButtonItem) {
+        genderField.isUserInteractionEnabled = true
         genderField.resignFirstResponder()
+        fieldCheck()
     }
     
     func editingChanged(_ textField: UITextField) {
@@ -153,8 +148,7 @@ class RegisterController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     func fieldCheck() {
         
         guard
-            let firstName = firstNameField.text, !firstName.isEmpty,
-            let lastName = lastNameField.text, !lastName.isEmpty,
+            let username = usernameField.text, !username.isEmpty,
             let email = emailField.text, !email.isEmpty,
             let password = passwordField.text, !password.isEmpty,
             let confirmPassword = confirmPasswordField.text, !confirmPassword.isEmpty,
