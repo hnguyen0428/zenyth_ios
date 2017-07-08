@@ -100,6 +100,9 @@ class RegisterController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         registerButton.layer.cornerRadius = 20
         registerButton.isEnabled = false
         
+        usernameField.autocorrectionType = UITextAutocorrectionType.no
+        emailField.autocorrectionType = UITextAutocorrectionType.no
+        
         formatTextField(textField: usernameField)
         formatTextField(textField: emailField)
         formatTextField(textField: passwordField)
