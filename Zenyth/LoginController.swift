@@ -33,7 +33,6 @@ class LoginController: UIViewController {
         let urlString = serverAddress + route
         let url = URL(string: urlString)
         Alamofire.request(url!, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON {
-<<<<<<< HEAD
             response in switch response.result {
             case .success(let value):
                 let json = JSON(value)
@@ -59,20 +58,6 @@ class LoginController: UIViewController {
                     
                     // show the alert
                     self.present(alert, animated: true, completion: nil)
-                    
-=======
-            response in
-            
-            let JSON = response.result.value as? [String:Bool]
-            if JSON?["login"] == true {
-                print(JSON as Any)
-            } else {
-                let JSON = response.result.value as? [String:[String]]
-                let errorsArray = JSON?["errors"]
-                self.self.errorMessages.text = ""
-                for value in errorsArray! {
-                    self.self.errorMessages.insertText(value + "\n")
->>>>>>> 6220be79c29477bbbbc9707a01868f65e5c90340
                 }
                 
             case .failure(let error):
