@@ -97,12 +97,11 @@ class LoginController: UIViewController {
         twitterButton.imageView?.contentMode = .scaleAspectFit
         gplusButton.imageView?.contentMode = .scaleAspectFit
         
-        emailField.backgroundColor = .clear
-        passwordField.backgroundColor = .clear
-        
         signinButton.backgroundColor = disabledButtonColor
         signinButton.layer.cornerRadius = 20
         signinButton.isEnabled = false
+        
+        emailField.autocorrectionType = UITextAutocorrectionType.no
         
         formatTextField(textField: emailField)
         formatTextField(textField: passwordField)
