@@ -41,7 +41,7 @@ class RegisterController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
             case .success(let value):
                 let json = JSON(value)
                 
-                if json["register"].boolValue {
+                if json["success"].boolValue {
                     
                     print("JSON: \(json)")
                     
@@ -76,6 +76,7 @@ class RegisterController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
         
         let backgroundView: UIImageView = {
             let imageView = UIImageView(frame: view.frame)

@@ -18,6 +18,7 @@
 		47C622DE1F0A341A003BBC16 /* ZenythTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622DD1F0A341A003BBC16 /* ZenythTests.swift */; };
 		47C622E91F0A341A003BBC16 /* ZenythUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622E81F0A341A003BBC16 /* ZenythUITests.swift */; };
 		47C622F71F0A347F003BBC16 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622F61F0A347F003BBC16 /* RegisterController.swift */; };
+		47D838CC1F10A99F000E9668 /* UIViewController+KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D838CB1F10A99F000E9668 /* UIViewController+KeyboardHandler.swift */; };
 		7341F9E163A96B05940B44E8 /* Pods_ZenythTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BB6326B7B70E7CF186F4AB1 /* Pods_ZenythTests.framework */; };
 		B99E2A49109EC15FB04613DB /* Pods_ZenythUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4950B87A454879669AE8F046 /* Pods_ZenythUITests.framework */; };
 /* End PBXBuildFile section */
@@ -56,6 +57,7 @@
 		47C622E81F0A341A003BBC16 /* ZenythUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZenythUITests.swift; sourceTree = "<group>"; };
 		47C622EA1F0A341A003BBC16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		47C622F61F0A347F003BBC16 /* RegisterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
+		47D838CB1F10A99F000E9668 /* UIViewController+KeyboardHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+KeyboardHandler.swift"; sourceTree = "<group>"; };
 		4950B87A454879669AE8F046 /* Pods_ZenythUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZenythUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BB6326B7B70E7CF186F4AB1 /* Pods_ZenythTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZenythTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		82AFE11E1F0F16AD00605905 /* Zenyth.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Zenyth.entitlements; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 				47A9024B1F0B1F4400A1CEE8 /* LoginController.swift */,
 				47A9024D1F0B34C900A1CEE8 /* GlobalVariables.swift */,
 				47ABAA031F0B7B7400FD479E /* UIHelper.swift */,
+				47D838CB1F10A99F000E9668 /* UIViewController+KeyboardHandler.swift */,
 			);
 			path = Zenyth;
 			sourceTree = "<group>";
@@ -466,6 +469,7 @@
 				47C622F71F0A347F003BBC16 /* RegisterController.swift in Sources */,
 				47A9024C1F0B1F4400A1CEE8 /* LoginController.swift in Sources */,
 				47A9024E1F0B34C900A1CEE8 /* GlobalVariables.swift in Sources */,
+				47D838CC1F10A99F000E9668 /* UIViewController+KeyboardHandler.swift in Sources */,
 				47ABAA041F0B7B7400FD479E /* UIHelper.swift in Sources */,
 				47C622C91F0A341A003BBC16 /* AppDelegate.swift in Sources */,
 			);
