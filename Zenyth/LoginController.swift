@@ -11,8 +11,9 @@ import Alamofire
 import SwiftyJSON
 import FBSDKLoginKit
 import Firebase
+import GoogleSignIn
 
-class LoginController: UIViewController, FBSDKLoginButtonDelegate {
+class LoginController: UIViewController, FBSDKLoginButtonDelegate, GIDSignInUIDelegate {
     
     
     @IBOutlet weak var fbButton: UIButton!
@@ -70,31 +71,18 @@ class LoginController: UIViewController, FBSDKLoginButtonDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // the following is for the generic default login button
-        /////////////////////////
         
-        let loginButton = FBSDKLoginButton()
-        view.addSubview(loginButton)
-        //frame's are obselete, only use constraints
-        loginButton.frame = CGRect(x: 16, y: 50, width: view.frame.width - 32, height: 50)
-        
-        loginButton.delegate = self
-        
-        // needed this
-        loginButton.readPermissions = ["email", "public_profile"]
-
-        /////////////////////////////
-        
-        //The following is for the cutom login button (may need to call set up views prior
-        ////////////
-        
+        // The following is for the custom login button (may need to call set up views prior
         fbButton.addTarget(self, action: #selector(handleCustomFBLogin), for: .touchUpInside)
         
-        ///////////
-        
+        // delete default facebook
+        setupDefaultFBButton()
         
         // delete (default google sign in button
-        setupGoogleButtons()
+        setupDefaultGoogleButton()
+        
+        // custom Google+
+        gplusButton.addTarget(self, action: #selector(handleCustomGoogleSign), for: .touchUpInside)
         
         self.hideKeyboardWhenTappedAround()
         
@@ -118,14 +106,42 @@ class LoginController: UIViewController, FBSDKLoginButtonDelegate {
         
     }
     
+    func handleCustomGoogleSign() {
     
+        GIDSignIn.sharedInstance().signIn()
 
-fileprivate func setupGoogleButtons() {
-    //add google sign in button
-    let googleButton = GIDSignInButton()
-    googleButton.frame = CGRect(x: 16, y: 116 + 66, width: view.frame.width - 32, height: 50)
-    view.addSubview(googleButton)
-}
+    
+    }
+    
+    // delete this one -- testing purposes to log out 
+    func setupDefaultFBButton() {
+    
+        // the following is for the generic default login button
+        /////////////////////////
+    
+        let loginButton = FBSDKLoginButton()
+        view.addSubview(loginButton)
+        //frame's are obselete, only use constraints
+        loginButton.frame = CGRect(x: 16, y: 50, width: view.frame.width - 32, height: 50)
+    
+        loginButton.delegate = self
+    
+        // needed this
+        loginButton.readPermissions = ["email", "public_profile"]
+    
+    }
+    
+    
+    // delete this one tho
+    func setupDefaultGoogleButton() {
+        
+        //add google sign in button
+        let googleButton = GIDSignInButton()
+        googleButton.frame = CGRect(x: 16, y: 116 + 66, width: view.frame.width - 32, height: 50)
+        view.addSubview(googleButton)
+        GIDSignIn.sharedInstance().uiDelegate = self
+        
+    }
 
     func handleCustomFBLogin() {
 
