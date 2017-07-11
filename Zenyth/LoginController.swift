@@ -9,8 +9,10 @@
 import LBTAComponents
 import Alamofire
 import SwiftyJSON
+import FBSDKLoginKit
+import Firebase
 
-class LoginController: UIViewController {
+class LoginController: UIViewController, FBSDKLoginButtonDelegate {
     
     
     @IBOutlet weak var fbButton: UIButton!
@@ -67,6 +69,33 @@ class LoginController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // the following is for the generic default login button
+        /////////////////////////
+        
+        let loginButton = FBSDKLoginButton()
+        view.addSubview(loginButton)
+        //frame's are obselete, only use constraints
+        loginButton.frame = CGRect(x: 16, y: 50, width: view.frame.width - 32, height: 50)
+        
+        loginButton.delegate = self
+        
+        // needed this
+        loginButton.readPermissions = ["email", "public_profile"]
+
+        /////////////////////////////
+        
+        //The following is for the cutom login button (may need to call set up views prior
+        ////////////
+        
+        fbButton.addTarget(self, action: #selector(handleCustomFBLogin), for: .touchUpInside)
+        
+        ///////////
+        
+        
+        // delete (default google sign in button
+        setupGoogleButtons()
+        
         self.hideKeyboardWhenTappedAround()
         
         let backgroundView: UIImageView = {
@@ -88,6 +117,81 @@ class LoginController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
     }
+    
+    
+
+fileprivate func setupGoogleButtons() {
+    //add google sign in button
+    let googleButton = GIDSignInButton()
+    googleButton.frame = CGRect(x: 16, y: 116 + 66, width: view.frame.width - 32, height: 50)
+    view.addSubview(googleButton)
+}
+
+    func handleCustomFBLogin() {
+
+        FBSDKLoginManager().logIn(withReadPermissions: ["email", "public_profile"], from: self) { (result, err) in
+            
+            if err != nil {
+                
+                print ("FB login failed:", err ?? "")
+                return
+            }
+            
+            self.showFBEmailAddress()
+        }
+
+        
+    }
+    
+    
+    ///////////////////////////
+    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
+        print("Did log out of facebook")
+    }
+    
+    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
+        if error != nil {
+            print(error)
+            return
+        }
+        
+        showFBEmailAddress()
+        
+    }
+    
+    func showFBEmailAddress() {
+    
+        // not firAuth anymore
+        let accessToken = FBSDKAccessToken.current()
+        guard let accessTokenString = accessToken?.tokenString else { return }
+        
+        
+        let credentials = FacebookAuthProvider.credential(withAccessToken: accessTokenString)
+        Auth.auth().signIn(with: credentials, completion: { (user, error) in
+            if error != nil {
+                print("Something went wrong with our FB user: ", error ?? "")
+                return
+            }
+            
+            print("Successfully logged in with our user: ", user ?? "")
+        })
+        
+        
+        
+        print("Successfully logged in with facebook...")
+        FBSDKGraphRequest(graphPath: "/me", parameters: ["fields": "id, name, email"]).start { (connnection, result, err) in
+            
+            if err != nil {
+                
+                print("Failed to start graph request:", err)
+                return
+            }
+            print (result)
+            
+        }
+    }
+    
+    ////////////////////////
     
     func setupViews() {
         fbButton.setImage(#imageLiteral(resourceName: "Facebook_Icon"), for: .normal)
