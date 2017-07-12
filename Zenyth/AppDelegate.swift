@@ -43,6 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         guard let accessToken = user.authentication.accessToken else { return }
         let credentials = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
         
+        print ("*************** CHECK ME OUT, GOOGLE TOKEN WHAT UPPPP", accessToken)
+        
         Auth.auth().signIn(with: credentials, completion: { (user, error) in
             if let err = error {
                 print("Failed to create a Firebase User with Google account: ", err)

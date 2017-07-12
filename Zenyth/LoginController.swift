@@ -181,8 +181,8 @@ class LoginController: UIViewController, FBSDKLoginButtonDelegate, GIDSignInUIDe
         let accessToken = FBSDKAccessToken.current()
         guard let accessTokenString = accessToken?.tokenString else { return }
         
-        
         let credentials = FacebookAuthProvider.credential(withAccessToken: accessTokenString)
+        
         Auth.auth().signIn(with: credentials, completion: { (user, error) in
             if error != nil {
                 print("Something went wrong with our FB user: ", error ?? "")
@@ -192,7 +192,9 @@ class LoginController: UIViewController, FBSDKLoginButtonDelegate, GIDSignInUIDe
             print("Successfully logged in with our user: ", user ?? "")
         })
         
-        
+        print ("*************** CHECK ME OUT, FACEBOOK", accessTokenString)
+        let FBTokenStringCount = accessTokenString.characters.count
+        print (FBTokenStringCount)
         
         print("Successfully logged in with facebook...")
         FBSDKGraphRequest(graphPath: "/me", parameters: ["fields": "id, name, email"]).start { (connnection, result, err) in
