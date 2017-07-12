@@ -28,7 +28,7 @@ class LoginController: UIViewController {
             "password" : passwordField.text
         ]
         
-        let requestor = Requestor(route: loginRoute, parameters: parameters)
+        let requestor = LoginRequestor(parameters: parameters)
         let request = requestor.execute()
         
         request.responseJSON { response in

@@ -2,20 +2,17 @@
 //  LoginRequestor.swift
 //  Zenyth
 //
-//  Created by Hoang on 7/11/17.
+//  Created by Hoang on 7/12/17.
 //  Copyright © 2017 Hoang. All rights reserved.
 //
 
-import SwiftyJSON
 import Alamofire
+import SwiftyJSON
 
 class LoginRequestor: Requestor {
+    let loginRoute = Route(method: .post, urlString: "\(serverAddress)/api/login")
     
-    override init(route: Route, header: HTTPHeaders, parameters: Parameters) {
-        super.init(route: route, header: header, parameters: parameters)
-    }
-    
-    override func execute() {
-        <#code#>
+    init(parameters: Parameters) {
+        super.init(route: self.loginRoute, parameters: parameters)
     }
 }

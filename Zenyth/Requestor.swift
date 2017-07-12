@@ -10,7 +10,7 @@ import SwiftyJSON
 import Alamofire
 
 class Requestor {
-    let route: Route
+    var route: Route
     var header: HTTPHeaders
     let parameters: Parameters
     
@@ -18,7 +18,7 @@ class Requestor {
     var success: Bool = false
     let needsAuthorization: Bool
 
-    init(route: Route, header: HTTPHeaders = [:], parameters: Parameters,
+    init(route: Route, header: HTTPHeaders = [:], parameters: Parameters = [:],
          needsAuthorization: Bool = false) {
         self.needsAuthorization = needsAuthorization
         self.route = route

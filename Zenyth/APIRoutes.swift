@@ -15,11 +15,7 @@ protocol RouteProtocol {
     
 }
 
-struct Route: RouteProtocol{
+struct Route: RouteProtocol {
     var method: HTTPMethod
     var urlString: String
 }
-
-let loginRoute = Route(method: .post, urlString: "\(serverAddress)/api/login")
-let registerRoute = Route(method: .post, urlString: "\(serverAddress)/api/register")
-let sendResetPasswordRoute = Route(method: .post, urlString: "\(serverAddress)/api/send_reset_password")

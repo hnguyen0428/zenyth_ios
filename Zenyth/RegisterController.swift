@@ -31,7 +31,7 @@ class RegisterController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
             "gender" : genderField.text
         ]
         
-        let requestor = Requestor(route: registerRoute, parameters: parameters)
+        let requestor = RegisterRequestor(parameters: parameters)
         let request = requestor.execute()
         
         request.responseJSON { response in
