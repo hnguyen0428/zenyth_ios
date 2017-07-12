@@ -23,20 +23,19 @@ class RegisterController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     @IBOutlet weak var registerButton: UIButton!
     
     @IBAction func registerButtonAction(_ sender: UIButton) {
-        var parameters = [String:String]()
-        parameters["username"] = usernameField.text
-        parameters["email"] = emailField.text
-        parameters["password"] = passwordField.text
-        parameters["password_confirmation"] = confirmPasswordField.text
-        parameters["gender"] = genderField.text
+        let parameters: Parameters = [
+            "username" : usernameField.text,
+            "email" : emailField.text,
+            "password" : passwordField.text,
+            "password_confirmation" : confirmPasswordField.text,
+            "gender" : genderField.text
+        ]
         
-        //print(parameters)
+        let requestor = Requestor(route: registerRoute, parameters: parameters)
+        let request = requestor.execute()
         
-        let route = "register"
-        let urlString = serverAddress + route
-        let url = URL(string: urlString)
-        Alamofire.request(url!, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON {
-            response in switch response.result {
+        request.responseJSON { response in
+            switch response.result {
             
             case .success(let value):
                 let json = JSON(value)
@@ -45,33 +44,27 @@ class RegisterController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
                     
                     print("JSON: \(json)")
                     
-                } else if let errors = json["errors"].array {
-                    
+                } else {
+                    let errors = json["errors"].arrayValue
                     var errorString = ""
-                    for value in errors {
-                        errorString.append(value.string! + "\n")
+                    for item in errors {
+                        errorString.append(item.stringValue + "\n")
                     }
                     // strip the newline character at the end
                     errorString.remove(at: errorString.index(before: errorString.endIndex))
                     
-                    // create the alert
-                    let alert = UIAlertController(title: "Register Failed", message: errorString, preferredStyle: UIAlertControllerStyle.alert)
-                    
-                    // add an action (button)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                    
-                    // show the alert
-                    self.present(alert, animated: true, completion: nil)
+                    displayAlert(view: self, title: "Register Failed", message: errorString)
                     
                 }
-            
-            case .failure(let error):
-                print(parameters)
-                print(error)
+                break
                 
+            case .failure(let error):
+                print(error)
+                debugPrint(response)
+                break
             }
-        
         }
+        
     }
 
     override func viewDidLoad() {

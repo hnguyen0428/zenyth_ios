@@ -23,44 +23,41 @@ class LoginController: UIViewController {
     @IBOutlet weak var signinButton: UIButton!
     
     @IBAction func loginButtonAction(_ sender: UIButton) {
-        var parameters = [String:String]()
-        parameters["username"] = usernameField.text
-        parameters["password"] = passwordField.text
+        var parameters: Parameters = [
+            "username" : usernameField.text,
+            "password" : passwordField.text
+        ]
         
-        let route = "login"
-        let urlString = serverAddress + route
-        let url = URL(string: urlString)
-        Alamofire.request(url!, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON {
-            response in switch response.result {
+        let requestor = Requestor(route: loginRoute, parameters: parameters)
+        let request = requestor.execute()
+        
+        request.responseJSON { response in
+            switch response.result {
             case .success(let value):
                 let json = JSON(value)
                 
                 if json["success"].boolValue {
-                    
                     print("JSON: \(json)")
-                    
-                } else if let errors = json["errors"].array {
-                    
+                    let token = json["data"]["api_token"]
+                    UserDefaults.standard.set(token.stringValue, forKey: "api_token")
+                    UserDefaults.standard.synchronize()
+                } else {
+                    let errors = json["errors"].arrayValue
                     var errorString = ""
-                    for value in errors {
-                        errorString.append(value.string! + "\n")
+                    for item in errors {
+                        errorString.append(item.stringValue + "\n")
                     }
                     // strip the newline character at the end
                     errorString.remove(at: errorString.index(before: errorString.endIndex))
                     
-                    // create the alert
-                    let alert = UIAlertController(title: "Login Failed", message: errorString, preferredStyle: UIAlertControllerStyle.alert)
-                    
-                    // add an action (button)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                    
-                    // show the alert
-                    self.present(alert, animated: true, completion: nil)
-                    
+                    displayAlert(view: self, title: "Login Failed", message: errorString)
                 }
-                
+                break
+            
             case .failure(let error):
                 print(error)
+                debugPrint(response)
+                break
             }
             
         }

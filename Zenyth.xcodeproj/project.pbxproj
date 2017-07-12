@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3725D1DBA4E1D74C7627B484 /* Pods_Zenyth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDF4603E6F5113638CE0C5ED /* Pods_Zenyth.framework */; };
+		475652EE1F15D1D40075B04A /* Requestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475652ED1F15D1D40075B04A /* Requestor.swift */; };
+		477A918F1F135426009B2D10 /* APIRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477A918E1F135426009B2D10 /* APIRoutes.swift */; };
 		47A9024C1F0B1F4400A1CEE8 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A9024B1F0B1F4400A1CEE8 /* LoginController.swift */; };
 		47A9024E1F0B34C900A1CEE8 /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A9024D1F0B34C900A1CEE8 /* GlobalVariables.swift */; };
 		47ABAA041F0B7B7400FD479E /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47ABAA031F0B7B7400FD479E /* UIHelper.swift */; };
@@ -41,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		475652ED1F15D1D40075B04A /* Requestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Requestor.swift; sourceTree = "<group>"; };
+		477A918E1F135426009B2D10 /* APIRoutes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRoutes.swift; sourceTree = "<group>"; };
 		47A9024B1F0B1F4400A1CEE8 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		47A9024D1F0B34C900A1CEE8 /* GlobalVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariables.swift; sourceTree = "<group>"; };
 		47ABAA031F0B7B7400FD479E /* UIHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
@@ -107,6 +111,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		475652EF1F15D1E70075B04A /* APIRequests */ = {
+			isa = PBXGroup;
+			children = (
+				477A918E1F135426009B2D10 /* APIRoutes.swift */,
+				475652ED1F15D1D40075B04A /* Requestor.swift */,
+			);
+			name = APIRequests;
+			sourceTree = "<group>";
+		};
 		47C622BC1F0A341A003BBC16 = {
 			isa = PBXGroup;
 			children = (
@@ -142,6 +155,7 @@
 				47A9024D1F0B34C900A1CEE8 /* GlobalVariables.swift */,
 				47ABAA031F0B7B7400FD479E /* UIHelper.swift */,
 				47D838CB1F10A99F000E9668 /* UIViewController+KeyboardHandler.swift */,
+				475652EF1F15D1E70075B04A /* APIRequests */,
 			);
 			path = Zenyth;
 			sourceTree = "<group>";
@@ -460,8 +474,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				47C622F71F0A347F003BBC16 /* RegisterController.swift in Sources */,
+				477A918F1F135426009B2D10 /* APIRoutes.swift in Sources */,
 				47A9024C1F0B1F4400A1CEE8 /* LoginController.swift in Sources */,
 				47A9024E1F0B34C900A1CEE8 /* GlobalVariables.swift in Sources */,
+				475652EE1F15D1D40075B04A /* Requestor.swift in Sources */,
 				47D838CC1F10A99F000E9668 /* UIViewController+KeyboardHandler.swift in Sources */,
 				47ABAA041F0B7B7400FD479E /* UIHelper.swift in Sources */,
 				47C622C91F0A341A003BBC16 /* AppDelegate.swift in Sources */,

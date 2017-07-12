@@ -7,6 +7,7 @@
 //
 
 import LBTAComponents
+import UIKit
 
 func formatTextField(textField: UITextField) {
     let border = CALayer()
@@ -19,3 +20,13 @@ func formatTextField(textField: UITextField) {
     textField.layer.masksToBounds = true
 }
 
+func displayAlert(view: UIViewController, title: String, message: String) {
+    // create the alert
+    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+    
+    // add an action (button)
+    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+    
+    // show the alert
+    view.present(alert, animated: true, completion: nil)
+}
