@@ -6,6 +6,7 @@ PODS:
   - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
+  - Fabric (1.6.12)
   - FBSDKCoreKit (4.23.0):
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.23.0):
@@ -54,9 +55,13 @@ PODS:
     - GTMSessionFetcher/Core (= 1.1.10)
   - LBTAComponents (0.1.9)
   - SwiftyJSON (3.1.4)
+  - TwitterCore (3.0.0)
+  - TwitterKit (3.0.3):
+    - TwitterCore (>= 3.0.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.4)
+  - Fabric
   - FBSDKCoreKit
   - FBSDKLoginKit
   - FBSDKShareKit
@@ -64,10 +69,12 @@ DEPENDENCIES:
   - GoogleSignIn
   - LBTAComponents
   - SwiftyJSON
+  - TwitterKit
 
 SPEC CHECKSUMS:
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
+  Fabric: f050464eac45a2ce5a8e6e6a07e977c0df32fe28
   FBSDKCoreKit: d7829f5a69901cd7296105328e4c3c3fc7da6518
   FBSDKLoginKit: 6b92bd65f319d669d2b0730e49db495ef1660566
   FBSDKShareKit: 65751c3b9937ab9d594e6c37611ecc115ceeb448
@@ -82,7 +89,9 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 30d874b96d0d76028f61fbd122801e3f030d47db
   LBTAComponents: 9a5d314080d1f80208062ccc81a2d25225c5f572
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  TwitterCore: 8ce250be1eb34633a0e6acc89520d4165ec52c10
+  TwitterKit: 202404be71aadd81d19f677b34579fe77d9cb67e
 
-PODFILE CHECKSUM: a4b15c4e2a1edf263fe6102eb2b036f98fa1554b
+PODFILE CHECKSUM: 9c1c75a62b8b63c95f7c4509d73a598d03bbffbd
 
 COCOAPODS: 1.2.1

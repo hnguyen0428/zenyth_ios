@@ -20,6 +20,7 @@
 		47C622F71F0A347F003BBC16 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622F61F0A347F003BBC16 /* RegisterController.swift */; };
 		47D838CC1F10A99F000E9668 /* UIViewController+KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D838CB1F10A99F000E9668 /* UIViewController+KeyboardHandler.swift */; };
 		7341F9E163A96B05940B44E8 /* Pods_ZenythTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BB6326B7B70E7CF186F4AB1 /* Pods_ZenythTests.framework */; };
+		824F43211F15E84C00031672 /* TwitterKitManual in Resources */ = {isa = PBXBuildFile; fileRef = 824F43201F15E84C00031672 /* TwitterKitManual */; };
 		827DD8A21F13204F00241BDB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 827DD8A11F13204F00241BDB /* GoogleService-Info.plist */; };
 		B99E2A49109EC15FB04613DB /* Pods_ZenythUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4950B87A454879669AE8F046 /* Pods_ZenythUITests.framework */; };
 /* End PBXBuildFile section */
@@ -61,6 +62,7 @@
 		47D838CB1F10A99F000E9668 /* UIViewController+KeyboardHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+KeyboardHandler.swift"; sourceTree = "<group>"; };
 		4950B87A454879669AE8F046 /* Pods_ZenythUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZenythUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BB6326B7B70E7CF186F4AB1 /* Pods_ZenythTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZenythTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		824F43201F15E84C00031672 /* TwitterKitManual */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TwitterKitManual; sourceTree = "<group>"; };
 		827DD8A11F13204F00241BDB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		82AFE11E1F0F16AD00605905 /* Zenyth.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Zenyth.entitlements; sourceTree = "<group>"; };
 		9BF5C92438833D8106466321 /* Pods-Zenyth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zenyth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Zenyth/Pods-Zenyth.debug.xcconfig"; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 		47C622BC1F0A341A003BBC16 = {
 			isa = PBXGroup;
 			children = (
+				824F43201F15E84C00031672 /* TwitterKitManual */,
 				47C622C71F0A341A003BBC16 /* Zenyth */,
 				47C622DC1F0A341A003BBC16 /* ZenythTests */,
 				47C622E71F0A341A003BBC16 /* ZenythUITests */,
@@ -308,6 +311,7 @@
 				827DD8A21F13204F00241BDB /* GoogleService-Info.plist in Resources */,
 				47C622D01F0A341A003BBC16 /* Assets.xcassets in Resources */,
 				47C622CE1F0A341A003BBC16 /* Main.storyboard in Resources */,
+				824F43211F15E84C00031672 /* TwitterKitManual in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

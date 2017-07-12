@@ -10,6 +10,8 @@ import UIKit
 import FBSDKCoreKit
 import Firebase
 import GoogleSignIn
+//import TwitterKit
+//import Fabric
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
@@ -18,6 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        // Twitter auth
+     //   Fabric.with([Twitter.self])
         
         FirebaseApp.configure()
         
@@ -28,6 +33,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         // converted from original objective C
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        
+        // Twitter 
+       // Twitter.sharedInstance().start(withConsumerKey:"KblBowxwd1VQruZvYEYG12Dsq", consumerSecret:"ikGB5s18LZrxjO5oDUP8fqU56xVuN5bzrsWJISWGl6DMeZPDoB")
+
         
         return true
     }
@@ -65,6 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                                           sourceApplication:options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String,
                                           annotation: options[UIApplicationOpenURLOptionsKey.annotation])
         
+       // Twitter.sharedInstance().application(app, open: url, options: options)
         
         return handled
     }

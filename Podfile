@@ -29,4 +29,7 @@ target 'Zenyth' do
   pod 'Firebase/Auth'
   pod 'GoogleSignIn'
 
+  pod 'Fabric'
+  pod 'TwitterKit'
+
 end

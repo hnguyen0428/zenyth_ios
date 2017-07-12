@@ -12,6 +12,8 @@ import SwiftyJSON
 import FBSDKLoginKit
 import Firebase
 import GoogleSignIn
+//import TwitterKit
+
 
 class LoginController: UIViewController, FBSDKLoginButtonDelegate, GIDSignInUIDelegate {
     
@@ -82,7 +84,13 @@ class LoginController: UIViewController, FBSDKLoginButtonDelegate, GIDSignInUIDe
         setupDefaultGoogleButton()
         
         // custom Google+
-        gplusButton.addTarget(self, action: #selector(handleCustomGoogleSign), for: .touchUpInside)
+        gplusButton.addTarget(self, action: #selector(handleCustomGoogleLogin), for: .touchUpInside)
+        
+        // custom twitter button
+       // twitterButton.addTarget(self, action: #selector(handleCustomTwitterLogin), for: .touchUpInside)
+        
+        // default twitter
+        //defaultTwitter()
         
         self.hideKeyboardWhenTappedAround()
         
@@ -106,10 +114,30 @@ class LoginController: UIViewController, FBSDKLoginButtonDelegate, GIDSignInUIDe
         
     }
     
-    func handleCustomGoogleSign() {
+  /*  func defaultTwitter() {
+        
+        // Swift
+        let logInButton = TWTRLogInButton(logInCompletion: { session, error in
+            if (session != nil) {
+                print("signed in as \(String(describing: session?.userName))");
+            } else {
+                print("error: \(String(describing: error?.localizedDescription))");
+            }
+        })
+        logInButton.center = self.view.center
+        self.view.addSubview(logInButton)
+        
+    }
+    
+    func handleCustomTwitterLogin() {
+    
+    
+    
+    }
+    */
+    func handleCustomGoogleLogin() {
     
         GIDSignIn.sharedInstance().signIn()
-
     
     }
     
@@ -201,10 +229,10 @@ class LoginController: UIViewController, FBSDKLoginButtonDelegate, GIDSignInUIDe
             
             if err != nil {
                 
-                print("Failed to start graph request:", err)
+                print("Failed to start graph request:", err ?? "")
                 return
             }
-            print (result)
+            print (result ?? "")
             
         }
     }
