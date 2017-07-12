@@ -23,7 +23,7 @@ class LoginController: UIViewController {
     @IBOutlet weak var signinButton: UIButton!
     
     @IBAction func loginButtonAction(_ sender: UIButton) {
-        var parameters: Parameters = [
+        let parameters: Parameters = [
             "username" : usernameField.text,
             "password" : passwordField.text
         ]
