@@ -15,4 +15,4 @@ let disabledButtonColor = UIColor(r: 116, g: 112, b: 83)
 //let disabledButtonBlue = UIColor(r: 70, g: 132, b: 200)
 let background = #imageLiteral(resourceName: "background3")
 //let serverAddress = "http://127.0.0.1/api/"
-let serverAddress = "http://54.219.134.56/api/"
+let serverAddress = "http://54.219.134.56"
