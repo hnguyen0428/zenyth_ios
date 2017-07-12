@@ -9,6 +9,26 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Bolts.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>FBSDKCoreKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>FBSDKLoginKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>FBSDKShareKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>LBTAComponents.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -57,7 +77,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8BDD68FA4D277059D25571A3D83336D1</key>
+		<key>90355483ABD6B803C6D1CEBEA5429EE7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9920CDD5FBA27038CB6EA8BFC661A4F8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -82,7 +107,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BEC517F58A33F8BC2EE79896D6C22FE6</key>
+		<key>BEF7E6E85DB5CDE5D7A18F4F2EB8494B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E396A93E4C79B22B7816E9F02F62ECED</key>
 		<dict>
 			<key>primary</key>
 			<true/>
