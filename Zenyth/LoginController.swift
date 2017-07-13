@@ -71,6 +71,16 @@ class LoginController: UIViewController, FBSDKLoginButtonDelegate, GIDSignInUIDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let backgroundView: UIImageView = {
+            let imageView = UIImageView(frame: view.frame)
+            imageView.image = background
+            imageView.contentMode = .scaleAspectFill
+            imageView.center = self.view.center
+            imageView.clipsToBounds = true
+            return imageView
+        }()
+        
+        self.view.insertSubview(backgroundView, at: 0)
         
         
         // The following is for the custom login button (may need to call set up views prior
