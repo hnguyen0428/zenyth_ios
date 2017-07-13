@@ -93,17 +93,6 @@ class LoginController: UIViewController, FBSDKLoginButtonDelegate, GIDSignInUIDe
         
         self.hideKeyboardWhenTappedAround()
         
-        let backgroundView: UIImageView = {
-            let imageView = UIImageView(frame: view.frame)
-            imageView.image = background
-            imageView.contentMode = .scaleAspectFill
-            imageView.center = self.view.center
-            imageView.clipsToBounds = true
-            return imageView
-        }()
-        
-        self.view.insertSubview(backgroundView, at: 0)
-        
         setupViews()
         usernameField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         passwordField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)

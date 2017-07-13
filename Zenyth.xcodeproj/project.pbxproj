@@ -154,6 +154,7 @@
 		47A745E71F16F7B100A88D5D /* StartingControllers */ = {
 			isa = PBXGroup;
 			children = (
+				47D838CB1F10A99F000E9668 /* UIViewController+KeyboardHandler.swift */,
 				47C622F61F0A347F003BBC16 /* RegisterController.swift */,
 				47A9024B1F0B1F4400A1CEE8 /* LoginController.swift */,
 				47A745E81F16F7D000A88D5D /* ModelViewController.swift */,
@@ -197,7 +198,6 @@
 				47C622D41F0A341A003BBC16 /* Info.plist */,
 				47A9024D1F0B34C900A1CEE8 /* GlobalVariables.swift */,
 				47ABAA031F0B7B7400FD479E /* UIHelper.swift */,
-				47D838CB1F10A99F000E9668 /* UIViewController+KeyboardHandler.swift */,
 				47883CD41F16EC8B0008C7F3 /* GoogleService-Info.plist */,
 			);
 			path = Zenyth;
