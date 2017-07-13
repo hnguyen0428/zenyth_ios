@@ -53,7 +53,7 @@ class RegisterController: ModelViewController, UIPickerViewDelegate, UIPickerVie
                     // strip the newline character at the end
                     errorString.remove(at: errorString.index(before: errorString.endIndex))
                     
-                    displayAlert(view: self, title: "Register Failed", message: errorString)
+                    self.displayAlert(view: self, title: "Register Failed", message: errorString)
                     
                 }
                 break
@@ -137,11 +137,11 @@ class RegisterController: ModelViewController, UIPickerViewDelegate, UIPickerVie
         
         guard
             let username = usernameField.text, !username.isEmpty,
-            let email = emailField.text, !email.isEmpty,
+            let email = emailField.text, !email.isEmpty && isValidEmail(testStr: email),
             let password = passwordField.text, !password.isEmpty &&
-                            (passwordField.text?.characters.count)! >= minimumPasswordLength,
+                            password.characters.count >= minimumPasswordLength,
             let confirmPassword = confirmPasswordField.text, !confirmPassword.isEmpty &&
-                            (confirmPasswordField.text?.characters.count)! >= minimumPasswordLength,
+                            confirmPassword.characters.count >= minimumPasswordLength,
             let gender = genderField.text, !gender.isEmpty
             else {
                 registerButton.isEnabled = false

@@ -27,7 +27,7 @@ class ModelViewController: UIViewController {
         self.view.addSubview(scrollView)
         
         backgroundView = {
-            let imageView = UIImageView(frame: view.frame)
+            let imageView = UIImageView(frame: scrollView.frame)
             imageView.image = background
             imageView.contentMode = .scaleAspectFill
             imageView.center = self.view.center
@@ -43,7 +43,6 @@ class ModelViewController: UIViewController {
             imageView.image = #imageLiteral(resourceName: "Logo")
             return imageView
         }()
-        self.view.insertSubview(logoView, at: 1)
         
         scrollView.addSubview(logoView)
         

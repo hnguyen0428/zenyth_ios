@@ -55,7 +55,7 @@ class LoginController: ModelViewController, FBSDKLoginButtonDelegate, GIDSignInU
                     // strip the newline character at the end
                     errorString.remove(at: errorString.index(before: errorString.endIndex))
                     
-                    displayAlert(view: self, title: "Login Failed", message: errorString)
+                    self.displayAlert(view: self, title: "Login Failed", message: errorString)
                     
                 }
                 break
@@ -257,7 +257,7 @@ class LoginController: ModelViewController, FBSDKLoginButtonDelegate, GIDSignInU
         guard
             let username = usernameField.text, !username.isEmpty,
             let password = passwordField.text, !password.isEmpty &&
-                (passwordField.text?.characters.count)! >= minimumPasswordLength
+                        password.characters.count >= minimumPasswordLength
             else {
                 signinButton.isEnabled = false
                 signinButton.backgroundColor = disabledButtonColor
