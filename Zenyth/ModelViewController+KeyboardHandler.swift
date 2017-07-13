@@ -31,11 +31,6 @@ extension ModelViewController {
     
         
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            /*
-            if self.view.frame.origin.y == 0{
-                self.view.frame.origin.y -= keyboardSize.height / 2
-            }
-            */
             scrollView.contentSize.height = view.frame.height + keyboardSize.height
         }
         
@@ -47,11 +42,6 @@ extension ModelViewController {
     
         
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            /*
-            if self.view.frame.origin.y != 0{
-                self.view.frame.origin.y += keyboardSize.height / 2
-            }
-            */
             scrollView.contentSize.height = scrollView.contentSize.height - keyboardSize.height
         }
         

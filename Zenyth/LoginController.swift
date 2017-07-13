@@ -97,7 +97,6 @@ class LoginController: ModelViewController, FBSDKLoginButtonDelegate, GIDSignInU
                 scrollView.addSubview(subview)
             }
         }
-        scrollView.addSubview(logoView)
         
     }
     

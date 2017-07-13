@@ -45,6 +45,8 @@ class ModelViewController: UIViewController {
         }()
         self.view.insertSubview(logoView, at: 1)
         
+        scrollView.addSubview(logoView)
+        
         self.hideKeyboardWhenTappedAround()
         
     }
