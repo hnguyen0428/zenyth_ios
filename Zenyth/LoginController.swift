@@ -15,7 +15,7 @@ import GoogleSignIn
 //import TwitterKit
 
 
-class LoginController: UIViewController, FBSDKLoginButtonDelegate, GIDSignInUIDelegate {
+class LoginController: ModelViewController, FBSDKLoginButtonDelegate, GIDSignInUIDelegate {
     
     
     @IBOutlet weak var fbButton: UIButton!
@@ -72,6 +72,15 @@ class LoginController: UIViewController, FBSDKLoginButtonDelegate, GIDSignInUIDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let backgroundView: UIImageView = {
+            let imageView = UIImageView(frame: view.frame)
+            imageView.image = background
+            imageView.contentMode = .scaleAspectFill
+            imageView.center = self.view.center
+            imageView.clipsToBounds = true
+            return imageView
+        }()
+        self.view.insertSubview(backgroundView, at: 0)
         
         // The following is for the custom login button (may need to call set up views prior
         fbButton.addTarget(self, action: #selector(handleCustomFBLogin), for: .touchUpInside)
@@ -227,7 +236,7 @@ class LoginController: UIViewController, FBSDKLoginButtonDelegate, GIDSignInUIDe
     
     ////////////////////////
     
-    func setupViews() {
+    override func setupViews() {
         fbButton.setImage(#imageLiteral(resourceName: "Facebook_Icon"), for: .normal)
         twitterButton.setImage(#imageLiteral(resourceName: "Twitter_Icon"), for: .normal)
         gplusButton.setImage(#imageLiteral(resourceName: "Google_Plus_Icon"), for: .normal)
