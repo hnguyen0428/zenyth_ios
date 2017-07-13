@@ -30,7 +30,7 @@
 		47C622DE1F0A341A003BBC16 /* ZenythTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622DD1F0A341A003BBC16 /* ZenythTests.swift */; };
 		47C622E91F0A341A003BBC16 /* ZenythUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622E81F0A341A003BBC16 /* ZenythUITests.swift */; };
 		47C622F71F0A347F003BBC16 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622F61F0A347F003BBC16 /* RegisterController.swift */; };
-		47D838CC1F10A99F000E9668 /* UIViewController+KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D838CB1F10A99F000E9668 /* UIViewController+KeyboardHandler.swift */; };
+		47D838CC1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */; };
 		7341F9E163A96B05940B44E8 /* Pods_ZenythTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BB6326B7B70E7CF186F4AB1 /* Pods_ZenythTests.framework */; };
 		824F43211F15E84C00031672 /* TwitterKitManual in Resources */ = {isa = PBXBuildFile; fileRef = 824F43201F15E84C00031672 /* TwitterKitManual */; };
 		B99E2A49109EC15FB04613DB /* Pods_ZenythUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4950B87A454879669AE8F046 /* Pods_ZenythUITests.framework */; };
@@ -82,7 +82,7 @@
 		47C622E81F0A341A003BBC16 /* ZenythUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZenythUITests.swift; sourceTree = "<group>"; };
 		47C622EA1F0A341A003BBC16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		47C622F61F0A347F003BBC16 /* RegisterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
-		47D838CB1F10A99F000E9668 /* UIViewController+KeyboardHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+KeyboardHandler.swift"; sourceTree = "<group>"; };
+		47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModelViewController+KeyboardHandler.swift"; sourceTree = "<group>"; };
 		4950B87A454879669AE8F046 /* Pods_ZenythUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZenythUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BB6326B7B70E7CF186F4AB1 /* Pods_ZenythTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZenythTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		824F43201F15E84C00031672 /* TwitterKitManual */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TwitterKitManual; sourceTree = "<group>"; };
@@ -154,7 +154,7 @@
 		47A745E71F16F7B100A88D5D /* StartingControllers */ = {
 			isa = PBXGroup;
 			children = (
-				47D838CB1F10A99F000E9668 /* UIViewController+KeyboardHandler.swift */,
+				47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */,
 				47C622F61F0A347F003BBC16 /* RegisterController.swift */,
 				47A9024B1F0B1F4400A1CEE8 /* LoginController.swift */,
 				47A745E81F16F7D000A88D5D /* ModelViewController.swift */,
@@ -311,7 +311,7 @@
 				TargetAttributes = {
 					47C622C41F0A341A003BBC16 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = JGM83HBADX;
+						DevelopmentTeam = 4B5PEQM7U2;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -531,7 +531,7 @@
 				47C622F71F0A347F003BBC16 /* RegisterController.swift in Sources */,
 				47A9024C1F0B1F4400A1CEE8 /* LoginController.swift in Sources */,
 				47A9024E1F0B34C900A1CEE8 /* GlobalVariables.swift in Sources */,
-				47D838CC1F10A99F000E9668 /* UIViewController+KeyboardHandler.swift in Sources */,
+				47D838CC1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift in Sources */,
 				47A745E31F16F5B500A88D5D /* ResetPasswordRequestor.swift in Sources */,
 				47ABAA041F0B7B7400FD479E /* UIHelper.swift in Sources */,
 				47A745E21F16F5B500A88D5D /* Requestor.swift in Sources */,
@@ -695,10 +695,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Zenyth/Zenyth.entitlements;
-				DEVELOPMENT_TEAM = JGM83HBADX;
+				DEVELOPMENT_TEAM = 4B5PEQM7U2;
 				INFOPLIST_FILE = Zenyth/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "-05Industries.Zenyth";
+				PRODUCT_BUNDLE_IDENTIFIER = "-05Industries.Zenyth.Hoang";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -710,10 +710,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Zenyth/Zenyth.entitlements;
-				DEVELOPMENT_TEAM = JGM83HBADX;
+				DEVELOPMENT_TEAM = 4B5PEQM7U2;
 				INFOPLIST_FILE = Zenyth/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "-05Industries.Zenyth";
+				PRODUCT_BUNDLE_IDENTIFIER = "-05Industries.Zenyth.Hoang";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

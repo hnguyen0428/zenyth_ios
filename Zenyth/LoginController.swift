@@ -72,16 +72,6 @@ class LoginController: ModelViewController, FBSDKLoginButtonDelegate, GIDSignInU
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let backgroundView: UIImageView = {
-            let imageView = UIImageView(frame: view.frame)
-            imageView.image = background
-            imageView.contentMode = .scaleAspectFill
-            imageView.center = self.view.center
-            imageView.clipsToBounds = true
-            return imageView
-        }()
-        self.view.insertSubview(backgroundView, at: 0)
-        
         // The following is for the custom login button (may need to call set up views prior
         fbButton.addTarget(self, action: #selector(handleCustomFBLogin), for: .touchUpInside)
         
@@ -94,14 +84,6 @@ class LoginController: ModelViewController, FBSDKLoginButtonDelegate, GIDSignInU
         // custom Google+
         gplusButton.addTarget(self, action: #selector(handleCustomGoogleLogin), for: .touchUpInside)
         
-        // custom twitter button
-       // twitterButton.addTarget(self, action: #selector(handleCustomTwitterLogin), for: .touchUpInside)
-        
-        // default twitter
-        //defaultTwitter()
-        
-        self.hideKeyboardWhenTappedAround()
-        
         setupViews()
         usernameField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         passwordField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
@@ -109,29 +91,16 @@ class LoginController: ModelViewController, FBSDKLoginButtonDelegate, GIDSignInU
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
-    }
-    
-  /*  func defaultTwitter() {
-        
-        // Swift
-        let logInButton = TWTRLogInButton(logInCompletion: { session, error in
-            if (session != nil) {
-                print("signed in as \(String(describing: session?.userName))");
-            } else {
-                print("error: \(String(describing: error?.localizedDescription))");
+        for subview in view.subviews {
+            if !(subview is UIScrollView) && !(subview is UIImageView) {
+                print("Subview: ", subview)
+                scrollView.addSubview(subview)
             }
-        })
-        logInButton.center = self.view.center
-        self.view.addSubview(logInButton)
+        }
+        scrollView.addSubview(logoView)
         
     }
     
-    func handleCustomTwitterLogin() {
-    
-    
-    
-    }
-    */
     func handleCustomGoogleLogin() {
     
         GIDSignIn.sharedInstance().signIn()
@@ -236,7 +205,9 @@ class LoginController: ModelViewController, FBSDKLoginButtonDelegate, GIDSignInU
     
     ////////////////////////
     
-    override func setupViews() {
+    /* Setup images for the buttons and setups textfields
+     */
+    func setupViews() {
         fbButton.setImage(#imageLiteral(resourceName: "Facebook_Icon"), for: .normal)
         twitterButton.setImage(#imageLiteral(resourceName: "Twitter_Icon"), for: .normal)
         gplusButton.setImage(#imageLiteral(resourceName: "Google_Plus_Icon"), for: .normal)
@@ -281,16 +252,13 @@ class LoginController: ModelViewController, FBSDKLoginButtonDelegate, GIDSignInU
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    func editingChanged(_ textField: UITextField) {
-        if textField.text?.characters.count == 1 {
-            if textField.text?.characters.first == " " {
-                textField.text = ""
-                return
-            }
-        }
+    /* Overridden rules for checking the field before enabling the button
+     */
+    override func fieldCheck() {
         guard
             let username = usernameField.text, !username.isEmpty,
-            let password = passwordField.text, !password.isEmpty
+            let password = passwordField.text, !password.isEmpty &&
+                (passwordField.text?.characters.count)! >= minimumPasswordLength
             else {
                 signinButton.isEnabled = false
                 signinButton.backgroundColor = disabledButtonColor

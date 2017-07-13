@@ -22,7 +22,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>fb664338180441981</string>
-                <string>com.googleusercontent.apps.726843823228-983fiv45v8m39aoslobaiiqqipvvm2lf</string>
+				<string>com.googleusercontent.apps.726843823228-983fiv45v8m39aoslobaiiqqipvvm2lf</string>
 			</array>
 		</dict>
 	</array>
@@ -61,6 +61,6 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>        
+	</array>
 </dict>
 </plist>

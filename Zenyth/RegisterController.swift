@@ -11,7 +11,7 @@ import LBTAComponents
 import Alamofire
 import SwiftyJSON
 
-class RegisterController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class RegisterController: ModelViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     let genderData = ["", "Male", "Female", "Non-binary"]
     
@@ -68,23 +68,22 @@ class RegisterController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.hideKeyboardWhenTappedAround()
         
-        let backgroundView: UIImageView = {
-            let imageView = UIImageView(frame: view.frame)
-            imageView.image = background
-            imageView.contentMode = .scaleAspectFill
-            imageView.center = self.view.center
-            imageView.clipsToBounds = true
-            return imageView
-        }()
-        
-        self.view.insertSubview(backgroundView, at: 0)
         setupViews()
         usernameField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         emailField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         passwordField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         confirmPasswordField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+        for subview in view.subviews {
+            if !(subview is UIScrollView) && !(subview is UIImageView) {
+                print("Subview: ", subview)
+                scrollView.addSubview(subview)
+            }
+        }
         
     }
     
@@ -105,6 +104,8 @@ class RegisterController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         setupGenderPicker()
     }
     
+    /* Setups the gender picker
+     */
     func setupGenderPicker() {
         let genderPicker = UIPickerView()
         genderField.inputView = genderPicker
@@ -130,24 +131,17 @@ class RegisterController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         fieldCheck()
     }
     
-    func editingChanged(_ textField: UITextField) {
-        if textField.text?.characters.count == 1 {
-            if textField.text?.characters.first == " " {
-                textField.text = ""
-                return
-            }
-        }
-        fieldCheck()
-        
-    }
-    
-    func fieldCheck() {
+    /* Overridden rules for checking the field before enabling the button
+     */
+    override func fieldCheck() {
         
         guard
             let username = usernameField.text, !username.isEmpty,
             let email = emailField.text, !email.isEmpty,
-            let password = passwordField.text, !password.isEmpty,
-            let confirmPassword = confirmPasswordField.text, !confirmPassword.isEmpty,
+            let password = passwordField.text, !password.isEmpty &&
+                            (passwordField.text?.characters.count)! >= minimumPasswordLength,
+            let confirmPassword = confirmPasswordField.text, !confirmPassword.isEmpty &&
+                            (confirmPasswordField.text?.characters.count)! >= minimumPasswordLength,
             let gender = genderField.text, !gender.isEmpty
             else {
                 registerButton.isEnabled = false
@@ -171,6 +165,8 @@ class RegisterController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         return genderData[row]
     }
     
+    /* Called whenever the user picks an item on the pickerview
+     */
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         genderField.text = genderData[row]
     }

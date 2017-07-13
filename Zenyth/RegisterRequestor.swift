@@ -16,3 +16,12 @@ class RegisterRequestor: Requestor {
         super.init(route: self.registerRoute, parameters: parameters)
     }
 }
+
+class EmailExistRequestor: Requestor {
+    var emailExistRoute = Route(method: .post, urlString: "\(serverAddress)/api/email_exists/%@")
+    
+    init(email: String) {
+        emailExistRoute.urlString = String(format: emailExistRoute.urlString, email)
+        super.init(route: emailExistRoute)
+    }
+}

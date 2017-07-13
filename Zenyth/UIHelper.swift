@@ -8,6 +8,8 @@
 
 import LBTAComponents
 
+/* Format textfield so that it has only the line on the bottom
+ */
 func formatTextField(textField: UITextField) {
     let border = CALayer()
     let width = CGFloat(1.0)
@@ -19,6 +21,8 @@ func formatTextField(textField: UITextField) {
     textField.layer.masksToBounds = true
 }
 
+/* Displays an alert with title and message and an OK button
+ */
 func displayAlert(view: UIViewController, title: String, message: String) {
     // create the alert
     let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
