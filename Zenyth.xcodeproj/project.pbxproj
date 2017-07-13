@@ -9,6 +9,17 @@
 /* Begin PBXBuildFile section */
 		3725D1DBA4E1D74C7627B484 /* Pods_Zenyth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDF4603E6F5113638CE0C5ED /* Pods_Zenyth.framework */; };
 		47883CD51F16EC8B0008C7F3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 47883CD41F16EC8B0008C7F3 /* GoogleService-Info.plist */; };
+		47A745D41F16F59F00A88D5D /* APIRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745D31F16F59F00A88D5D /* APIRoutes.swift */; };
+		47A745D61F16F5A800A88D5D /* CommentRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745D51F16F5A800A88D5D /* CommentRequestor.swift */; };
+		47A745DE1F16F5B500A88D5D /* PinpostRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745D71F16F5B500A88D5D /* PinpostRequestor.swift */; };
+		47A745DF1F16F5B500A88D5D /* ProfileRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745D81F16F5B500A88D5D /* ProfileRequestor.swift */; };
+		47A745E01F16F5B500A88D5D /* RegisterRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745D91F16F5B500A88D5D /* RegisterRequestor.swift */; };
+		47A745E11F16F5B500A88D5D /* RelationshipRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745DA1F16F5B500A88D5D /* RelationshipRequestor.swift */; };
+		47A745E21F16F5B500A88D5D /* Requestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745DB1F16F5B500A88D5D /* Requestor.swift */; };
+		47A745E31F16F5B500A88D5D /* ResetPasswordRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745DC1F16F5B500A88D5D /* ResetPasswordRequestor.swift */; };
+		47A745E41F16F5B500A88D5D /* UserRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745DD1F16F5B500A88D5D /* UserRequestor.swift */; };
+		47A745E61F16F64200A88D5D /* LoginRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745E51F16F64200A88D5D /* LoginRequestor.swift */; };
+		47A745E91F16F7D000A88D5D /* ModelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745E81F16F7D000A88D5D /* ModelViewController.swift */; };
 		47A9024C1F0B1F4400A1CEE8 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A9024B1F0B1F4400A1CEE8 /* LoginController.swift */; };
 		47A9024E1F0B34C900A1CEE8 /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A9024D1F0B34C900A1CEE8 /* GlobalVariables.swift */; };
 		47ABAA041F0B7B7400FD479E /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47ABAA031F0B7B7400FD479E /* UIHelper.swift */; };
@@ -44,6 +55,17 @@
 
 /* Begin PBXFileReference section */
 		47883CD41F16EC8B0008C7F3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		47A745D31F16F59F00A88D5D /* APIRoutes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRoutes.swift; sourceTree = "<group>"; };
+		47A745D51F16F5A800A88D5D /* CommentRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentRequestor.swift; sourceTree = "<group>"; };
+		47A745D71F16F5B500A88D5D /* PinpostRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinpostRequestor.swift; sourceTree = "<group>"; };
+		47A745D81F16F5B500A88D5D /* ProfileRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileRequestor.swift; sourceTree = "<group>"; };
+		47A745D91F16F5B500A88D5D /* RegisterRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterRequestor.swift; sourceTree = "<group>"; };
+		47A745DA1F16F5B500A88D5D /* RelationshipRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipRequestor.swift; sourceTree = "<group>"; };
+		47A745DB1F16F5B500A88D5D /* Requestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Requestor.swift; sourceTree = "<group>"; };
+		47A745DC1F16F5B500A88D5D /* ResetPasswordRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordRequestor.swift; sourceTree = "<group>"; };
+		47A745DD1F16F5B500A88D5D /* UserRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRequestor.swift; sourceTree = "<group>"; };
+		47A745E51F16F64200A88D5D /* LoginRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginRequestor.swift; sourceTree = "<group>"; };
+		47A745E81F16F7D000A88D5D /* ModelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelViewController.swift; sourceTree = "<group>"; };
 		47A9024B1F0B1F4400A1CEE8 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		47A9024D1F0B34C900A1CEE8 /* GlobalVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariables.swift; sourceTree = "<group>"; };
 		47ABAA031F0B7B7400FD479E /* UIHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
@@ -112,6 +134,33 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		47883CD61F16F4C60008C7F3 /* APIRequests */ = {
+			isa = PBXGroup;
+			children = (
+				47A745E51F16F64200A88D5D /* LoginRequestor.swift */,
+				47A745D71F16F5B500A88D5D /* PinpostRequestor.swift */,
+				47A745D81F16F5B500A88D5D /* ProfileRequestor.swift */,
+				47A745D91F16F5B500A88D5D /* RegisterRequestor.swift */,
+				47A745DA1F16F5B500A88D5D /* RelationshipRequestor.swift */,
+				47A745DB1F16F5B500A88D5D /* Requestor.swift */,
+				47A745DC1F16F5B500A88D5D /* ResetPasswordRequestor.swift */,
+				47A745DD1F16F5B500A88D5D /* UserRequestor.swift */,
+				47A745D51F16F5A800A88D5D /* CommentRequestor.swift */,
+				47A745D31F16F59F00A88D5D /* APIRoutes.swift */,
+			);
+			name = APIRequests;
+			sourceTree = "<group>";
+		};
+		47A745E71F16F7B100A88D5D /* StartingControllers */ = {
+			isa = PBXGroup;
+			children = (
+				47C622F61F0A347F003BBC16 /* RegisterController.swift */,
+				47A9024B1F0B1F4400A1CEE8 /* LoginController.swift */,
+				47A745E81F16F7D000A88D5D /* ModelViewController.swift */,
+			);
+			name = StartingControllers;
+			sourceTree = "<group>";
+		};
 		47C622BC1F0A341A003BBC16 = {
 			isa = PBXGroup;
 			children = (
@@ -138,14 +187,14 @@
 		47C622C71F0A341A003BBC16 /* Zenyth */ = {
 			isa = PBXGroup;
 			children = (
+				47A745E71F16F7B100A88D5D /* StartingControllers */,
+				47883CD61F16F4C60008C7F3 /* APIRequests */,
 				82AFE11E1F0F16AD00605905 /* Zenyth.entitlements */,
 				47C622C81F0A341A003BBC16 /* AppDelegate.swift */,
 				47C622CC1F0A341A003BBC16 /* Main.storyboard */,
 				47C622CF1F0A341A003BBC16 /* Assets.xcassets */,
 				47C622D11F0A341A003BBC16 /* LaunchScreen.storyboard */,
 				47C622D41F0A341A003BBC16 /* Info.plist */,
-				47C622F61F0A347F003BBC16 /* RegisterController.swift */,
-				47A9024B1F0B1F4400A1CEE8 /* LoginController.swift */,
 				47A9024D1F0B34C900A1CEE8 /* GlobalVariables.swift */,
 				47ABAA031F0B7B7400FD479E /* UIHelper.swift */,
 				47D838CB1F10A99F000E9668 /* UIViewController+KeyboardHandler.swift */,
@@ -474,12 +523,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47A745E01F16F5B500A88D5D /* RegisterRequestor.swift in Sources */,
+				47A745D41F16F59F00A88D5D /* APIRoutes.swift in Sources */,
+				47A745E61F16F64200A88D5D /* LoginRequestor.swift in Sources */,
+				47A745E91F16F7D000A88D5D /* ModelViewController.swift in Sources */,
+				47A745E11F16F5B500A88D5D /* RelationshipRequestor.swift in Sources */,
 				47C622F71F0A347F003BBC16 /* RegisterController.swift in Sources */,
 				47A9024C1F0B1F4400A1CEE8 /* LoginController.swift in Sources */,
 				47A9024E1F0B34C900A1CEE8 /* GlobalVariables.swift in Sources */,
 				47D838CC1F10A99F000E9668 /* UIViewController+KeyboardHandler.swift in Sources */,
+				47A745E31F16F5B500A88D5D /* ResetPasswordRequestor.swift in Sources */,
 				47ABAA041F0B7B7400FD479E /* UIHelper.swift in Sources */,
+				47A745E21F16F5B500A88D5D /* Requestor.swift in Sources */,
+				47A745D61F16F5A800A88D5D /* CommentRequestor.swift in Sources */,
 				47C622C91F0A341A003BBC16 /* AppDelegate.swift in Sources */,
+				47A745E41F16F5B500A88D5D /* UserRequestor.swift in Sources */,
+				47A745DF1F16F5B500A88D5D /* ProfileRequestor.swift in Sources */,
+				47A745DE1F16F5B500A88D5D /* PinpostRequestor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

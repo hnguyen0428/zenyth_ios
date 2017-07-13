@@ -19,3 +19,5 @@ struct Route: RouteProtocol {
     var method: HTTPMethod
     var urlString: String
 }
+
+let serverAddress = "http://54.219.134.56"

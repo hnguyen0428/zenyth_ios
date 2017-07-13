@@ -6,4 +6,4 @@
 //  Copyright © 2017 Hoang. All rights reserved.
 //
 
-import UIKit
+import Foundation
