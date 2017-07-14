@@ -18,8 +18,8 @@ class Requestor {
     var success: Bool = false
     let needsAuthorization: Bool
 
-    init(route: Route, header: HTTPHeaders = [:], parameters: Parameters = [:],
-         needsAuthorization: Bool = false) {
+    init(route: Route, header: HTTPHeaders = HTTPHeaders.init(),
+         parameters: Parameters = Parameters.init(), needsAuthorization: Bool = false) {
         self.needsAuthorization = needsAuthorization
         self.route = route
         self.header = header
@@ -32,15 +32,10 @@ class Requestor {
             setAuthorization()
         }
         
-        if(route.method == .post) {
-            return Alamofire.request(route.urlString, method: method,
-                                          parameters: self.parameters,
-                                          encoding: JSONEncoding.default,
-                                          headers: header)
-        } else {
-            return Alamofire.request(route.urlString, method: method,
-                                     parameters: self.parameters)
-        }
+        return Alamofire.request(route.urlString, method: method,
+                                 parameters: self.parameters,
+                                 headers: header)
+
     }
     
     func setAuthorization() {

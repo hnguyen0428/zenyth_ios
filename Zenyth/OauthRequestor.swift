@@ -18,11 +18,11 @@ class OauthRegisterRequestor: Requestor {
 }
 
 
-class OauthFBLoginRequestor: Requestor {
-    let oauthFBLoginRoute = Route(method: .post, urlString: "\(serverAddress)/api/oauth/fb/login")
+class OauthLoginRequestor: Requestor {
+    let oauthLoginRoute = Route(method: .post, urlString: "\(serverAddress)/api/oauth/login")
     
     init(parameters: Parameters, header: HTTPHeaders) {
-        super.init(route: self.oauthFBLoginRoute, header: header, parameters: parameters)
+        super.init(route: self.oauthLoginRoute, header: header, parameters: parameters)
     }
 }
 

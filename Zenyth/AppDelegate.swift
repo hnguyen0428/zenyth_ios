@@ -23,12 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         // Twitter auth
-        //   Fabric.with([Twitter.self])
-        
-        //FirebaseApp.configure()
-        
-        // Google+
-        //GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+        // Fabric.with([Twitter.self])
 
         GIDSignIn.sharedInstance().clientID = "726843823228-983fiv45v8m39aoslobaiiqqipvvm2lf.apps.googleusercontent.com"
         GIDSignIn.sharedInstance().delegate = self
@@ -52,12 +47,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
         print("Successfully logged into Google")
         // Perform any operations on signed in user here.
-        let userId = user.userID                  // For client-side use only!
-        let fullName = user.profile.name
-        let email = user.profile.email
+
+        guard let userId = user.authentication.idToken else { return }
         guard let accessToken = user.authentication.accessToken else { return }
-        
-        let route = Route(method: .get, urlString: "https://www.googleapis.com/oauth2/v3/userinfo?access_token=\(user.authentication.accessToken!)")
+        print("Google userId: \(userId)")
+        print("Google accessToken: \(accessToken)")
+        let route = Route(method: .get, urlString: "https://www.googleapis.com/oauth2/v3/userinfo?access_token=\(accessToken)")
         
         let request = Requestor.init(route: route)
         let response = request.execute()
@@ -65,20 +60,96 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
-                let gender = json["gender"].stringValue
-                print(gender)
+                self.googleOauthHandle(json: json, accessToken: accessToken)
                 break
-            
+                
             case .failure(let error):
                 print(error)
                 break
             }
         }
         
-        print(email)
-        print(fullName)
-        print ("CHECK ME OUT, GOOGLE TOKEN WHAT UPPPP", accessToken)
-        
+    }
+    
+    func googleOauthHandle(json: JSON, accessToken: String) {
+        // Checks if email is taken
+        let request = EmailTakenRequestor.init(email: json["email"].stringValue)
+        let response = request.execute()
+        response.responseJSON { response in
+            switch response.result {
+                
+            case .success(let value):
+                let data = JSON(value)
+                
+                if data["data"].boolValue { // email is taken
+                    print("Email Taken")
+                    self.googleOauthLogin(accessToken: accessToken)
+                } else { // email is available
+                    print("Email Available")
+                    self.googleOauthRegister(json: json)
+                }
+                break
+                
+            case .failure(let error):
+                debugPrint(response)
+                print(error)
+                break
+                
+            }
+            
+        }
+    }
+    
+    func googleOauthLogin(accessToken: String) {
+        let parameters: Parameters = [
+            "oauth_type": "google"
+        ]
+        let header: HTTPHeaders = [
+            "Authorization": "bearer \(accessToken)"
+        ]
+        let request = OauthLoginRequestor.init(parameters: parameters, header: header)
+        let response = request.execute()
+        response.responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                if json["success"].boolValue {
+                    print(json)
+                }
+                break
+                
+            case . failure(let error):
+                print(error)
+                debugPrint(response)
+                break
+            }
+        }
+    }
+    
+    func googleOauthRegister(json: JSON) {
+        let parameters: Parameters = [
+            "username": "hoangGoogle",
+            "email": json["email"].stringValue,
+            "gender": json["gender"].stringValue,
+            "first_name": json["givenName"].stringValue,
+            "last_name": json["familyName"].stringValue
+        ]
+        let request = OauthRegisterRequestor.init(parameters: parameters)
+        let response = request.execute()
+        response.responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                let data = JSON(value)
+                print(data)
+                break
+                
+            case .failure(let error):
+                print(error)
+                debugPrint(response)
+                break
+                
+            }
+        }
     }
     
     

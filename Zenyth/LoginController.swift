@@ -99,18 +99,6 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         GIDSignIn.sharedInstance().signIn()
     
     }
-    
-    // delete this one tho
-//    func setupDefaultGoogleButton() {
-//        
-//        //add google sign in button
-//        let googleButton = GIDSignInButton()
-//        
-//        googleButton.frame = CGRect(x: 16, y: 116 + 66, width: view.frame.width - 32, height: 50)
-//        view.addSubview(googleButton)
-//        GIDSignIn.sharedInstance().uiDelegate = self
-//        
-//    }
 
     func handleCustomFBLogin() {
 
@@ -122,36 +110,116 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
                 return
             }
             
-            self.showFBEmailAddress()
+            self.graphRequest()
         }
 
         
     }
     
-    func showFBEmailAddress() {
+    func graphRequest() {
     
         // not firAuth anymore
         let accessToken = FBSDKAccessToken.current()
         guard let accessTokenString = accessToken?.tokenString else { return }
-
-        print ("*************** CHECK ME OUT, FACEBOOK", accessTokenString)
-        let FBTokenStringCount = accessTokenString.characters.count
-        print (FBTokenStringCount)
+        print("Facebook accessToken: \(accessTokenString)")
         
         print("Successfully logged in with facebook...")
-        FBSDKGraphRequest(graphPath: "/me", parameters: ["fields": "id, name, email, gender"]).start { (connnection, result, err) in
+        FBSDKGraphRequest(graphPath: "/me", parameters: ["fields": "last_name, first_name, email, gender"])
+            .start { (connnection, result, err) in
             
             if err != nil {
                 
                 print("Failed to start graph request:", err ?? "")
                 return
             }
-            print (result ?? "")
+            let json = JSON(result)
+                self.fbOauthHandler(json: json, accessToken: accessTokenString)
             
         }
     }
     
-    ////////////////////////
+    func fbOauthHandler(json: JSON, accessToken: String) {
+        
+        // Checks if facebook email has already been used
+        let request = EmailTakenRequestor.init(email: json["email"].stringValue)
+        let response = request.execute()
+        response.responseJSON { response in
+            switch response.result {
+                
+            case .success(let value):
+                let data = JSON(value)
+                
+                if data["data"].boolValue { // email is taken
+                    print("Email Taken")
+                    self.fbOauthLogin(accessToken: accessToken)
+                } else { // email is available
+                    print("Email Available")
+                    self.oauthRegister(json: json)
+                }
+                break
+                
+            case .failure(let error):
+                debugPrint(response)
+                print(error)
+                break
+                
+            }
+            
+        }
+        
+    }
+    
+    func oauthRegister(json: JSON) {
+        let parameters: Parameters = [
+            "username": "hoangFacebook",
+            "email": json["email"].stringValue,
+            "gender": json["gender"].stringValue,
+            "first_name": json["first_name"].stringValue,
+            "last_name": json["last_name"].stringValue
+        ]
+        let request = OauthRegisterRequestor.init(parameters: parameters)
+        let response = request.execute()
+        response.responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                let data = JSON(value)
+                print(data)
+                break
+                
+            case .failure(let error):
+                print(error)
+                debugPrint(response)
+                break
+                
+            }
+        }
+    }
+    
+    func fbOauthLogin(accessToken: String) {
+        let parameters: Parameters = [
+            "oauth_type": "facebook"
+        ]
+        let header: HTTPHeaders = [
+            "Authorization": "bearer \(accessToken)"
+        ]
+        let request = OauthLoginRequestor.init(parameters: parameters, header: header)
+        let response = request.execute()
+        response.responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                if json["success"].boolValue {
+                    print(json)
+                }
+                break
+                
+            case . failure(let error):
+                print(error)
+                debugPrint(response)
+                break
+            }
+        }
+    }
     
     /* Setup images for the buttons and setups textfields
      */
