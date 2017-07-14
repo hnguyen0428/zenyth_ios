@@ -28,41 +28,34 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
     
     @IBAction func loginButtonAction(_ sender: UIButton) {
         let parameters: Parameters = [
-            "username" : usernameField.text,
-            "password" : passwordField.text
+            "username" : usernameField.text!,
+            "password" : passwordField.text!
         ]
         
-        let requestor = LoginRequestor(parameters: parameters)
-        let request = requestor.execute()
+        let request = LoginRequestor(parameters: parameters)
         
-        request.responseJSON { response in
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
-                
-                if json["success"].boolValue {
-                    print("JSON: \(json)")
-                    let token = json["data"]["api_token"]
-                    UserDefaults.standard.set(token.stringValue, forKey: "api_token")
-                    UserDefaults.standard.synchronize()
-                } else {
-                    let errors = json["errors"].arrayValue
-                    var errorString = ""
-                    for item in errors {
-                        errorString.append(item.stringValue + "\n")
-                    }
-                    // strip the newline character at the end
-                    errorString.remove(at: errorString.index(before: errorString.endIndex))
-                    
-                    self.displayAlert(view: self, title: "Login Failed", message: errorString)
-                    
+        request.getJSON { data, error in
+            
+            if (error != nil) {
+                return
+            }
+            
+            if (data?["success"].boolValue)! {
+                print("JSON: \(data)")
+                let token = data?["data"]["api_token"]
+                UserDefaults.standard.set(token?.stringValue, forKey: "api_token")
+                UserDefaults.standard.synchronize()
+            } else {
+                let errors = (data?["errors"].arrayValue)!
+                var errorString = ""
+                for item in errors {
+                    errorString.append(item.stringValue + "\n")
                 }
-                break
+                // strip the newline character at the end
+                errorString.remove(at: errorString.index(before: errorString.endIndex))
                 
-            case .failure(let error):
-                print(error)
-                debugPrint(response)
-                break
+                self.displayAlert(view: self, title: "Login Failed", message: errorString)
+                
             }
             
         }
@@ -133,7 +126,7 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
                 return
             }
             let json = JSON(result)
-                self.fbOauthHandler(json: json, accessToken: accessTokenString)
+            self.fbOauthHandler(json: json, accessToken: accessTokenString)
             
         }
     }
@@ -142,27 +135,19 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         
         // Checks if facebook email has already been used
         let request = EmailTakenRequestor.init(email: json["email"].stringValue)
-        let response = request.execute()
-        response.responseJSON { response in
-            switch response.result {
-                
-            case .success(let value):
-                let data = JSON(value)
-                
-                if data["data"].boolValue { // email is taken
-                    print("Email Taken")
-                    self.fbOauthLogin(accessToken: accessToken)
-                } else { // email is available
-                    print("Email Available")
-                    self.oauthRegister(json: json)
-                }
-                break
-                
-            case .failure(let error):
-                debugPrint(response)
-                print(error)
-                break
-                
+        
+        request.getJSON { data, error in
+            
+            if (error != nil) {
+                return
+            }
+            
+            if (data?["data"].boolValue)! { // email is taken
+                print("Email Taken")
+                self.fbOauthLogin(accessToken: accessToken)
+            } else { // email is available
+                print("Email Available")
+                self.oauthRegister(json: json)
             }
             
         }
@@ -178,20 +163,15 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
             "last_name": json["last_name"].stringValue
         ]
         let request = OauthRegisterRequestor.init(parameters: parameters)
-        let response = request.execute()
-        response.responseJSON { response in
-            switch response.result {
-            case .success(let value):
-                let data = JSON(value)
-                print(data)
-                break
-                
-            case .failure(let error):
-                print(error)
-                debugPrint(response)
-                break
-                
+        
+        request.getJSON { data, error in
+            
+            if (error != nil) {
+                return
             }
+            
+            print(data)
+            
         }
     }
     
@@ -203,21 +183,17 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
             "Authorization": "bearer \(accessToken)"
         ]
         let request = OauthLoginRequestor.init(parameters: parameters, header: header)
-        let response = request.execute()
-        response.responseJSON { response in
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
-                if json["success"].boolValue {
-                    print(json)
-                }
-                break
-                
-            case . failure(let error):
-                print(error)
-                debugPrint(response)
-                break
+        
+        request.getJSON { data, error in
+            
+            if (error != nil) {
+                return
             }
+            
+            if (data?["success"].boolValue)! {
+                print(data)
+            }
+            
         }
     }
     

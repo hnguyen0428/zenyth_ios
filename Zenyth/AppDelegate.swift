@@ -55,18 +55,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         let route = Route(method: .get, urlString: "https://www.googleapis.com/oauth2/v3/userinfo?access_token=\(accessToken)")
         
         let request = Requestor.init(route: route)
-        let response = request.execute()
-        response.responseJSON { response in
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
-                self.googleOauthHandle(json: json, accessToken: accessToken)
-                break
-                
-            case .failure(let error):
-                print(error)
-                break
+        
+        request.getJSON { data, error in
+            
+            if (error != nil) {
+                return
             }
+        
+            self.googleOauthHandle(json: data!, accessToken: accessToken)
+            
         }
         
     }
@@ -74,27 +71,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func googleOauthHandle(json: JSON, accessToken: String) {
         // Checks if email is taken
         let request = EmailTakenRequestor.init(email: json["email"].stringValue)
-        let response = request.execute()
-        response.responseJSON { response in
-            switch response.result {
-                
-            case .success(let value):
-                let data = JSON(value)
-                
-                if data["data"].boolValue { // email is taken
-                    print("Email Taken")
-                    self.googleOauthLogin(accessToken: accessToken)
-                } else { // email is available
-                    print("Email Available")
-                    self.googleOauthRegister(json: json)
-                }
-                break
-                
-            case .failure(let error):
-                debugPrint(response)
-                print(error)
-                break
-                
+        
+        request.getJSON { data, error in
+            
+            if (error != nil) {
+                return
+            }
+
+            if (data?["data"].boolValue)! { // email is taken
+                print("Email Taken")
+                self.googleOauthLogin(accessToken: accessToken)
+            } else { // email is available
+                print("Email Available")
+                self.googleOauthRegister(json: json)
             }
             
         }
@@ -108,21 +97,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             "Authorization": "bearer \(accessToken)"
         ]
         let request = OauthLoginRequestor.init(parameters: parameters, header: header)
-        let response = request.execute()
-        response.responseJSON { response in
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
-                if json["success"].boolValue {
-                    print(json)
-                }
-                break
-                
-            case . failure(let error):
-                print(error)
-                debugPrint(response)
-                break
+        
+        request.getJSON { data, error in
+
+            if (error != nil) {
+                return
             }
+            
+            if (data?["success"].boolValue)! {
+                print(data)
+            }
+
         }
     }
     
@@ -135,20 +120,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             "last_name": json["familyName"].stringValue
         ]
         let request = OauthRegisterRequestor.init(parameters: parameters)
-        let response = request.execute()
-        response.responseJSON { response in
-            switch response.result {
-            case .success(let value):
-                let data = JSON(value)
-                print(data)
-                break
-                
-            case .failure(let error):
-                print(error)
-                debugPrint(response)
-                break
-                
+        
+        request.getJSON { data, error in
+            
+            if (error != nil) {
+                return
             }
+
+            print(data)
+            
         }
     }
     

@@ -26,16 +26,34 @@ class Requestor {
         self.parameters = parameters
     }
     
-    func execute() -> DataRequest {
+    func execute(completionHandler: @escaping (JSON?, Error?) -> ()) -> DataRequest {
         let method = route.method
+        let url = route.urlString
         if needsAuthorization {
             setAuthorization()
         }
         
-        return Alamofire.request(route.urlString, method: method,
-                                 parameters: self.parameters,
-                                 headers: header)
+        return Alamofire.request(url, method: method, parameters: parameters,
+                        headers: header).responseJSON { response in
+            debugPrint(response)
+            switch response.result {
+            case .success(let value):
+                completionHandler(JSON(value), nil)
+                break
+                
+            case .failure(let error):
+                completionHandler(nil, error)
+                print(error)
+                debugPrint(response)
+                break
+            }
+        }
 
+    }
+    
+    
+    func getJSON(completionHandler: @escaping (JSON?, Error?) -> ()) {
+        execute(completionHandler: completionHandler)
     }
     
     func setAuthorization() {

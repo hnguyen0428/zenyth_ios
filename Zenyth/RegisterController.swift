@@ -24,45 +24,39 @@ class RegisterController: ModelViewController, UIPickerViewDelegate, UIPickerVie
     
     @IBAction func registerButtonAction(_ sender: UIButton) {
         let parameters: Parameters = [
-            "username" : usernameField.text,
-            "email" : emailField.text,
-            "password" : passwordField.text,
-            "password_confirmation" : confirmPasswordField.text,
-            "gender" : genderField.text
+            "username" : usernameField.text!,
+            "email" : emailField.text!,
+            "password" : passwordField.text!,
+            "password_confirmation" : confirmPasswordField.text!,
+            "gender" : genderField.text!
         ]
+        print(parameters)
         
-        let requestor = RegisterRequestor(parameters: parameters)
-        let request = requestor.execute()
+        let request = RegisterRequestor(parameters: parameters)
         
-        request.responseJSON { response in
-            switch response.result {
-                
-            case .success(let value):
-                let json = JSON(value)
-                
-                if json["success"].boolValue {
-                    
-                    print("JSON: \(json)")
-                    
-                } else {
-                    let errors = json["errors"].arrayValue
-                    var errorString = ""
-                    for item in errors {
-                        errorString.append(item.stringValue + "\n")
-                    }
-                    // strip the newline character at the end
-                    errorString.remove(at: errorString.index(before: errorString.endIndex))
-                    
-                    self.displayAlert(view: self, title: "Register Failed", message: errorString)
-                    
-                }
-                break
-                
-            case .failure(let error):
-                print(error)
-                debugPrint(response)
-                break
+        request.getJSON { data, error in
+            
+            if (error != nil) {
+                return
             }
+                
+            if (data?["success"].boolValue)! {
+                
+                print("JSON: \(data)")
+                
+            } else {
+                let errors = (data?["errors"].arrayValue)!
+                var errorString = ""
+                for item in errors {
+                    errorString.append(item.stringValue + "\n")
+                }
+                // strip the newline character at the end
+                errorString.remove(at: errorString.index(before: errorString.endIndex))
+                
+                self.displayAlert(view: self, title: "Register Failed", message: errorString)
+                
+            }
+
         }
     }
 
