@@ -8,8 +8,9 @@
 
 import UIKit
 import FBSDKCoreKit
-import Firebase
 import GoogleSignIn
+import Alamofire
+import SwiftyJSON
 //import TwitterKit
 //import Fabric
 
@@ -22,12 +23,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         // Twitter auth
-     //   Fabric.with([Twitter.self])
+        //   Fabric.with([Twitter.self])
         
-        FirebaseApp.configure()
+        //FirebaseApp.configure()
         
         // Google+
-        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+        //GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+
+        GIDSignIn.sharedInstance().clientID = "726843823228-983fiv45v8m39aoslobaiiqqipvvm2lf.apps.googleusercontent.com"
         GIDSignIn.sharedInstance().delegate = self
 
         
@@ -35,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
         // Twitter 
-       // Twitter.sharedInstance().start(withConsumerKey:"KblBowxwd1VQruZvYEYG12Dsq", consumerSecret:"ikGB5s18LZrxjO5oDUP8fqU56xVuN5bzrsWJISWGl6DMeZPDoB")
+        // Twitter.sharedInstance().start(withConsumerKey:"KblBowxwd1VQruZvYEYG12Dsq", consumerSecret:"ikGB5s18LZrxjO5oDUP8fqU56xVuN5bzrsWJISWGl6DMeZPDoB")
 
         
         return true
@@ -46,23 +49,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             print("Failed to log into Google: ", err)
             return
         }
-        
-        print("Successfully logged into Google", user)
-        guard let idToken = user.authentication.idToken else { return }
+    
+        print("Successfully logged into Google")
+        // Perform any operations on signed in user here.
+        let userId = user.userID                  // For client-side use only!
+        let fullName = user.profile.name
+        let email = user.profile.email
         guard let accessToken = user.authentication.accessToken else { return }
-        let credentials = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
         
-        print ("*************** CHECK ME OUT, GOOGLE TOKEN WHAT UPPPP", accessToken)
+        let route = Route(method: .get, urlString: "https://www.googleapis.com/oauth2/v3/userinfo?access_token=\(user.authentication.accessToken!)")
         
-        Auth.auth().signIn(with: credentials, completion: { (user, error) in
-            if let err = error {
-                print("Failed to create a Firebase User with Google account: ", err)
-                return
-            }
+        let request = Requestor.init(route: route)
+        let response = request.execute()
+        response.responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                let gender = json["gender"].stringValue
+                print(gender)
+                break
             
-            guard let uid = user?.uid else { return }
-            print("Successfully logged into Firebase with Google", uid)
-        })
+            case .failure(let error):
+                print(error)
+                break
+            }
+        }
+        
+        print(email)
+        print(fullName)
+        print ("CHECK ME OUT, GOOGLE TOKEN WHAT UPPPP", accessToken)
+        
     }
     
     

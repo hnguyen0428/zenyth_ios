@@ -27,16 +27,20 @@ class Requestor {
     }
     
     func execute() -> DataRequest {
-        let url = URL(string: route.urlString)
         let method = route.method
         if needsAuthorization {
             setAuthorization()
         }
         
-        return Alamofire.request(url!, method: method,
+        if(route.method == .post) {
+            return Alamofire.request(route.urlString, method: method,
                                           parameters: self.parameters,
                                           encoding: JSONEncoding.default,
                                           headers: header)
+        } else {
+            return Alamofire.request(route.urlString, method: method,
+                                     parameters: self.parameters)
+        }
     }
     
     func setAuthorization() {

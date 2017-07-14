@@ -17,11 +17,20 @@ class RegisterRequestor: Requestor {
     }
 }
 
-class EmailExistRequestor: Requestor {
-    var emailExistRoute = Route(method: .post, urlString: "\(serverAddress)/api/email_exists/%@")
+class EmailTakenRequestor: Requestor {
+    var emailTakenRoute = Route(method: .get, urlString: "\(serverAddress)/api/email_taken/%@")
     
     init(email: String) {
-        emailExistRoute.urlString = String(format: emailExistRoute.urlString, email)
-        super.init(route: emailExistRoute)
+        emailTakenRoute.urlString = String(format: emailTakenRoute.urlString, email)
+        super.init(route: emailTakenRoute)
+    }
+}
+
+class UsernameTakenRequestor: Requestor {
+    var usernameTakenRoute = Route(method: .get, urlString: "\(serverAddress)/api/username_taken/%@")
+    
+    init(username: String) {
+        usernameTakenRoute.urlString = String(format: usernameTakenRoute.urlString, username)
+        super.init(route: usernameTakenRoute)
     }
 }

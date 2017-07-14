@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3725D1DBA4E1D74C7627B484 /* Pods_Zenyth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDF4603E6F5113638CE0C5ED /* Pods_Zenyth.framework */; };
+		4717A9961F188C4300CDC924 /* OauthRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4717A9951F188C4300CDC924 /* OauthRequestor.swift */; };
 		47883CD51F16EC8B0008C7F3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 47883CD41F16EC8B0008C7F3 /* GoogleService-Info.plist */; };
 		47A745D41F16F59F00A88D5D /* APIRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745D31F16F59F00A88D5D /* APIRoutes.swift */; };
 		47A745D61F16F5A800A88D5D /* CommentRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745D51F16F5A800A88D5D /* CommentRequestor.swift */; };
@@ -54,6 +55,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4717A9951F188C4300CDC924 /* OauthRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OauthRequestor.swift; sourceTree = "<group>"; };
 		47883CD41F16EC8B0008C7F3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		47A745D31F16F59F00A88D5D /* APIRoutes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRoutes.swift; sourceTree = "<group>"; };
 		47A745D51F16F5A800A88D5D /* CommentRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentRequestor.swift; sourceTree = "<group>"; };
@@ -137,15 +139,16 @@
 		47883CD61F16F4C60008C7F3 /* APIRequests */ = {
 			isa = PBXGroup;
 			children = (
+				47A745DB1F16F5B500A88D5D /* Requestor.swift */,
 				47A745E51F16F64200A88D5D /* LoginRequestor.swift */,
 				47A745D71F16F5B500A88D5D /* PinpostRequestor.swift */,
 				47A745D81F16F5B500A88D5D /* ProfileRequestor.swift */,
 				47A745D91F16F5B500A88D5D /* RegisterRequestor.swift */,
 				47A745DA1F16F5B500A88D5D /* RelationshipRequestor.swift */,
-				47A745DB1F16F5B500A88D5D /* Requestor.swift */,
 				47A745DC1F16F5B500A88D5D /* ResetPasswordRequestor.swift */,
 				47A745DD1F16F5B500A88D5D /* UserRequestor.swift */,
 				47A745D51F16F5A800A88D5D /* CommentRequestor.swift */,
+				4717A9951F188C4300CDC924 /* OauthRequestor.swift */,
 				47A745D31F16F59F00A88D5D /* APIRoutes.swift */,
 			);
 			name = APIRequests;
@@ -537,6 +540,7 @@
 				47A745E21F16F5B500A88D5D /* Requestor.swift in Sources */,
 				47A745D61F16F5A800A88D5D /* CommentRequestor.swift in Sources */,
 				47C622C91F0A341A003BBC16 /* AppDelegate.swift in Sources */,
+				4717A9961F188C4300CDC924 /* OauthRequestor.swift in Sources */,
 				47A745E41F16F5B500A88D5D /* UserRequestor.swift in Sources */,
 				47A745DF1F16F5B500A88D5D /* ProfileRequestor.swift in Sources */,
 				47A745DE1F16F5B500A88D5D /* PinpostRequestor.swift in Sources */,

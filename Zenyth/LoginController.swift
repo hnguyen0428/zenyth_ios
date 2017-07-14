@@ -10,12 +10,11 @@ import LBTAComponents
 import Alamofire
 import SwiftyJSON
 import FBSDKLoginKit
-import Firebase
 import GoogleSignIn
 //import TwitterKit
 
 
-class LoginController: ModelViewController, FBSDKLoginButtonDelegate, GIDSignInUIDelegate {
+class LoginController: ModelViewController, GIDSignInUIDelegate {
     
     
     @IBOutlet weak var fbButton: UIButton!
@@ -75,11 +74,7 @@ class LoginController: ModelViewController, FBSDKLoginButtonDelegate, GIDSignInU
         // The following is for the custom login button (may need to call set up views prior
         fbButton.addTarget(self, action: #selector(handleCustomFBLogin), for: .touchUpInside)
         
-        // delete default facebook
-        setupDefaultFBButton()
-        
-        // delete (default google sign in button
-        setupDefaultGoogleButton()
+        GIDSignIn.sharedInstance().uiDelegate = self
         
         // custom Google+
         gplusButton.addTarget(self, action: #selector(handleCustomGoogleLogin), for: .touchUpInside)
@@ -93,7 +88,6 @@ class LoginController: ModelViewController, FBSDKLoginButtonDelegate, GIDSignInU
         
         for subview in view.subviews {
             if !(subview is UIScrollView) && !(subview is UIImageView) {
-                print("Subview: ", subview)
                 scrollView.addSubview(subview)
             }
         }
@@ -106,35 +100,17 @@ class LoginController: ModelViewController, FBSDKLoginButtonDelegate, GIDSignInU
     
     }
     
-    // delete this one -- testing purposes to log out 
-    func setupDefaultFBButton() {
-    
-        // the following is for the generic default login button
-        /////////////////////////
-    
-        let loginButton = FBSDKLoginButton()
-        view.addSubview(loginButton)
-        //frame's are obselete, only use constraints
-        loginButton.frame = CGRect(x: 16, y: 50, width: view.frame.width - 32, height: 50)
-    
-        loginButton.delegate = self
-    
-        // needed this
-        loginButton.readPermissions = ["email", "public_profile"]
-    
-    }
-    
-    
     // delete this one tho
-    func setupDefaultGoogleButton() {
-        
-        //add google sign in button
-        let googleButton = GIDSignInButton()
-        googleButton.frame = CGRect(x: 16, y: 116 + 66, width: view.frame.width - 32, height: 50)
-        view.addSubview(googleButton)
-        GIDSignIn.sharedInstance().uiDelegate = self
-        
-    }
+//    func setupDefaultGoogleButton() {
+//        
+//        //add google sign in button
+//        let googleButton = GIDSignInButton()
+//        
+//        googleButton.frame = CGRect(x: 16, y: 116 + 66, width: view.frame.width - 32, height: 50)
+//        view.addSubview(googleButton)
+//        GIDSignIn.sharedInstance().uiDelegate = self
+//        
+//    }
 
     func handleCustomFBLogin() {
 
@@ -152,45 +128,18 @@ class LoginController: ModelViewController, FBSDKLoginButtonDelegate, GIDSignInU
         
     }
     
-    
-    ///////////////////////////
-    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
-        print("Did log out of facebook")
-    }
-    
-    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
-        if error != nil {
-            print(error)
-            return
-        }
-        
-        showFBEmailAddress()
-        
-    }
-    
     func showFBEmailAddress() {
     
         // not firAuth anymore
         let accessToken = FBSDKAccessToken.current()
         guard let accessTokenString = accessToken?.tokenString else { return }
-        
-        let credentials = FacebookAuthProvider.credential(withAccessToken: accessTokenString)
-        
-        Auth.auth().signIn(with: credentials, completion: { (user, error) in
-            if error != nil {
-                print("Something went wrong with our FB user: ", error ?? "")
-                return
-            }
-            
-            print("Successfully logged in with our user: ", user ?? "")
-        })
-        
+
         print ("*************** CHECK ME OUT, FACEBOOK", accessTokenString)
         let FBTokenStringCount = accessTokenString.characters.count
         print (FBTokenStringCount)
         
         print("Successfully logged in with facebook...")
-        FBSDKGraphRequest(graphPath: "/me", parameters: ["fields": "id, name, email"]).start { (connnection, result, err) in
+        FBSDKGraphRequest(graphPath: "/me", parameters: ["fields": "id, name, email, gender"]).start { (connnection, result, err) in
             
             if err != nil {
                 
