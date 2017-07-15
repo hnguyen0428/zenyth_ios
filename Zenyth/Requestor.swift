@@ -35,7 +35,6 @@ class Requestor {
         
         return Alamofire.request(url, method: method, parameters: parameters,
                         headers: header).responseJSON { response in
-            debugPrint(response)
             switch response.result {
             case .success(let value):
                 completionHandler(JSON(value), nil)

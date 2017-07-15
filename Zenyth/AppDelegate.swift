@@ -48,10 +48,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         print("Successfully logged into Google")
         // Perform any operations on signed in user here.
 
-        guard let userId = user.authentication.idToken else { return }
         guard let accessToken = user.authentication.accessToken else { return }
-        print("Google userId: \(userId)")
-        print("Google accessToken: \(accessToken)")
+
         let route = Route(method: .get, urlString: "https://www.googleapis.com/oauth2/v3/userinfo?access_token=\(accessToken)")
         
         let request = Requestor.init(route: route)
@@ -105,7 +103,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             }
             
             if (data?["success"].boolValue)! {
-                print(data)
+                let user = User.init(json: data!)
+                print("User: \(user)")
             }
 
         }
@@ -116,8 +115,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             "username": "hoangGoogle",
             "email": json["email"].stringValue,
             "gender": json["gender"].stringValue,
-            "first_name": json["givenName"].stringValue,
-            "last_name": json["familyName"].stringValue
+            "first_name": json["given_name"].stringValue,
+            "last_name": json["family_name"].stringValue
         ]
         let request = OauthRegisterRequestor.init(parameters: parameters)
         
@@ -127,7 +126,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 return
             }
 
-            print(data)
+            let user = User.init(json: data!)
+            print("User: \(user)")
             
         }
     }

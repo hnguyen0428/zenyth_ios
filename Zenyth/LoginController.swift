@@ -41,9 +41,9 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
             }
             
             if (data?["success"].boolValue)! {
-                print("JSON: \(data)")
-                let token = data?["data"]["api_token"]
-                UserDefaults.standard.set(token?.stringValue, forKey: "api_token")
+                let user = User.init(json: data!)
+                print("User: \(user)")
+                UserDefaults.standard.set(user.api_token, forKey: "api_token")
                 UserDefaults.standard.synchronize()
             } else {
                 let errors = (data?["errors"].arrayValue)!
@@ -170,7 +170,8 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
                 return
             }
             
-            print(data)
+            let user = User.init(json: data!)
+            print("User: \(user)")
             
         }
     }
@@ -191,7 +192,8 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
             }
             
             if (data?["success"].boolValue)! {
-                print(data)
+                let user = User.init(json: data!)
+                print("User: \(user)")
             }
             
         }

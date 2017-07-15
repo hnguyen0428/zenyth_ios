@@ -1,5 +1,5 @@
 //
-//  UIViewController+HideKeyboard.swift
+//  ModelViewController+KeyboardHandler.swift
 //  Zenyth
 //
 //  Created by Hoang on 7/7/17.

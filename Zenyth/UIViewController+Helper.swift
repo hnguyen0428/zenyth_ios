@@ -1,5 +1,5 @@
 //
-//  UIHelper.swift
+//  UIViewController+UIHelper.swift
 //  Zenyth
 //
 //  Created by Hoang on 7/4/17.

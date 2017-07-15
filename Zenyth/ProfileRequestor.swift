@@ -1,5 +1,5 @@
 //
-//  ProfileUpdateController.swift
+//  ProfileRequestor.swift
 //  Zenyth
 //
 //  Created by Hoang on 7/12/17.

@@ -1,5 +1,5 @@
 //
-//  HomeDatasourceController.swift
+//  RegisterController.swift
 //  Zenyth
 //
 //  Created by Hoang on 7/3/17.
@@ -30,7 +30,6 @@ class RegisterController: ModelViewController, UIPickerViewDelegate, UIPickerVie
             "password_confirmation" : confirmPasswordField.text!,
             "gender" : genderField.text!
         ]
-        print(parameters)
         
         let request = RegisterRequestor(parameters: parameters)
         
@@ -42,7 +41,8 @@ class RegisterController: ModelViewController, UIPickerViewDelegate, UIPickerVie
                 
             if (data?["success"].boolValue)! {
                 
-                print("JSON: \(data)")
+                let user = User.init(json: data!)
+                print("User: \(user)")
                 
             } else {
                 let errors = (data?["errors"].arrayValue)!
@@ -122,7 +122,6 @@ class RegisterController: ModelViewController, UIPickerViewDelegate, UIPickerVie
     func donePicker(sender: UIBarButtonItem) {
         genderField.isUserInteractionEnabled = true
         genderField.resignFirstResponder()
-        fieldCheck()
     }
     
     /* Overridden rules for checking the field before enabling the button
@@ -163,6 +162,7 @@ class RegisterController: ModelViewController, UIPickerViewDelegate, UIPickerVie
      */
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         genderField.text = genderData[row]
+        fieldCheck()
     }
     
 }
