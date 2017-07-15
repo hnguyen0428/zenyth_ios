@@ -16,7 +16,6 @@ import GoogleSignIn
 
 class LoginController: ModelViewController, GIDSignInUIDelegate {
     
-    
     @IBOutlet weak var fbButton: UIButton!
     @IBOutlet weak var gplusButton: UIButton!
     @IBOutlet weak var twitterButton: UIButton!

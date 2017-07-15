@@ -24,6 +24,8 @@ class RegisterController: ModelViewController, UINavigationControllerDelegate {
     let activityIndicatorChecking = "     Checking"
     let invalidEmailMessage = "This field must be an email"
     let usernameRules = "Username must be between 3 to 20 characters"
+    let passwordLengthError = "Password must be between 8 to 16 characters"
+    let confirmPasswordMustMatchError = "Confirmation password does not match"
     
     override func viewDidLoad() {
         super.viewDidLoad()

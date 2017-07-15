@@ -21,6 +21,8 @@ class UsernameEmailController: RegisterController {
     @IBOutlet weak var usernameActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var emailActivityIndicator: UIActivityIndicatorView!
     
+    var validEmail: Bool = false
+    var validUsername: Bool = false
     var checkTimer: Timer? = nil
     
     override func viewDidLoad() {
@@ -28,8 +30,8 @@ class UsernameEmailController: RegisterController {
         
         setupViews()
         
-        usernameField.addTarget(self, action: #selector(timerBeforeCheck), for: .editingChanged)
-        emailField.addTarget(self, action: #selector(timerBeforeCheck), for: .editingChanged)
+        usernameField.addTarget(self, action: #selector(timeBeforeCheck), for: .editingChanged)
+        emailField.addTarget(self, action: #selector(timeBeforeCheck), for: .editingChanged)
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
@@ -63,7 +65,7 @@ class UsernameEmailController: RegisterController {
         usernameActivityIndicator.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
     }
     
-    func timerBeforeCheck(_ textField: UITextField) {
+    func timeBeforeCheck(_ textField: UITextField) {
         if self.checkTimer != nil {
             self.checkTimer!.invalidate()
             self.checkTimer = nil
@@ -85,8 +87,8 @@ class UsernameEmailController: RegisterController {
                 self.usernameErrorLabel.text = self.usernameRules
                 self.usernameErrorLabel.isHidden = false
                 self.usernameErrorLabel.textColor = .red
-                continueButton.isEnabled = false
-                continueButton.backgroundColor = disabledButtonColor
+                self.validUsername = false
+                self.fieldCheck(validEmail: validEmail, validUsername: validUsername)
                 return
             }
             let request = UsernameTakenRequestor.init(username: text)
@@ -104,14 +106,15 @@ class UsernameEmailController: RegisterController {
                     self.usernameErrorLabel.text = "\(text) \(self.usernameTakenMessage)"
                     self.usernameErrorLabel.isHidden = false
                     self.usernameErrorLabel.textColor = .red
+                    self.validUsername = false
                 } else { // username available
                     self.usernameErrorLabel.text = "\(text) \(self.usernameAvailableMessage)"
                     self.usernameErrorLabel.isHidden = false
                     self.usernameErrorLabel.textColor = .green
+                    self.validUsername = true
                 }
                 self.usernameActivityIndicator.stopAnimating()
-                self.continueButton.isEnabled = true
-                self.continueButton.backgroundColor = buttonColor
+                self.fieldCheck(validEmail: self.validEmail, validUsername: self.validUsername)
             }
         }
     }
@@ -124,8 +127,8 @@ class UsernameEmailController: RegisterController {
                 self.emailErrorLabel.text = self.invalidEmailMessage
                 self.emailErrorLabel.isHidden = false
                 self.emailErrorLabel.textColor = .red
-                continueButton.isEnabled = false
-                continueButton.backgroundColor = disabledButtonColor
+                self.validEmail = false
+                self.fieldCheck(validEmail: validEmail, validUsername: validUsername)
                 return
             }
             
@@ -144,15 +147,26 @@ class UsernameEmailController: RegisterController {
                     self.emailErrorLabel.text = self.emailTakenMessage
                     self.emailErrorLabel.isHidden = false
                     self.emailErrorLabel.textColor = .red
+                    self.validEmail = false
                 } else { // email available
                     self.emailErrorLabel.text = self.emailAvailableMessage
                     self.emailErrorLabel.isHidden = false
                     self.emailErrorLabel.textColor = .green
+                    self.validEmail = true
                 }
                 self.emailActivityIndicator.stopAnimating()
-                self.continueButton.isEnabled = true
-                self.continueButton.backgroundColor = buttonColor
+                self.fieldCheck(validEmail: self.validEmail, validUsername: self.validUsername)
             }
+        }
+    }
+    
+    func fieldCheck(validEmail: Bool, validUsername: Bool) {
+        if validEmail && validUsername {
+            continueButton.isEnabled = true
+            continueButton.backgroundColor = buttonColor
+        } else {
+            continueButton.isEnabled = false
+            continueButton.backgroundColor = disabledButtonColor
         }
     }
     

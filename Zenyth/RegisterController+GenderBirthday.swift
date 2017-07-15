@@ -40,6 +40,7 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPick
             if (data?["success"].boolValue)! {
                 let user = User.init(json: data!)
                 print("User: \(user)")
+                self.performSegue(withIdentifier: "registerToLogin", sender: nil)
                 
             } else {
                 let errors = (data?["errors"].arrayValue)!
