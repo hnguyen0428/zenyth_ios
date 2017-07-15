@@ -30,9 +30,12 @@
 		47C622D31F0A341A003BBC16 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47C622D11F0A341A003BBC16 /* LaunchScreen.storyboard */; };
 		47C622DE1F0A341A003BBC16 /* ZenythTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622DD1F0A341A003BBC16 /* ZenythTests.swift */; };
 		47C622E91F0A341A003BBC16 /* ZenythUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622E81F0A341A003BBC16 /* ZenythUITests.swift */; };
-		47C622F71F0A347F003BBC16 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622F61F0A347F003BBC16 /* RegisterController.swift */; };
+		47C622F71F0A347F003BBC16 /* RegisterController+UsernameEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622F61F0A347F003BBC16 /* RegisterController+UsernameEmail.swift */; };
 		47D838CC1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */; };
 		47D9ECB71F19755A00E3EEE4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECB61F19755A00E3EEE4 /* User.swift */; };
+		47D9ECBA1F19C3C500E3EEE4 /* RegisterController+Password.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECB91F19C3C500E3EEE4 /* RegisterController+Password.swift */; };
+		47D9ECBC1F19C3E200E3EEE4 /* RegisterController+GenderBirthday.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECBB1F19C3E200E3EEE4 /* RegisterController+GenderBirthday.swift */; };
+		47D9ECC01F19E3D300E3EEE4 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECBF1F19E3D300E3EEE4 /* RegisterController.swift */; };
 		7341F9E163A96B05940B44E8 /* Pods_ZenythTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BB6326B7B70E7CF186F4AB1 /* Pods_ZenythTests.framework */; };
 		824F43211F15E84C00031672 /* TwitterKitManual in Resources */ = {isa = PBXBuildFile; fileRef = 824F43201F15E84C00031672 /* TwitterKitManual */; };
 		B99E2A49109EC15FB04613DB /* Pods_ZenythUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4950B87A454879669AE8F046 /* Pods_ZenythUITests.framework */; };
@@ -84,9 +87,12 @@
 		47C622E41F0A341A003BBC16 /* ZenythUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZenythUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		47C622E81F0A341A003BBC16 /* ZenythUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZenythUITests.swift; sourceTree = "<group>"; };
 		47C622EA1F0A341A003BBC16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		47C622F61F0A347F003BBC16 /* RegisterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
+		47C622F61F0A347F003BBC16 /* RegisterController+UsernameEmail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RegisterController+UsernameEmail.swift"; sourceTree = "<group>"; };
 		47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModelViewController+KeyboardHandler.swift"; sourceTree = "<group>"; };
 		47D9ECB61F19755A00E3EEE4 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		47D9ECB91F19C3C500E3EEE4 /* RegisterController+Password.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RegisterController+Password.swift"; sourceTree = "<group>"; };
+		47D9ECBB1F19C3E200E3EEE4 /* RegisterController+GenderBirthday.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RegisterController+GenderBirthday.swift"; sourceTree = "<group>"; };
+		47D9ECBF1F19E3D300E3EEE4 /* RegisterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
 		4950B87A454879669AE8F046 /* Pods_ZenythUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZenythUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BB6326B7B70E7CF186F4AB1 /* Pods_ZenythTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZenythTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		824F43201F15E84C00031672 /* TwitterKitManual */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TwitterKitManual; sourceTree = "<group>"; };
@@ -159,10 +165,10 @@
 		47A745E71F16F7B100A88D5D /* StartingControllers */ = {
 			isa = PBXGroup;
 			children = (
+				47D9ECB81F19C37D00E3EEE4 /* RegisterControllers */,
 				47C622C81F0A341A003BBC16 /* AppDelegate.swift */,
 				47ABAA031F0B7B7400FD479E /* UIViewController+Helper.swift */,
 				47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */,
-				47C622F61F0A347F003BBC16 /* RegisterController.swift */,
 				47A9024B1F0B1F4400A1CEE8 /* LoginController.swift */,
 				47A745E81F16F7D000A88D5D /* ModelViewController.swift */,
 			);
@@ -233,6 +239,17 @@
 				47D9ECB61F19755A00E3EEE4 /* User.swift */,
 			);
 			name = ObjectModels;
+			sourceTree = "<group>";
+		};
+		47D9ECB81F19C37D00E3EEE4 /* RegisterControllers */ = {
+			isa = PBXGroup;
+			children = (
+				47C622F61F0A347F003BBC16 /* RegisterController+UsernameEmail.swift */,
+				47D9ECB91F19C3C500E3EEE4 /* RegisterController+Password.swift */,
+				47D9ECBB1F19C3E200E3EEE4 /* RegisterController+GenderBirthday.swift */,
+				47D9ECBF1F19E3D300E3EEE4 /* RegisterController.swift */,
+			);
+			name = RegisterControllers;
 			sourceTree = "<group>";
 		};
 		4BC0F9BA76D20C2BD243083A /* Pods */ = {
@@ -538,11 +555,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				47A745E01F16F5B500A88D5D /* RegisterRequestor.swift in Sources */,
+				47D9ECBA1F19C3C500E3EEE4 /* RegisterController+Password.swift in Sources */,
+				47D9ECC01F19E3D300E3EEE4 /* RegisterController.swift in Sources */,
 				47A745D41F16F59F00A88D5D /* APIRoutes.swift in Sources */,
 				47A745E61F16F64200A88D5D /* LoginRequestor.swift in Sources */,
+				47D9ECBC1F19C3E200E3EEE4 /* RegisterController+GenderBirthday.swift in Sources */,
 				47A745E91F16F7D000A88D5D /* ModelViewController.swift in Sources */,
 				47A745E11F16F5B500A88D5D /* RelationshipRequestor.swift in Sources */,
-				47C622F71F0A347F003BBC16 /* RegisterController.swift in Sources */,
+				47C622F71F0A347F003BBC16 /* RegisterController+UsernameEmail.swift in Sources */,
 				47A9024C1F0B1F4400A1CEE8 /* LoginController.swift in Sources */,
 				47A9024E1F0B34C900A1CEE8 /* GlobalVariables.swift in Sources */,
 				47D838CC1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift in Sources */,

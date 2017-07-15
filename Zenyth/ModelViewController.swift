@@ -11,6 +11,7 @@ import UIKit
 class ModelViewController: UIViewController {
     
     let minimumPasswordLength = 8
+    let maximumPasswordLength = 16
     var scrollView: UIScrollView!
     var backgroundView: UIImageView!
     var logoView: UIImageView!
@@ -38,7 +39,9 @@ class ModelViewController: UIViewController {
         
         logoView = {
             // CHANGE: NO MAGIC NUMBER
-            let frame = CGRect(x: 173, y: 112, width: 29, height: 52)
+            let width: CGFloat = 29.0
+            let height: CGFloat = 52.0
+            let frame = CGRect(x: view.center.x - (width/2), y: view.center.y/3.5, width: width, height: height)
             let imageView = UIImageView(frame: frame)
             imageView.image = #imageLiteral(resourceName: "Logo")
             return imageView
