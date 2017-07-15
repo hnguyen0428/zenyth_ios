@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SwiftyJSON
+import Alamofire
 
 class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -15,6 +17,46 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPick
     @IBOutlet weak var genderField: UITextField!
     @IBOutlet weak var dobField: UITextField!
     @IBOutlet weak var signupButton: UIButton!
+    
+    @IBAction func signupButtonAction(_ sender: UIButton) {
+        
+        let parameters: Parameters = [
+            "username" : username!,
+            "email" : email!,
+            "password" : password!,
+            "password_confirmation" : confirmPassword!,
+            "gender" : genderField.text!,
+            "date_of_birth" : dobField.text!
+        ]
+        
+        let request = RegisterRequestor(parameters: parameters)
+        
+        request.getJSON { data, error in
+            
+            if (error != nil) {
+                return
+            }
+            
+            if (data?["success"].boolValue)! {
+                let user = User.init(json: data!)
+                print("User: \(user)")
+                
+            } else {
+                let errors = (data?["errors"].arrayValue)!
+                var errorString = ""
+                for item in errors {
+                    errorString.append(item.stringValue + "\n")
+                }
+                // strip the newline character at the end
+                errorString.remove(at: errorString.index(before: errorString.endIndex))
+                
+                self.displayAlert(view: self, title: "Login Failed", message: errorString)
+                
+            }
+            
+        }
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -17,6 +17,14 @@ class RegisterController: ModelViewController, UINavigationControllerDelegate {
     var gender: String?
     var dateOfBirth: String?
     
+    let usernameTakenMessage = "is already taken!"
+    let usernameAvailableMessage = "is available!"
+    let emailTakenMessage = "Email is already taken!"
+    let emailAvailableMessage = "Email is available!"
+    let activityIndicatorChecking = "     Checking"
+    let invalidEmailMessage = "This field must be an email"
+    let usernameRules = "Username must be between 3 to 20 characters"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
