@@ -33,6 +33,7 @@ extension UIViewController {
         
         // show the alert
         view.present(alert, animated: true, completion: nil)
+        
     }
 
     func isValidEmail(testStr:String) -> Bool {

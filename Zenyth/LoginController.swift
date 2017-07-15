@@ -91,9 +91,8 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         GIDSignIn.sharedInstance().signIn()
     
     }
-
+    
     func handleCustomFBLogin() {
-
         FBSDKLoginManager().logIn(withReadPermissions: ["email", "public_profile"], from: self) { (result, err) in
             
             if err != nil {
@@ -113,7 +112,6 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         // not firAuth anymore
         let accessToken = FBSDKAccessToken.current()
         guard let accessTokenString = accessToken?.tokenString else { return }
-        print("Facebook accessToken: \(accessTokenString)")
         
         print("Successfully logged in with facebook...")
         FBSDKGraphRequest(graphPath: "/me", parameters: ["fields": "last_name, first_name, email, gender"])

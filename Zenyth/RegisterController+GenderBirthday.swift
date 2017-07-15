@@ -32,22 +32,28 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPick
         let request = RegisterRequestor(parameters: parameters)
         let indicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
         indicator.center = self.view.center
+        indicator.hidesWhenStopped = true
         indicator.startAnimating()
         self.view.addSubview(indicator)
         self.view.isUserInteractionEnabled = false
         
         request.getJSON { data, error in
-            
+            self.view.isUserInteractionEnabled = true
             if (error != nil) {
-                self.view.isUserInteractionEnabled = true
+                
                 return
             }
-            
             if (data?["success"].boolValue)! {
                 let user = User.init(json: data!)
                 print("User: \(user)")
-                
-                self.performSegue(withIdentifier: "registerToLogin", sender: nil)
+                indicator.stopAnimating()
+                let alert = UIAlertController(title: self.signupSuccessfulMessage,
+                                              message: self.checkEmailMessage,
+                                              preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
+                    self.performSegue(withIdentifier: "registerToLogin", sender: nil)
+                }))
+                self.present(alert, animated: true, completion: nil)
                 
             } else {
                 let errors = (data?["errors"].arrayValue)!
@@ -59,7 +65,6 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPick
                 errorString.remove(at: errorString.index(before: errorString.endIndex))
                 
                 self.displayAlert(view: self, title: "Login Failed", message: errorString)
-                self.view.isUserInteractionEnabled = true
             }
             
         }

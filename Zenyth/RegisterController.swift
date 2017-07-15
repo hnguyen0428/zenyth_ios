@@ -24,6 +24,8 @@ class RegisterController: ModelViewController, UINavigationControllerDelegate {
     let activityIndicatorChecking = "     Checking"
     let invalidEmailMessage = "This field must be an email"
     let usernameRules = "Username must be between 3 to 20 characters"
+    let checkEmailMessage = "Please Check Your Email"
+    let signupSuccessfulMessage = "Signup Successful"
     
     override func viewDidLoad() {
         super.viewDidLoad()
