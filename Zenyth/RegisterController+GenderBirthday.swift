@@ -30,16 +30,23 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPick
         ]
         
         let request = RegisterRequestor(parameters: parameters)
+        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        indicator.center = self.view.center
+        indicator.startAnimating()
+        self.view.addSubview(indicator)
+        self.view.isUserInteractionEnabled = false
         
         request.getJSON { data, error in
             
             if (error != nil) {
+                self.view.isUserInteractionEnabled = true
                 return
             }
             
             if (data?["success"].boolValue)! {
                 let user = User.init(json: data!)
                 print("User: \(user)")
+                
                 self.performSegue(withIdentifier: "registerToLogin", sender: nil)
                 
             } else {
@@ -52,7 +59,7 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPick
                 errorString.remove(at: errorString.index(before: errorString.endIndex))
                 
                 self.displayAlert(view: self, title: "Login Failed", message: errorString)
-                
+                self.view.isUserInteractionEnabled = true
             }
             
         }
@@ -69,7 +76,6 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPick
         
         for subview in view.subviews {
             if !(subview is UIScrollView) && !(subview is UIImageView) {
-                print("Subview: ", subview)
                 scrollView.addSubview(subview)
             }
         }

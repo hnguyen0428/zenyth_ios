@@ -27,7 +27,6 @@ class PasswordController: RegisterController {
         
         for subview in view.subviews {
             if !(subview is UIScrollView) && !(subview is UIImageView) {
-                print("Subview: ", subview)
                 scrollView.addSubview(subview)
             }
         }
