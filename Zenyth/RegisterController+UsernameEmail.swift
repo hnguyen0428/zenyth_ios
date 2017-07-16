@@ -42,6 +42,7 @@ class UsernameEmailController: RegisterController {
             }
         }
         
+        self.clearInfo()
     }
     
     func setupViews() {
@@ -70,11 +71,14 @@ class UsernameEmailController: RegisterController {
             self.checkTimer = nil
         }
         
+        // disables button while checking
+        fieldCheck(validEmail: false, validUsername: false)
+        
         if textField == emailField {
-            self.checkTimer = Timer.scheduledTimer(timeInterval: 0.8, target: self, selector: #selector(checkValidEmail), userInfo: textField.text, repeats: false)
+            self.checkTimer = Timer.scheduledTimer(timeInterval: timeBetweenCheck, target: self, selector: #selector(checkValidEmail), userInfo: textField.text, repeats: false)
         }
         if textField == usernameField {
-            self.checkTimer = Timer.scheduledTimer(timeInterval: 0.8, target: self, selector: #selector(checkValidUsername), userInfo: textField.text, repeats: false)
+            self.checkTimer = Timer.scheduledTimer(timeInterval: timeBetweenCheck, target: self, selector: #selector(checkValidUsername), userInfo: textField.text, repeats: false)
         }
     }
     

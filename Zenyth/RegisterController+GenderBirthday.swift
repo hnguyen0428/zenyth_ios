@@ -51,7 +51,7 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPick
                                               message: self.checkEmailMessage,
                                               preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
-                    self.performSegue(withIdentifier: "registerToLogin", sender: nil)
+                    self.navigationController?.popToRootViewController(animated: true)
                 }))
                 self.present(alert, animated: true, completion: nil)
                 

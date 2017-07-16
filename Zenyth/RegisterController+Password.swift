@@ -31,7 +31,6 @@ class PasswordController: RegisterController {
             }
         }
         
-        fieldCheck()
     }
     
     func setupViews() {

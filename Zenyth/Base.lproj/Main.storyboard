@@ -361,7 +361,6 @@
                         <outlet property="dobField" destination="NSI-K4-foa" id="Oij-AW-1S8"/>
                         <outlet property="genderField" destination="0Z7-VM-ntP" id="L2X-ae-Jpc"/>
                         <outlet property="signupButton" destination="W38-hf-S9u" id="PJG-A8-6We"/>
-                        <segue destination="YHJ-xh-XnM" kind="show" identifier="registerToLogin" id="01T-2M-xam"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gDU-dg-MdQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -369,8 +368,5 @@
             <point key="canvasLocation" x="1398" y="36"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="01T-2M-xam"/>
-    </inferredMetricsTieBreakers>
     <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
 </document>
