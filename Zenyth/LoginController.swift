@@ -66,7 +66,8 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // The following is for the custom login button (may need to call set up views prior
+        // The following is for the custom login button 
+        // (may need to call set up views prior)
         fbButton.addTarget(self, action: #selector(handleCustomFBLogin),
                            for: .touchUpInside)
         
@@ -82,21 +83,27 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         passwordField.addTarget(self, action: #selector(editingChanged),
                                 for: .editingChanged)
         
-        NotificationCenter.default.addObserver(self,
-                                    selector:#selector(self.keyboardWillShow),
-                                    name: NSNotification.Name.UIKeyboardWillShow,
-                                    object: nil)
-        NotificationCenter.default.addObserver(self,
-                                    selector: #selector(self.keyboardWillHide),
-                                    name: NSNotification.Name.UIKeyboardWillHide,
-                                    object: nil)
+    }
+    
+    /* Setup images for the buttons and setups textfields
+     */
+    func setupViews() {
+        fbButton.setImage(#imageLiteral(resourceName: "Facebook_Icon"), for: .normal)
+        twitterButton.setImage(#imageLiteral(resourceName: "Twitter_Icon"), for: .normal)
+        gplusButton.setImage(#imageLiteral(resourceName: "Google_Plus_Icon"), for: .normal)
         
-        for subview in view.subviews {
-            if !(subview is UIScrollView) && !(subview is UIImageView) {
-                scrollView.addSubview(subview)
-            }
-        }
+        fbButton.imageView?.contentMode = .scaleAspectFit
+        twitterButton.imageView?.contentMode = .scaleAspectFit
+        gplusButton.imageView?.contentMode = .scaleAspectFit
         
+        signinButton.backgroundColor = disabledButtonColor
+        signinButton.layer.cornerRadius = 20
+        signinButton.isEnabled = false
+        
+        usernameField.autocorrectionType = UITextAutocorrectionType.no
+        
+        formatTextField(textField: usernameField)
+        formatTextField(textField: passwordField)
     }
     
     func handleCustomGoogleLogin() {
@@ -109,17 +116,13 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         FBSDKLoginManager().logIn(withReadPermissions: ["email",
                                                         "public_profile"],
                                   from: self) { (result, err) in
-            
             if err != nil {
-                
                 print ("FB login failed:", err ?? "")
                 return
             }
             
             self.graphRequest()
         }
-
-        
     }
     
     func graphRequest() {
@@ -213,26 +216,6 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         }
     }
     
-    /* Setup images for the buttons and setups textfields
-     */
-    func setupViews() {
-        fbButton.setImage(#imageLiteral(resourceName: "Facebook_Icon"), for: .normal)
-        twitterButton.setImage(#imageLiteral(resourceName: "Twitter_Icon"), for: .normal)
-        gplusButton.setImage(#imageLiteral(resourceName: "Google_Plus_Icon"), for: .normal)
-        
-        fbButton.imageView?.contentMode = .scaleAspectFit
-        twitterButton.imageView?.contentMode = .scaleAspectFit
-        gplusButton.imageView?.contentMode = .scaleAspectFit
-        
-        signinButton.backgroundColor = disabledButtonColor
-        signinButton.layer.cornerRadius = 20
-        signinButton.isEnabled = false
-        
-        usernameField.autocorrectionType = UITextAutocorrectionType.no
-        
-        formatTextField(textField: usernameField)
-        formatTextField(textField: passwordField)
-    }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)

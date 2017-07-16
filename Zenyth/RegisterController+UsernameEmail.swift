@@ -25,32 +25,22 @@ class UsernameEmailController: RegisterController {
     var validUsername: Bool = false
     var checkTimer: Timer? = nil
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
         
+        // Add action for button to segue into PasswordController
         continueButton.addTarget(self, action: #selector(toPasswordVC),
                                  for: .touchUpInside)
+        
+        // Run a timer when user starts editing, once the timer ends, it will
+        // trigger a method to check if username or email is valid
         usernameField.addTarget(self, action: #selector(timeBeforeCheck),
                                 for: .editingChanged)
         emailField.addTarget(self, action: #selector(timeBeforeCheck),
                              for: .editingChanged)
-        
-        NotificationCenter.default.addObserver(self,
-                                selector: #selector(self.keyboardWillShow),
-                                name: NSNotification.Name.UIKeyboardWillShow,
-                                object: nil)
-        NotificationCenter.default.addObserver(self,
-                                selector: #selector(self.keyboardWillHide),
-                                name: NSNotification.Name.UIKeyboardWillHide,
-                                object: nil)
-        
-        for subview in view.subviews {
-            if !(subview is UIScrollView) && !(subview is UIImageView) {
-                scrollView.addSubview(subview)
-            }
-        }
         
         self.clearInfo()
     }
@@ -71,6 +61,8 @@ class UsernameEmailController: RegisterController {
         
         emailActivityIndicator.hidesWhenStopped = true
         usernameActivityIndicator.hidesWhenStopped = true
+        
+        // Makes the activity indicator smaller
         emailActivityIndicator.transform = CGAffineTransform(
             scaleX: 0.75, y: 0.75
         )
@@ -88,20 +80,23 @@ class UsernameEmailController: RegisterController {
     }
     
     func timeBeforeCheck(_ textField: UITextField) {
+        // Reset the timer if it has been started
         if self.checkTimer != nil {
             self.checkTimer!.invalidate()
             self.checkTimer = nil
         }
         
-        // disables button while checking
+        // Disable button as soon as user starts editing
         fieldCheck(validEmail: false, validUsername: false)
         
+        // If user is editing email field, start timer on checking email
         if textField == emailField {
             self.checkTimer = Timer.scheduledTimer(timeInterval:
                 timeBetweenCheck, target: self,
                 selector: #selector(checkValidEmail), userInfo: textField.text,
                 repeats: false)
         }
+        // If user is editing username field, start timer on checking username
         if textField == usernameField {
             self.checkTimer = Timer.scheduledTimer(timeInterval:
                 timeBetweenCheck, target: self,
@@ -116,25 +111,16 @@ class UsernameEmailController: RegisterController {
         if text != "" {
             if text.characters.count < minimumUsernameLength ||
                 text.characters.count > maximumUsernameLength {
-                self.usernameErrorLabel.text = self.usernameRules
-                self.usernameErrorLabel.isHidden = false
-                self.usernameErrorLabel.textColor = .red
-                self.validUsername = false
-                self.fieldCheck(validEmail: validEmail,
-                                validUsername: validUsername)
+                self.setUsernameError("usernameLengthError")
                 return
             } else if !(isValidUsername(testStr: text)) {
-                self.usernameErrorLabel.text = self.usernameInvalidCharacters
-                self.usernameErrorLabel.isHidden = false
-                self.usernameErrorLabel.textColor = .red
-                self.validUsername = false
-                self.fieldCheck(validEmail: validEmail,
-                                validUsername: validUsername)
+                self.setUsernameError("notAlphaNumericError")
                 return
             }
             
             let request = UsernameTakenRequestor.init(username: text)
             
+            // Start the activity indicator to indicate that request is loading
             usernameActivityIndicator.startAnimating()
             usernameErrorLabel.text = activityIndicatorChecking
             usernameErrorLabel.textColor = .lightGray
@@ -145,17 +131,9 @@ class UsernameEmailController: RegisterController {
                 }
                 
                 if data!["data"].boolValue { // username taken
-                    self.usernameErrorLabel.text = "\(text) " +
-                                        "\(self.usernameTakenMessage)"
-                    self.usernameErrorLabel.isHidden = false
-                    self.usernameErrorLabel.textColor = .red
-                    self.validUsername = false
+                    self.setUsernameError("usernameTaken")
                 } else { // username available
-                    self.usernameErrorLabel.text = "\(text) " +
-                                        "\(self.usernameAvailableMessage)"
-                    self.usernameErrorLabel.isHidden = false
-                    self.usernameErrorLabel.textColor = .green
-                    self.validUsername = true
+                    self.setUsernameError("usernameAvailable")
                 }
                 self.usernameActivityIndicator.stopAnimating()
                 self.fieldCheck(validEmail: self.validEmail,
@@ -169,17 +147,13 @@ class UsernameEmailController: RegisterController {
         
         if text != "" {
             if !(isValidEmail(testStr: text)) {
-                self.emailErrorLabel.text = self.invalidEmailMessage
-                self.emailErrorLabel.isHidden = false
-                self.emailErrorLabel.textColor = .red
-                self.validEmail = false
-                self.fieldCheck(validEmail: validEmail,
-                                validUsername: validUsername)
+                self.setEmailError("notEmailError")
                 return
             }
             
             let request = EmailTakenRequestor.init(email: text)
             
+            // Start the activity indicator to indicate that request is loading
             emailActivityIndicator.startAnimating()
             emailErrorLabel.text = activityIndicatorChecking
             emailErrorLabel.textColor = .lightGray
@@ -190,20 +164,70 @@ class UsernameEmailController: RegisterController {
                 }
                 
                 if data!["data"].boolValue { // email taken
-                    self.emailErrorLabel.text = self.emailTakenMessage
-                    self.emailErrorLabel.isHidden = false
-                    self.emailErrorLabel.textColor = .red
-                    self.validEmail = false
+                    self.setEmailError("emailTaken")
                 } else { // email available
-                    self.emailErrorLabel.text = self.emailAvailableMessage
-                    self.emailErrorLabel.isHidden = false
-                    self.emailErrorLabel.textColor = .green
-                    self.validEmail = true
+                    self.setEmailError("emailAvailable")
                 }
                 self.emailActivityIndicator.stopAnimating()
                 self.fieldCheck(validEmail: self.validEmail,
                                 validUsername: self.validUsername)
             }
+        }
+    }
+    
+    func setUsernameError(_ type: String) {
+        if type == "usernameLengthError" {
+            self.usernameErrorLabel.text = self.usernameRules
+            self.usernameErrorLabel.isHidden = false
+            self.usernameErrorLabel.textColor = .red
+            self.validUsername = false
+            self.fieldCheck(validEmail: validEmail,
+                            validUsername: validUsername)
+        }
+        else if type == "notAlphaNumericError" {
+            self.usernameErrorLabel.text = self.usernameInvalidCharacters
+            self.usernameErrorLabel.isHidden = false
+            self.usernameErrorLabel.textColor = .red
+            self.validUsername = false
+            self.fieldCheck(validEmail: validEmail,
+                            validUsername: validUsername)
+        }
+        else if type == "usernameTaken" {
+            self.usernameErrorLabel.text = "\(usernameField.text!) " +
+            "\(self.usernameTakenMessage)"
+            self.usernameErrorLabel.isHidden = false
+            self.usernameErrorLabel.textColor = .red
+            self.validUsername = false
+        }
+        else if type == "usernameAvailable" {
+            self.usernameErrorLabel.text = "\(usernameField.text!) " +
+            "\(self.usernameAvailableMessage)"
+            self.usernameErrorLabel.isHidden = false
+            self.usernameErrorLabel.textColor = .green
+            self.validUsername = true
+        }
+    }
+    
+    func setEmailError(_ type: String) {
+        if type == "notEmailError" {
+            self.emailErrorLabel.text = self.invalidEmailMessage
+            self.emailErrorLabel.isHidden = false
+            self.emailErrorLabel.textColor = .red
+            self.validEmail = false
+            self.fieldCheck(validEmail: validEmail,
+                            validUsername: validUsername)
+        }
+        else if type == "emailTaken" {
+            self.emailErrorLabel.text = self.emailTakenMessage
+            self.emailErrorLabel.isHidden = false
+            self.emailErrorLabel.textColor = .red
+            self.validEmail = false
+        }
+        else if type == "emailAvailable" {
+            self.emailErrorLabel.text = self.emailAvailableMessage
+            self.emailErrorLabel.isHidden = false
+            self.emailErrorLabel.textColor = .green
+            self.validEmail = true
         }
     }
     
@@ -218,6 +242,8 @@ class UsernameEmailController: RegisterController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Send info to the next page in order to retain the field's text
+        // when traversing between the registration pages
         if segue.identifier == "toPassword" {
             let resultVC = segue.destination  as! PasswordController
             resultVC.username = usernameField.text

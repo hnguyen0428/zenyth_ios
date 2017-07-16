@@ -23,25 +23,12 @@ class PasswordController: RegisterController {
         
         setupViews()
         
+        // Run a timer when user starts editing, once the timer ends, it will
+        // trigger a method to check if username or email is valid
         passwordField.addTarget(self, action: #selector(timeBeforeCheck),
                                 for: .editingChanged)
         confirmPasswordField.addTarget(self, action: #selector(timeBeforeCheck),
                                        for: .editingChanged)
-        
-        NotificationCenter.default.addObserver(self,
-                                selector: #selector(self.keyboardWillShow),
-                                name: NSNotification.Name.UIKeyboardWillShow,
-                                object: nil)
-        NotificationCenter.default.addObserver(self,
-                                selector: #selector(self.keyboardWillHide),
-                                name: NSNotification.Name.UIKeyboardWillHide,
-                                object: nil)
-        
-        for subview in view.subviews {
-            if !(subview is UIScrollView) && !(subview is UIImageView) {
-                scrollView.addSubview(subview)
-            }
-        }
         
     }
     
@@ -61,12 +48,13 @@ class PasswordController: RegisterController {
     }
     
     func timeBeforeCheck(_ textField: UITextField) {
+        // Reset the timer if it has been started
         if self.checkTimer != nil {
             self.checkTimer!.invalidate()
             self.checkTimer = nil
         }
         
-        // hides errors while typing
+        // Hide errors while typing
         continueButton.isEnabled = false
         continueButton.backgroundColor = disabledButtonColor
         passwordErrorLabel.isHidden = true
@@ -84,6 +72,7 @@ class PasswordController: RegisterController {
         let password = passwordField.text ?? ""
         let confirmPassword = confirmPasswordField.text ?? ""
         
+        // If both are empty, disable buttons and hide error labels
         if password == "" && confirmPassword == "" {
             passwordErrorLabel.isHidden = true
             confirmPasswordErrorLabel.isHidden = true
@@ -106,9 +95,10 @@ class PasswordController: RegisterController {
             }
         }
         
-        // password passed
+        // Password passed
         
         if confirmPassword != "" {
+            // Password confirmation is not the same as password
             if confirmPassword != password {
                 setErrorConfirmPassword()
                 return
@@ -121,6 +111,7 @@ class PasswordController: RegisterController {
             return
         }
         
+        // Enable button after all checks passed
         passwordErrorLabel.isHidden = true
         confirmPasswordErrorLabel.isHidden = true
         continueButton.isEnabled = true
@@ -155,10 +146,16 @@ class PasswordController: RegisterController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        // Allow for the navigation controller to read data from this class
         navigationController?.delegate = self
+        
+        // Check the fields everytime this screen appears
         checkValidPassword(Timer.init())
     }
     
+    /* Allow for passing data when pressing back on the navigation bar
+     */
     func navigationController(_ navigationController: UINavigationController,
                               willShow viewController: UIViewController,
                               animated: Bool) {
@@ -170,6 +167,9 @@ class PasswordController: RegisterController {
         }
     }
     
+    /* Send data to the gender and birthday view controller to retain texts
+     * when traversing through registration pages
+     */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toGenderBirthday" {
             let resultVC = segue.destination  as! GenderBirthdayController

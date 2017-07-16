@@ -95,21 +95,6 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate,
         super.viewDidLoad()
         
         setupViews()
-        
-        NotificationCenter.default.addObserver(self,
-                                selector: #selector(self.keyboardWillShow),
-                                name: NSNotification.Name.UIKeyboardWillShow,
-                                object: nil)
-        NotificationCenter.default.addObserver(self,
-                                selector: #selector(self.keyboardWillHide),
-                                name: NSNotification.Name.UIKeyboardWillHide,
-                                object: nil)
-        
-        for subview in view.subviews {
-            if !(subview is UIScrollView) && !(subview is UIImageView) {
-                scrollView.addSubview(subview)
-            }
-        }
     }
     
     func setupViews() {
@@ -134,6 +119,7 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate,
         genderField.inputView = genderPicker
         genderPicker.delegate = self
         
+        // Create a done button on the toolbar on the picker
         let toolBar = UIToolbar()
         toolBar.sizeToFit()
         toolBar.tintColor = UIColor.white
@@ -160,6 +146,7 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate,
         datePicker.addTarget(self, action: #selector(changeDOBValue),
                              for: .valueChanged)
         
+        // Create a done button on the toolbar on the picker
         let toolBar = UIToolbar()
         toolBar.sizeToFit()
         toolBar.tintColor = UIColor.white
@@ -177,6 +164,8 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate,
         dobField.inputAccessoryView = toolBar
     }
     
+    /* Clicking done closes the pickerview
+     */
     func donePicker(sender: UIBarButtonItem) {
         genderField.isUserInteractionEnabled = true
         genderField.resignFirstResponder()
@@ -184,6 +173,9 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate,
         dobField.resignFirstResponder()
     }
     
+    /* When picker is picked, the dateOfBirth variable is updated and the
+     * textfield is changed
+     */
     func changeDOBValue(sender: UIDatePicker) {
         let dateFormat = DateFormatter()
         dateFormat.dateFormat = "MMMM dd, yyyy"
@@ -219,10 +211,14 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate,
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        // Check the fields everytime this screen appears
         fieldCheck()
+        // Allow for the navigation controller to read data from this class
         navigationController?.delegate = self
     }
     
+    /* Allow for passing data when pressing back on the navigation bar
+     */
     func navigationController(_ navigationController: UINavigationController,
                     willShow viewController: UIViewController, animated: Bool) {
         if let passwordVC = viewController as? PasswordController {
@@ -250,6 +246,8 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate,
         
     }
     
+    /* Check if user passes the age limit
+     */
     func notOfAge() -> Bool {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -261,7 +259,7 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate,
                                                     from: birthday!, to: now)
         let age = ageComponents.year!
         
-        return age < 13
+        return age < minimumAge
     }
     
 }

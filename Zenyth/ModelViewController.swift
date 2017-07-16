@@ -17,6 +17,24 @@ class ModelViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        
+        // Add observer that allows for scrolling once you enter keyboard mode
+        NotificationCenter.default.addObserver(self,
+                                selector:#selector(self.keyboardWillShow),
+                                name: NSNotification.Name.UIKeyboardWillShow,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                selector: #selector(self.keyboardWillHide),
+                                name: NSNotification.Name.UIKeyboardWillHide,
+                                object: nil)
+        
+        // Add all subviews to allow for scroll once the keyboard pops up
+        for subview in view.subviews {
+            if !(subview is UIScrollView) && !(subview is UIImageView) {
+                scrollView.addSubview(subview)
+            }
+        }
+        
     }
     
     /* Setups the background
