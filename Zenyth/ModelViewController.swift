@@ -10,8 +10,6 @@ import UIKit
 
 class ModelViewController: UIViewController {
     
-    let minimumPasswordLength = 8
-    let maximumPasswordLength = 16
     var scrollView: UIScrollView!
     var backgroundView: UIImageView!
     var logoView: UIImageView!

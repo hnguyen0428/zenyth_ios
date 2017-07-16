@@ -282,12 +282,30 @@
                                     <segue destination="ZxK-rV-BFn" kind="show" identifier="toGenderBirthday" id="BWh-4z-vK7"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="     Error label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XLW-r2-Qwz">
+                                <rect key="frame" x="53" y="220" width="268" height="14"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" identifier="usernameErrorLabel"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="     Error label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qXL-nI-2G8">
+                                <rect key="frame" x="53" y="280" width="268" height="14"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" identifier="usernameErrorLabel"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="confirmPasswordErrorLabel" destination="qXL-nI-2G8" id="E2I-40-pPM"/>
                         <outlet property="confirmPasswordField" destination="lRs-Px-kOk" id="t0m-pe-d55"/>
                         <outlet property="continueButton" destination="jUW-qV-f7b" id="jJK-bI-nuK"/>
+                        <outlet property="passwordErrorLabel" destination="XLW-r2-Qwz" id="oNZ-QC-TbQ"/>
                         <outlet property="passwordField" destination="d3m-xd-UQi" id="DgD-Gd-z88"/>
                     </connections>
                 </viewController>

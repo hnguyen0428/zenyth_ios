@@ -43,6 +43,7 @@ class Requestor {
             case .failure(let error):
                 completionHandler(nil, error)
                 print(error)
+                print(self.parameters)
                 debugPrint(response)
                 break
             }

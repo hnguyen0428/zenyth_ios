@@ -86,14 +86,23 @@ class UsernameEmailController: RegisterController {
         let text = usernameField.text ?? ""
         
         if text != "" {
-            if text.characters.count < 3 || text.characters.count > 20 {
+            if text.characters.count < minimumUsernameLength ||
+                text.characters.count > maximumUsernameLength {
                 self.usernameErrorLabel.text = self.usernameRules
                 self.usernameErrorLabel.isHidden = false
                 self.usernameErrorLabel.textColor = .red
                 self.validUsername = false
                 self.fieldCheck(validEmail: validEmail, validUsername: validUsername)
                 return
+            } else if !(isValidUsername(testStr: text)) {
+                self.usernameErrorLabel.text = self.usernameInvalidCharacters
+                self.usernameErrorLabel.isHidden = false
+                self.usernameErrorLabel.textColor = .red
+                self.validUsername = false
+                self.fieldCheck(validEmail: validEmail, validUsername: validUsername)
+                return
             }
+            
             let request = UsernameTakenRequestor.init(username: text)
             
             usernameActivityIndicator.startAnimating()

@@ -21,12 +21,21 @@ class RegisterController: ModelViewController, UINavigationControllerDelegate {
     let usernameAvailableMessage = "is available!"
     let emailTakenMessage = "Email is already taken!"
     let emailAvailableMessage = "Email is available!"
+    let passwordLengthError = "Password must be in between 8 to 16 characters"
+    let passwordAlphaNumericError = "Password must be alpha numeric"
+    let confirmPasswordNotMatchError = "Confirmation password does not match"
     let activityIndicatorChecking = "     Checking"
     let invalidEmailMessage = "This field must be an email"
     let usernameRules = "Username must be between 3 to 20 characters"
+    let usernameInvalidCharacters = "Username can only contain [a-zA-Z0-9] and _"
     let checkEmailMessage = "Please Check Your Email"
     let signupSuccessfulMessage = "Signup Successful"
     let timeBetweenCheck = 0.6
+    
+    let minimumPasswordLength = 8
+    let maximumPasswordLength = 16
+    let minimumUsernameLength = 3
+    let maximumUsernameLength = 20
     
     override func viewDidLoad() {
         super.viewDidLoad()

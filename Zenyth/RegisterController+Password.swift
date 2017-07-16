@@ -13,14 +13,18 @@ class PasswordController: RegisterController {
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var confirmPasswordField: UITextField!
     @IBOutlet weak var continueButton: UIButton!
+    @IBOutlet weak var passwordErrorLabel: UILabel!
+    @IBOutlet weak var confirmPasswordErrorLabel: UILabel!
+    
+    var checkTimer: Timer? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
         
-        passwordField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
-        confirmPasswordField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        passwordField.addTarget(self, action: #selector(timeBeforeCheck), for: .editingChanged)
+        confirmPasswordField.addTarget(self, action: #selector(timeBeforeCheck), for: .editingChanged)
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
@@ -43,34 +47,105 @@ class PasswordController: RegisterController {
         
         passwordField.text = password
         confirmPasswordField.text = confirmPassword
+        
+        passwordErrorLabel.isHidden = true
+        confirmPasswordErrorLabel.isHidden = true
+    }
+    
+    func timeBeforeCheck(_ textField: UITextField) {
+        if self.checkTimer != nil {
+            self.checkTimer!.invalidate()
+            self.checkTimer = nil
+        }
+        
+        // hides errors while typing
+        continueButton.isEnabled = false
+        continueButton.backgroundColor = disabledButtonColor
+        passwordErrorLabel.isHidden = true
+        confirmPasswordErrorLabel.isHidden = true
+        
+        self.checkTimer = Timer.scheduledTimer(timeInterval: timeBetweenCheck, target: self, selector: #selector(checkValidPassword), userInfo: textField.text, repeats: false)
+        
     }
     
     /* Overridden rules for checking the field before enabling the button
      */
-    override func fieldCheck() {
+    func checkValidPassword(_ timer: Timer) {
+        let password = passwordField.text ?? ""
+        let confirmPassword = confirmPasswordField.text ?? ""
         
-        guard
-            let password = passwordField.text, !password.isEmpty &&
-                        password.characters.count >= minimumPasswordLength &&
-                        password.characters.count <= maximumPasswordLength,
-            let confirmPassword = confirmPasswordField.text, !confirmPassword.isEmpty &&
-                        confirmPassword.characters.count >= minimumPasswordLength &&
-                        confirmPassword.characters.count <= maximumPasswordLength &&
-                        confirmPassword == password
-            else {
-                continueButton.isEnabled = false
-                continueButton.backgroundColor = disabledButtonColor
-                return
+        if password == "" && confirmPassword == "" {
+            passwordErrorLabel.isHidden = true
+            confirmPasswordErrorLabel.isHidden = true
+            continueButton.isEnabled = false
+            continueButton.backgroundColor = disabledButtonColor
+            return
         }
+        
+        if password != "" {
+            if isAlphaNumeric(testStr: password) { // is alpha numeric
+                let count = password.characters.count
+                if count > maximumPasswordLength || count < minimumPasswordLength {
+                    setErrorPassword("LengthError")
+                    return
+                } // does not satisfy length requirement
+            } else { // not alpha numeric
+                setErrorPassword("AlphaNumericError")
+                return
+            }
+        }
+        
+        // password passed
+        
+        if confirmPassword != "" {
+            if confirmPassword != password {
+                setErrorConfirmPassword()
+                return
+            }
+        } else {
+            passwordErrorLabel.isHidden = true
+            confirmPasswordErrorLabel.isHidden = true
+            continueButton.isEnabled = false
+            continueButton.backgroundColor = disabledButtonColor
+            return
+        }
+        
+        passwordErrorLabel.isHidden = true
+        confirmPasswordErrorLabel.isHidden = true
         continueButton.isEnabled = true
         continueButton.backgroundColor = buttonColor
         
     }
     
+    func setErrorPassword(_ type: String) {
+        if type == "AlphaNumericError" {
+            passwordErrorLabel.text = passwordAlphaNumericError
+            passwordErrorLabel.textColor = .red
+            passwordErrorLabel.isHidden = false
+            continueButton.isEnabled = false
+            continueButton.backgroundColor = disabledButtonColor
+        }
+        if type == "LengthError" {
+            passwordErrorLabel.text = passwordLengthError
+            passwordErrorLabel.textColor = .red
+            passwordErrorLabel.isHidden = false
+            continueButton.isEnabled = false
+            continueButton.backgroundColor = disabledButtonColor
+        }
+    }
+    
+    func setErrorConfirmPassword() {
+        confirmPasswordErrorLabel.text = confirmPasswordNotMatchError
+        confirmPasswordErrorLabel.textColor = .red
+        confirmPasswordErrorLabel.isHidden = false
+        continueButton.isEnabled = false
+        continueButton.backgroundColor = disabledButtonColor
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         navigationController?.delegate = self
-        fieldCheck()
+        checkValidPassword(Timer.init())
     }
     
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {

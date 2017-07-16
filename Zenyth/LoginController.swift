@@ -248,8 +248,7 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
     override func fieldCheck() {
         guard
             let username = usernameField.text, !username.isEmpty,
-            let password = passwordField.text, !password.isEmpty &&
-                        password.characters.count >= minimumPasswordLength
+            let password = passwordField.text, !password.isEmpty
             else {
                 signinButton.isEnabled = false
                 signinButton.backgroundColor = disabledButtonColor

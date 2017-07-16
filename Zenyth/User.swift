@@ -28,17 +28,19 @@ class User: NSObject {
         self.first_name = json["data"]["profile"]["first_name"].string
         self.last_name = json["data"]["profile"]["last_name"].string
         self.gender = json["data"]["profile"]["gender"].string
-        self.birthday = json["data"]["profile"]["date_of_birth"].string
+        self.birthday = json["data"]["profile"]["birthday"].string
+        
+        // TODO: parse birthday
         
         let userJSON: JSON = [
-            "id": id,
-            "username": username,
-            "email": email,
-            "api_token": api_token,
-            "first_name": first_name,
-            "last_name": last_name,
-            "gender": gender,
-            "date_of_birth": birthday
+            "id" : id,
+            "username" : username,
+            "email" : email,
+            "api_token" : api_token,
+            "first_name" : first_name,
+            "last_name" : last_name,
+            "gender" : gender,
+            "birthday" : birthday
         ]
         self.json = userJSON
     }

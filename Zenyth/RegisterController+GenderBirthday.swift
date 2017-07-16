@@ -25,8 +25,8 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPick
             "email" : email!,
             "password" : password!,
             "password_confirmation" : confirmPassword!,
-            "gender" : genderField.text!,
-            "date_of_birth" : dobField.text!
+            "gender" : gender!,
+            "birthday" : dateOfBirth!
         ]
         
         let request = RegisterRequestor(parameters: parameters)
@@ -34,19 +34,21 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPick
         indicator.center = self.view.center
         indicator.hidesWhenStopped = true
         indicator.startAnimating()
+        self.view.mask = UIView(frame: self.view.frame)
+        self.view.mask?.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         self.view.addSubview(indicator)
         self.view.isUserInteractionEnabled = false
         
         request.getJSON { data, error in
+            indicator.stopAnimating()
             self.view.isUserInteractionEnabled = true
+            self.view.mask = nil
             if (error != nil) {
-                
                 return
             }
             if (data?["success"].boolValue)! {
                 let user = User.init(json: data!)
                 print("User: \(user)")
-                indicator.stopAnimating()
                 let alert = UIAlertController(title: self.signupSuccessfulMessage,
                                               message: self.checkEmailMessage,
                                               preferredStyle: UIAlertControllerStyle.alert)
@@ -156,6 +158,8 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPick
         dateFormat.dateFormat = "MMMM dd, yyyy"
         let date = dateFormat.string(from: sender.date)
         dobField.text = date
+        dateFormat.dateFormat = "yyyy-MM-dd"
+        self.dateOfBirth = dateFormat.string(from: sender.date)
         fieldCheck()
     }
     
@@ -174,6 +178,7 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPick
     /* Called whenever the user picks an item on the pickerview
      */
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.gender = genderData[row]
         genderField.text = genderData[row]
         fieldCheck()
     }

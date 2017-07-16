@@ -43,5 +43,19 @@ extension UIViewController {
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailTest.evaluate(with: testStr)
     }
+    
+    func isValidUsername(testStr:String) -> Bool {
+        let usernameRegEx = "[A-Z0-9a-z_]*"
+        
+        let usernameTest = NSPredicate(format:"SELF MATCHES %@", usernameRegEx)
+        return usernameTest.evaluate(with: testStr)
+    }
+    
+    func isAlphaNumeric(testStr:String) -> Bool {
+        let regEx = "[A-Z0-9a-z]*"
+        
+        let test = NSPredicate(format:"SELF MATCHES %@", regEx)
+        return test.evaluate(with: testStr)
+    }
 
 }
