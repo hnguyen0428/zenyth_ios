@@ -27,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
         GIDSignIn.sharedInstance().clientID = "726843823228-983fiv45v8m39aoslobaiiqqipvvm2lf.apps.googleusercontent.com"
         GIDSignIn.sharedInstance().delegate = self
-
         
         // converted from original objective C
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -59,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             if (error != nil) {
                 return
             }
-        
+            
             self.googleOauthHandle(json: data!, accessToken: accessToken)
             
         }
@@ -131,7 +130,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             
         }
     }
-    
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
 

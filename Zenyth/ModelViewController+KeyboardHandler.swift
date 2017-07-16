@@ -29,7 +29,6 @@ extension ModelViewController {
      */
     func keyboardWillShow(notification:NSNotification) {
     
-        
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             scrollView.contentSize.height = view.frame.height + keyboardSize.height
         }
@@ -40,7 +39,6 @@ extension ModelViewController {
      */
     func keyboardWillHide(notification:NSNotification) {
     
-        
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             scrollView.contentSize.height = scrollView.contentSize.height - keyboardSize.height
         }

@@ -28,9 +28,13 @@ class User: NSObject {
         self.first_name = json["data"]["profile"]["first_name"].string
         self.last_name = json["data"]["profile"]["last_name"].string
         self.gender = json["data"]["profile"]["gender"].string
-        self.birthday = json["data"]["profile"]["birthday"].string
         
-        // TODO: parse birthday
+        let dateTime = json["data"]["profile"]["birthday"]["date"].string
+        
+        if let str = dateTime {
+            let index = str.index(str.startIndex, offsetBy: 10)
+            self.birthday = str.substring(to: index)
+        }
         
         let userJSON: JSON = [
             "id" : id,

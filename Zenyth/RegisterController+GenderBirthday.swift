@@ -20,6 +20,11 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPick
     
     @IBAction func signupButtonAction(_ sender: UIButton) {
         
+        if self.notOfAge() {
+            self.displayAlert(view: self, title: "Not Eligible", message: notOfAgeMessage)
+            return
+        }
+        
         let parameters: Parameters = [
             "username" : username!,
             "email" : email!,
@@ -213,6 +218,19 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPick
         signupButton.isEnabled = true
         signupButton.backgroundColor = buttonColor
         
+    }
+    
+    func notOfAge() -> Bool {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let now = Date()
+        let birthday = dateFormatter.date(from: dateOfBirth!)
+        let calendar = Calendar.current
+        
+        let ageComponents = calendar.dateComponents([.year], from: birthday!, to: now)
+        let age = ageComponents.year!
+        
+        return age < 13
     }
     
 }

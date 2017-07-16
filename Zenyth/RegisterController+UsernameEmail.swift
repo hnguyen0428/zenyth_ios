@@ -30,6 +30,7 @@ class UsernameEmailController: RegisterController {
         
         setupViews()
         
+        continueButton.addTarget(self, action: #selector(toPasswordVC), for: .touchUpInside)
         usernameField.addTarget(self, action: #selector(timeBeforeCheck), for: .editingChanged)
         emailField.addTarget(self, action: #selector(timeBeforeCheck), for: .editingChanged)
         
@@ -63,6 +64,14 @@ class UsernameEmailController: RegisterController {
         usernameActivityIndicator.hidesWhenStopped = true
         emailActivityIndicator.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
         usernameActivityIndicator.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
+    }
+    
+    func toPasswordVC(_ button: UIButton) {
+        self.performSegue(withIdentifier: "toPassword", sender: self)
+    }
+    
+    func oauthSegue(_ button: UIButton) {
+        
     }
     
     func timeBeforeCheck(_ textField: UITextField) {

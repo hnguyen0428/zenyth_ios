@@ -30,8 +30,10 @@ class RegisterController: ModelViewController, UINavigationControllerDelegate {
     let usernameInvalidCharacters = "Username can only contain [a-zA-Z0-9] and _"
     let checkEmailMessage = "Please Check Your Email"
     let signupSuccessfulMessage = "Signup Successful"
+    let notOfAgeMessage = "You're too young!"
     let timeBetweenCheck = 0.6
     
+    let minimumAge = 13
     let minimumPasswordLength = 8
     let maximumPasswordLength = 16
     let minimumUsernameLength = 3

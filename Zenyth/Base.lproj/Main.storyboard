@@ -133,6 +133,7 @@
                         <outlet property="signupButton" destination="Dcr-bq-y9R" id="aKo-Hp-69b"/>
                         <outlet property="twitterButton" destination="fZr-gj-CiJ" id="CCl-3J-0t3"/>
                         <outlet property="usernameField" destination="5bS-Qe-9hj" id="Hd3-DW-3Sv"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="oauthToUsernameSegue" id="76S-8z-txD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rvt-bE-IpO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -172,9 +173,6 @@
                                 <state key="normal" title="Continue">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
-                                <connections>
-                                    <segue destination="ND0-EQ-Ni7" kind="show" identifier="toPassword" id="o2H-4w-Pmg"/>
-                                </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sZx-XO-wX6">
                                 <rect key="frame" x="53" y="185" width="268" height="30"/>
@@ -225,6 +223,8 @@
                         <outlet property="usernameActivityIndicator" destination="STz-3N-9Qr" id="3KG-Cr-eR0"/>
                         <outlet property="usernameErrorLabel" destination="5C4-p3-UPs" id="rfv-8g-FLW"/>
                         <outlet property="usernameField" destination="sZx-XO-wX6" id="wwZ-az-DZv"/>
+                        <segue destination="ND0-EQ-Ni7" kind="show" identifier="toPassword" id="3yf-T4-T0G"/>
+                        <segue destination="YHJ-xh-XnM" kind="show" identifier="oauthSegue" id="i2j-az-4ty"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -386,5 +386,9 @@
             <point key="canvasLocation" x="1398" y="36"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="76S-8z-txD"/>
+        <segue reference="i2j-az-4ty"/>
+    </inferredMetricsTieBreakers>
     <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
 </document>
