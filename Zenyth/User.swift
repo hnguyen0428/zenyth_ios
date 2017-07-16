@@ -18,6 +18,7 @@ class User: NSObject {
     var first_name: String?
     var last_name: String?
     var gender: String?
+    var birthday: String?
     
     init(json: JSON) {
         self.id = json["data"]["user"]["id"].uInt64Value
@@ -27,6 +28,7 @@ class User: NSObject {
         self.first_name = json["data"]["profile"]["first_name"].string
         self.last_name = json["data"]["profile"]["last_name"].string
         self.gender = json["data"]["profile"]["gender"].string
+        self.birthday = json["data"]["profile"]["date_of_birth"].string
         
         let userJSON: JSON = [
             "id": id,
@@ -35,7 +37,8 @@ class User: NSObject {
             "api_token": api_token,
             "first_name": first_name,
             "last_name": last_name,
-            "gender": gender
+            "gender": gender,
+            "date_of_birth": birthday
         ]
         self.json = userJSON
     }
