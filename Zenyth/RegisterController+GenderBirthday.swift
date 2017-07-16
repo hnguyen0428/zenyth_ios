@@ -10,7 +10,8 @@ import UIKit
 import SwiftyJSON
 import Alamofire
 
-class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPickerViewDataSource {
+class GenderBirthdayController: RegisterController, UIPickerViewDelegate,
+                                UIPickerViewDataSource {
     
     let genderData = ["", "Male", "Female", "Non-binary"]
     
@@ -21,7 +22,8 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPick
     @IBAction func signupButtonAction(_ sender: UIButton) {
         
         if self.notOfAge() {
-            self.displayAlert(view: self, title: "Not Eligible", message: notOfAgeMessage)
+            self.displayAlert(view: self, title: "Not Eligible",
+                              message: notOfAgeMessage)
             return
         }
         
@@ -35,7 +37,9 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPick
         ]
         
         let request = RegisterRequestor(parameters: parameters)
-        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        let indicator = UIActivityIndicatorView(
+            activityIndicatorStyle: .whiteLarge
+        )
         indicator.center = self.view.center
         indicator.hidesWhenStopped = true
         indicator.startAnimating()
@@ -54,12 +58,18 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPick
             if (data?["success"].boolValue)! {
                 let user = User.init(json: data!)
                 print("User: \(user)")
-                let alert = UIAlertController(title: self.signupSuccessfulMessage,
-                                              message: self.checkEmailMessage,
-                                              preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
-                    self.navigationController?.popToRootViewController(animated: true)
-                }))
+                let alert = UIAlertController(
+                    title: self.signupSuccessfulMessage,
+                    message: self.checkEmailMessage,
+                    preferredStyle: UIAlertControllerStyle.alert
+                )
+                alert.addAction(UIAlertAction(title: "OK",
+                        style: UIAlertActionStyle.default, handler: { action in
+                    self.navigationController?.popToRootViewController(
+                        animated: true
+                    )
+                })
+                )
                 self.present(alert, animated: true, completion: nil)
                 
             } else {
@@ -69,9 +79,12 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPick
                     errorString.append(item.stringValue + "\n")
                 }
                 // strip the newline character at the end
-                errorString.remove(at: errorString.index(before: errorString.endIndex))
+                errorString.remove(
+                    at: errorString.index(before: errorString.endIndex)
+                )
                 
-                self.displayAlert(view: self, title: "Login Failed", message: errorString)
+                self.displayAlert(view: self, title: "Login Failed",
+                                  message: errorString)
             }
             
         }
@@ -83,8 +96,14 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPick
         
         setupViews()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                selector: #selector(self.keyboardWillShow),
+                                name: NSNotification.Name.UIKeyboardWillShow,
+                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                selector: #selector(self.keyboardWillHide),
+                                name: NSNotification.Name.UIKeyboardWillHide,
+                                object: nil)
         
         for subview in view.subviews {
             if !(subview is UIScrollView) && !(subview is UIImageView) {
@@ -122,7 +141,10 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPick
         toolBar.backgroundColor = buttonColor
         toolBar.isTranslucent = true
         
-        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(donePicker))
+        let doneButton = UIBarButtonItem(
+            barButtonSystemItem: UIBarButtonSystemItem.done, target: self,
+            action: #selector(donePicker)
+        )
         
         toolBar.setItems([doneButton], animated: true)
         
@@ -135,7 +157,8 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPick
         let datePicker = UIDatePicker()
         dobField.inputView = datePicker
         datePicker.datePickerMode = UIDatePickerMode.date
-        datePicker.addTarget(self, action: #selector(changeDOBValue), for: .valueChanged)
+        datePicker.addTarget(self, action: #selector(changeDOBValue),
+                             for: .valueChanged)
         
         let toolBar = UIToolbar()
         toolBar.sizeToFit()
@@ -144,7 +167,10 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPick
         toolBar.backgroundColor = buttonColor
         toolBar.isTranslucent = true
         
-        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(donePicker))
+        let doneButton = UIBarButtonItem(barButtonSystemItem:
+            UIBarButtonSystemItem.done, target: self,
+            action: #selector(donePicker)
+        )
         
         toolBar.setItems([doneButton], animated: true)
         
@@ -172,17 +198,20 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPick
         return 1
     }
     
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView,
+                    numberOfRowsInComponent component: Int) -> Int {
         return genderData.count
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int,
+                    forComponent component: Int) -> String? {
         return genderData[row]
     }
     
     /* Called whenever the user picks an item on the pickerview
      */
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int,
+                    inComponent component: Int) {
         self.gender = genderData[row]
         genderField.text = genderData[row]
         fieldCheck()
@@ -194,7 +223,8 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPick
         navigationController?.delegate = self
     }
     
-    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+    func navigationController(_ navigationController: UINavigationController,
+                    willShow viewController: UIViewController, animated: Bool) {
         if let passwordVC = viewController as? PasswordController {
             passwordVC.username = username
             passwordVC.email = email
@@ -227,7 +257,8 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate, UIPick
         let birthday = dateFormatter.date(from: dateOfBirth!)
         let calendar = Calendar.current
         
-        let ageComponents = calendar.dateComponents([.year], from: birthday!, to: now)
+        let ageComponents = calendar.dateComponents([.year],
+                                                    from: birthday!, to: now)
         let age = ageComponents.year!
         
         return age < 13

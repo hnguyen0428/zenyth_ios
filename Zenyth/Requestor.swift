@@ -19,14 +19,16 @@ class Requestor {
     let needsAuthorization: Bool
 
     init(route: Route, header: HTTPHeaders = HTTPHeaders.init(),
-         parameters: Parameters = Parameters.init(), needsAuthorization: Bool = false) {
+         parameters: Parameters = Parameters.init(),
+         needsAuthorization: Bool = false) {
         self.needsAuthorization = needsAuthorization
         self.route = route
         self.header = header
         self.parameters = parameters
     }
     
-    func execute(completionHandler: @escaping (JSON?, Error?) -> ()) -> DataRequest {
+    func execute(completionHandler: @escaping (JSON?, Error?) -> ())
+        -> DataRequest {
         let method = route.method
         let url = route.urlString
         if needsAuthorization {

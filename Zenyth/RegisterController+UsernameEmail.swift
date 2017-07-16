@@ -30,12 +30,21 @@ class UsernameEmailController: RegisterController {
         
         setupViews()
         
-        continueButton.addTarget(self, action: #selector(toPasswordVC), for: .touchUpInside)
-        usernameField.addTarget(self, action: #selector(timeBeforeCheck), for: .editingChanged)
-        emailField.addTarget(self, action: #selector(timeBeforeCheck), for: .editingChanged)
+        continueButton.addTarget(self, action: #selector(toPasswordVC),
+                                 for: .touchUpInside)
+        usernameField.addTarget(self, action: #selector(timeBeforeCheck),
+                                for: .editingChanged)
+        emailField.addTarget(self, action: #selector(timeBeforeCheck),
+                             for: .editingChanged)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                selector: #selector(self.keyboardWillShow),
+                                name: NSNotification.Name.UIKeyboardWillShow,
+                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                selector: #selector(self.keyboardWillHide),
+                                name: NSNotification.Name.UIKeyboardWillHide,
+                                object: nil)
         
         for subview in view.subviews {
             if !(subview is UIScrollView) && !(subview is UIImageView) {
@@ -62,8 +71,12 @@ class UsernameEmailController: RegisterController {
         
         emailActivityIndicator.hidesWhenStopped = true
         usernameActivityIndicator.hidesWhenStopped = true
-        emailActivityIndicator.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
-        usernameActivityIndicator.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
+        emailActivityIndicator.transform = CGAffineTransform(
+            scaleX: 0.75, y: 0.75
+        )
+        usernameActivityIndicator.transform = CGAffineTransform(
+            scaleX: 0.75, y: 0.75
+        )
     }
     
     func toPasswordVC(_ button: UIButton) {
@@ -84,10 +97,16 @@ class UsernameEmailController: RegisterController {
         fieldCheck(validEmail: false, validUsername: false)
         
         if textField == emailField {
-            self.checkTimer = Timer.scheduledTimer(timeInterval: timeBetweenCheck, target: self, selector: #selector(checkValidEmail), userInfo: textField.text, repeats: false)
+            self.checkTimer = Timer.scheduledTimer(timeInterval:
+                timeBetweenCheck, target: self,
+                selector: #selector(checkValidEmail), userInfo: textField.text,
+                repeats: false)
         }
         if textField == usernameField {
-            self.checkTimer = Timer.scheduledTimer(timeInterval: timeBetweenCheck, target: self, selector: #selector(checkValidUsername), userInfo: textField.text, repeats: false)
+            self.checkTimer = Timer.scheduledTimer(timeInterval:
+                timeBetweenCheck, target: self,
+                selector: #selector(checkValidUsername),
+                userInfo: textField.text, repeats: false)
         }
     }
     
@@ -101,14 +120,16 @@ class UsernameEmailController: RegisterController {
                 self.usernameErrorLabel.isHidden = false
                 self.usernameErrorLabel.textColor = .red
                 self.validUsername = false
-                self.fieldCheck(validEmail: validEmail, validUsername: validUsername)
+                self.fieldCheck(validEmail: validEmail,
+                                validUsername: validUsername)
                 return
             } else if !(isValidUsername(testStr: text)) {
                 self.usernameErrorLabel.text = self.usernameInvalidCharacters
                 self.usernameErrorLabel.isHidden = false
                 self.usernameErrorLabel.textColor = .red
                 self.validUsername = false
-                self.fieldCheck(validEmail: validEmail, validUsername: validUsername)
+                self.fieldCheck(validEmail: validEmail,
+                                validUsername: validUsername)
                 return
             }
             
@@ -124,18 +145,21 @@ class UsernameEmailController: RegisterController {
                 }
                 
                 if data!["data"].boolValue { // username taken
-                    self.usernameErrorLabel.text = "\(text) \(self.usernameTakenMessage)"
+                    self.usernameErrorLabel.text = "\(text) " +
+                                        "\(self.usernameTakenMessage)"
                     self.usernameErrorLabel.isHidden = false
                     self.usernameErrorLabel.textColor = .red
                     self.validUsername = false
                 } else { // username available
-                    self.usernameErrorLabel.text = "\(text) \(self.usernameAvailableMessage)"
+                    self.usernameErrorLabel.text = "\(text) " +
+                                        "\(self.usernameAvailableMessage)"
                     self.usernameErrorLabel.isHidden = false
                     self.usernameErrorLabel.textColor = .green
                     self.validUsername = true
                 }
                 self.usernameActivityIndicator.stopAnimating()
-                self.fieldCheck(validEmail: self.validEmail, validUsername: self.validUsername)
+                self.fieldCheck(validEmail: self.validEmail,
+                                validUsername: self.validUsername)
             }
         }
     }
@@ -149,7 +173,8 @@ class UsernameEmailController: RegisterController {
                 self.emailErrorLabel.isHidden = false
                 self.emailErrorLabel.textColor = .red
                 self.validEmail = false
-                self.fieldCheck(validEmail: validEmail, validUsername: validUsername)
+                self.fieldCheck(validEmail: validEmail,
+                                validUsername: validUsername)
                 return
             }
             
@@ -176,7 +201,8 @@ class UsernameEmailController: RegisterController {
                     self.validEmail = true
                 }
                 self.emailActivityIndicator.stopAnimating()
-                self.fieldCheck(validEmail: self.validEmail, validUsername: self.validUsername)
+                self.fieldCheck(validEmail: self.validEmail,
+                                validUsername: self.validUsername)
             }
         }
     }

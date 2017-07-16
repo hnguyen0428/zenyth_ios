@@ -15,7 +15,9 @@ extension UIViewController {
         let border = CALayer()
         let width = CGFloat(1.0)
         border.borderColor = UIColor.lightGray.cgColor
-        border.frame = CGRect(x: 0, y: textField.frame.size.height - width, width:  textField.frame.size.width, height: textField.frame.size.height)
+        border.frame = CGRect(x: 0, y: textField.frame.size.height - width,
+                              width:  textField.frame.size.width,
+                              height: textField.frame.size.height)
         
         border.borderWidth = 1
         textField.layer.addSublayer(border)
@@ -26,10 +28,13 @@ extension UIViewController {
      */
     func displayAlert(view: UIViewController, title: String, message: String) {
         // create the alert
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: title, message: message,
+                                      preferredStyle: UIAlertControllerStyle.alert)
         
         // add an action (button)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        alert.addAction(UIAlertAction(title: "OK",
+                                      style: UIAlertActionStyle.default,
+                                      handler: nil))
         
         // show the alert
         view.present(alert, animated: true, completion: nil)

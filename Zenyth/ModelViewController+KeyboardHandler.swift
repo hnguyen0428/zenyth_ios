@@ -13,7 +13,8 @@ extension ModelViewController {
     /* Hides keyboard when clicking outside of the keyboard
      */
     func hideKeyboardWhenTappedAround() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ModelViewController.dismissKeyboard))
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
+                        action: #selector(ModelViewController.dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }
@@ -29,8 +30,10 @@ extension ModelViewController {
      */
     func keyboardWillShow(notification:NSNotification) {
     
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            scrollView.contentSize.height = view.frame.height + keyboardSize.height
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey]
+                                as? NSValue)?.cgRectValue {
+            scrollView.contentSize.height =
+                            view.frame.height + keyboardSize.height
         }
         
     }
@@ -39,8 +42,10 @@ extension ModelViewController {
      */
     func keyboardWillHide(notification:NSNotification) {
     
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            scrollView.contentSize.height = scrollView.contentSize.height - keyboardSize.height
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey]
+                                as? NSValue)?.cgRectValue {
+            scrollView.contentSize.height =
+                            scrollView.contentSize.height - keyboardSize.height
         }
         
     }

@@ -20,16 +20,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     var window: UIWindow?
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions:
+        [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         // Twitter auth
         // Fabric.with([Twitter.self])
 
-        GIDSignIn.sharedInstance().clientID = "726843823228-983fiv45v8m39aoslobaiiqqipvvm2lf.apps.googleusercontent.com"
+        GIDSignIn.sharedInstance().clientID =
+        "726843823228-983fiv45v8m39aoslobaiiqqipvvm2lf.apps.googleusercontent.com"
         GIDSignIn.sharedInstance().delegate = self
         
         // converted from original objective C
-        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        FBSDKApplicationDelegate.sharedInstance().application(application,
+                                didFinishLaunchingWithOptions: launchOptions)
         
         // Twitter 
         // Twitter.sharedInstance().start(withConsumerKey:"KblBowxwd1VQruZvYEYG12Dsq", consumerSecret:"ikGB5s18LZrxjO5oDUP8fqU56xVuN5bzrsWJISWGl6DMeZPDoB")
@@ -38,7 +42,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         return true
     }
     
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
+              withError error: Error!) {
         if let err = error {
             print("Failed to log into Google: ", err)
             return
@@ -49,7 +54,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
         guard let accessToken = user.authentication.accessToken else { return }
 
-        let route = Route(method: .get, urlString: "https://www.googleapis.com/oauth2/v3/userinfo?access_token=\(accessToken)")
+        let route = Route(method: .get, urlString:
+            "https://www.googleapis.com/oauth2/v3/userinfo?access_token=" +
+            "\(accessToken)")
         
         let request = Requestor.init(route: route)
         
@@ -93,7 +100,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         let header: HTTPHeaders = [
             "Authorization": "bearer \(accessToken)"
         ]
-        let request = OauthLoginRequestor.init(parameters: parameters, header: header)
+        let request = OauthLoginRequestor.init(parameters: parameters,
+                                               header: header)
         
         request.getJSON { data, error in
 
@@ -131,13 +139,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         }
     }
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options:
+        [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
 
-        let handled = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String, annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+        let handled = FBSDKApplicationDelegate.sharedInstance().application(
+            app, open: url, sourceApplication:
+            options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String,
+            annotation: options[UIApplicationOpenURLOptionsKey.annotation])
         
         GIDSignIn.sharedInstance().handle(url,
-                                          sourceApplication:options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String,
-                                          annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+                                          sourceApplication:
+            options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String,
+            annotation: options[UIApplicationOpenURLOptionsKey.annotation])
         
        // Twitter.sharedInstance().application(app, open: url, options: options)
         

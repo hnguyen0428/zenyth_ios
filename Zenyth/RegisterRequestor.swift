@@ -10,7 +10,8 @@ import Alamofire
 import SwiftyJSON
 
 class RegisterRequestor: Requestor {
-    let registerRoute = Route(method: .post, urlString: "\(serverAddress)/api/register")
+    let registerRoute = Route(method: .post,
+                            urlString: "\(serverAddress)/api/register")
     
     init(parameters: Parameters) {
         super.init(route: self.registerRoute, parameters: parameters)
@@ -18,7 +19,8 @@ class RegisterRequestor: Requestor {
 }
 
 class EmailTakenRequestor: Requestor {
-    var emailTakenRoute = Route(method: .get, urlString: "\(serverAddress)/api/email_taken/%@")
+    var emailTakenRoute = Route(method: .get,
+                            urlString: "\(serverAddress)/api/email_taken/%@")
     
     init(email: String) {
         emailTakenRoute.urlString = String(format: emailTakenRoute.urlString, email)
@@ -27,10 +29,12 @@ class EmailTakenRequestor: Requestor {
 }
 
 class UsernameTakenRequestor: Requestor {
-    var usernameTakenRoute = Route(method: .get, urlString: "\(serverAddress)/api/username_taken/%@")
+    var usernameTakenRoute = Route(method: .get,
+                            urlString: "\(serverAddress)/api/username_taken/%@")
     
     init(username: String) {
-        usernameTakenRoute.urlString = String(format: usernameTakenRoute.urlString, username)
+        usernameTakenRoute.urlString = String(
+            format: usernameTakenRoute.urlString, username)
         super.init(route: usernameTakenRoute)
     }
 }

@@ -10,7 +10,8 @@ import Alamofire
 import SwiftyJSON
 
 class ProfileUpdateRequestor: Requestor {
-    let profileUpdateRoute = Route(method: .post, urlString: "\(serverAddress)/api/profile/update")
+    let profileUpdateRoute = Route(method: .post,
+                            urlString: "\(serverAddress)/api/profile/update")
     
     init(parameters: Parameters) {
         super.init(route: self.profileUpdateRoute, parameters: parameters,

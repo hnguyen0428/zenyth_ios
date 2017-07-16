@@ -39,7 +39,9 @@ class ModelViewController: UIViewController {
             // CHANGE: NO MAGIC NUMBER
             let width: CGFloat = 29.0
             let height: CGFloat = 52.0
-            let frame = CGRect(x: view.center.x - (width/2), y: view.center.y/3.5, width: width, height: height)
+            let frame = CGRect(x: view.center.x - (width/2),
+                               y: view.center.y/3.5, width: width,
+                               height: height)
             let imageView = UIImageView(frame: frame)
             imageView.image = #imageLiteral(resourceName: "Logo")
             return imageView

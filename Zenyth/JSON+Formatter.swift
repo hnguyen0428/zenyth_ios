@@ -14,7 +14,8 @@ extension JSON {
         get {
             switch self.type {
             case is String:
-                return Formatter.jsonDateFormatter.date(from: self.object as! String) as! NSDate
+                return Formatter.jsonDateFormatter.date(
+                    from: self.object as! String) as! NSDate
             default:
                 return nil
             }

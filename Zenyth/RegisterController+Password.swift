@@ -23,11 +23,19 @@ class PasswordController: RegisterController {
         
         setupViews()
         
-        passwordField.addTarget(self, action: #selector(timeBeforeCheck), for: .editingChanged)
-        confirmPasswordField.addTarget(self, action: #selector(timeBeforeCheck), for: .editingChanged)
+        passwordField.addTarget(self, action: #selector(timeBeforeCheck),
+                                for: .editingChanged)
+        confirmPasswordField.addTarget(self, action: #selector(timeBeforeCheck),
+                                       for: .editingChanged)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                selector: #selector(self.keyboardWillShow),
+                                name: NSNotification.Name.UIKeyboardWillShow,
+                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                selector: #selector(self.keyboardWillHide),
+                                name: NSNotification.Name.UIKeyboardWillHide,
+                                object: nil)
         
         for subview in view.subviews {
             if !(subview is UIScrollView) && !(subview is UIImageView) {
@@ -64,7 +72,9 @@ class PasswordController: RegisterController {
         passwordErrorLabel.isHidden = true
         confirmPasswordErrorLabel.isHidden = true
         
-        self.checkTimer = Timer.scheduledTimer(timeInterval: timeBetweenCheck, target: self, selector: #selector(checkValidPassword), userInfo: textField.text, repeats: false)
+        self.checkTimer = Timer.scheduledTimer(timeInterval: timeBetweenCheck,
+                        target: self, selector: #selector(checkValidPassword),
+                        userInfo: textField.text, repeats: false)
         
     }
     
@@ -85,7 +95,8 @@ class PasswordController: RegisterController {
         if password != "" {
             if isAlphaNumeric(testStr: password) { // is alpha numeric
                 let count = password.characters.count
-                if count > maximumPasswordLength || count < minimumPasswordLength {
+                if count > maximumPasswordLength ||
+                    count < minimumPasswordLength {
                     setErrorPassword("LengthError")
                     return
                 } // does not satisfy length requirement
@@ -148,7 +159,9 @@ class PasswordController: RegisterController {
         checkValidPassword(Timer.init())
     }
     
-    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+    func navigationController(_ navigationController: UINavigationController,
+                              willShow viewController: UIViewController,
+                              animated: Bool) {
         if let usernameEmailVC = viewController as? UsernameEmailController {
             usernameEmailVC.password = passwordField.text
             usernameEmailVC.confirmPassword = confirmPasswordField.text

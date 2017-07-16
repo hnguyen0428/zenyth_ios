@@ -51,9 +51,12 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
                     errorString.append(item.stringValue + "\n")
                 }
                 // strip the newline character at the end
-                errorString.remove(at: errorString.index(before: errorString.endIndex))
+                errorString.remove(at: errorString.index(
+                    before: errorString.endIndex)
+                )
                 
-                self.displayAlert(view: self, title: "Login Failed", message: errorString)
+                self.displayAlert(view: self, title: "Login Failed",
+                                  message: errorString)
                 
             }
             
@@ -64,19 +67,29 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         super.viewDidLoad()
         
         // The following is for the custom login button (may need to call set up views prior
-        fbButton.addTarget(self, action: #selector(handleCustomFBLogin), for: .touchUpInside)
+        fbButton.addTarget(self, action: #selector(handleCustomFBLogin),
+                           for: .touchUpInside)
         
         GIDSignIn.sharedInstance().uiDelegate = self
         
         // custom Google+
-        gplusButton.addTarget(self, action: #selector(handleCustomGoogleLogin), for: .touchUpInside)
+        gplusButton.addTarget(self, action: #selector(handleCustomGoogleLogin),
+                              for: .touchUpInside)
         
         setupViews()
-        usernameField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
-        passwordField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        usernameField.addTarget(self, action: #selector(editingChanged),
+                                for: .editingChanged)
+        passwordField.addTarget(self, action: #selector(editingChanged),
+                                for: .editingChanged)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                    selector:#selector(self.keyboardWillShow),
+                                    name: NSNotification.Name.UIKeyboardWillShow,
+                                    object: nil)
+        NotificationCenter.default.addObserver(self,
+                                    selector: #selector(self.keyboardWillHide),
+                                    name: NSNotification.Name.UIKeyboardWillHide,
+                                    object: nil)
         
         for subview in view.subviews {
             if !(subview is UIScrollView) && !(subview is UIImageView) {
@@ -93,7 +106,9 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
     }
     
     func handleCustomFBLogin() {
-        FBSDKLoginManager().logIn(withReadPermissions: ["email", "public_profile"], from: self) { (result, err) in
+        FBSDKLoginManager().logIn(withReadPermissions: ["email",
+                                                        "public_profile"],
+                                  from: self) { (result, err) in
             
             if err != nil {
                 
@@ -114,7 +129,8 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         guard let accessTokenString = accessToken?.tokenString else { return }
         
         print("Successfully logged in with facebook...")
-        FBSDKGraphRequest(graphPath: "/me", parameters: ["fields": "last_name, first_name, email, gender"])
+        FBSDKGraphRequest(graphPath: "/me", parameters:
+            ["fields": "last_name, first_name, email, gender"])
             .start { (connnection, result, err) in
             
             if err != nil {
@@ -180,7 +196,8 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         let header: HTTPHeaders = [
             "Authorization": "bearer \(accessToken)"
         ]
-        let request = OauthLoginRequestor.init(parameters: parameters, header: header)
+        let request = OauthLoginRequestor.init(parameters: parameters,
+                                               header: header)
         
         request.getJSON { data, error in
             
@@ -221,26 +238,39 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         super.viewWillDisappear(animated)
         
         // Show the navigation bar on other view controllers
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        self.navigationController?.setNavigationBarHidden(false,
+                                                          animated: animated)
         
         // Make the navigation bar transparent
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(),
+                                                                for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.view.backgroundColor = .clear
         
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: self.view.window)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: self.view.window)
+        NotificationCenter.default.removeObserver(self,
+                                name: NSNotification.Name.UIKeyboardWillHide,
+                                object: self.view.window)
+        NotificationCenter.default.removeObserver(self,
+                                name: NSNotification.Name.UIKeyboardWillShow,
+                                object: self.view.window)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // Hide the navigation bar on the this view controller
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        self.navigationController?.setNavigationBarHidden(true,
+                                                          animated: animated)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self,
+                            selector: #selector(self.keyboardWillShow),
+                            name: NSNotification.Name.UIKeyboardWillShow,
+                            object: nil)
+        NotificationCenter.default.addObserver(self,
+                            selector: #selector(self.keyboardWillHide),
+                            name: NSNotification.Name.UIKeyboardWillHide,
+                            object: nil)
     }
     
     /* Overridden rules for checking the field before enabling the button
