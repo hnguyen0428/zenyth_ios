@@ -13,7 +13,7 @@
         <scene sceneID="T8a-ue-YBr">
             <objects>
                 <navigationController id="xIJ-6R-G7F" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Jtg-om-rOh">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Jtg-om-rOh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -71,9 +71,6 @@
                                 <state key="normal" title="Log In">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="loginButtonAction:" destination="YHJ-xh-XnM" eventType="touchUpInside" id="Iaq-4t-Khg"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bTC-ce-nnH">
                                 <rect key="frame" x="0.0" y="632" width="115" height="27"/>
@@ -363,7 +360,6 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="registerButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="t8a-kp-tfG"/>
                                     <segue destination="ZxK-rV-BFn" kind="show" identifier="toGenderBirthday" id="BWh-4z-vK7"/>
                                 </connections>
                             </button>
@@ -418,10 +414,6 @@
                                 <state key="normal" title="Sign Up">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
-                                <connections>
-                                    <action selector="registerButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1To-iH-meK"/>
-                                    <action selector="signupButtonAction:" destination="ZxK-rV-BFn" eventType="touchUpInside" id="8uc-ap-hSy"/>
-                                </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Gender" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0Z7-VM-ntP">
                                 <rect key="frame" x="53" y="185" width="268" height="30"/>

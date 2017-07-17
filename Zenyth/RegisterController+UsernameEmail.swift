@@ -128,11 +128,10 @@ class UsernameEmailController: RegisterController {
         let text = usernameField.text ?? ""
         
         if text != "" {
-            if text.characters.count < minimumUsernameLength ||
-                text.characters.count > maximumUsernameLength {
+            if !(isValidLengthUsername(username: text)) {
                 self.setUsernameError("usernameLengthError")
                 return
-            } else if !(isValidUsername(testStr: text)) {
+            } else if !(isValidCharactersUsername(username: text)) {
                 self.setUsernameError("notAlphaNumericError")
                 return
             }
@@ -165,7 +164,7 @@ class UsernameEmailController: RegisterController {
         let text = emailField.text ?? ""
         
         if text != "" {
-            if !(isValidEmail(testStr: text)) {
+            if !(isValidEmail(email: text)) {
                 self.setEmailError("notEmailError")
                 return
             }
@@ -287,9 +286,7 @@ class UsernameEmailController: RegisterController {
         let indicator = requestLoading(view: self.view)
         
         request.getJSON { data, error in
-            indicator.stopAnimating()
-            self.view.isUserInteractionEnabled = true
-            self.view.mask = nil
+            self.requestDoneLoading(view: self.view, indicator: indicator)
             
             if (error != nil) {
                 return
@@ -326,9 +323,7 @@ class UsernameEmailController: RegisterController {
         let indicator = requestLoading(view: self.view)
         
         request.getJSON { data, error in
-            indicator.stopAnimating()
-            self.view.isUserInteractionEnabled = true
-            self.view.mask = nil
+            self.requestDoneLoading(view: self.view, indicator: indicator)
             
             if (error != nil) {
                 return

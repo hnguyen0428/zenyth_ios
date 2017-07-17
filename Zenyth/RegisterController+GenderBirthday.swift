@@ -19,7 +19,7 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate,
     @IBOutlet weak var dobField: UITextField!
     @IBOutlet weak var signupButton: UIButton!
     
-    @IBAction func signupButtonAction(_ sender: UIButton) {
+    func signupButtonAction(_ sender: UIButton) {
         
         if self.notOfAge() {
             self.displayAlert(view: self, title: "Not Eligible",
@@ -41,9 +41,7 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate,
         let indicator = requestLoading(view: self.view)
         
         request.getJSON { data, error in
-            indicator.stopAnimating()
-            self.view.isUserInteractionEnabled = true
-            self.view.mask = nil
+            self.requestDoneLoading(view: self.view, indicator: indicator)
             if (error != nil) {
                 return
             }
@@ -86,6 +84,8 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        signupButton.addTarget(self, action: #selector(signupButtonAction),
+                               for: .touchUpInside)
         setupViews()
     }
     

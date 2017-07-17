@@ -29,12 +29,12 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
     
     var oauthJSON: JSON? = nil
     
-    @IBAction func loginButtonAction(_ sender: UIButton) {
+    func loginButtonAction(_ sender: UIButton) {
         var key = ""
         let text = usernameField.text!
-        if self.isValidEmail(testStr: text) {
+        if self.isValidEmail(email: text) {
             key = "email"
-        } else if self.isValidUsername(testStr: text) {
+        } else if self.isValidCharactersUsername(username: text) {
             key = "username"
         }
         let parameters: Parameters = [
@@ -44,8 +44,9 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         
         let request = LoginRequestor(parameters: parameters)
         
+        let indicator = requestLoading(view: self.view)
         request.getJSON { data, error in
-            
+            self.requestDoneLoading(view: self.view, indicator: indicator)
             if (error != nil) {
                 return
             }
@@ -87,14 +88,19 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         
         self.view.insertSubview(backgroundView, at: 0)
         
+        signinButton.addTarget(self, action: #selector(loginButtonAction),
+                               for: .touchUpInside)
+        
         // The following is for the custom login button 
         // (may need to call set up views prior)
         fbButton.addTarget(self, action: #selector(handleCustomFBLogin),
                            for: .touchUpInside)
         
         // REMOVE
-        fboauthButton.addTarget(self, action: #selector(logoutFB), for: .touchUpInside)
-        googleoauthButton.addTarget(self, action: #selector(logoutGoogle), for: .touchUpInside)
+        fboauthButton.addTarget(self, action: #selector(logoutFB),
+                                for: .touchUpInside)
+        googleoauthButton.addTarget(self, action: #selector(logoutGoogle),
+                                    for: .touchUpInside)
         
         GIDSignIn.sharedInstance().uiDelegate = self
         
@@ -278,8 +284,11 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
      */
     override func fieldCheck() {
         guard
-            let username = usernameField.text, !username.isEmpty,
-            let password = passwordField.text, !password.isEmpty
+            let usernameEmail = usernameField.text, !usernameEmail.isEmpty &&
+                                (isValidUsername(username: usernameEmail) ||
+                                    isValidEmail(email: usernameEmail)),
+            let password = passwordField.text, !password.isEmpty &&
+                            isValidPassword(password: password)
             else {
                 signinButton.isEnabled = false
                 signinButton.backgroundColor = disabledButtonColor

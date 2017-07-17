@@ -26,7 +26,8 @@ class ResetPasswordController: ModelViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        resetPasswordButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        resetPasswordButton.addTarget(self, action: #selector(buttonAction),
+                                      for: .touchUpInside)
         usernameEmailField.addTarget(self, action: #selector(timeBeforeCheck),
                              for: .editingChanged)
     }
@@ -46,9 +47,7 @@ class ResetPasswordController: ModelViewController {
         
         let indicator = requestLoading(view: self.view)
         request.getJSON { data, error in
-            indicator.stopAnimating()
-            self.view.isUserInteractionEnabled = true
-            self.view.mask = nil
+            self.requestDoneLoading(view: self.view, indicator: indicator)
             if (error != nil) {
                 return
             }
@@ -91,6 +90,9 @@ class ResetPasswordController: ModelViewController {
         
         let checkUsernameRequest = UsernameTakenRequestor.init(username: text)
         let checkEmailRequest = EmailTakenRequestor.init(email: text)
+        
+        // Dispatch group used to detect when all of the asynchronous requests
+        // finish
         let group = DispatchGroup()
         
         group.enter()

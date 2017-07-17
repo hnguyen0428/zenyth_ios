@@ -41,19 +41,32 @@ extension UIViewController {
         
     }
 
-    func isValidEmail(testStr:String) -> Bool {
+    func isValidEmail(email: String) -> Bool {
         // print("validate calendar: \(testStr)")
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
         
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluate(with: testStr)
+        return emailTest.evaluate(with: email)
     }
     
-    func isValidUsername(testStr:String) -> Bool {
+    func isValidLengthUsername(username: String) -> Bool {
+        let count = username.characters.count
+        if count < minimumUsernameLength || count > maximumUsernameLength {
+            return false
+        }
+        return true
+    }
+    
+    func isValidCharactersUsername(username: String) -> Bool {
         let usernameRegEx = "[A-Z0-9a-z_]*"
         
         let usernameTest = NSPredicate(format:"SELF MATCHES %@", usernameRegEx)
-        return usernameTest.evaluate(with: testStr)
+        return usernameTest.evaluate(with: username)
+    }
+    
+    func isValidUsername(username: String) -> Bool {
+        return isValidLengthUsername(username: username) &&
+                isValidCharactersUsername(username: username)
     }
     
     func isAlphaNumeric(testStr:String) -> Bool {
@@ -61,6 +74,19 @@ extension UIViewController {
         
         let test = NSPredicate(format:"SELF MATCHES %@", regEx)
         return test.evaluate(with: testStr)
+    }
+    
+    func isValidLengthPassword(password: String) -> Bool {
+        let count = password.characters.count
+        if count < minimumPasswordLength || count > maximumPasswordLength {
+            return false
+        }
+        return true
+    }
+    
+    func isValidPassword(password: String) -> Bool {
+        return isAlphaNumeric(testStr: password) &&
+                isValidLengthPassword(password: password)
     }
     
     func requestLoading(view: UIView) -> UIActivityIndicatorView {
@@ -75,6 +101,12 @@ extension UIViewController {
         view.addSubview(indicator)
         view.isUserInteractionEnabled = false
         return indicator
+    }
+    
+    func requestDoneLoading(view: UIView, indicator: UIActivityIndicatorView) {
+        indicator.stopAnimating()
+        view.isUserInteractionEnabled = true
+        view.mask = nil
     }
 
 }

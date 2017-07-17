@@ -32,12 +32,6 @@ class RegisterController: ModelViewController, UINavigationControllerDelegate {
     let signupSuccessfulMessage = "Signup Successful"
     let notOfAgeMessage = "You're too young!"
     
-    let minimumAge = 13
-    let minimumPasswordLength = 8
-    let maximumPasswordLength = 16
-    let minimumUsernameLength = 3
-    let maximumUsernameLength = 20
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }

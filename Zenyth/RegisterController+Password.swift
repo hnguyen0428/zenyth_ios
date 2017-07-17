@@ -83,9 +83,7 @@ class PasswordController: RegisterController {
         
         if password != "" {
             if isAlphaNumeric(testStr: password) { // is alpha numeric
-                let count = password.characters.count
-                if count > maximumPasswordLength ||
-                    count < minimumPasswordLength {
+                if !isValidLengthPassword(password: password) {
                     setErrorPassword("LengthError")
                     return
                 } // does not satisfy length requirement
