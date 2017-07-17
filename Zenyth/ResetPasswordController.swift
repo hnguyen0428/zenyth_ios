@@ -22,7 +22,7 @@ class ResetPasswordController: ModelViewController {
     }
     
     func buttonAction(_ button: UIButton) {
-        //ldksjgldkjgflksdhbjdlfs;djgdlfksjHELLO HAVE A NICE SUMMER HI THIS IS EMILY EMILY WROTE THIS CODE
+        // HELLO HAVE A NICE SUMMER HI THIS IS EMILY EMILY WROTE THIS CODE
     }
     
     func setupViews() {

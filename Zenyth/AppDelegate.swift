@@ -87,7 +87,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 self.googleOauthLogin(accessToken: accessToken)
             } else { // email is available
                 print("Email Available")
-                self.googleOauthRegister(json: json)
+                
+                // Access the storyboard and fetch an instance of the view controller
+                let storyboard = UIStoryboard(name: "Main", bundle: nil);
+                let viewController: UsernameEmailController = storyboard.instantiateViewController(withIdentifier: "UsernameEmailController") as! UsernameEmailController;
+                
+                // Then push that view controller onto the navigation stack
+                let rootViewController = self.window!.rootViewController as! UINavigationController;
+                rootViewController.pushViewController(viewController, animated: true);
+                viewController.oauthJSON = json
+                viewController.messageFromOauth = "changeButtonTargetGoogle"
             }
             
         }
@@ -114,28 +123,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 print("User: \(user)")
             }
 
-        }
-    }
-    
-    func googleOauthRegister(json: JSON) {
-        let parameters: Parameters = [
-            "username": "hoangGoogle",
-            "email": json["email"].stringValue,
-            "gender": json["gender"].stringValue,
-            "first_name": json["given_name"].stringValue,
-            "last_name": json["family_name"].stringValue
-        ]
-        let request = OauthRegisterRequestor.init(parameters: parameters)
-        
-        request.getJSON { data, error in
-            
-            if (error != nil) {
-                return
-            }
-
-            let user = User.init(json: data!)
-            print("User: \(user)")
-            
         }
     }
     

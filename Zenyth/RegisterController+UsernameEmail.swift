@@ -77,12 +77,19 @@ class UsernameEmailController: RegisterController {
             emailField.isUserInteractionEnabled = false
             validEmail = true
         }
-        if messageFromOauth == "changeButtonTarget" {
+        if messageFromOauth == "changeButtonTargetFB" {
             continueButton.removeTarget(self,
                                         action: #selector(toPasswordVC),
                                         for: .allEvents)
             continueButton.addTarget(self,
                                      action: #selector(oauthFBRegister),
+                                     for: .touchUpInside)
+        } else if messageFromOauth == "changeButtonTargetGoogle" {
+            continueButton.removeTarget(self,
+                                        action: #selector(toPasswordVC),
+                                        for: .allEvents)
+            continueButton.addTarget(self,
+                                     action: #selector(oauthGoogleRegister),
                                      for: .touchUpInside)
         }
     }
@@ -299,8 +306,46 @@ class UsernameEmailController: RegisterController {
                                           style: UIAlertActionStyle.default,
                                           handler: { action in
                 self.navigationController?.popToRootViewController(
-                                                animated: true
-                )
+                                                animated: true)
+            })
+            )
+            self.present(alert, animated: true, completion: nil)
+            
+        }
+    }
+    
+    func oauthGoogleRegister(_ button: UIButton) {
+        let parameters: Parameters = [
+            "username": usernameField.text!,
+            "email": oauthJSON!["email"].stringValue,
+            "gender": oauthJSON!["gender"].stringValue,
+            "first_name": oauthJSON!["given_name"].stringValue,
+            "last_name": oauthJSON!["family_name"].stringValue
+        ]
+        let request = OauthRegisterRequestor.init(parameters: parameters)
+        let indicator = requestLoading(view: self.view)
+        
+        request.getJSON { data, error in
+            indicator.stopAnimating()
+            self.view.isUserInteractionEnabled = true
+            self.view.mask = nil
+            
+            if (error != nil) {
+                return
+            }
+            
+            let user = User.init(json: data!)
+            print("User: \(user)")
+            let alert = UIAlertController(
+                title: self.signupSuccessfulMessage,
+                message: nil,
+                preferredStyle: UIAlertControllerStyle.alert
+            )
+            alert.addAction(UIAlertAction(title: "OK",
+                                          style: UIAlertActionStyle.default,
+                                          handler: { action in
+                self.navigationController?.popToRootViewController(
+                                                animated: true)
             })
             )
             self.present(alert, animated: true, completion: nil)

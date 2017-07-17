@@ -24,6 +24,8 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var signinButton: UIButton!
+    @IBOutlet weak var fboauthButton: UIButton!
+    @IBOutlet weak var googleoauthButton: UIButton!
     
     var oauthJSON: JSON? = nil
     
@@ -83,6 +85,10 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         fbButton.addTarget(self, action: #selector(handleCustomFBLogin),
                            for: .touchUpInside)
         
+        // REMOVE
+        fboauthButton.addTarget(self, action: #selector(logoutFB), for: .touchUpInside)
+        googleoauthButton.addTarget(self, action: #selector(logoutGoogle), for: .touchUpInside)
+        
         GIDSignIn.sharedInstance().uiDelegate = self
         
         // custom Google+
@@ -95,6 +101,17 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         passwordField.addTarget(self, action: #selector(editingChanged),
                                 for: .editingChanged)
         
+    }
+    
+    // REMOVE
+    func logoutFB() {
+        print("Logging out of FB")
+        FBSDKLoginManager().logOut()
+    }
+    
+    func logoutGoogle() {
+        print("Logging out of Google")
+        GIDSignIn.sharedInstance().signOut()
     }
     
     /* Setup images for the buttons and setups textfields
@@ -112,6 +129,12 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         signinButton.layer.cornerRadius = 20
         signinButton.isEnabled = false
         
+        fboauthButton.backgroundColor = disabledButtonColor
+        fboauthButton.layer.cornerRadius = 20
+        
+        googleoauthButton.backgroundColor = disabledButtonColor
+        googleoauthButton.layer.cornerRadius = 20
+        
         usernameField.autocorrectionType = UITextAutocorrectionType.no
         
         formatTextField(textField: usernameField)
@@ -126,7 +149,9 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
     
     func handleCustomFBLogin() {
         FBSDKLoginManager().logIn(withReadPermissions: ["email",
-                                                        "public_profile"],
+                                                        "public_profile",
+                                                        "user_birthday",
+                                                        "user_friends"],
                                   from: self) { (result, err) in
             if err != nil {
                 print ("FB login failed:", err ?? "")
@@ -145,7 +170,7 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         
         print("Successfully logged in with facebook...")
         FBSDKGraphRequest(graphPath: "/me", parameters:
-            ["fields": "last_name, first_name, email, gender"])
+            ["fields": "last_name, first_name, email, gender, birthday"])
             .start { (connnection, result, err) in
             
             if err != nil {
@@ -154,6 +179,7 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
                 return
             }
             let json = JSON(result)
+            print(json)
             self.oauthJSON = json
             self.fbOauthHandler(json: json, accessToken: accessTokenString)
             
@@ -182,28 +208,6 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
             
         }
         
-    }
-    
-    func oauthRegister(json: JSON) {
-        let parameters: Parameters = [
-            "username": "hoangFacebook",
-            "email": json["email"].stringValue,
-            "gender": json["gender"].stringValue,
-            "first_name": json["first_name"].stringValue,
-            "last_name": json["last_name"].stringValue
-        ]
-        let request = OauthRegisterRequestor.init(parameters: parameters)
-        
-        request.getJSON { data, error in
-            
-            if (error != nil) {
-                return
-            }
-            
-            let user = User.init(json: data!)
-            print("User: \(user)")
-            
-        }
     }
     
     func fbOauthLogin(accessToken: String) {
@@ -281,7 +285,7 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "oauthToUsernameSegue" {
             let resultVC = segue.destination as! UsernameEmailController
-            resultVC.messageFromOauth = "changeButtonTarget"
+            resultVC.messageFromOauth = "changeButtonTargetFB"
             resultVC.oauthJSON = self.oauthJSON
         }
     }
