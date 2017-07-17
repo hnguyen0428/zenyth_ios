@@ -277,16 +277,7 @@ class UsernameEmailController: RegisterController {
         ]
         let request = OauthRegisterRequestor.init(parameters: parameters)
         
-        let indicator = UIActivityIndicatorView(
-            activityIndicatorStyle: .whiteLarge
-        )
-        indicator.center = self.view.center
-        indicator.hidesWhenStopped = true
-        indicator.startAnimating()
-        self.view.mask = UIView(frame: self.view.frame)
-        self.view.mask?.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        self.view.addSubview(indicator)
-        self.view.isUserInteractionEnabled = false
+        let indicator = requestLoading(view: self.view)
         
         request.getJSON { data, error in
             indicator.stopAnimating()

@@ -62,5 +62,19 @@ extension UIViewController {
         let test = NSPredicate(format:"SELF MATCHES %@", regEx)
         return test.evaluate(with: testStr)
     }
+    
+    func requestLoading(view: UIView) -> UIActivityIndicatorView {
+        let indicator = UIActivityIndicatorView(
+            activityIndicatorStyle: .whiteLarge
+        )
+        indicator.center = view.center
+        indicator.hidesWhenStopped = true
+        indicator.startAnimating()
+        view.mask = UIView(frame: view.frame)
+        view.mask?.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        view.addSubview(indicator)
+        view.isUserInteractionEnabled = false
+        return indicator
+    }
 
 }

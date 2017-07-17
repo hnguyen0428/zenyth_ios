@@ -41,6 +41,7 @@
 		7341F9E163A96B05940B44E8 /* Pods_ZenythTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BB6326B7B70E7CF186F4AB1 /* Pods_ZenythTests.framework */; };
 		824F43211F15E84C00031672 /* TwitterKitManual in Resources */ = {isa = PBXBuildFile; fileRef = 824F43201F15E84C00031672 /* TwitterKitManual */; };
 		B99E2A49109EC15FB04613DB /* Pods_ZenythUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4950B87A454879669AE8F046 /* Pods_ZenythUITests.framework */; };
+		D23722701F1C8813004FFCFA /* ResetPasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D237226F1F1C8813004FFCFA /* ResetPasswordController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +107,7 @@
 		AF3772E19C15E48808910B4B /* Pods-ZenythUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZenythUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ZenythUITests/Pods-ZenythUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B91E4378161D72337CBFECA2 /* Pods-ZenythTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZenythTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZenythTests/Pods-ZenythTests.release.xcconfig"; sourceTree = "<group>"; };
 		CA4871FF56084440AE442D2C /* Pods-Zenyth.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zenyth.release.xcconfig"; path = "Pods/Target Support Files/Pods-Zenyth/Pods-Zenyth.release.xcconfig"; sourceTree = "<group>"; };
+		D237226F1F1C8813004FFCFA /* ResetPasswordController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordController.swift; sourceTree = "<group>"; };
 		DDF4603E6F5113638CE0C5ED /* Pods_Zenyth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Zenyth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F16B25EFAC48B67D0F6A64D0 /* Pods-ZenythUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZenythUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZenythUITests/Pods-ZenythUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -177,6 +179,7 @@
 				47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */,
 				47A9024B1F0B1F4400A1CEE8 /* LoginController.swift */,
 				47A745E81F16F7D000A88D5D /* ModelViewController.swift */,
+				D237226F1F1C8813004FFCFA /* ResetPasswordController.swift */,
 			);
 			name = StartingControllers;
 			sourceTree = "<group>";
@@ -583,6 +586,7 @@
 				47A745E41F16F5B500A88D5D /* UserRequestor.swift in Sources */,
 				47D9ECB71F19755A00E3EEE4 /* User.swift in Sources */,
 				47A745DF1F16F5B500A88D5D /* ProfileRequestor.swift in Sources */,
+				D23722701F1C8813004FFCFA /* ResetPasswordController.swift in Sources */,
 				47A745DE1F16F5B500A88D5D /* PinpostRequestor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
