@@ -13,4 +13,4 @@ let buttonColor = UIColor(r: 118, g: 113, b: 57)
 let disabledButtonColor = UIColor(r: 116, g: 112, b: 83)
 let background = #imageLiteral(resourceName: "background3")
 
-
+let timeBetweenCheck = 0.6

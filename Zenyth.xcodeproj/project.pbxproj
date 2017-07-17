@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3725D1DBA4E1D74C7627B484 /* Pods_Zenyth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDF4603E6F5113638CE0C5ED /* Pods_Zenyth.framework */; };
+		4717A9961F188C4300CDC924 /* OauthRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4717A9951F188C4300CDC924 /* OauthRequestor.swift */; };
+		47626DE51F1AF77600BB79DD /* JSON+Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47626DE41F1AF77600BB79DD /* JSON+Formatter.swift */; };
+		47626DE71F1AF77F00BB79DD /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47626DE61F1AF77F00BB79DD /* Formatter.swift */; };
 		47883CD51F16EC8B0008C7F3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 47883CD41F16EC8B0008C7F3 /* GoogleService-Info.plist */; };
 		47A745D41F16F59F00A88D5D /* APIRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745D31F16F59F00A88D5D /* APIRoutes.swift */; };
 		47A745D61F16F5A800A88D5D /* CommentRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745D51F16F5A800A88D5D /* CommentRequestor.swift */; };
@@ -22,18 +25,23 @@
 		47A745E91F16F7D000A88D5D /* ModelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745E81F16F7D000A88D5D /* ModelViewController.swift */; };
 		47A9024C1F0B1F4400A1CEE8 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A9024B1F0B1F4400A1CEE8 /* LoginController.swift */; };
 		47A9024E1F0B34C900A1CEE8 /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A9024D1F0B34C900A1CEE8 /* GlobalVariables.swift */; };
-		47ABAA041F0B7B7400FD479E /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47ABAA031F0B7B7400FD479E /* UIHelper.swift */; };
+		47ABAA041F0B7B7400FD479E /* UIViewController+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47ABAA031F0B7B7400FD479E /* UIViewController+Helper.swift */; };
 		47C622C91F0A341A003BBC16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622C81F0A341A003BBC16 /* AppDelegate.swift */; };
 		47C622CE1F0A341A003BBC16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47C622CC1F0A341A003BBC16 /* Main.storyboard */; };
 		47C622D01F0A341A003BBC16 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47C622CF1F0A341A003BBC16 /* Assets.xcassets */; };
 		47C622D31F0A341A003BBC16 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47C622D11F0A341A003BBC16 /* LaunchScreen.storyboard */; };
 		47C622DE1F0A341A003BBC16 /* ZenythTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622DD1F0A341A003BBC16 /* ZenythTests.swift */; };
 		47C622E91F0A341A003BBC16 /* ZenythUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622E81F0A341A003BBC16 /* ZenythUITests.swift */; };
-		47C622F71F0A347F003BBC16 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622F61F0A347F003BBC16 /* RegisterController.swift */; };
-		47D838CC1F10A99F000E9668 /* UIViewController+KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D838CB1F10A99F000E9668 /* UIViewController+KeyboardHandler.swift */; };
+		47C622F71F0A347F003BBC16 /* RegisterController+UsernameEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622F61F0A347F003BBC16 /* RegisterController+UsernameEmail.swift */; };
+		47D838CC1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */; };
+		47D9ECB71F19755A00E3EEE4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECB61F19755A00E3EEE4 /* User.swift */; };
+		47D9ECBA1F19C3C500E3EEE4 /* RegisterController+Password.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECB91F19C3C500E3EEE4 /* RegisterController+Password.swift */; };
+		47D9ECBC1F19C3E200E3EEE4 /* RegisterController+GenderBirthday.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECBB1F19C3E200E3EEE4 /* RegisterController+GenderBirthday.swift */; };
+		47D9ECC01F19E3D300E3EEE4 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECBF1F19E3D300E3EEE4 /* RegisterController.swift */; };
 		7341F9E163A96B05940B44E8 /* Pods_ZenythTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BB6326B7B70E7CF186F4AB1 /* Pods_ZenythTests.framework */; };
 		824F43211F15E84C00031672 /* TwitterKitManual in Resources */ = {isa = PBXBuildFile; fileRef = 824F43201F15E84C00031672 /* TwitterKitManual */; };
 		B99E2A49109EC15FB04613DB /* Pods_ZenythUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4950B87A454879669AE8F046 /* Pods_ZenythUITests.framework */; };
+		D23722701F1C8813004FFCFA /* ResetPasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D237226F1F1C8813004FFCFA /* ResetPasswordController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +62,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4717A9951F188C4300CDC924 /* OauthRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OauthRequestor.swift; sourceTree = "<group>"; };
+		47626DE41F1AF77600BB79DD /* JSON+Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSON+Formatter.swift"; sourceTree = "<group>"; };
+		47626DE61F1AF77F00BB79DD /* Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		47883CD41F16EC8B0008C7F3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		47A745D31F16F59F00A88D5D /* APIRoutes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRoutes.swift; sourceTree = "<group>"; };
 		47A745D51F16F5A800A88D5D /* CommentRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentRequestor.swift; sourceTree = "<group>"; };
@@ -68,7 +79,7 @@
 		47A745E81F16F7D000A88D5D /* ModelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelViewController.swift; sourceTree = "<group>"; };
 		47A9024B1F0B1F4400A1CEE8 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		47A9024D1F0B34C900A1CEE8 /* GlobalVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariables.swift; sourceTree = "<group>"; };
-		47ABAA031F0B7B7400FD479E /* UIHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
+		47ABAA031F0B7B7400FD479E /* UIViewController+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Helper.swift"; sourceTree = "<group>"; };
 		47C622C51F0A341A003BBC16 /* Zenyth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zenyth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47C622C81F0A341A003BBC16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		47C622CD1F0A341A003BBC16 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -81,8 +92,12 @@
 		47C622E41F0A341A003BBC16 /* ZenythUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZenythUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		47C622E81F0A341A003BBC16 /* ZenythUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZenythUITests.swift; sourceTree = "<group>"; };
 		47C622EA1F0A341A003BBC16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		47C622F61F0A347F003BBC16 /* RegisterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
-		47D838CB1F10A99F000E9668 /* UIViewController+KeyboardHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+KeyboardHandler.swift"; sourceTree = "<group>"; };
+		47C622F61F0A347F003BBC16 /* RegisterController+UsernameEmail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RegisterController+UsernameEmail.swift"; sourceTree = "<group>"; };
+		47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModelViewController+KeyboardHandler.swift"; sourceTree = "<group>"; };
+		47D9ECB61F19755A00E3EEE4 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		47D9ECB91F19C3C500E3EEE4 /* RegisterController+Password.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RegisterController+Password.swift"; sourceTree = "<group>"; };
+		47D9ECBB1F19C3E200E3EEE4 /* RegisterController+GenderBirthday.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RegisterController+GenderBirthday.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		47D9ECBF1F19E3D300E3EEE4 /* RegisterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
 		4950B87A454879669AE8F046 /* Pods_ZenythUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZenythUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BB6326B7B70E7CF186F4AB1 /* Pods_ZenythTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZenythTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		824F43201F15E84C00031672 /* TwitterKitManual */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TwitterKitManual; sourceTree = "<group>"; };
@@ -92,6 +107,7 @@
 		AF3772E19C15E48808910B4B /* Pods-ZenythUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZenythUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ZenythUITests/Pods-ZenythUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B91E4378161D72337CBFECA2 /* Pods-ZenythTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZenythTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZenythTests/Pods-ZenythTests.release.xcconfig"; sourceTree = "<group>"; };
 		CA4871FF56084440AE442D2C /* Pods-Zenyth.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zenyth.release.xcconfig"; path = "Pods/Target Support Files/Pods-Zenyth/Pods-Zenyth.release.xcconfig"; sourceTree = "<group>"; };
+		D237226F1F1C8813004FFCFA /* ResetPasswordController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordController.swift; sourceTree = "<group>"; };
 		DDF4603E6F5113638CE0C5ED /* Pods_Zenyth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Zenyth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F16B25EFAC48B67D0F6A64D0 /* Pods-ZenythUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZenythUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZenythUITests/Pods-ZenythUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -137,16 +153,19 @@
 		47883CD61F16F4C60008C7F3 /* APIRequests */ = {
 			isa = PBXGroup;
 			children = (
+				47A745DB1F16F5B500A88D5D /* Requestor.swift */,
 				47A745E51F16F64200A88D5D /* LoginRequestor.swift */,
 				47A745D71F16F5B500A88D5D /* PinpostRequestor.swift */,
 				47A745D81F16F5B500A88D5D /* ProfileRequestor.swift */,
 				47A745D91F16F5B500A88D5D /* RegisterRequestor.swift */,
 				47A745DA1F16F5B500A88D5D /* RelationshipRequestor.swift */,
-				47A745DB1F16F5B500A88D5D /* Requestor.swift */,
 				47A745DC1F16F5B500A88D5D /* ResetPasswordRequestor.swift */,
 				47A745DD1F16F5B500A88D5D /* UserRequestor.swift */,
 				47A745D51F16F5A800A88D5D /* CommentRequestor.swift */,
+				4717A9951F188C4300CDC924 /* OauthRequestor.swift */,
 				47A745D31F16F59F00A88D5D /* APIRoutes.swift */,
+				47626DE41F1AF77600BB79DD /* JSON+Formatter.swift */,
+				47626DE61F1AF77F00BB79DD /* Formatter.swift */,
 			);
 			name = APIRequests;
 			sourceTree = "<group>";
@@ -154,10 +173,13 @@
 		47A745E71F16F7B100A88D5D /* StartingControllers */ = {
 			isa = PBXGroup;
 			children = (
-				47D838CB1F10A99F000E9668 /* UIViewController+KeyboardHandler.swift */,
-				47C622F61F0A347F003BBC16 /* RegisterController.swift */,
+				47D9ECB81F19C37D00E3EEE4 /* RegisterControllers */,
+				47C622C81F0A341A003BBC16 /* AppDelegate.swift */,
+				47ABAA031F0B7B7400FD479E /* UIViewController+Helper.swift */,
+				47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */,
 				47A9024B1F0B1F4400A1CEE8 /* LoginController.swift */,
 				47A745E81F16F7D000A88D5D /* ModelViewController.swift */,
+				D237226F1F1C8813004FFCFA /* ResetPasswordController.swift */,
 			);
 			name = StartingControllers;
 			sourceTree = "<group>";
@@ -188,16 +210,15 @@
 		47C622C71F0A341A003BBC16 /* Zenyth */ = {
 			isa = PBXGroup;
 			children = (
+				47D9ECB51F19752E00E3EEE4 /* ObjectModels */,
 				47A745E71F16F7B100A88D5D /* StartingControllers */,
 				47883CD61F16F4C60008C7F3 /* APIRequests */,
 				82AFE11E1F0F16AD00605905 /* Zenyth.entitlements */,
-				47C622C81F0A341A003BBC16 /* AppDelegate.swift */,
 				47C622CC1F0A341A003BBC16 /* Main.storyboard */,
 				47C622CF1F0A341A003BBC16 /* Assets.xcassets */,
 				47C622D11F0A341A003BBC16 /* LaunchScreen.storyboard */,
 				47C622D41F0A341A003BBC16 /* Info.plist */,
 				47A9024D1F0B34C900A1CEE8 /* GlobalVariables.swift */,
-				47ABAA031F0B7B7400FD479E /* UIHelper.swift */,
 				47883CD41F16EC8B0008C7F3 /* GoogleService-Info.plist */,
 			);
 			path = Zenyth;
@@ -219,6 +240,25 @@
 				47C622EA1F0A341A003BBC16 /* Info.plist */,
 			);
 			path = ZenythUITests;
+			sourceTree = "<group>";
+		};
+		47D9ECB51F19752E00E3EEE4 /* ObjectModels */ = {
+			isa = PBXGroup;
+			children = (
+				47D9ECB61F19755A00E3EEE4 /* User.swift */,
+			);
+			name = ObjectModels;
+			sourceTree = "<group>";
+		};
+		47D9ECB81F19C37D00E3EEE4 /* RegisterControllers */ = {
+			isa = PBXGroup;
+			children = (
+				47C622F61F0A347F003BBC16 /* RegisterController+UsernameEmail.swift */,
+				47D9ECB91F19C3C500E3EEE4 /* RegisterController+Password.swift */,
+				47D9ECBB1F19C3E200E3EEE4 /* RegisterController+GenderBirthday.swift */,
+				47D9ECBF1F19E3D300E3EEE4 /* RegisterController.swift */,
+			);
+			name = RegisterControllers;
 			sourceTree = "<group>";
 		};
 		4BC0F9BA76D20C2BD243083A /* Pods */ = {
@@ -311,7 +351,7 @@
 				TargetAttributes = {
 					47C622C41F0A341A003BBC16 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = JGM83HBADX;
+						DevelopmentTeam = 4B5PEQM7U2;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -524,21 +564,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				47A745E01F16F5B500A88D5D /* RegisterRequestor.swift in Sources */,
+				47D9ECBA1F19C3C500E3EEE4 /* RegisterController+Password.swift in Sources */,
+				47D9ECC01F19E3D300E3EEE4 /* RegisterController.swift in Sources */,
 				47A745D41F16F59F00A88D5D /* APIRoutes.swift in Sources */,
 				47A745E61F16F64200A88D5D /* LoginRequestor.swift in Sources */,
+				47D9ECBC1F19C3E200E3EEE4 /* RegisterController+GenderBirthday.swift in Sources */,
+				47626DE71F1AF77F00BB79DD /* Formatter.swift in Sources */,
 				47A745E91F16F7D000A88D5D /* ModelViewController.swift in Sources */,
 				47A745E11F16F5B500A88D5D /* RelationshipRequestor.swift in Sources */,
-				47C622F71F0A347F003BBC16 /* RegisterController.swift in Sources */,
+				47C622F71F0A347F003BBC16 /* RegisterController+UsernameEmail.swift in Sources */,
 				47A9024C1F0B1F4400A1CEE8 /* LoginController.swift in Sources */,
 				47A9024E1F0B34C900A1CEE8 /* GlobalVariables.swift in Sources */,
-				47D838CC1F10A99F000E9668 /* UIViewController+KeyboardHandler.swift in Sources */,
+				47D838CC1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift in Sources */,
 				47A745E31F16F5B500A88D5D /* ResetPasswordRequestor.swift in Sources */,
-				47ABAA041F0B7B7400FD479E /* UIHelper.swift in Sources */,
+				47ABAA041F0B7B7400FD479E /* UIViewController+Helper.swift in Sources */,
 				47A745E21F16F5B500A88D5D /* Requestor.swift in Sources */,
+				47626DE51F1AF77600BB79DD /* JSON+Formatter.swift in Sources */,
 				47A745D61F16F5A800A88D5D /* CommentRequestor.swift in Sources */,
 				47C622C91F0A341A003BBC16 /* AppDelegate.swift in Sources */,
+				4717A9961F188C4300CDC924 /* OauthRequestor.swift in Sources */,
 				47A745E41F16F5B500A88D5D /* UserRequestor.swift in Sources */,
+				47D9ECB71F19755A00E3EEE4 /* User.swift in Sources */,
 				47A745DF1F16F5B500A88D5D /* ProfileRequestor.swift in Sources */,
+				D23722701F1C8813004FFCFA /* ResetPasswordController.swift in Sources */,
 				47A745DE1F16F5B500A88D5D /* PinpostRequestor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -695,10 +743,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Zenyth/Zenyth.entitlements;
-				DEVELOPMENT_TEAM = JGM83HBADX;
+				DEVELOPMENT_TEAM = 4B5PEQM7U2;
 				INFOPLIST_FILE = Zenyth/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "-05Industries.Zenyth";
+				PRODUCT_BUNDLE_IDENTIFIER = "-05Industries.Zenyth.Hoang";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -710,10 +758,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Zenyth/Zenyth.entitlements;
-				DEVELOPMENT_TEAM = JGM83HBADX;
+				DEVELOPMENT_TEAM = 4B5PEQM7U2;
 				INFOPLIST_FILE = Zenyth/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "-05Industries.Zenyth";
+				PRODUCT_BUNDLE_IDENTIFIER = "-05Industries.Zenyth.Hoang";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

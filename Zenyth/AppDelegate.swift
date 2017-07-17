@@ -8,8 +8,9 @@
 
 import UIKit
 import FBSDKCoreKit
-import Firebase
 import GoogleSignIn
+import Alamofire
+import SwiftyJSON
 //import TwitterKit
 //import Fabric
 
@@ -19,60 +20,124 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     var window: UIWindow?
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions:
+        [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         // Twitter auth
-     //   Fabric.with([Twitter.self])
-        
-        FirebaseApp.configure()
-        
-        // Google+
-        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
-        GIDSignIn.sharedInstance().delegate = self
+        // Fabric.with([Twitter.self])
 
+        GIDSignIn.sharedInstance().clientID =
+        "726843823228-983fiv45v8m39aoslobaiiqqipvvm2lf.apps.googleusercontent.com"
+        GIDSignIn.sharedInstance().delegate = self
         
         // converted from original objective C
-        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        FBSDKApplicationDelegate.sharedInstance().application(application,
+                                didFinishLaunchingWithOptions: launchOptions)
         
         // Twitter 
-       // Twitter.sharedInstance().start(withConsumerKey:"KblBowxwd1VQruZvYEYG12Dsq", consumerSecret:"ikGB5s18LZrxjO5oDUP8fqU56xVuN5bzrsWJISWGl6DMeZPDoB")
+        // Twitter.sharedInstance().start(withConsumerKey:"KblBowxwd1VQruZvYEYG12Dsq", consumerSecret:"ikGB5s18LZrxjO5oDUP8fqU56xVuN5bzrsWJISWGl6DMeZPDoB")
 
         
         return true
     }
     
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
+              withError error: Error!) {
         if let err = error {
             print("Failed to log into Google: ", err)
             return
         }
-        
-        print("Successfully logged into Google", user)
-        guard let idToken = user.authentication.idToken else { return }
+    
+        print("Successfully logged into Google")
+        // Perform any operations on signed in user here.
+
         guard let accessToken = user.authentication.accessToken else { return }
-        let credentials = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
+
+        let route = Route(method: .get, urlString:
+            "https://www.googleapis.com/oauth2/v3/userinfo?access_token=" +
+            "\(accessToken)")
         
-        print ("*************** CHECK ME OUT, GOOGLE TOKEN WHAT UPPPP", accessToken)
+        let request = Requestor.init(route: route)
         
-        Auth.auth().signIn(with: credentials, completion: { (user, error) in
-            if let err = error {
-                print("Failed to create a Firebase User with Google account: ", err)
+        request.getJSON { data, error in
+            
+            if (error != nil) {
                 return
             }
             
-            guard let uid = user?.uid else { return }
-            print("Successfully logged into Firebase with Google", uid)
-        })
+            self.googleOauthHandle(json: data!, accessToken: accessToken)
+            
+        }
+        
     }
     
-    
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+    func googleOauthHandle(json: JSON, accessToken: String) {
+        // Checks if email is taken
+        let request = EmailTakenRequestor.init(email: json["email"].stringValue)
+        
+        request.getJSON { data, error in
+            
+            if (error != nil) {
+                return
+            }
 
-        let handled = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String, annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+            if (data?["data"].boolValue)! { // email is taken
+                print("Email Taken")
+                self.googleOauthLogin(accessToken: accessToken)
+            } else { // email is available
+                print("Email Available")
+                
+                // Access the storyboard and fetch an instance of the view controller
+                let storyboard = UIStoryboard(name: "Main", bundle: nil);
+                let viewController: UsernameEmailController = storyboard.instantiateViewController(withIdentifier: "UsernameEmailController") as! UsernameEmailController;
+                
+                // Then push that view controller onto the navigation stack
+                let rootViewController = self.window!.rootViewController as! UINavigationController;
+                rootViewController.pushViewController(viewController, animated: true);
+                viewController.oauthJSON = json
+                viewController.messageFromOauth = "changeButtonTargetGoogle"
+            }
+            
+        }
+    }
+    
+    func googleOauthLogin(accessToken: String) {
+        let parameters: Parameters = [
+            "oauth_type": "google"
+        ]
+        let header: HTTPHeaders = [
+            "Authorization": "bearer \(accessToken)"
+        ]
+        let request = OauthLoginRequestor.init(parameters: parameters,
+                                               header: header)
+        
+        request.getJSON { data, error in
+
+            if (error != nil) {
+                return
+            }
+            
+            if (data?["success"].boolValue)! {
+                let user = User.init(json: data!)
+                print("User: \(user)")
+            }
+
+        }
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options:
+        [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+
+        let handled = FBSDKApplicationDelegate.sharedInstance().application(
+            app, open: url, sourceApplication:
+            options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String,
+            annotation: options[UIApplicationOpenURLOptionsKey.annotation])
         
         GIDSignIn.sharedInstance().handle(url,
-                                          sourceApplication:options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String,
-                                          annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+                                          sourceApplication:
+            options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String,
+            annotation: options[UIApplicationOpenURLOptionsKey.annotation])
         
        // Twitter.sharedInstance().application(app, open: url, options: options)
         

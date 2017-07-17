@@ -10,7 +10,8 @@ import Alamofire
 import SwiftyJSON
 
 class LoginRequestor: Requestor {
-    let loginRoute = Route(method: .post, urlString: "\(serverAddress)/api/login")
+    let loginRoute = Route(method: .post,
+                           urlString: "\(serverAddress)/api/login")
     
     init(parameters: Parameters) {
         super.init(route: self.loginRoute, parameters: parameters)
