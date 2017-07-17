@@ -24,12 +24,11 @@ class UsernameEmailController: RegisterController {
     var validEmail: Bool = false
     var validUsername: Bool = false
     var checkTimer: Timer? = nil
-    
+    var oauthJSON: JSON? = nil
+    var messageFromOauth: String? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupViews()
         
         // Add action for button to segue into PasswordController
         continueButton.addTarget(self, action: #selector(toPasswordVC),
@@ -41,6 +40,8 @@ class UsernameEmailController: RegisterController {
                                 for: .editingChanged)
         emailField.addTarget(self, action: #selector(timeBeforeCheck),
                              for: .editingChanged)
+        
+        setupViews()
         
         self.clearInfo()
     }
@@ -69,14 +70,25 @@ class UsernameEmailController: RegisterController {
         usernameActivityIndicator.transform = CGAffineTransform(
             scaleX: 0.75, y: 0.75
         )
+        
+        if let email = oauthJSON?["email"].string {
+            emailField.text = email
+            emailField.textColor = .lightGray
+            emailField.isUserInteractionEnabled = false
+            validEmail = true
+        }
+        if messageFromOauth == "changeButtonTarget" {
+            continueButton.removeTarget(self,
+                                        action: #selector(toPasswordVC),
+                                        for: .allEvents)
+            continueButton.addTarget(self,
+                                     action: #selector(oauthFBRegister),
+                                     for: .touchUpInside)
+        }
     }
     
     func toPasswordVC(_ button: UIButton) {
         self.performSegue(withIdentifier: "toPassword", sender: self)
-    }
-    
-    func oauthSegue(_ button: UIButton) {
-        
     }
     
     func timeBeforeCheck(_ textField: UITextField) {
@@ -252,6 +264,56 @@ class UsernameEmailController: RegisterController {
             resultVC.confirmPassword = confirmPassword
             resultVC.gender = gender
             resultVC.dateOfBirth = dateOfBirth
+        }
+    }
+    
+    func oauthFBRegister(_ button: UIButton) {
+        let parameters: Parameters = [
+            "username": usernameField.text!,
+            "email": oauthJSON!["email"].stringValue,
+            "gender": oauthJSON!["gender"].stringValue,
+            "first_name": oauthJSON!["first_name"].stringValue,
+            "last_name": oauthJSON!["last_name"].stringValue
+        ]
+        let request = OauthRegisterRequestor.init(parameters: parameters)
+        
+        let indicator = UIActivityIndicatorView(
+            activityIndicatorStyle: .whiteLarge
+        )
+        indicator.center = self.view.center
+        indicator.hidesWhenStopped = true
+        indicator.startAnimating()
+        self.view.mask = UIView(frame: self.view.frame)
+        self.view.mask?.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        self.view.addSubview(indicator)
+        self.view.isUserInteractionEnabled = false
+        
+        request.getJSON { data, error in
+            indicator.stopAnimating()
+            self.view.isUserInteractionEnabled = true
+            self.view.mask = nil
+            
+            if (error != nil) {
+                return
+            }
+            
+            let user = User.init(json: data!)
+            print("User: \(user)")
+            let alert = UIAlertController(
+                title: self.signupSuccessfulMessage,
+                message: nil,
+                preferredStyle: UIAlertControllerStyle.alert
+            )
+            alert.addAction(UIAlertAction(title: "OK",
+                                          style: UIAlertActionStyle.default,
+                                          handler: { action in
+                self.navigationController?.popToRootViewController(
+                                                animated: true
+                )
+            })
+            )
+            self.present(alert, animated: true, completion: nil)
+            
         }
     }
     

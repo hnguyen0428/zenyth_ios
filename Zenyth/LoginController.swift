@@ -25,6 +25,8 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var signinButton: UIButton!
     
+    var oauthJSON: JSON? = nil
+    
     @IBAction func loginButtonAction(_ sender: UIButton) {
         let parameters: Parameters = [
             "username" : usernameField.text!,
@@ -142,6 +144,7 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
                 return
             }
             let json = JSON(result)
+            self.oauthJSON = json
             self.fbOauthHandler(json: json, accessToken: accessTokenString)
             
         }
@@ -163,7 +166,8 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
                 self.fbOauthLogin(accessToken: accessToken)
             } else { // email is available
                 print("Email Available")
-                self.oauthRegister(json: json)
+                self.performSegue(withIdentifier: "oauthToUsernameSegue",
+                                  sender: self)
             }
             
         }
@@ -230,13 +234,6 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.view.backgroundColor = .clear
-        
-        NotificationCenter.default.removeObserver(self,
-                                name: NSNotification.Name.UIKeyboardWillHide,
-                                object: self.view.window)
-        NotificationCenter.default.removeObserver(self,
-                                name: NSNotification.Name.UIKeyboardWillShow,
-                                object: self.view.window)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -269,6 +266,14 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         }
         signinButton.isEnabled = true
         signinButton.backgroundColor = buttonColor
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "oauthToUsernameSegue" {
+            let resultVC = segue.destination as! UsernameEmailController
+            resultVC.messageFromOauth = "changeButtonTarget"
+            resultVC.oauthJSON = self.oauthJSON
+        }
     }
     
 }

@@ -224,7 +224,6 @@
                         <outlet property="usernameErrorLabel" destination="5C4-p3-UPs" id="rfv-8g-FLW"/>
                         <outlet property="usernameField" destination="sZx-XO-wX6" id="wwZ-az-DZv"/>
                         <segue destination="ND0-EQ-Ni7" kind="show" identifier="toPassword" id="3yf-T4-T0G"/>
-                        <segue destination="YHJ-xh-XnM" kind="show" identifier="oauthSegue" id="i2j-az-4ty"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -388,7 +387,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="76S-8z-txD"/>
-        <segue reference="i2j-az-4ty"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
 </document>
