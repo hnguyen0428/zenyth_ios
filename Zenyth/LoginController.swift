@@ -269,15 +269,6 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         // Hide the navigation bar on the this view controller
         self.navigationController?.setNavigationBarHidden(true,
                                                           animated: animated)
-        
-        NotificationCenter.default.addObserver(self,
-                            selector: #selector(self.keyboardWillShow),
-                            name: NSNotification.Name.UIKeyboardWillShow,
-                            object: nil)
-        NotificationCenter.default.addObserver(self,
-                            selector: #selector(self.keyboardWillHide),
-                            name: NSNotification.Name.UIKeyboardWillHide,
-                            object: nil)
     }
     
     /* Overridden rules for checking the field before enabling the button

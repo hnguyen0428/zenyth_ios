@@ -254,4 +254,8 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate,
         return age < minimumAge
     }
     
+    override func onPressingBack() {
+        self.navigationController?.popViewController(animated: false)
+    }
+    
 }

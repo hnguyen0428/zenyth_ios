@@ -45,6 +45,8 @@ class PasswordController: RegisterController {
         
         passwordErrorLabel.isHidden = true
         confirmPasswordErrorLabel.isHidden = true
+        
+        
     }
     
     func timeBeforeCheck(_ textField: UITextField) {
@@ -178,6 +180,10 @@ class PasswordController: RegisterController {
             resultVC.gender = gender
             resultVC.dateOfBirth = dateOfBirth
         }
+    }
+    
+    override func onPressingBack() {
+        self.navigationController?.popViewController(animated: false)
     }
     
 }

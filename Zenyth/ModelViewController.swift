@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ModelViewController: UIViewController {
+class ModelViewController: UIViewController, UITextFieldDelegate {
     
     var scrollView: UIScrollView!
     var backgroundView: UIImageView!
@@ -27,6 +27,13 @@ class ModelViewController: UIViewController {
                                 selector: #selector(self.keyboardWillHide),
                                 name: NSNotification.Name.UIKeyboardWillHide,
                                 object: nil)
+        
+        for subview in view.subviews {
+            if subview is UITextField {
+                let textField = subview as! UITextField
+                textField.delegate = self
+            }
+        }
         
         // Add all subviews to allow for scroll once the keyboard pops up
         for subview in view.subviews {
@@ -69,6 +76,19 @@ class ModelViewController: UIViewController {
         
         self.hideKeyboardWhenTappedAround()
         
+        let backButton: UIButton = {
+            let frame = CGRect(x: 0, y: 0, width: 15,
+                               height: 25)
+            let button = UIButton(frame: frame)
+            button.contentMode = .scaleAspectFill
+            button.backgroundColor = .clear
+            button.setImage(#imageLiteral(resourceName: "back"), for: .normal)
+            button.addTarget(self, action: #selector(onPressingBack),
+                             for: .touchUpInside)
+            return button
+        }()
+        let barButton = UIBarButtonItem(customView: backButton)
+        self.navigationItem.leftBarButtonItem = barButton
     }
     
     /* Checks if the textfields are all filled out corresponding to the
@@ -88,5 +108,21 @@ class ModelViewController: UIViewController {
     /* To be overridden by the class that extends from this class
      */
     func fieldCheck() {}
+    
+    func onPressingBack() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // Try to find next responder
+        if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
+            nextField.becomeFirstResponder()
+        }
+        else if let nextField = textField.superview?.viewWithTag(textField.tag - 1) as? UITextField {
+            nextField.becomeFirstResponder()
+        }
+        // Do not add a line break
+        return false
+    }
     
 }

@@ -90,11 +90,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 
                 // Access the storyboard and fetch an instance of the view controller
                 let storyboard = UIStoryboard(name: "Main", bundle: nil);
-                let viewController: UsernameEmailController = storyboard.instantiateViewController(withIdentifier: "UsernameEmailController") as! UsernameEmailController;
+                let viewController: UsernameEmailController =
+                    storyboard.instantiateViewController(
+                        withIdentifier: "UsernameEmailController")
+                        as! UsernameEmailController;
                 
                 // Then push that view controller onto the navigation stack
-                let rootViewController = self.window!.rootViewController as! UINavigationController;
-                rootViewController.pushViewController(viewController, animated: true);
+                let rootViewController = self.window!.rootViewController
+                    as! UINavigationController;
+                rootViewController.pushViewController(viewController,
+                                                      animated: true);
                 viewController.oauthJSON = json
                 viewController.messageFromOauth = "changeButtonTargetGoogle"
             }
