@@ -30,8 +30,15 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
     var oauthJSON: JSON? = nil
     
     @IBAction func loginButtonAction(_ sender: UIButton) {
+        var key = ""
+        let text = usernameField.text!
+        if self.isValidEmail(testStr: text) {
+            key = "email"
+        } else if self.isValidUsername(testStr: text) {
+            key = "username"
+        }
         let parameters: Parameters = [
-            "username" : usernameField.text!,
+            key : usernameField.text!,
             "password" : passwordField.text!
         ]
         

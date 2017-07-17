@@ -31,7 +31,6 @@ class RegisterController: ModelViewController, UINavigationControllerDelegate {
     let checkEmailMessage = "Please Check Your Email"
     let signupSuccessfulMessage = "Signup Successful"
     let notOfAgeMessage = "You're too young!"
-    let timeBetweenCheck = 0.6
     
     let minimumAge = 13
     let minimumPasswordLength = 8
