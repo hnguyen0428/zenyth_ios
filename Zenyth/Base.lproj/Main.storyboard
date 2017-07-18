@@ -13,7 +13,7 @@
         <scene sceneID="T8a-ue-YBr">
             <objects>
                 <navigationController id="xIJ-6R-G7F" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Jtg-om-rOh">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Jtg-om-rOh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -120,33 +120,13 @@
                                     <segue destination="BYZ-38-t0r" kind="show" identifier="registerSegue" id="aNB-MO-Nk2"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="In6-zh-G1N">
-                                <rect key="frame" x="76" y="215" width="223" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <accessibility key="accessibilityConfiguration" identifier="logoutButton" label="logoutButton"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                                <state key="normal" title="Log Out FB">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dVv-y2-nAO">
-                                <rect key="frame" x="76" y="274" width="223" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <accessibility key="accessibilityConfiguration" identifier="logoutButtonGoogle" label="logoutButtonGoogle"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                                <state key="normal" title="Log Out Google">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="i2w-l2-lbg"/>
                     <connections>
                         <outlet property="fbButton" destination="KAn-gd-0u5" id="nTx-i9-J9R"/>
-                        <outlet property="fboauthButton" destination="In6-zh-G1N" id="QTL-eT-uEA"/>
                         <outlet property="forgotPasswordButton" destination="bTC-ce-nnH" id="jG7-XD-t0c"/>
-                        <outlet property="googleoauthButton" destination="dVv-y2-nAO" id="CUT-9c-xoW"/>
                         <outlet property="gplusButton" destination="qi3-fq-DwI" id="cFO-UK-fXh"/>
                         <outlet property="passwordField" destination="Qo8-jv-AD9" id="ld0-9f-vwU"/>
                         <outlet property="signinButton" destination="5Ot-Gs-4tb" id="Wm1-mK-Xzg"/>

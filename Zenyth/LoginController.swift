@@ -96,12 +96,6 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         fbButton.addTarget(self, action: #selector(handleCustomFBLogin),
                            for: .touchUpInside)
         
-        // REMOVE
-        fboauthButton.addTarget(self, action: #selector(logoutFB),
-                                for: .touchUpInside)
-        googleoauthButton.addTarget(self, action: #selector(logoutGoogle),
-                                    for: .touchUpInside)
-        
         GIDSignIn.sharedInstance().uiDelegate = self
         
         // custom Google+
@@ -114,17 +108,6 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         passwordField.addTarget(self, action: #selector(editingChanged),
                                 for: .editingChanged)
         
-    }
-    
-    // REMOVE
-    func logoutFB() {
-        print("Logging out of FB")
-        FBSDKLoginManager().logOut()
-    }
-    
-    func logoutGoogle() {
-        print("Logging out of Google")
-        GIDSignIn.sharedInstance().signOut()
     }
     
     /* Setup images for the buttons and setups textfields
@@ -170,12 +153,13 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
     }
     
     func handleCustomGoogleLogin() {
-    
+        GIDSignIn.sharedInstance().signOut()
         GIDSignIn.sharedInstance().signIn()
     
     }
     
     func handleCustomFBLogin() {
+        FBSDKLoginManager().logOut()
         FBSDKLoginManager().logIn(withReadPermissions: ["email",
                                                         "public_profile",
                                                         "user_birthday",
