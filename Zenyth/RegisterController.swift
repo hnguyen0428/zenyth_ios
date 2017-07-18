@@ -34,7 +34,6 @@ class RegisterController: ModelViewController, UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        backgroundView.isHidden = true
     }
     
     func clearInfo() {
@@ -46,4 +45,12 @@ class RegisterController: ModelViewController, UINavigationControllerDelegate {
         dateOfBirth = ""
     }
     
+    func printInfo() {
+        print(username)
+        print(email)
+        print(password)
+        print(confirmPassword)
+        print(gender)
+        print(dateOfBirth)
+    }
 }

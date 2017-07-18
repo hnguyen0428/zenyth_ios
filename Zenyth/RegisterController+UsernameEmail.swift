@@ -33,7 +33,7 @@ class UsernameEmailController: RegisterController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        backgroundView.isHidden = true
         // Add action for button to segue into PasswordController
         continueButton.addTarget(self, action: #selector(toPasswordVC),
                                  for: .touchUpInside)

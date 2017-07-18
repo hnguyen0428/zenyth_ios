@@ -14,7 +14,7 @@ import GoogleSignIn
 //import TwitterKit
 
 
-class LoginController: ModelViewController, GIDSignInUIDelegate {
+class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDelegate {
     
     @IBOutlet weak var fbButton: UIButton!
     @IBOutlet weak var gplusButton: UIButton!
@@ -29,6 +29,29 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
     @IBOutlet weak var passwordIcon: UIImageView!
     @IBOutlet weak var bars: UIImageView!
     @IBOutlet weak var logo: UIImageView!
+    
+    /* Signup View */
+    @IBOutlet weak var signupView: UIView!
+    @IBOutlet weak var textFieldOne: UITextField!
+    @IBOutlet weak var textFieldTwo: UITextField!
+    @IBOutlet weak var errorLabelOne: UILabel!
+    @IBOutlet weak var errorLabelTwo: UILabel!
+    @IBOutlet weak var indicatorOne: UIActivityIndicatorView!
+    @IBOutlet weak var indicatorTwo: UIActivityIndicatorView!
+    @IBOutlet weak var tabOne: UIButton!
+    @IBOutlet weak var tabTwo: UIButton!
+    @IBOutlet weak var tabThree: UIButton!
+    @IBOutlet weak var registerButton: UIButton!
+    @IBOutlet weak var hideButton: UIButton!
+    var mask: UIView?
+    var currentTab = 1
+    let genderData = ["", "Male", "Female", "Non-binary"]
+    var validUsername: Bool = false
+    var validEmail: Bool = false
+    var validPw: Bool = false
+    var checkTimer: Timer? = nil
+    
+    /* End Signup View */
     
     let facebookNoEmailMessage = "Your facebook account does not contain an " +
                         "email. Please make an account through our signup page"
@@ -109,10 +132,13 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
                               for: .touchUpInside)
         
         setupViews()
+        setupSignupView()
         usernameField.addTarget(self, action: #selector(editingChanged),
                                 for: .editingChanged)
         passwordField.addTarget(self, action: #selector(editingChanged),
                                 for: .editingChanged)
+        
+        signupButton.addTarget(self, action: #selector(showSignupView), for: .touchUpInside)
         
     }
     
@@ -137,12 +163,12 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         formatTextField(textField: usernameField, color: UIColor.gray.cgColor)
         formatTextField(textField: passwordField, color: UIColor.gray.cgColor)
         
-        scrollView.addSubview(passwordIcon)
-        scrollView.addSubview(userIcon)
-        scrollView.addSubview(userIconBorder)
-        scrollView.addSubview(passwordIconBorder)
-        scrollView.addSubview(bars)
-        scrollView.addSubview(logo)
+        scrollView.insertSubview(passwordIcon, belowSubview: signupView)
+        scrollView.insertSubview(userIcon, belowSubview: signupView)
+        scrollView.insertSubview(userIconBorder, belowSubview: signupView)
+        scrollView.insertSubview(passwordIconBorder, belowSubview: signupView)
+        scrollView.insertSubview(bars, belowSubview: signupView)
+        scrollView.insertSubview(logo, belowSubview: signupView)
         
         self.hideKeyboardWhenTappedAround()
     }
@@ -303,6 +329,29 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
             resultVC.oauthJSON = self.oauthJSON
             resultVC.fbToken = self.fbToken
         }
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView,
+                    numberOfRowsInComponent component: Int) -> Int {
+        return genderData.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int,
+                    forComponent component: Int) -> String? {
+        return genderData[row]
+    }
+    
+    /* Called whenever the user picks an item on the pickerview
+     */
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int,
+                    inComponent component: Int) {
+        self.gender = genderData[row]
+        textFieldOne.text = genderData[row]
+        checkAllFields()
     }
     
 }

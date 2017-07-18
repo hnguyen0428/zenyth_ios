@@ -33,6 +33,10 @@
 		47C622DE1F0A341A003BBC16 /* ZenythTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622DD1F0A341A003BBC16 /* ZenythTests.swift */; };
 		47C622E91F0A341A003BBC16 /* ZenythUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622E81F0A341A003BBC16 /* ZenythUITests.swift */; };
 		47C622F71F0A347F003BBC16 /* RegisterController+UsernameEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622F61F0A347F003BBC16 /* RegisterController+UsernameEmail.swift */; };
+		47CA09791F1E57A600EA2455 /* LoginController+Signup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CA09781F1E57A600EA2455 /* LoginController+Signup.swift */; };
+		47CA097B1F1E73BC00EA2455 /* TabThree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CA097A1F1E73BC00EA2455 /* TabThree.swift */; };
+		47CA097D1F1E75BE00EA2455 /* TabOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CA097C1F1E75BE00EA2455 /* TabOne.swift */; };
+		47CA097F1F1E75C700EA2455 /* TabTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CA097E1F1E75C700EA2455 /* TabTwo.swift */; };
 		47D838CC1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */; };
 		47D9ECB71F19755A00E3EEE4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECB61F19755A00E3EEE4 /* User.swift */; };
 		47D9ECBA1F19C3C500E3EEE4 /* RegisterController+Password.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECB91F19C3C500E3EEE4 /* RegisterController+Password.swift */; };
@@ -93,6 +97,10 @@
 		47C622E81F0A341A003BBC16 /* ZenythUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZenythUITests.swift; sourceTree = "<group>"; };
 		47C622EA1F0A341A003BBC16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		47C622F61F0A347F003BBC16 /* RegisterController+UsernameEmail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RegisterController+UsernameEmail.swift"; sourceTree = "<group>"; };
+		47CA09781F1E57A600EA2455 /* LoginController+Signup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LoginController+Signup.swift"; sourceTree = "<group>"; };
+		47CA097A1F1E73BC00EA2455 /* TabThree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabThree.swift; sourceTree = "<group>"; };
+		47CA097C1F1E75BE00EA2455 /* TabOne.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabOne.swift; sourceTree = "<group>"; };
+		47CA097E1F1E75C700EA2455 /* TabTwo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabTwo.swift; sourceTree = "<group>"; };
 		47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModelViewController+KeyboardHandler.swift"; sourceTree = "<group>"; };
 		47D9ECB61F19755A00E3EEE4 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		47D9ECB91F19C3C500E3EEE4 /* RegisterController+Password.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RegisterController+Password.swift"; sourceTree = "<group>"; };
@@ -257,6 +265,10 @@
 				47D9ECB91F19C3C500E3EEE4 /* RegisterController+Password.swift */,
 				47D9ECBB1F19C3E200E3EEE4 /* RegisterController+GenderBirthday.swift */,
 				47D9ECBF1F19E3D300E3EEE4 /* RegisterController.swift */,
+				47CA09781F1E57A600EA2455 /* LoginController+Signup.swift */,
+				47CA097A1F1E73BC00EA2455 /* TabThree.swift */,
+				47CA097C1F1E75BE00EA2455 /* TabOne.swift */,
+				47CA097E1F1E75C700EA2455 /* TabTwo.swift */,
 			);
 			name = RegisterControllers;
 			sourceTree = "<group>";
@@ -563,13 +575,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47CA097D1F1E75BE00EA2455 /* TabOne.swift in Sources */,
 				47A745E01F16F5B500A88D5D /* RegisterRequestor.swift in Sources */,
 				47D9ECBA1F19C3C500E3EEE4 /* RegisterController+Password.swift in Sources */,
 				47D9ECC01F19E3D300E3EEE4 /* RegisterController.swift in Sources */,
+				47CA097F1F1E75C700EA2455 /* TabTwo.swift in Sources */,
 				47A745D41F16F59F00A88D5D /* APIRoutes.swift in Sources */,
 				47A745E61F16F64200A88D5D /* LoginRequestor.swift in Sources */,
 				47D9ECBC1F19C3E200E3EEE4 /* RegisterController+GenderBirthday.swift in Sources */,
 				47626DE71F1AF77F00BB79DD /* Formatter.swift in Sources */,
+				47CA097B1F1E73BC00EA2455 /* TabThree.swift in Sources */,
+				47CA09791F1E57A600EA2455 /* LoginController+Signup.swift in Sources */,
 				47A745E91F16F7D000A88D5D /* ModelViewController.swift in Sources */,
 				47A745E11F16F5B500A88D5D /* RelationshipRequestor.swift in Sources */,
 				47C622F71F0A347F003BBC16 /* RegisterController+UsernameEmail.swift in Sources */,
