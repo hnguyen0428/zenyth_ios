@@ -91,8 +91,9 @@ extension UIViewController {
     
     func requestLoading(view: UIView) -> UIActivityIndicatorView {
         let indicator = UIActivityIndicatorView(
-            activityIndicatorStyle: .whiteLarge
+            activityIndicatorStyle: .gray
         )
+        indicator.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
         indicator.center = view.center
         indicator.hidesWhenStopped = true
         indicator.startAnimating()

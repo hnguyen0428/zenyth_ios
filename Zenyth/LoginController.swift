@@ -77,16 +77,16 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let backgroundView: UIImageView = {
-            let imageView = UIImageView(frame: view.frame)
-            imageView.image = background
-            imageView.contentMode = .scaleAspectFill
-            imageView.center = self.view.center
-            imageView.clipsToBounds = true
-            return imageView
-        }()
         
-        self.view.insertSubview(backgroundView, at: 0)
+        // Add observer that allows for scrolling once you enter keyboard mode
+        NotificationCenter.default.addObserver(self,
+                                    selector:#selector(self.keyboardWillShow),
+                                    name: NSNotification.Name.UIKeyboardWillShow,
+                                    object: nil)
+        NotificationCenter.default.addObserver(self,
+                                    selector: #selector(self.keyboardWillHide),
+                                    name: NSNotification.Name.UIKeyboardWillHide,
+                                    object: nil)
         
         signinButton.addTarget(self, action: #selector(loginButtonAction),
                                for: .touchUpInside)
@@ -130,6 +130,19 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
     /* Setup images for the buttons and setups textfields
      */
     func setupViews() {
+        let logoView: UIImageView = {
+            // CHANGE: NO MAGIC NUMBER
+            let width: CGFloat = 29.0
+            let height: CGFloat = 52.0
+            let frame = CGRect(x: self.view.center.x - (width/2),
+                               y: self.view.center.y/3.5, width: width,
+                               height: height)
+            let imageView = UIImageView(frame: frame)
+            imageView.image = #imageLiteral(resourceName: "Logo")
+            return imageView
+        }()
+        scrollView.addSubview(logoView)
+        
         fbButton.setImage(#imageLiteral(resourceName: "Facebook_Icon"), for: .normal)
         twitterButton.setImage(#imageLiteral(resourceName: "Twitter_Icon"), for: .normal)
         gplusButton.setImage(#imageLiteral(resourceName: "Google_Plus_Icon"), for: .normal)
@@ -138,20 +151,22 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         twitterButton.imageView?.contentMode = .scaleAspectFit
         gplusButton.imageView?.contentMode = .scaleAspectFit
         
-        signinButton.backgroundColor = disabledButtonColor
+        signinButton.backgroundColor = disabledBrown
         signinButton.layer.cornerRadius = 20
         signinButton.isEnabled = false
         
-        fboauthButton.backgroundColor = disabledButtonColor
+        fboauthButton.backgroundColor = disabledBrown
         fboauthButton.layer.cornerRadius = 20
         
-        googleoauthButton.backgroundColor = disabledButtonColor
+        googleoauthButton.backgroundColor = disabledBrown
         googleoauthButton.layer.cornerRadius = 20
         
         usernameField.autocorrectionType = UITextAutocorrectionType.no
         
         formatTextField(textField: usernameField)
         formatTextField(textField: passwordField)
+        
+        self.hideKeyboardWhenTappedAround()
     }
     
     func handleCustomGoogleLogin() {
@@ -282,7 +297,7 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
                             isValidPassword(password: password)
             else {
                 signinButton.isEnabled = false
-                signinButton.backgroundColor = disabledButtonColor
+                signinButton.backgroundColor = disabledBrown
                 return
         }
         signinButton.isEnabled = true

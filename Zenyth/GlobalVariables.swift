@@ -10,7 +10,9 @@ import LBTAComponents
 
 let twitterBlue = UIColor(r: 61, g: 167, b: 244)
 let buttonColor = UIColor(r: 118, g: 113, b: 57)
-let disabledButtonColor = UIColor(r: 116, g: 112, b: 83)
+let disabledButtonColor = UIColor(r: 185, g: 192, b: 200)
+let disabledBrown = UIColor(r: 116, g: 112, b: 83)
+let blueButtonColor = UIColor(r: 61, g: 167, b: 244)
 let background = #imageLiteral(resourceName: "background3")
 
 let timeBetweenCheck = 0.6

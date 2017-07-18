@@ -87,11 +87,12 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate,
         signupButton.addTarget(self, action: #selector(signupButtonAction),
                                for: .touchUpInside)
         setupViews()
+        genderField.becomeFirstResponder()
     }
     
     func setupViews() {
         signupButton.backgroundColor = disabledButtonColor
-        signupButton.layer.cornerRadius = 20
+        signupButton.layer.cornerRadius = 25
         signupButton.isEnabled = false
         
         formatTextField(textField: genderField)
@@ -110,23 +111,6 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate,
         let genderPicker = UIPickerView()
         genderField.inputView = genderPicker
         genderPicker.delegate = self
-        
-        // Create a done button on the toolbar on the picker
-        let toolBar = UIToolbar()
-        toolBar.sizeToFit()
-        toolBar.tintColor = UIColor.white
-        toolBar.barStyle = UIBarStyle.blackTranslucent
-        toolBar.backgroundColor = buttonColor
-        toolBar.isTranslucent = true
-        
-        let doneButton = UIBarButtonItem(
-            barButtonSystemItem: UIBarButtonSystemItem.done, target: self,
-            action: #selector(donePicker)
-        )
-        
-        toolBar.setItems([doneButton], animated: true)
-        
-        genderField.inputAccessoryView = toolBar
     }
     
     /* Setups the gender picker
@@ -137,32 +121,6 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate,
         datePicker.datePickerMode = UIDatePickerMode.date
         datePicker.addTarget(self, action: #selector(changeDOBValue),
                              for: .valueChanged)
-        
-        // Create a done button on the toolbar on the picker
-        let toolBar = UIToolbar()
-        toolBar.sizeToFit()
-        toolBar.tintColor = UIColor.white
-        toolBar.barStyle = UIBarStyle.blackTranslucent
-        toolBar.backgroundColor = buttonColor
-        toolBar.isTranslucent = true
-        
-        let doneButton = UIBarButtonItem(barButtonSystemItem:
-            UIBarButtonSystemItem.done, target: self,
-            action: #selector(donePicker)
-        )
-        
-        toolBar.setItems([doneButton], animated: true)
-        
-        dobField.inputAccessoryView = toolBar
-    }
-    
-    /* Clicking done closes the pickerview
-     */
-    func donePicker(sender: UIBarButtonItem) {
-        genderField.isUserInteractionEnabled = true
-        genderField.resignFirstResponder()
-        dobField.isUserInteractionEnabled = true
-        dobField.resignFirstResponder()
     }
     
     /* When picker is picked, the dateOfBirth variable is updated and the
@@ -234,7 +192,7 @@ class GenderBirthdayController: RegisterController, UIPickerViewDelegate,
                 return
         }
         signupButton.isEnabled = true
-        signupButton.backgroundColor = buttonColor
+        signupButton.backgroundColor = blueButtonColor
         
     }
     

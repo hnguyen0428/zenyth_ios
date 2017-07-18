@@ -30,6 +30,7 @@ class ResetPasswordController: ModelViewController {
                                       for: .touchUpInside)
         usernameEmailField.addTarget(self, action: #selector(timeBeforeCheck),
                              for: .editingChanged)
+        usernameEmailField.becomeFirstResponder()
     }
     
     func buttonAction(_ button: UIButton) {
@@ -59,11 +60,13 @@ class ResetPasswordController: ModelViewController {
     }
     
     func setupViews() {
+        backgroundView.isHidden = true
+        usernameEmailField.autocorrectionType = UITextAutocorrectionType.no
         formatTextField(textField: usernameEmailField)
         errorLabel.isHidden = true
         indicator.hidesWhenStopped = true
         resetPasswordButton.backgroundColor = disabledButtonColor
-        resetPasswordButton.layer.cornerRadius = 20
+        resetPasswordButton.layer.cornerRadius = 25
         resetPasswordButton.isEnabled = false
     }
     
@@ -136,7 +139,7 @@ class ResetPasswordController: ModelViewController {
     
     func setButtonEnable(_ toggle: Bool) {
         if toggle {
-            resetPasswordButton.backgroundColor = buttonColor
+            resetPasswordButton.backgroundColor = blueButtonColor
             resetPasswordButton.isEnabled = true
         } else {
             resetPasswordButton.backgroundColor = disabledButtonColor

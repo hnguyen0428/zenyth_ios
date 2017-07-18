@@ -26,6 +26,7 @@ class UsernameEmailController: RegisterController {
     var checkTimer: Timer? = nil
     var oauthJSON: JSON? = nil
     var messageFromOauth: String? = nil
+    let signupTitle = "Sign Up"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,11 +45,12 @@ class UsernameEmailController: RegisterController {
         setupViews()
         
         self.clearInfo()
+        usernameField.becomeFirstResponder()
     }
     
     func setupViews() {
         continueButton.backgroundColor = disabledButtonColor
-        continueButton.layer.cornerRadius = 20
+        continueButton.layer.cornerRadius = 25
         continueButton.isEnabled = false
         
         usernameField.autocorrectionType = UITextAutocorrectionType.no
@@ -84,6 +86,7 @@ class UsernameEmailController: RegisterController {
             continueButton.addTarget(self,
                                      action: #selector(oauthFBRegister),
                                      for: .touchUpInside)
+            continueButton.setTitle(signupTitle, for: .normal)
         } else if messageFromOauth == "changeButtonTargetGoogle" {
             continueButton.removeTarget(self,
                                         action: #selector(toPasswordVC),
@@ -91,6 +94,7 @@ class UsernameEmailController: RegisterController {
             continueButton.addTarget(self,
                                      action: #selector(oauthGoogleRegister),
                                      for: .touchUpInside)
+            continueButton.setTitle(signupTitle, for: .normal)
         }
     }
     
@@ -252,7 +256,7 @@ class UsernameEmailController: RegisterController {
     func fieldCheck(validEmail: Bool, validUsername: Bool) {
         if validEmail && validUsername {
             continueButton.isEnabled = true
-            continueButton.backgroundColor = buttonColor
+            continueButton.backgroundColor = blueButtonColor
         } else {
             continueButton.isEnabled = false
             continueButton.backgroundColor = disabledButtonColor

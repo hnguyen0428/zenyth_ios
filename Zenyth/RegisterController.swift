@@ -34,6 +34,7 @@ class RegisterController: ModelViewController, UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        backgroundView.isHidden = true
     }
     
     func clearInfo() {

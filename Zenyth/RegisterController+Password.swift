@@ -29,12 +29,13 @@ class PasswordController: RegisterController {
                                 for: .editingChanged)
         confirmPasswordField.addTarget(self, action: #selector(timeBeforeCheck),
                                        for: .editingChanged)
+        passwordField.becomeFirstResponder()
         
     }
     
     func setupViews() {
         continueButton.backgroundColor = disabledButtonColor
-        continueButton.layer.cornerRadius = 20
+        continueButton.layer.cornerRadius = 25
         continueButton.isEnabled = false
         
         formatTextField(textField: passwordField)
@@ -115,7 +116,7 @@ class PasswordController: RegisterController {
         passwordErrorLabel.isHidden = true
         confirmPasswordErrorLabel.isHidden = true
         continueButton.isEnabled = true
-        continueButton.backgroundColor = buttonColor
+        continueButton.backgroundColor = blueButtonColor
         
     }
     
