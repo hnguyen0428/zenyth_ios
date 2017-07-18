@@ -102,6 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                                                       animated: true);
                 viewController.oauthJSON = json
                 viewController.messageFromOauth = "changeButtonTargetGoogle"
+                viewController.googleToken = accessToken
             }
             
         }
@@ -116,16 +117,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         ]
         let request = OauthLoginRequestor.init(parameters: parameters,
                                                header: header)
-        
+        let rootViewController = self.window!.rootViewController
+            as! UINavigationController
+        let viewController = rootViewController.topViewController!
+        let indicator = viewController.requestLoading(view: viewController.view)
         request.getJSON { data, error in
-
+            viewController.requestDoneLoading(view: viewController.view,
+                                              indicator: indicator)
             if (error != nil) {
                 return
             }
             
             if (data?["success"].boolValue)! {
+                print(data)
                 let user = User.init(json: data!)
                 print("User: \(user)")
+            } else {
+                if (data?["data"]["merge_facebook"].boolValue)! {
+                    // TODO: prompts user to merge with facebook
+                } else if (data?["data"]["can_merge"].boolValue)! {
+                    // TODO: prompts user to merge with their created account
+                } else {
+                    print(data?["errors"])
+                }
             }
 
         }

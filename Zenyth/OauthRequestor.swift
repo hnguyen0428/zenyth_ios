@@ -13,8 +13,8 @@ class OauthRegisterRequestor: Requestor {
     let oauthRegisterRoute = Route(method: .post,
                             urlString: "\(serverAddress)/api/oauth/register")
     
-    init(parameters: Parameters) {
-        super.init(route: self.oauthRegisterRoute, parameters: parameters)
+    init(parameters: Parameters, header: HTTPHeaders) {
+        super.init(route: self.oauthRegisterRoute, header: header, parameters: parameters)
     }
 }
 

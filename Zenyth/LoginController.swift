@@ -24,10 +24,11 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var signinButton: UIButton!
-    @IBOutlet weak var fboauthButton: UIButton!
-    @IBOutlet weak var googleoauthButton: UIButton!
     
+    let facebookNoEmailMessage = "Your facebook account does not contain an " +
+                        "email. Please make an account through our signup page"
     var oauthJSON: JSON? = nil
+    var fbToken: String? = nil
     
     func loginButtonAction(_ sender: UIButton) {
         var key = ""
@@ -115,13 +116,13 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
     func setupViews() {
         let logoView: UIImageView = {
             // CHANGE: NO MAGIC NUMBER
-            let width: CGFloat = 29.0
+            let width: CGFloat = 52.0 * 2.44
             let height: CGFloat = 52.0
             let frame = CGRect(x: self.view.center.x - (width/2),
                                y: self.view.center.y/3.5, width: width,
                                height: height)
             let imageView = UIImageView(frame: frame)
-            imageView.image = #imageLiteral(resourceName: "Logo")
+            imageView.image = #imageLiteral(resourceName: "logo-1")
             return imageView
         }()
         scrollView.addSubview(logoView)
@@ -137,12 +138,6 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         signinButton.backgroundColor = disabledBrown
         signinButton.layer.cornerRadius = 20
         signinButton.isEnabled = false
-        
-        fboauthButton.backgroundColor = disabledBrown
-        fboauthButton.layer.cornerRadius = 20
-        
-        googleoauthButton.backgroundColor = disabledBrown
-        googleoauthButton.layer.cornerRadius = 20
         
         usernameField.autocorrectionType = UITextAutocorrectionType.no
         
@@ -179,6 +174,7 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         // not firAuth anymore
         let accessToken = FBSDKAccessToken.current()
         guard let accessTokenString = accessToken?.tokenString else { return }
+        self.fbToken = accessTokenString
         
         print("Successfully logged in with facebook...")
         FBSDKGraphRequest(graphPath: "/me", parameters:
@@ -191,7 +187,11 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
                 return
             }
             let json = JSON(result)
-            print(json)
+            if json["email"].string == nil {
+                self.displayAlert(view: self, title: "No Email",
+                                  message: self.facebookNoEmailMessage)
+            }
+            
             self.oauthJSON = json
             self.fbOauthHandler(json: json, accessToken: accessTokenString)
             
@@ -231,21 +231,29 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         ]
         let request = OauthLoginRequestor.init(parameters: parameters,
                                                header: header)
-        
+        let indicator = requestLoading(view: self.view)
         request.getJSON { data, error in
-            
+            self.requestDoneLoading(view: self.view, indicator: indicator)
             if (error != nil) {
                 return
             }
             
             if (data?["success"].boolValue)! {
+                print(data)
                 let user = User.init(json: data!)
                 print("User: \(user)")
+            } else {
+                if (data?["data"]["merge_google"].boolValue)! {
+                    // TODO: prompts user to merge with google
+                } else if (data?["data"]["can_merge"].boolValue)! {
+                    // TODO: prompts user to merge with their created account
+                } else {
+                    print(data?["errors"])
+                }
             }
             
         }
     }
-    
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -293,6 +301,7 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
             let resultVC = segue.destination as! UsernameEmailController
             resultVC.messageFromOauth = "changeButtonTargetFB"
             resultVC.oauthJSON = self.oauthJSON
+            resultVC.fbToken = self.fbToken
         }
     }
     

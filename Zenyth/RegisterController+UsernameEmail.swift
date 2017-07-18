@@ -28,6 +28,9 @@ class UsernameEmailController: RegisterController {
     var messageFromOauth: String? = nil
     let signupTitle = "Sign Up"
     
+    var fbToken: String? = nil
+    var googleToken: String? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -279,13 +282,18 @@ class UsernameEmailController: RegisterController {
     
     func oauthFBRegister(_ button: UIButton) {
         let parameters: Parameters = [
-            "username": usernameField.text!,
-            "email": oauthJSON!["email"].stringValue,
-            "gender": oauthJSON!["gender"].stringValue,
-            "first_name": oauthJSON!["first_name"].stringValue,
-            "last_name": oauthJSON!["last_name"].stringValue
+            "oauth_type" : "facebook",
+            "username" : usernameField.text!,
+            "email" : oauthJSON!["email"].stringValue,
+            "gender" : oauthJSON!["gender"].stringValue,
+            "first_name" : oauthJSON!["first_name"].stringValue,
+            "last_name" : oauthJSON!["last_name"].stringValue
         ]
-        let request = OauthRegisterRequestor.init(parameters: parameters)
+        let header: HTTPHeaders = [
+            "Authorization" : "bearer \(fbToken!)"
+        ]
+        let request = OauthRegisterRequestor.init(parameters: parameters,
+                                                  header: header)
         
         let indicator = requestLoading(view: self.view)
         
@@ -317,13 +325,18 @@ class UsernameEmailController: RegisterController {
     
     func oauthGoogleRegister(_ button: UIButton) {
         let parameters: Parameters = [
-            "username": usernameField.text!,
-            "email": oauthJSON!["email"].stringValue,
-            "gender": oauthJSON!["gender"].stringValue,
-            "first_name": oauthJSON!["given_name"].stringValue,
-            "last_name": oauthJSON!["family_name"].stringValue
+            "oauth_type" : "google",
+            "username" : usernameField.text!,
+            "email" : oauthJSON!["email"].stringValue,
+            "gender" : oauthJSON!["gender"].stringValue,
+            "first_name" : oauthJSON!["given_name"].stringValue,
+            "last_name" : oauthJSON!["family_name"].stringValue
         ]
-        let request = OauthRegisterRequestor.init(parameters: parameters)
+        let header: HTTPHeaders = [
+            "Authorization" : "bearer \(googleToken!)"
+        ]
+        let request = OauthRegisterRequestor.init(parameters: parameters,
+                                                  header: header)
         let indicator = requestLoading(view: self.view)
         
         request.getJSON { data, error in
