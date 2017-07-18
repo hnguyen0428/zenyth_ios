@@ -7,14 +7,16 @@
 //
 
 import LBTAComponents
+import UIKit
 
 extension UIViewController {
     /* Format textfield so that it has only the line on the bottom
      */
-    func formatTextField(textField: UITextField) {
+    func formatTextField(textField: UITextField,
+                         color: CGColor = disabledButtonColor.cgColor) {
         let border = CALayer()
         let width = CGFloat(1.0)
-        border.borderColor = UIColor.lightGray.cgColor
+        border.borderColor = color
         border.frame = CGRect(x: 0, y: textField.frame.size.height - width,
                               width:  textField.frame.size.width,
                               height: textField.frame.size.height)
@@ -22,6 +24,19 @@ extension UIViewController {
         border.borderWidth = 1
         textField.layer.addSublayer(border)
         textField.layer.masksToBounds = true
+    }
+    
+    func formatImageView(imageView: UIImageView) {
+        let border = CALayer()
+        let width = CGFloat(1.0)
+        border.borderColor = UIColor.gray.cgColor
+        border.frame = CGRect(x: 0, y: imageView.frame.size.height - width,
+                              width:  imageView.frame.size.width,
+                              height: imageView.frame.size.height)
+        
+        border.borderWidth = 1
+        imageView.layer.addSublayer(border)
+        imageView.layer.masksToBounds = true
     }
 
     /* Displays an alert with title and message and an OK button

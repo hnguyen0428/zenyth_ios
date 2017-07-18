@@ -18,12 +18,17 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
     
     @IBOutlet weak var fbButton: UIButton!
     @IBOutlet weak var gplusButton: UIButton!
-    @IBOutlet weak var twitterButton: UIButton!
     @IBOutlet weak var forgotPasswordButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var signinButton: UIButton!
+    @IBOutlet weak var userIconBorder: UIImageView!
+    @IBOutlet weak var passwordIconBorder: UIImageView!
+    @IBOutlet weak var userIcon: UIImageView!
+    @IBOutlet weak var passwordIcon: UIImageView!
+    @IBOutlet weak var bars: UIImageView!
+    @IBOutlet weak var logo: UIImageView!
     
     let facebookNoEmailMessage = "Your facebook account does not contain an " +
                         "email. Please make an account through our signup page"
@@ -114,35 +119,30 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
     /* Setup images for the buttons and setups textfields
      */
     func setupViews() {
-        let logoView: UIImageView = {
-            // CHANGE: NO MAGIC NUMBER
-            let width: CGFloat = 52.0 * 2.44
-            let height: CGFloat = 52.0
-            let frame = CGRect(x: self.view.center.x - (width/2),
-                               y: self.view.center.y/3.5, width: width,
-                               height: height)
-            let imageView = UIImageView(frame: frame)
-            imageView.image = #imageLiteral(resourceName: "logo-1")
-            return imageView
-        }()
-        scrollView.addSubview(logoView)
+        formatImageView(imageView: userIconBorder)
+        formatImageView(imageView: passwordIconBorder)
         
-        fbButton.setImage(#imageLiteral(resourceName: "Facebook_Icon"), for: .normal)
-        twitterButton.setImage(#imageLiteral(resourceName: "Twitter_Icon"), for: .normal)
-        gplusButton.setImage(#imageLiteral(resourceName: "Google_Plus_Icon"), for: .normal)
+        fbButton.imageView?.contentMode = .scaleAspectFill
+        gplusButton.imageView?.contentMode = .scaleAspectFill
         
-        fbButton.imageView?.contentMode = .scaleAspectFit
-        twitterButton.imageView?.contentMode = .scaleAspectFit
-        gplusButton.imageView?.contentMode = .scaleAspectFit
-        
-        signinButton.backgroundColor = disabledBrown
+        signinButton.backgroundColor = disabledButtonColor
         signinButton.layer.cornerRadius = 20
         signinButton.isEnabled = false
         
+        signupButton.backgroundColor = blueButtonColor
+        signupButton.layer.cornerRadius = 20
+        
         usernameField.autocorrectionType = UITextAutocorrectionType.no
         
-        formatTextField(textField: usernameField)
-        formatTextField(textField: passwordField)
+        formatTextField(textField: usernameField, color: UIColor.gray.cgColor)
+        formatTextField(textField: passwordField, color: UIColor.gray.cgColor)
+        
+        scrollView.addSubview(passwordIcon)
+        scrollView.addSubview(userIcon)
+        scrollView.addSubview(userIconBorder)
+        scrollView.addSubview(passwordIconBorder)
+        scrollView.addSubview(bars)
+        scrollView.addSubview(logo)
         
         self.hideKeyboardWhenTappedAround()
     }
@@ -289,11 +289,11 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
                             isValidPassword(password: password)
             else {
                 signinButton.isEnabled = false
-                signinButton.backgroundColor = disabledBrown
+                signinButton.backgroundColor = disabledButtonColor
                 return
         }
         signinButton.isEnabled = true
-        signinButton.backgroundColor = buttonColor
+        signinButton.backgroundColor = blueButtonColor
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
