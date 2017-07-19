@@ -13,6 +13,9 @@ import Alamofire
 extension LoginController {
     
     func setupSignupView() {
+        signupView.isHidden = true
+        self.view.addGestureRecognizer(panGesture)
+        panGesture.addTarget(self, action: #selector(hideSignupView))
         swipeRecognizer.addTarget(self, action: #selector(hideSignupView))
         formatTextField(textField: textFieldOne,
                         color: UIColor.darkGray.cgColor)
@@ -112,39 +115,81 @@ extension LoginController {
 
     
     func showSignupView(_ button: UIButton) {
-        let pointOfSeparation = self.view.frame.height - self.signupView.frame.height
-
+        signupView.isHidden = false
         mask = UIView(frame: self.view.frame)
         mask!.backgroundColor = UIColor.black.withAlphaComponent(0.7)
         self.view.addSubview(self.mask!)
-        UIView.animate(withDuration: 0.6, animations: {
+        self.showSignupViewHelper()
+    }
+    
+    func showSignupViewHelper(_ showKeyboard: Bool = true) {
+        let pointOfSeparation = self.view.frame.height - self.signupView.frame.height
+        UIView.animate(withDuration: 0.2, animations: {
             self.signupView.frame.origin.y = pointOfSeparation
             self.mask!.frame.origin.y = -self.signupView.frame.height
         }, completion: { bool in
-            self.textFieldOne.becomeFirstResponder()
+            if showKeyboard {
+                self.textFieldOne.becomeFirstResponder()
+            }
         })
         NotificationCenter.default.removeObserver(self,
-                                    name: NSNotification.Name.UIKeyboardWillShow,
-                                    object: nil)
+                                                  name: NSNotification.Name.UIKeyboardWillShow,
+                                                  object: nil)
         NotificationCenter.default.removeObserver(self,
-                                    name: NSNotification.Name.UIKeyboardWillHide,
-                                    object: nil)
+                                                  name: NSNotification.Name.UIKeyboardWillHide,
+                                                  object: nil)
     }
     
-    func hideSignupView(_ sender: UISwipeGestureRecognizer) {
+    func hideSignupView(_ sender: UIPanGestureRecognizer) {
         let location = sender.location(in: self.view)
-        let touchedView = self.view.hitTest(location, with: nil)
-        if touchedView == signupView {
-            return
+        let view = self.view.hitTest(location, with: nil)
+        
+        if sender.state == .began {
+            if view == signupView {
+                return
+            }
         }
-        hideSignupViewHelper()
+        
+        if sender.state == .changed {
+            if view == signupView {
+                return
+            }
+            let translation = sender.translation(in: self.view)
+            
+            // Check if swiping down
+            if grabbed || (location.y >= signupView.frame.origin.y && translation.y > 0) {
+                grabbed = true
+                sender.setTranslation(CGPoint.zero, in: self.view)
+                self.dismissKeyboard()
+                signupView.frame.origin.y = location.y
+                mask!.frame.origin.y = location.y - mask!.frame.height
+            }
+        }
+        // check where the signup view is at
+        if sender.state == .ended {
+            grabbed = false
+            let yCoord = signupView.frame.origin.y
+            let originalY = self.view.frame.height - signupView.frame.height
+            let velocityY = sender.velocity(in: self.view).y
+            
+            // If the swipe is long or fast enough it will hide
+            if velocityY > 3000.0 ||
+                (yCoord - originalY > signupView.frame.height * 0.60) {
+                hideSignupViewHelper()
+            } else { // Moves the signupView back to its original position
+                showSignupViewHelper(false)
+            }
+        }
+        
     }
     
     func hideSignupViewHelper() {
-        view.endEditing(true)
+        self.dismissKeyboard()
         mask?.removeFromSuperview()
-        UIView.animate(withDuration: 0.6, animations: {
+        UIView.animate(withDuration: 0.2, animations: {
             self.signupView.frame.origin.y = self.view.frame.height
+        }, completion: { bool in
+            self.signupView.isHidden = true
         })
         NotificationCenter.default.addObserver(self,
                                                selector:#selector(self.keyboardWillShow),

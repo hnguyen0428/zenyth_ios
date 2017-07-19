@@ -49,8 +49,10 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
     @IBOutlet weak var iconOneBorder: UIImageView!
     @IBOutlet weak var iconTwoBorder: UIImageView!
     @IBOutlet var swipeRecognizer: UISwipeGestureRecognizer!
+    @IBOutlet var panGesture: UIPanGestureRecognizer!
     
     var mask: UIView?
+    var grabbed: Bool = false
     let genderData = ["", "Male", "Female", "Non-binary"]
     var validUsername: Bool = false
     var validEmail: Bool = false
@@ -151,8 +153,8 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
     /* Setup images for the buttons and setups textfields
      */
     func setupViews() {
-        formatImageView(imageView: userIconBorder, color: UIColor.darkGray.cgColor)
-        formatImageView(imageView: passwordIconBorder, color: UIColor.darkGray.cgColor)
+        formatImageView(imageView: userIconBorder, color: UIColor.white.cgColor)
+        formatImageView(imageView: passwordIconBorder, color: UIColor.white.cgColor)
         
         fbButton.imageView?.contentMode = .scaleAspectFill
         gplusButton.imageView?.contentMode = .scaleAspectFill
@@ -166,8 +168,8 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
         
         usernameField.autocorrectionType = UITextAutocorrectionType.no
         
-        formatTextField(textField: usernameField, color: UIColor.darkGray.cgColor)
-        formatTextField(textField: passwordField, color: UIColor.darkGray.cgColor)
+        formatTextField(textField: usernameField, color: UIColor.white.cgColor)
+        formatTextField(textField: passwordField, color: UIColor.white.cgColor)
         
         scrollView.insertSubview(passwordIcon, belowSubview: signupView)
         scrollView.insertSubview(userIcon, belowSubview: signupView)
