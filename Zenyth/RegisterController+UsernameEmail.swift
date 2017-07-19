@@ -21,6 +21,10 @@ class UsernameEmailController: RegisterController {
     @IBOutlet weak var usernameActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var emailActivityIndicator: UIActivityIndicatorView!
     
+    @IBOutlet weak var userIcon: UIImageView!
+    @IBOutlet weak var userIconBorder: UIImageView!
+    @IBOutlet weak var mailIcon: UIImageView!
+    @IBOutlet weak var mailIconBorder: UIImageView!
     var validEmail: Bool = false
     var validUsername: Bool = false
     var checkTimer: Timer? = nil
@@ -34,9 +38,6 @@ class UsernameEmailController: RegisterController {
     override func viewDidLoad() {
         super.viewDidLoad()
         backgroundView.isHidden = true
-        // Add action for button to segue into PasswordController
-        continueButton.addTarget(self, action: #selector(toPasswordVC),
-                                 for: .touchUpInside)
         
         // Run a timer when user starts editing, once the timer ends, it will
         // trigger a method to check if username or email is valid
@@ -61,6 +62,11 @@ class UsernameEmailController: RegisterController {
         
         formatTextField(textField: usernameField)
         formatTextField(textField: emailField)
+        formatImageView(imageView: userIconBorder, color: disabledButtonColor.cgColor)
+        formatImageView(imageView: mailIconBorder, color: disabledButtonColor.cgColor)
+        
+        userIcon.image = #imageLiteral(resourceName: "user")
+        mailIcon.image = #imageLiteral(resourceName: "mail")
         
         usernameErrorLabel.isHidden = true
         emailErrorLabel.isHidden = true
@@ -83,26 +89,20 @@ class UsernameEmailController: RegisterController {
             validEmail = true
         }
         if messageFromOauth == "changeButtonTargetFB" {
-            continueButton.removeTarget(self,
-                                        action: #selector(toPasswordVC),
+            continueButton.removeTarget(nil, action: nil,
                                         for: .allEvents)
             continueButton.addTarget(self,
                                      action: #selector(oauthFBRegister),
                                      for: .touchUpInside)
             continueButton.setTitle(signupTitle, for: .normal)
         } else if messageFromOauth == "changeButtonTargetGoogle" {
-            continueButton.removeTarget(self,
-                                        action: #selector(toPasswordVC),
+            continueButton.removeTarget(nil, action: nil,
                                         for: .allEvents)
             continueButton.addTarget(self,
                                      action: #selector(oauthGoogleRegister),
                                      for: .touchUpInside)
             continueButton.setTitle(signupTitle, for: .normal)
         }
-    }
-    
-    func toPasswordVC(_ button: UIButton) {
-        self.performSegue(withIdentifier: "toPassword", sender: self)
     }
     
     func timeBeforeCheck(_ textField: UITextField) {
@@ -263,20 +263,6 @@ class UsernameEmailController: RegisterController {
         } else {
             continueButton.isEnabled = false
             continueButton.backgroundColor = disabledButtonColor
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Send info to the next page in order to retain the field's text
-        // when traversing between the registration pages
-        if segue.identifier == "toPassword" {
-            let resultVC = segue.destination  as! PasswordController
-            resultVC.username = usernameField.text
-            resultVC.email = emailField.text
-            resultVC.password = password
-            resultVC.confirmPassword = confirmPassword
-            resultVC.gender = gender
-            resultVC.dateOfBirth = dateOfBirth
         }
     }
     

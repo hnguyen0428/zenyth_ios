@@ -15,10 +15,12 @@ extension LoginController {
         enableButton(3)
         setupGenderPicker()
         setupDatePicker()
+        iconOne.image = #imageLiteral(resourceName: "gendericon")
+        iconTwo.image = #imageLiteral(resourceName: "calendar")
         enableSecureEntry(false)
         setTintColor(true)
-        textFieldOne.placeholder = "Gender"
-        textFieldTwo.placeholder = "Date of birth"
+        textLabelOne.text = "GENDER"
+        textLabelTwo.text = "DATE OF BIRTH"
         if let text = gender {
             textFieldOne.text = text
         }

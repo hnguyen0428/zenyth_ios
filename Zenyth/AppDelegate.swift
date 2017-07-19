@@ -19,7 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions:
         [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -84,7 +83,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
             if (data?["data"].boolValue)! { // email is taken
                 print("Email Taken")
-                self.googleOauthLogin(accessToken: accessToken)
+                self.googleOauthLogin(accessToken: accessToken, json: json)
             } else { // email is available
                 print("Email Available")
                 
@@ -108,7 +107,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         }
     }
     
-    func googleOauthLogin(accessToken: String) {
+    func googleOauthLogin(accessToken: String, json: JSON) {
         let parameters: Parameters = [
             "oauth_type": "google"
         ]
@@ -129,19 +128,65 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             }
             
             if (data?["success"].boolValue)! {
-                print(data)
                 let user = User.init(json: data!)
                 print("User: \(user)")
             } else {
                 if (data?["data"]["merge_facebook"].boolValue)! {
                     // TODO: prompts user to merge with facebook
+                    // create the alert
+                    let alert = UIAlertController(title: nil,
+                                                  message: RegisterController.mergeMessageFacebook,
+                                                  preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: nil))
+                    alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: {
+                        action in
+                        self.mergeAccount(accessToken: accessToken)
+                    }))
+                    viewController.present(alert, animated: true, completion: nil)
                 } else if (data?["data"]["can_merge"].boolValue)! {
                     // TODO: prompts user to merge with their created account
+                    let alert = UIAlertController(title: nil,
+                                                  message: RegisterController.mergeMessageRegular,
+                                                  preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: nil))
+                    alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: {
+                        action in
+                        self.mergeAccount(accessToken: accessToken)
+                    }))
+                    viewController.present(alert, animated: true, completion: nil)
                 } else {
                     print(data?["errors"])
                 }
             }
 
+        }
+    }
+    
+    func mergeAccount(accessToken: String) {
+        let parameters: Parameters = [
+            "oauth_type": "google",
+            "merge" : true
+        ]
+        let header: HTTPHeaders = [
+            "Authorization": "bearer \(accessToken)"
+        ]
+        let request = OauthLoginRequestor.init(parameters: parameters,
+                                               header: header)
+        let rootViewController = self.window!.rootViewController
+            as! UINavigationController
+        let viewController = rootViewController.topViewController!
+        let indicator = viewController.requestLoading(view: viewController.view)
+        request.getJSON { data, error in
+            viewController.requestDoneLoading(view: viewController.view,
+                                              indicator: indicator)
+            if error != nil {
+                return
+            }
+            
+            if (data?["success"].boolValue)! {
+                let user = User.init(json: data!)
+                print("User: \(user)")
+            }
         }
     }
     

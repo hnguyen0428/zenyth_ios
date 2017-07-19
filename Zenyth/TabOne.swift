@@ -14,11 +14,13 @@ extension LoginController {
         hideErrorLabel()
         enableButton(1)
         enableSecureEntry(false)
+        iconOne.image = #imageLiteral(resourceName: "user")
+        iconTwo.image = #imageLiteral(resourceName: "mail")
         setTintColor(false)
         textFieldOne.inputView = nil
         textFieldTwo.inputView = nil
-        textFieldOne.placeholder = "Username"
-        textFieldTwo.placeholder = "Email"
+        textLabelOne.text = "USERNAME"
+        textLabelTwo.text = "EMAIL"
         if let text = username {
             textFieldOne.text = text
         }

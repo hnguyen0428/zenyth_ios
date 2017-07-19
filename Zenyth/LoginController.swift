@@ -42,9 +42,15 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
     @IBOutlet weak var tabTwo: UIButton!
     @IBOutlet weak var tabThree: UIButton!
     @IBOutlet weak var registerButton: UIButton!
-    @IBOutlet weak var hideButton: UIButton!
+    @IBOutlet weak var textLabelOne: UILabel!
+    @IBOutlet weak var textLabelTwo: UILabel!
+    @IBOutlet weak var iconOne: UIImageView!
+    @IBOutlet weak var iconTwo: UIImageView!
+    @IBOutlet weak var iconOneBorder: UIImageView!
+    @IBOutlet weak var iconTwoBorder: UIImageView!
+    @IBOutlet var swipeRecognizer: UISwipeGestureRecognizer!
+    
     var mask: UIView?
-    var currentTab = 1
     let genderData = ["", "Male", "Female", "Non-binary"]
     var validUsername: Bool = false
     var validEmail: Bool = false
@@ -145,8 +151,8 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
     /* Setup images for the buttons and setups textfields
      */
     func setupViews() {
-        formatImageView(imageView: userIconBorder)
-        formatImageView(imageView: passwordIconBorder)
+        formatImageView(imageView: userIconBorder, color: UIColor.darkGray.cgColor)
+        formatImageView(imageView: passwordIconBorder, color: UIColor.darkGray.cgColor)
         
         fbButton.imageView?.contentMode = .scaleAspectFill
         gplusButton.imageView?.contentMode = .scaleAspectFill
@@ -160,8 +166,8 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
         
         usernameField.autocorrectionType = UITextAutocorrectionType.no
         
-        formatTextField(textField: usernameField, color: UIColor.gray.cgColor)
-        formatTextField(textField: passwordField, color: UIColor.gray.cgColor)
+        formatTextField(textField: usernameField, color: UIColor.darkGray.cgColor)
+        formatTextField(textField: passwordField, color: UIColor.darkGray.cgColor)
         
         scrollView.insertSubview(passwordIcon, belowSubview: signupView)
         scrollView.insertSubview(userIcon, belowSubview: signupView)
@@ -271,13 +277,56 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
             } else {
                 if (data?["data"]["merge_google"].boolValue)! {
                     // TODO: prompts user to merge with google
+                    let alert = UIAlertController(title: nil,
+                                                  message: RegisterController.mergeMessageGoogle,
+                                                  preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: nil))
+                    alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: {
+                        action in
+                        self.mergeAccount(accessToken: accessToken)
+                    }))
+                    self.present(alert, animated: true, completion: nil)
                 } else if (data?["data"]["can_merge"].boolValue)! {
                     // TODO: prompts user to merge with their created account
+                    let alert = UIAlertController(title: nil,
+                                                  message: RegisterController.mergeMessageRegular,
+                                                  preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: nil))
+                    alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: {
+                        action in
+                        self.mergeAccount(accessToken: accessToken)
+                    }))
+                    self.present(alert, animated: true, completion: nil)
                 } else {
                     print(data?["errors"])
                 }
             }
             
+        }
+    }
+    
+    func mergeAccount(accessToken: String) {
+        let parameters: Parameters = [
+            "oauth_type": "facebook",
+            "merge" : true
+        ]
+        let header: HTTPHeaders = [
+            "Authorization": "bearer \(accessToken)"
+        ]
+        let request = OauthLoginRequestor.init(parameters: parameters,
+                                               header: header)
+        let indicator = self.requestLoading(view: self.view)
+        request.getJSON { data, error in
+            self.requestDoneLoading(view: self.view,
+                                    indicator: indicator)
+            if error != nil {
+                return
+            }
+            
+            if (data?["success"].boolValue)! {
+                let user = User.init(json: data!)
+                print("User: \(user)")
+            }
         }
     }
     
@@ -352,6 +401,16 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
         self.gender = genderData[row]
         textFieldOne.text = genderData[row]
         checkAllFields()
+    }
+    
+    /* Clears all fields of registration
+     */
+    override func clearInfo() {
+        super.clearInfo()
+        clearTextFields()
+        self.validPw = false
+        self.validEmail = false
+        self.validUsername = false
     }
     
 }

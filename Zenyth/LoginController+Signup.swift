@@ -13,10 +13,20 @@ import Alamofire
 extension LoginController {
     
     func setupSignupView() {
-        formatTextField(textField: textFieldOne)
-        formatTextField(textField: textFieldTwo)
+        swipeRecognizer.addTarget(self, action: #selector(hideSignupView))
+        formatTextField(textField: textFieldOne,
+                        color: UIColor.darkGray.cgColor)
+        formatTextField(textField: textFieldTwo,
+                        color: UIColor.darkGray.cgColor)
+        formatImageView(imageView: iconOneBorder, color: UIColor.darkGray.cgColor)
+        formatImageView(imageView: iconTwoBorder, color: UIColor.darkGray.cgColor)
+        
         formatButton(button: tabOne)
         formatButton(button: tabTwo)
+        textFieldOne.autocorrectionType = UITextAutocorrectionType.no
+        textFieldTwo.autocorrectionType = UITextAutocorrectionType.no
+        textLabelOne.textColor = disabledButtonColor
+        textLabelTwo.textColor = disabledButtonColor
         
         registerButton.backgroundColor = disabledButtonColor
         registerButton.isEnabled = false
@@ -31,8 +41,6 @@ extension LoginController {
         indicatorTwo.transform = CGAffineTransform(
             scaleX: 0.75, y: 0.75
         )
-        hideButton.addTarget(self, action: #selector(hideSignupView),
-                             for: .touchUpInside)
         
         tabOne.addTarget(self, action: #selector(tabOneAction), for: .touchUpInside)
         tabTwo.addTarget(self, action: #selector(tabTwoAction), for: .touchUpInside)
@@ -78,7 +86,7 @@ extension LoginController {
                                               style: UIAlertActionStyle.default, handler: { action in
                     self.clearInfo()
                     self.clearTextFields()
-                    self.hideSignupView(UIButton())
+                    self.hideSignupViewHelper()
                     self.disableButton()
                 }))
                 self.present(alert, animated: true, completion: nil)
@@ -105,24 +113,47 @@ extension LoginController {
     
     func showSignupView(_ button: UIButton) {
         let pointOfSeparation = self.view.frame.height - self.signupView.frame.height
-        let frame: CGRect = CGRect(x: 0, y: 0, width: self.view.frame.width,
-                                   height: pointOfSeparation)
-        mask = UIView(frame: frame)
+
+        mask = UIView(frame: self.view.frame)
         mask!.backgroundColor = UIColor.black.withAlphaComponent(0.7)
-        
+        self.view.addSubview(self.mask!)
         UIView.animate(withDuration: 0.6, animations: {
             self.signupView.frame.origin.y = pointOfSeparation
+            self.mask!.frame.origin.y = -self.signupView.frame.height
         }, completion: { bool in
-            self.view.addSubview(self.mask!)
             self.textFieldOne.becomeFirstResponder()
         })
+        NotificationCenter.default.removeObserver(self,
+                                    name: NSNotification.Name.UIKeyboardWillShow,
+                                    object: nil)
+        NotificationCenter.default.removeObserver(self,
+                                    name: NSNotification.Name.UIKeyboardWillHide,
+                                    object: nil)
     }
     
-    func hideSignupView(_ button: UIButton) {
+    func hideSignupView(_ sender: UISwipeGestureRecognizer) {
+        let location = sender.location(in: self.view)
+        let touchedView = self.view.hitTest(location, with: nil)
+        if touchedView == signupView {
+            return
+        }
+        hideSignupViewHelper()
+    }
+    
+    func hideSignupViewHelper() {
+        view.endEditing(true)
         mask?.removeFromSuperview()
         UIView.animate(withDuration: 0.6, animations: {
             self.signupView.frame.origin.y = self.view.frame.height
         })
+        NotificationCenter.default.addObserver(self,
+                                               selector:#selector(self.keyboardWillShow),
+                                               name: NSNotification.Name.UIKeyboardWillShow,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.keyboardWillHide),
+                                               name: NSNotification.Name.UIKeyboardWillHide,
+                                               object: nil)
     }
     
     func tabOneAction(_ button: UIButton) {
@@ -148,19 +179,16 @@ extension LoginController {
             tabOne.backgroundColor = blueButtonColor
             tabTwo.backgroundColor = disabledButtonColor
             tabThree.backgroundColor = disabledButtonColor
-            currentTab = 1
         }
         else if identifier == 2 {
             tabOne.backgroundColor = disabledButtonColor
             tabTwo.backgroundColor = blueButtonColor
             tabThree.backgroundColor = disabledButtonColor
-            currentTab = 2
         }
         else if identifier == 3 {
             tabOne.backgroundColor = disabledButtonColor
             tabTwo.backgroundColor = disabledButtonColor
             tabThree.backgroundColor = blueButtonColor
-            currentTab = 3
         }
     }
     
@@ -171,21 +199,6 @@ extension LoginController {
         } else {
             textFieldOne.isSecureTextEntry = false
             textFieldTwo.isSecureTextEntry = false
-        }
-    }
-    
-    func saveInformation() {
-        if currentTab == 1 {
-            username = textFieldOne.text
-            email = textFieldTwo.text
-        }
-        else if currentTab == 2 {
-            password = textFieldOne.text
-            confirmPassword = textFieldTwo.text
-        }
-        else if currentTab == 3 {
-            gender = textFieldOne.text
-            dateOfBirth = textFieldTwo.text
         }
     }
     

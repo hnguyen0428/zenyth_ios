@@ -26,10 +26,11 @@ extension UIViewController {
         textField.layer.masksToBounds = true
     }
     
-    func formatImageView(imageView: UIImageView) {
+    func formatImageView(imageView: UIImageView,
+                         color: CGColor = UIColor.gray.cgColor) {
         let border = CALayer()
         let width = CGFloat(1.0)
-        border.borderColor = UIColor.gray.cgColor
+        border.borderColor = color
         border.frame = CGRect(x: 0, y: imageView.frame.size.height - width,
                               width:  imageView.frame.size.width,
                               height: imageView.frame.size.height)

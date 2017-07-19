@@ -32,6 +32,13 @@ class RegisterController: ModelViewController, UINavigationControllerDelegate {
     let signupSuccessfulMessage = "Signup Successful"
     let notOfAgeMessage = "You're too young!"
     
+    static let mergeMessageGoogle = "A Google account with the same email" +
+                        " has already been created. Do you want to merge?"
+    static let mergeMessageFacebook = "A Facebook account with the same email" +
+                        " has already been created. Do you want to merge?"
+    static let mergeMessageRegular = "An account with the same email" +
+                        " has already been created. Do you want to merge?"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -53,4 +60,5 @@ class RegisterController: ModelViewController, UINavigationControllerDelegate {
         print(gender)
         print(dateOfBirth)
     }
+    
 }
