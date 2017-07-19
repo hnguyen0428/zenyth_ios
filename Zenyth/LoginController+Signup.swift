@@ -16,7 +16,6 @@ extension LoginController {
         signupView.isHidden = true
         self.view.addGestureRecognizer(panGesture)
         panGesture.addTarget(self, action: #selector(hideSignupView))
-        swipeRecognizer.addTarget(self, action: #selector(hideSignupView))
         formatTextField(textField: textFieldOne,
                         color: UIColor.darkGray.cgColor)
         formatTextField(textField: textFieldTwo,
@@ -217,6 +216,7 @@ extension LoginController {
     func tabThreeAction(_ button: UIButton) {
         setupTabThree()
         self.textFieldOne.becomeFirstResponder()
+        
     }
     
     func enableButton(_ identifier: Int) {
@@ -224,16 +224,19 @@ extension LoginController {
             tabOne.backgroundColor = blueButtonColor
             tabTwo.backgroundColor = disabledButtonColor
             tabThree.backgroundColor = disabledButtonColor
+            currentTab = 1
         }
         else if identifier == 2 {
             tabOne.backgroundColor = disabledButtonColor
             tabTwo.backgroundColor = blueButtonColor
             tabThree.backgroundColor = disabledButtonColor
+            currentTab = 2
         }
         else if identifier == 3 {
             tabOne.backgroundColor = disabledButtonColor
             tabTwo.backgroundColor = disabledButtonColor
             tabThree.backgroundColor = blueButtonColor
+            currentTab = 3
         }
     }
     

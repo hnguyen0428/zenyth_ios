@@ -13,7 +13,7 @@
         <scene sceneID="T8a-ue-YBr">
             <objects>
                 <navigationController id="xIJ-6R-G7F" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Jtg-om-rOh">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Jtg-om-rOh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -256,7 +256,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <connections>
-                            <outletCollection property="gestureRecognizers" destination="0s2-Mt-wIA" appends="YES" id="AVa-lL-0wA"/>
                             <outletCollection property="gestureRecognizers" destination="rz5-yp-ive" appends="YES" id="vSi-fp-Tmt"/>
                         </connections>
                     </view>
@@ -283,7 +282,6 @@
                         <outlet property="signinButton" destination="5Ot-Gs-4tb" id="Wm1-mK-Xzg"/>
                         <outlet property="signupButton" destination="Dcr-bq-y9R" id="Tks-EG-KL0"/>
                         <outlet property="signupView" destination="5P9-pp-aSo" id="Uz8-gp-prS"/>
-                        <outlet property="swipeRecognizer" destination="0s2-Mt-wIA" id="7Zp-Xb-1EI"/>
                         <outlet property="tabOne" destination="yh1-AW-sZr" id="eir-AW-n4k"/>
                         <outlet property="tabThree" destination="HoX-cV-jZG" id="YqT-US-wfH"/>
                         <outlet property="tabTwo" destination="gmH-b6-dpG" id="d2k-cy-scc"/>
@@ -298,7 +296,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rvt-bE-IpO" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="down" id="0s2-Mt-wIA"/>
                 <panGestureRecognizer minimumNumberOfTouches="1" id="rz5-yp-ive"/>
             </objects>
             <point key="canvasLocation" x="-727.20000000000005" y="36.431784107946029"/>

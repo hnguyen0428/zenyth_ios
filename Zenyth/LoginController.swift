@@ -48,9 +48,9 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
     @IBOutlet weak var iconTwo: UIImageView!
     @IBOutlet weak var iconOneBorder: UIImageView!
     @IBOutlet weak var iconTwoBorder: UIImageView!
-    @IBOutlet var swipeRecognizer: UISwipeGestureRecognizer!
     @IBOutlet var panGesture: UIPanGestureRecognizer!
     
+    var currentTab: Int = 1
     var mask: UIView?
     var grabbed: Bool = false
     let genderData = ["", "Male", "Female", "Non-binary"]
