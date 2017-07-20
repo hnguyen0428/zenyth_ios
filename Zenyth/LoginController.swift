@@ -227,12 +227,12 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
             }
             
             self.oauthJSON = json
-            self.fbOauthHandler(json: json, accessToken: accessTokenString)
+            self.fbOauthHandle(json: json, accessToken: accessTokenString)
             
         }
     }
     
-    func fbOauthHandler(json: JSON, accessToken: String) {
+    func fbOauthHandle(json: JSON, accessToken: String) {
         
         // Checks if facebook email has already been used
         let request = EmailTakenRequestor.init(email: json["email"].stringValue)
@@ -243,7 +243,8 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
                 return
             }
             
-            if (data?["data"].boolValue)! { // email is taken
+            if (data?["data"]["taken"].boolValue)!
+                && (data?["data"]["confirmed"].boolValue)! { // email is taken
                 print("Email Taken")
                 self.fbOauthLogin(accessToken: accessToken, json: json)
             } else { // email is available

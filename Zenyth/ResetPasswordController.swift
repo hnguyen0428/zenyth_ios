@@ -113,7 +113,7 @@ class ResetPasswordController: ModelViewController {
             if error != nil {
                 return
             }
-            if data!["data"].boolValue {
+            if data!["data"]["taken"].boolValue {
                 self.validUsername = true
                 self.setButtonEnable(true)
                 self.errorLabel.isHidden = true
@@ -127,7 +127,7 @@ class ResetPasswordController: ModelViewController {
             if error != nil {
                 return
             }
-            if data!["data"].boolValue {
+            if data!["data"]["taken"].boolValue {
                 self.validEmail = true
                 self.setButtonEnable(true)
                 self.errorLabel.isHidden = true
