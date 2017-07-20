@@ -98,7 +98,7 @@ extension LoginController {
                     return
                 }
                 
-                if data!["data"].boolValue { // username taken
+                if data!["data"]["taken"].boolValue { // username taken
                     self.setUsernameError("usernameTaken")
                 } else { // username available
                     self.setUsernameError("usernameAvailable")
@@ -131,7 +131,7 @@ extension LoginController {
                     return
                 }
                 
-                if data!["data"].boolValue { // email taken
+                if data!["data"]["taken"].boolValue { // email taken
                     self.setEmailError("emailTaken")
                 } else { // email available
                     self.setEmailError("emailAvailable")

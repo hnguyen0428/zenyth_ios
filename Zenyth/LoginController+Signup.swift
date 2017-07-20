@@ -63,7 +63,7 @@ extension LoginController {
             "email" : email!,
             "password" : password!,
             "password_confirmation" : confirmPassword!,
-            "gender" : gender!,
+            "gender" : gender!.lowercased(),
             "birthday" : dateOfBirth!
         ]
         

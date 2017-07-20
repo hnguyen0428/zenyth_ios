@@ -245,7 +245,7 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
             
             if (data?["data"].boolValue)! { // email is taken
                 print("Email Taken")
-                self.fbOauthLogin(accessToken: accessToken)
+                self.fbOauthLogin(accessToken: accessToken, json: json)
             } else { // email is available
                 print("Email Available")
                 self.performSegue(withIdentifier: "oauthToUsernameSegue",
@@ -256,9 +256,10 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
         
     }
     
-    func fbOauthLogin(accessToken: String) {
+    func fbOauthLogin(accessToken: String, json: JSON) {
         let parameters: Parameters = [
-            "oauth_type": "facebook"
+            "oauth_type": "facebook",
+            "email" : json["email"].stringValue
         ]
         let header: HTTPHeaders = [
             "Authorization": "bearer \(accessToken)"
@@ -277,26 +278,16 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
                 let user = User.init(json: data!)
                 print("User: \(user)")
             } else {
-                if (data?["data"]["merge_google"].boolValue)! {
+                if (data?["data"]["mergeable"].boolValue)! {
                     // TODO: prompts user to merge with google
+                    let mergeErrors = data?["errors"].arrayValue.first?.stringValue
                     let alert = UIAlertController(title: nil,
-                                                  message: RegisterController.mergeMessageGoogle,
+                                                  message: mergeErrors,
                                                   preferredStyle: UIAlertControllerStyle.alert)
                     alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: nil))
                     alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: {
                         action in
-                        self.mergeAccount(accessToken: accessToken)
-                    }))
-                    self.present(alert, animated: true, completion: nil)
-                } else if (data?["data"]["can_merge"].boolValue)! {
-                    // TODO: prompts user to merge with their created account
-                    let alert = UIAlertController(title: nil,
-                                                  message: RegisterController.mergeMessageRegular,
-                                                  preferredStyle: UIAlertControllerStyle.alert)
-                    alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: nil))
-                    alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: {
-                        action in
-                        self.mergeAccount(accessToken: accessToken)
+                        self.mergeAccount(accessToken: accessToken, email: json["email"].stringValue)
                     }))
                     self.present(alert, animated: true, completion: nil)
                 } else {
@@ -307,9 +298,10 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
         }
     }
     
-    func mergeAccount(accessToken: String) {
+    func mergeAccount(accessToken: String, email: String) {
         let parameters: Parameters = [
             "oauth_type": "facebook",
+            "email" : email,
             "merge" : true
         ]
         let header: HTTPHeaders = [

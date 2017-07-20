@@ -13,7 +13,7 @@
         <scene sceneID="T8a-ue-YBr">
             <objects>
                 <navigationController id="xIJ-6R-G7F" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Jtg-om-rOh">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Jtg-om-rOh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -373,6 +373,7 @@
                         <outlet property="errorLabel" destination="V69-Hg-FPR" id="xr5-sd-CtW"/>
                         <outlet property="indicator" destination="SIp-KP-uwC" id="uWe-kr-0hi"/>
                         <outlet property="resetPasswordButton" destination="bhD-63-c7Z" id="KOP-d1-Cn0"/>
+                        <outlet property="topLabel" destination="gMr-ac-yZa" id="ciR-Yv-8lz"/>
                         <outlet property="userIcon" destination="IRn-Yj-Ltl" id="zGH-1J-UYJ"/>
                         <outlet property="userIconBorder" destination="kin-3x-VnE" id="0Ia-Zc-KsA"/>
                         <outlet property="usernameEmailField" destination="8ee-Uy-JsV" id="vPX-6a-aZs"/>
@@ -485,12 +486,14 @@
                     </view>
                     <toolbarItems/>
                     <connections>
+                        <outlet property="bottomLabel" destination="WnG-ph-7sv" id="z1S-TM-iSZ"/>
                         <outlet property="continueButton" destination="wv5-Nu-aZn" id="Pg2-HG-0x1"/>
                         <outlet property="emailActivityIndicator" destination="ouf-d6-b3N" id="NJx-UL-Y3o"/>
                         <outlet property="emailErrorLabel" destination="JhX-dd-4yz" id="dhB-J1-QUf"/>
                         <outlet property="emailField" destination="ZvD-1v-iP9" id="adr-qQ-IHl"/>
                         <outlet property="mailIcon" destination="jaL-6Y-p4z" id="JUr-AQ-1Zl"/>
                         <outlet property="mailIconBorder" destination="DYy-0R-w6p" id="W3Q-rO-ZND"/>
+                        <outlet property="topLabel" destination="xab-Gt-10b" id="peO-0z-51B"/>
                         <outlet property="userIcon" destination="Kht-xv-xgy" id="GqA-bk-gXn"/>
                         <outlet property="userIconBorder" destination="4fg-oE-U1z" id="X1i-sa-mdz"/>
                         <outlet property="usernameActivityIndicator" destination="J6s-hJ-bgh" id="xK9-mT-ASs"/>

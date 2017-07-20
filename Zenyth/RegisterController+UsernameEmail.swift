@@ -21,6 +21,8 @@ class UsernameEmailController: RegisterController {
     @IBOutlet weak var usernameActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var emailActivityIndicator: UIActivityIndicatorView!
     
+    @IBOutlet weak var topLabel: UILabel!
+    @IBOutlet weak var bottomLabel: UILabel!
     @IBOutlet weak var userIcon: UIImageView!
     @IBOutlet weak var userIconBorder: UIImageView!
     @IBOutlet weak var mailIcon: UIImageView!
@@ -64,6 +66,9 @@ class UsernameEmailController: RegisterController {
         formatTextField(textField: emailField)
         formatImageView(imageView: userIconBorder, color: disabledButtonColor.cgColor)
         formatImageView(imageView: mailIconBorder, color: disabledButtonColor.cgColor)
+        
+        topLabel.textColor = disabledButtonColor
+        bottomLabel.textColor = disabledButtonColor
         
         userIcon.image = #imageLiteral(resourceName: "user")
         mailIcon.image = #imageLiteral(resourceName: "mail")
@@ -155,7 +160,7 @@ class UsernameEmailController: RegisterController {
                     return
                 }
                 
-                if data!["data"].boolValue { // username taken
+                if data!["data"]["taken"].boolValue { // username taken
                     self.setUsernameError("usernameTaken")
                 } else { // username available
                     self.setUsernameError("usernameAvailable")
@@ -188,7 +193,7 @@ class UsernameEmailController: RegisterController {
                     return
                 }
                 
-                if data!["data"].boolValue { // email taken
+                if data!["data"]["taken"].boolValue { // email taken
                     self.setEmailError("emailTaken")
                 } else { // email available
                     self.setEmailError("emailAvailable")
@@ -271,9 +276,9 @@ class UsernameEmailController: RegisterController {
             "oauth_type" : "facebook",
             "username" : usernameField.text!,
             "email" : oauthJSON!["email"].stringValue,
-            "gender" : oauthJSON!["gender"].stringValue,
-            "first_name" : oauthJSON!["first_name"].stringValue,
-            "last_name" : oauthJSON!["last_name"].stringValue
+            "gender" : oauthJSON!["gender"].string ?? "",
+            "first_name" : oauthJSON!["first_name"].string ?? "",
+            "last_name" : oauthJSON!["last_name"].string ?? ""
         ]
         let header: HTTPHeaders = [
             "Authorization" : "bearer \(fbToken!)"
@@ -289,6 +294,7 @@ class UsernameEmailController: RegisterController {
             if (error != nil) {
                 return
             }
+            print(data)
             
             let user = User.init(json: data!)
             print("User: \(user)")
@@ -314,7 +320,7 @@ class UsernameEmailController: RegisterController {
             "oauth_type" : "google",
             "username" : usernameField.text!,
             "email" : oauthJSON!["email"].stringValue,
-            "gender" : oauthJSON!["gender"].stringValue,
+            "gender" : oauthJSON!["gender"].string ?? "",
             "first_name" : oauthJSON!["given_name"].stringValue,
             "last_name" : oauthJSON!["family_name"].stringValue
         ]

@@ -20,6 +20,7 @@ class ResetPasswordController: ModelViewController {
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     @IBOutlet weak var userIcon: UIImageView!
     @IBOutlet weak var userIconBorder: UIImageView!
+    @IBOutlet weak var topLabel: UILabel!
     
     var checkTimer: Timer? = nil
     var validEmail = false
@@ -74,6 +75,8 @@ class ResetPasswordController: ModelViewController {
         userIcon.image = #imageLiteral(resourceName: "user")
         formatImageView(imageView: userIconBorder,
                         color: disabledButtonColor.cgColor)
+        
+        topLabel.textColor = disabledButtonColor
     }
     
     func timeBeforeCheck(_ textField: UITextField) {
