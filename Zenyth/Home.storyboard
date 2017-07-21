@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="uqD-fw-A1K">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--MapController-->
+        <scene sceneID="KnO-BM-eaH">
+            <objects>
+                <viewController storyboardIdentifier="MapController" title="MapController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="uqD-fw-A1K" customClass="MapController" customModule="Zenyth" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FHv-dR-Hcj"/>
+                        <viewControllerLayoutGuide type="bottom" id="pLs-ub-7hf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="WhA-SI-g67">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4wC-e2-gas">
+                                <rect key="frame" x="16" y="627" width="25" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="navicon"/>
+                            </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cQO-K8-cF9">
+                                <rect key="frame" x="-274" y="0.0" width="274" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r6r-Oo-Wit">
+                                        <rect key="frame" x="26" y="616" width="106" height="34"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Sign Out">
+                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <accessibility key="accessibilityConfiguration" identifier="navView"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="cZF-bG-Ks4" appends="YES" id="iDz-jv-P1h"/>
+                        </connections>
+                    </view>
+                    <navigationItem key="navigationItem" id="J8S-U1-dUU"/>
+                    <connections>
+                        <outlet property="navButton" destination="4wC-e2-gas" id="hnQ-6V-0h5"/>
+                        <outlet property="navView" destination="cQO-K8-cF9" id="DTA-yl-wdd"/>
+                        <outlet property="signoutButton" destination="r6r-Oo-Wit" id="cLC-Kv-FUf"/>
+                        <outlet property="tapGesture" destination="cZF-bG-Ks4" id="5yw-gn-0Vl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="A2J-E6-Xsf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="cZF-bG-Ks4"/>
+            </objects>
+            <point key="canvasLocation" x="-18.399999999999999" y="105.69715142428787"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="navicon" width="282" height="224"/>
+    </resources>
+</document>

@@ -11,6 +11,7 @@ import FBSDKCoreKit
 import GoogleSignIn
 import Alamofire
 import SwiftyJSON
+import GoogleMaps
 //import TwitterKit
 //import Fabric
 
@@ -36,6 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         // Twitter 
         // Twitter.sharedInstance().start(withConsumerKey:"KblBowxwd1VQruZvYEYG12Dsq", consumerSecret:"ikGB5s18LZrxjO5oDUP8fqU56xVuN5bzrsWJISWGl6DMeZPDoB")
+        GMSServices.provideAPIKey("AIzaSyDbce3U3e0teGEnQM54kBu_r2kDGEGcOz0")
 
         
         return true
@@ -133,6 +135,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             if (data?["success"].boolValue)! {
                 let user = User.init(json: data!)
                 print("User: \(user)")
+                UserDefaults.standard.set(user.api_token, forKey: "api_token")
+                UserDefaults.standard.synchronize()
+                self.transitionToHome()
             } else {
                 if (data?["data"]["mergeable"].boolValue)! {
                     // TODO: prompts user to merge with facebook
@@ -180,8 +185,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             if (data?["success"].boolValue)! {
                 let user = User.init(json: data!)
                 print("User: \(user)")
+                UserDefaults.standard.set(user.api_token, forKey: "api_token")
+                UserDefaults.standard.synchronize()
+                self.transitionToHome()
             }
         }
+    }
+    
+    func transitionToHome() {
+        let storyboard = UIStoryboard(name: "Home", bundle: nil);
+        let mapController: MapController =
+            storyboard.instantiateViewController(
+                withIdentifier: "MapController")
+                as! MapController;
+        let rootViewController = self.window!.rootViewController
+            as! UINavigationController;
+        rootViewController.present(mapController, animated: true, completion: nil)
     }
     
     func application(_ app: UIApplication, open url: URL, options:

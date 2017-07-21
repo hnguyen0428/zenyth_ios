@@ -294,23 +294,23 @@ class UsernameEmailController: RegisterController {
             if (error != nil) {
                 return
             }
-            print(data)
-            
-            let user = User.init(json: data!)
-            print("User: \(user)")
-            let alert = UIAlertController(
-                title: self.signupSuccessfulMessage,
-                message: nil,
-                preferredStyle: UIAlertControllerStyle.alert
-            )
-            alert.addAction(UIAlertAction(title: "OK",
-                                          style: UIAlertActionStyle.default,
-                                          handler: { action in
-                self.navigationController?.popToRootViewController(
-                                                animated: true)
-            })
-            )
-            self.present(alert, animated: true, completion: nil)
+            if (data?["success"].boolValue)! {
+                let user = User.init(json: data!)
+                print("User: \(user)")
+                let alert = UIAlertController(
+                    title: self.signupSuccessfulMessage,
+                    message: nil,
+                    preferredStyle: UIAlertControllerStyle.alert
+                )
+                alert.addAction(UIAlertAction(title: "OK",
+                                              style: UIAlertActionStyle.default,
+                                              handler: { action in
+                    UserDefaults.standard.set(user.api_token, forKey: "api_token")
+                    UserDefaults.standard.synchronize()
+                    self.transitionToHome()
+                }))
+                self.present(alert, animated: true, completion: nil)
+            }
             
         }
     }
@@ -338,21 +338,23 @@ class UsernameEmailController: RegisterController {
                 return
             }
             
-            let user = User.init(json: data!)
-            print("User: \(user)")
-            let alert = UIAlertController(
-                title: self.signupSuccessfulMessage,
-                message: nil,
-                preferredStyle: UIAlertControllerStyle.alert
-            )
-            alert.addAction(UIAlertAction(title: "OK",
-                                          style: UIAlertActionStyle.default,
-                                          handler: { action in
-                self.navigationController?.popToRootViewController(
-                                                animated: true)
-            })
-            )
-            self.present(alert, animated: true, completion: nil)
+            if (data?["success"].boolValue)! {
+                let user = User.init(json: data!)
+                print("User: \(user)")
+                let alert = UIAlertController(
+                    title: self.signupSuccessfulMessage,
+                    message: nil,
+                    preferredStyle: UIAlertControllerStyle.alert
+                )
+                alert.addAction(UIAlertAction(title: "OK",
+                                              style: UIAlertActionStyle.default,
+                                              handler: { action in
+                    UserDefaults.standard.set(user.api_token, forKey: "api_token")
+                    UserDefaults.standard.synchronize()
+                    self.transitionToHome()
+                }))
+                self.present(alert, animated: true, completion: nil)
+            }
             
         }
     }

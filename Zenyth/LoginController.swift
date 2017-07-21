@@ -93,6 +93,7 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
                 print("User: \(user)")
                 UserDefaults.standard.set(user.api_token, forKey: "api_token")
                 UserDefaults.standard.synchronize()
+                self.transitionToHome()
             } else {
                 let errors = (data?["errors"].arrayValue)!
                 var errorString = ""
@@ -275,9 +276,11 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
             }
             
             if (data?["success"].boolValue)! {
-                print(data)
                 let user = User.init(json: data!)
                 print("User: \(user)")
+                UserDefaults.standard.set(user.api_token, forKey: "api_token")
+                UserDefaults.standard.synchronize()
+                self.transitionToHome()
             } else {
                 if (data?["data"]["mergeable"].boolValue)! {
                     // TODO: prompts user to merge with google
@@ -321,6 +324,9 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
             if (data?["success"].boolValue)! {
                 let user = User.init(json: data!)
                 print("User: \(user)")
+                UserDefaults.standard.set(user.api_token, forKey: "api_token")
+                UserDefaults.standard.synchronize()
+                self.transitionToHome()
             }
         }
     }

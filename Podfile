@@ -26,10 +26,12 @@ target 'Zenyth' do
   pod 'FBSDKShareKit'
   pod 'FBSDKLoginKit'
 
-  pod 'Firebase/Auth'
   pod 'GoogleSignIn'
 
   pod 'Fabric'
   pod 'TwitterKit'
+  
+  pod 'GoogleMaps'
+  pod 'GooglePlaces'
 
 end

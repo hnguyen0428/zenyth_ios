@@ -61,4 +61,15 @@ class RegisterController: ModelViewController, UINavigationControllerDelegate {
         print(dateOfBirth)
     }
     
+    func transitionToHome() {
+        let storyboard = UIStoryboard(name: "Home", bundle: nil);
+        let mapController: MapController =
+            storyboard.instantiateViewController(
+                withIdentifier: "MapController")
+                as! MapController;
+        //self.navigationController?.popToRootViewController(animated: false)
+        //self.navigationController?.present(mapController, animated: true, completion: nil)
+        self.present(mapController, animated: true, completion: nil)
+    }
+    
 }
