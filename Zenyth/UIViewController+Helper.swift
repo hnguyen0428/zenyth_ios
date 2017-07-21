@@ -26,10 +26,11 @@ extension UIViewController {
         textField.layer.masksToBounds = true
     }
     
-    func formatImageView(imageView: UIImageView) {
+    func formatImageView(imageView: UIImageView,
+                         color: CGColor = UIColor.gray.cgColor) {
         let border = CALayer()
         let width = CGFloat(1.0)
-        border.borderColor = UIColor.gray.cgColor
+        border.borderColor = color
         border.frame = CGRect(x: 0, y: imageView.frame.size.height - width,
                               width:  imageView.frame.size.width,
                               height: imageView.frame.size.height)
@@ -37,6 +38,19 @@ extension UIViewController {
         border.borderWidth = 1
         imageView.layer.addSublayer(border)
         imageView.layer.masksToBounds = true
+    }
+    
+    func formatButton(button: UIButton) {
+        let border = CALayer()
+        let width = CGFloat(1.0)
+        border.borderColor = UIColor.lightGray.cgColor
+        border.frame = CGRect(x: button.frame.size.width - width, y: 0,
+                              width:  button.frame.size.width,
+                              height: button.frame.size.height)
+        
+        border.borderWidth = 1
+        button.layer.addSublayer(border)
+        button.layer.masksToBounds = true
     }
 
     /* Displays an alert with title and message and an OK button

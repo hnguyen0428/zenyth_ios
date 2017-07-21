@@ -18,6 +18,9 @@ class ResetPasswordController: ModelViewController {
     @IBOutlet weak var resetPasswordButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
+    @IBOutlet weak var userIcon: UIImageView!
+    @IBOutlet weak var userIconBorder: UIImageView!
+    @IBOutlet weak var topLabel: UILabel!
     
     var checkTimer: Timer? = nil
     var validEmail = false
@@ -68,6 +71,12 @@ class ResetPasswordController: ModelViewController {
         resetPasswordButton.backgroundColor = disabledButtonColor
         resetPasswordButton.layer.cornerRadius = 25
         resetPasswordButton.isEnabled = false
+        
+        userIcon.image = #imageLiteral(resourceName: "user")
+        formatImageView(imageView: userIconBorder,
+                        color: disabledButtonColor.cgColor)
+        
+        topLabel.textColor = disabledButtonColor
     }
     
     func timeBeforeCheck(_ textField: UITextField) {
@@ -104,7 +113,7 @@ class ResetPasswordController: ModelViewController {
             if error != nil {
                 return
             }
-            if data!["data"].boolValue {
+            if data!["data"]["taken"].boolValue {
                 self.validUsername = true
                 self.setButtonEnable(true)
                 self.errorLabel.isHidden = true
@@ -118,7 +127,7 @@ class ResetPasswordController: ModelViewController {
             if error != nil {
                 return
             }
-            if data!["data"].boolValue {
+            if data!["data"]["taken"].boolValue {
                 self.validEmail = true
                 self.setButtonEnable(true)
                 self.errorLabel.isHidden = true
