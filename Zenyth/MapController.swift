@@ -85,7 +85,12 @@ class MapController: UIViewController {
             storyboard.instantiateInitialViewController()
         as! UINavigationController;
         
-        self.present(loginController, animated: true, completion: nil)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        UIView.transition(with: appDelegate.window!, duration: 0.5, options: .transitionCrossDissolve,
+                          animations: {
+            appDelegate.window!.rootViewController = loginController
+        }, completion: nil)
     }
     
 }

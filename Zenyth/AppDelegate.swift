@@ -198,9 +198,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             storyboard.instantiateViewController(
                 withIdentifier: "MapController")
                 as! MapController;
-        let rootViewController = self.window!.rootViewController
-            as! UINavigationController;
-        rootViewController.present(mapController, animated: true, completion: nil)
+        UIView.transition(with: self.window!, duration: 0.3, options: .transitionCrossDissolve,
+                          animations: {
+            self.window!.rootViewController = mapController
+        }, completion: nil)
     }
     
     func application(_ app: UIApplication, open url: URL, options:
