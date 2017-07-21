@@ -287,7 +287,7 @@ class UsernameEmailController: RegisterController {
                                                   header: header)
         
         let indicator = requestLoading(view: self.view)
-        
+        print(fbToken)
         request.getJSON { data, error in
             self.requestDoneLoading(view: self.view, indicator: indicator)
             
@@ -296,7 +296,9 @@ class UsernameEmailController: RegisterController {
             }
             if (data?["success"].boolValue)! {
                 let user = User.init(json: data!)
-                print("User: \(user)")
+                UserDefaults.standard.set(user.api_token, forKey: "api_token")
+                UserDefaults.standard.synchronize()
+                
                 let alert = UIAlertController(
                     title: self.signupSuccessfulMessage,
                     message: nil,
@@ -340,7 +342,9 @@ class UsernameEmailController: RegisterController {
             
             if (data?["success"].boolValue)! {
                 let user = User.init(json: data!)
-                print("User: \(user)")
+                UserDefaults.standard.set(user.api_token, forKey: "api_token")
+                UserDefaults.standard.synchronize()
+                
                 let alert = UIAlertController(
                     title: self.signupSuccessfulMessage,
                     message: nil,

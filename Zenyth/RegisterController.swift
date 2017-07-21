@@ -64,9 +64,8 @@ class RegisterController: ModelViewController, UINavigationControllerDelegate {
     func transitionToHome() {
         let storyboard = UIStoryboard(name: "Home", bundle: nil);
         let mapController: MapController =
-            storyboard.instantiateViewController(
-                withIdentifier: "MapController")
-                as! MapController;
+            storyboard.instantiateInitialViewController()
+                as! MapController
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
         UIView.transition(with: appDelegate.window!, duration: 0.3, options: .transitionCrossDissolve,

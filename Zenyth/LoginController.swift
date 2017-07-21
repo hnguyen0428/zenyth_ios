@@ -89,8 +89,23 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
             }
             
             if (data?["success"].boolValue)! {
-//                let email = data!["data"]["user"]["email"].stringValue
-//                let decoded  = UserDefaults.standard.object(forKey: email) as! Data
+                let email = data!["data"]["user"]["email"].stringValue
+                //print(email)
+                let userData = UserDefaults.standard.object(forKey: email) as? [String:Any]
+//                print(userData)
+                print(userData)
+                
+//                let api_token = data!["data"]["api_token"].stringValue
+//                UserDefaults.standard.set(api_token, forKey: "api_token")
+//                UserDefaults.standard.synchronize()
+//                print(UserDefaults.standard.object(forKey: "api_token") as? String)
+                /*
+                if let data  = UserDefaults.standard.object(forKey: email) as? Data {
+                    let users = NSKeyedUnarchiver.unarchiveObject(with: data) as? [User]
+                    let user = users?.first
+                    print(user)
+                }
+                */
 //                let user = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! User
 //                print("User: \(user)")
 //                UserDefaults.standard.set(user.api_token, forKey: "api_token")
@@ -279,9 +294,9 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
             
             if (data?["success"].boolValue)! {
                 let user = User.init(json: data!)
-                print("User: \(user)")
-                UserDefaults.standard.set(user.api_token, forKey: "api_token")
-                UserDefaults.standard.synchronize()
+                let userDefaults = UserDefaults.standard
+                userDefaults.set(user.api_token, forKey: "api_token")
+                userDefaults.synchronize()
                 self.transitionToHome()
             } else {
                 if (data?["data"]["mergeable"].boolValue)! {
@@ -325,7 +340,6 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
             
             if (data?["success"].boolValue)! {
                 let user = User.init(json: data!)
-                print("User: \(user)")
                 UserDefaults.standard.set(user.api_token, forKey: "api_token")
                 UserDefaults.standard.synchronize()
                 self.transitionToHome()

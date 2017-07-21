@@ -134,7 +134,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             
             if (data?["success"].boolValue)! {
                 let user = User.init(json: data!)
-                print("User: \(user)")
                 UserDefaults.standard.set(user.api_token, forKey: "api_token")
                 UserDefaults.standard.synchronize()
                 self.transitionToHome()
@@ -184,7 +183,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             
             if (data?["success"].boolValue)! {
                 let user = User.init(json: data!)
-                print("User: \(user)")
                 UserDefaults.standard.set(user.api_token, forKey: "api_token")
                 UserDefaults.standard.synchronize()
                 self.transitionToHome()
@@ -195,9 +193,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func transitionToHome() {
         let storyboard = UIStoryboard(name: "Home", bundle: nil);
         let mapController: MapController =
-            storyboard.instantiateViewController(
-                withIdentifier: "MapController")
-                as! MapController;
+            storyboard.instantiateInitialViewController()
+                as! MapController
+
         UIView.transition(with: self.window!, duration: 0.3, options: .transitionCrossDissolve,
                           animations: {
             self.window!.rootViewController = mapController

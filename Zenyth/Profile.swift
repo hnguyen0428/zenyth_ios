@@ -8,7 +8,7 @@
 
 import SwiftyJSON
 
-class Profile: NSObject, NSCoding {
+class Profile: NSObject {
     let json: JSON
     var userId: UInt32
     var firstName: String?
@@ -57,24 +57,6 @@ class Profile: NSObject, NSCoding {
     
     override var description: String {
         return self.json.description
-    }
-    
-    required convenience init?(coder aDecoder: NSCoder) {
-        let userId = aDecoder.decodeInteger(forKey: "user_id")
-        let firstName = aDecoder.decodeObject(forKey: "first_name") as! String
-        let lastName = aDecoder.decodeObject(forKey: "last_name") as! String
-        let gender = aDecoder.decodeObject(forKey: "gender") as! String
-        let birthday = aDecoder.decodeObject(forKey: "birthday") as! String
-        self.init(userId: UInt32(userId), firstName: firstName, lastName: lastName,
-                  gender: gender, birthday: birthday)
-    }
-    
-    func encode(with aCoder: NSCoder) {
-        aCoder.encode(userId, forKey: "user_id")
-        aCoder.encode(firstName, forKey: "first_name")
-        aCoder.encode(lastName, forKey: "last_name")
-        aCoder.encode(gender, forKey: "gender")
-        aCoder.encode(birthday, forKey: "birthday")
     }
 
 }
