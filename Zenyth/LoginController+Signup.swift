@@ -78,7 +78,9 @@ extension LoginController {
             }
             if (data?["success"].boolValue)! {
                 let user = User.init(json: data!)
-                print("User: \(user)")
+//                let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: user)
+//                UserDefaults.standard.set(encodedData, forKey: user.email)
+//                UserDefaults.standard.synchronize()
                 let alert = UIAlertController(
                     title: self.signupSuccessfulMessage,
                     message: self.checkEmailMessage,

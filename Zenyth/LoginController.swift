@@ -89,10 +89,12 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
             }
             
             if (data?["success"].boolValue)! {
-                let user = User.init(json: data!)
-                print("User: \(user)")
-                UserDefaults.standard.set(user.api_token, forKey: "api_token")
-                UserDefaults.standard.synchronize()
+//                let email = data!["data"]["user"]["email"].stringValue
+//                let decoded  = UserDefaults.standard.object(forKey: email) as! Data
+//                let user = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! User
+//                print("User: \(user)")
+//                UserDefaults.standard.set(user.api_token, forKey: "api_token")
+//                UserDefaults.standard.synchronize()
                 self.transitionToHome()
             } else {
                 let errors = (data?["errors"].arrayValue)!

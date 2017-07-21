@@ -13,6 +13,8 @@
 		47626DE51F1AF77600BB79DD /* JSON+Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47626DE41F1AF77600BB79DD /* JSON+Formatter.swift */; };
 		47626DE71F1AF77F00BB79DD /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47626DE61F1AF77F00BB79DD /* Formatter.swift */; };
 		478006331F218A380064F9E7 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478006321F218A380064F9E7 /* MapController.swift */; };
+		478006351F21B5400064F9E7 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478006341F21B5400064F9E7 /* Profile.swift */; };
+		478006391F21B5730064F9E7 /* Pinpost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478006381F21B5730064F9E7 /* Pinpost.swift */; };
 		47883CD51F16EC8B0008C7F3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 47883CD41F16EC8B0008C7F3 /* GoogleService-Info.plist */; };
 		47A745D41F16F59F00A88D5D /* APIRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745D31F16F59F00A88D5D /* APIRoutes.swift */; };
 		47A745D61F16F5A800A88D5D /* CommentRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745D51F16F5A800A88D5D /* CommentRequestor.swift */; };
@@ -71,6 +73,8 @@
 		47626DE41F1AF77600BB79DD /* JSON+Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSON+Formatter.swift"; sourceTree = "<group>"; };
 		47626DE61F1AF77F00BB79DD /* Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		478006321F218A380064F9E7 /* MapController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
+		478006341F21B5400064F9E7 /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		478006381F21B5730064F9E7 /* Pinpost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pinpost.swift; sourceTree = "<group>"; };
 		47883CD41F16EC8B0008C7F3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		47A745D31F16F59F00A88D5D /* APIRoutes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRoutes.swift; sourceTree = "<group>"; };
 		47A745D51F16F5A800A88D5D /* CommentRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentRequestor.swift; sourceTree = "<group>"; };
@@ -263,6 +267,8 @@
 			isa = PBXGroup;
 			children = (
 				47D9ECB61F19755A00E3EEE4 /* User.swift */,
+				478006341F21B5400064F9E7 /* Profile.swift */,
+				478006381F21B5730064F9E7 /* Pinpost.swift */,
 			);
 			name = ObjectModels;
 			sourceTree = "<group>";
@@ -586,6 +592,7 @@
 			files = (
 				47CA097D1F1E75BE00EA2455 /* TabOne.swift in Sources */,
 				47A745E01F16F5B500A88D5D /* RegisterRequestor.swift in Sources */,
+				478006351F21B5400064F9E7 /* Profile.swift in Sources */,
 				47D9ECC01F19E3D300E3EEE4 /* RegisterController.swift in Sources */,
 				47CA097F1F1E75C700EA2455 /* TabTwo.swift in Sources */,
 				47A745D41F16F59F00A88D5D /* APIRoutes.swift in Sources */,
@@ -598,6 +605,7 @@
 				47A745E11F16F5B500A88D5D /* RelationshipRequestor.swift in Sources */,
 				47C622F71F0A347F003BBC16 /* RegisterController+UsernameEmail.swift in Sources */,
 				47A9024C1F0B1F4400A1CEE8 /* LoginController.swift in Sources */,
+				478006391F21B5730064F9E7 /* Pinpost.swift in Sources */,
 				47A9024E1F0B34C900A1CEE8 /* GlobalVariables.swift in Sources */,
 				47D838CC1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift in Sources */,
 				47A745E31F16F5B500A88D5D /* ResetPasswordRequestor.swift in Sources */,

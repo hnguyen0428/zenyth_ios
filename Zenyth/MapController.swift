@@ -62,7 +62,6 @@ class MapController: UIViewController {
             self.mask!.removeFromSuperview()
             UIView.animate(withDuration: 0.1, animations: {
                 self.navView.frame.origin.x = -self.navView.frame.width
-                    
             })
         }
         
