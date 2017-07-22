@@ -9,7 +9,7 @@
 import UIKit
 import GoogleMaps
 
-class MapController: UIViewController {
+class MapController: HomeController {
     
     @IBOutlet weak var navButton: UIButton!
     @IBOutlet weak var navView: UIView!
@@ -55,6 +55,9 @@ class MapController: UIViewController {
     }
     
     func hideNavView(_ tap: UITapGestureRecognizer) {
+        if mask == nil {
+            return
+        }
         let location = tap.location(in: self.view)
         let view = self.view.hitTest(location, with: nil)
         
