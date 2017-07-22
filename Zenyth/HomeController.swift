@@ -28,10 +28,10 @@ class HomeController: UIViewController {
     func setupToolbar() {
         toolbar = {
             let viewFrame = self.view.frame
-            let x = viewFrame.origin.x
-            let y = viewFrame.height * 0.93
-            let height = viewFrame.height - y
+            let height = viewFrame.height * 0.07
             let width = viewFrame.width
+            let x = viewFrame.origin.x
+            let y = viewFrame.height - height
             let frame = CGRect(x: x, y: y, width: width, height: height)
             let toolbar = UIToolbar(frame: frame)
             toolbar.barStyle = .default
@@ -40,7 +40,6 @@ class HomeController: UIViewController {
         }()
         
         tabOne = {
-            //let button = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
             let button = UIBarButtonItem(title: "General Map", style: .plain, target: self, action: nil)
             button.title = "General Map"
             return button
