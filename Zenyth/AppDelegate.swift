@@ -11,6 +11,7 @@ import FBSDKCoreKit
 import GoogleSignIn
 import Alamofire
 import SwiftyJSON
+import GoogleMaps
 //import TwitterKit
 //import Fabric
 
@@ -18,7 +19,6 @@ import SwiftyJSON
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
     var window: UIWindow?
-
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions:
@@ -37,6 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         // Twitter 
         // Twitter.sharedInstance().start(withConsumerKey:"KblBowxwd1VQruZvYEYG12Dsq", consumerSecret:"ikGB5s18LZrxjO5oDUP8fqU56xVuN5bzrsWJISWGl6DMeZPDoB")
+        GMSServices.provideAPIKey("AIzaSyDbce3U3e0teGEnQM54kBu_r2kDGEGcOz0")
 
         
         return true
@@ -53,7 +54,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         // Perform any operations on signed in user here.
 
         guard let accessToken = user.authentication.accessToken else { return }
-
+        guard let idToken = user.authentication.idToken else { return }
+        
         let route = Route(method: .get, urlString:
             "https://www.googleapis.com/oauth2/v3/userinfo?access_token=" +
             "\(accessToken)")
@@ -66,13 +68,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 return
             }
             
-            self.googleOauthHandle(json: data!, accessToken: accessToken)
+            self.googleOauthHandle(json: data!, idToken: idToken)
             
         }
         
     }
     
-    func googleOauthHandle(json: JSON, accessToken: String) {
+    func googleOauthHandle(json: JSON, idToken: String) {
         // Checks if email is taken
         let request = EmailTakenRequestor.init(email: json["email"].stringValue)
         
@@ -82,9 +84,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 return
             }
 
-            if (data?["data"].boolValue)! { // email is taken
+            if (data?["data"]["taken"].boolValue)! &&
+                (data?["data"]["confirmed"].boolValue)! { // email is taken
                 print("Email Taken")
-                self.googleOauthLogin(accessToken: accessToken)
+                self.googleOauthLogin(idToken: idToken, json: json)
             } else { // email is available
                 print("Email Available")
                 
@@ -102,18 +105,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                                                       animated: true);
                 viewController.oauthJSON = json
                 viewController.messageFromOauth = "changeButtonTargetGoogle"
-                viewController.googleToken = accessToken
+                viewController.googleToken = idToken
             }
             
         }
     }
     
-    func googleOauthLogin(accessToken: String) {
+    func googleOauthLogin(idToken: String, json: JSON) {
         let parameters: Parameters = [
-            "oauth_type": "google"
+            "oauth_type" : "google",
+            "email" : json["email"].stringValue
         ]
         let header: HTTPHeaders = [
-            "Authorization": "bearer \(accessToken)"
+            "Authorization": "bearer \(idToken)"
         ]
         let request = OauthLoginRequestor.init(parameters: parameters,
                                                header: header)
@@ -129,20 +133,73 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             }
             
             if (data?["success"].boolValue)! {
-                print(data)
                 let user = User.init(json: data!)
-                print("User: \(user)")
+                UserDefaults.standard.set(user.api_token, forKey: "api_token")
+                UserDefaults.standard.synchronize()
+                self.transitionToHome()
             } else {
-                if (data?["data"]["merge_facebook"].boolValue)! {
+                if (data?["data"]["mergeable"].boolValue)! {
                     // TODO: prompts user to merge with facebook
-                } else if (data?["data"]["can_merge"].boolValue)! {
-                    // TODO: prompts user to merge with their created account
+                    // create the alert
+                    let mergeErrors = data?["errors"].arrayValue.first?.stringValue
+                    let alert = UIAlertController(title: nil,
+                                                  message: mergeErrors,
+                                                  preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: nil))
+                    alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: {
+                        action in
+                        self.mergeAccount(idToken: idToken, email: json["email"].stringValue)
+                    }))
+                    viewController.present(alert, animated: true, completion: nil)
                 } else {
                     print(data?["errors"])
                 }
             }
 
         }
+    }
+    
+    func mergeAccount(idToken: String, email: String) {
+        let parameters: Parameters = [
+            "oauth_type" : "google",
+            "email" : email,
+            "merge" : true
+        ]
+        let header: HTTPHeaders = [
+            "Authorization": "bearer \(idToken)"
+        ]
+        let request = OauthLoginRequestor.init(parameters: parameters,
+                                               header: header)
+        let rootViewController = self.window!.rootViewController
+            as! UINavigationController
+        let viewController = rootViewController.topViewController!
+        let indicator = viewController.requestLoading(view: viewController.view)
+        request.getJSON { data, error in
+            viewController.requestDoneLoading(view: viewController.view,
+                                              indicator: indicator)
+            if error != nil {
+                return
+            }
+            
+            if (data?["success"].boolValue)! {
+                let user = User.init(json: data!)
+                UserDefaults.standard.set(user.api_token, forKey: "api_token")
+                UserDefaults.standard.synchronize()
+                self.transitionToHome()
+            }
+        }
+    }
+    
+    func transitionToHome() {
+        let storyboard = UIStoryboard(name: "Home", bundle: nil);
+        let mapController: MapController =
+            storyboard.instantiateInitialViewController()
+                as! MapController
+
+        UIView.transition(with: self.window!, duration: 0.3, options: .transitionCrossDissolve,
+                          animations: {
+            self.window!.rootViewController = mapController
+        }, completion: nil)
     }
     
     func application(_ app: UIApplication, open url: URL, options:

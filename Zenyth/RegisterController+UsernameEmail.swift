@@ -21,6 +21,12 @@ class UsernameEmailController: RegisterController {
     @IBOutlet weak var usernameActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var emailActivityIndicator: UIActivityIndicatorView!
     
+    @IBOutlet weak var topLabel: UILabel!
+    @IBOutlet weak var bottomLabel: UILabel!
+    @IBOutlet weak var userIcon: UIImageView!
+    @IBOutlet weak var userIconBorder: UIImageView!
+    @IBOutlet weak var mailIcon: UIImageView!
+    @IBOutlet weak var mailIconBorder: UIImageView!
     var validEmail: Bool = false
     var validUsername: Bool = false
     var checkTimer: Timer? = nil
@@ -33,10 +39,7 @@ class UsernameEmailController: RegisterController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Add action for button to segue into PasswordController
-        continueButton.addTarget(self, action: #selector(toPasswordVC),
-                                 for: .touchUpInside)
+        backgroundView.isHidden = true
         
         // Run a timer when user starts editing, once the timer ends, it will
         // trigger a method to check if username or email is valid
@@ -61,6 +64,14 @@ class UsernameEmailController: RegisterController {
         
         formatTextField(textField: usernameField)
         formatTextField(textField: emailField)
+        formatImageView(imageView: userIconBorder, color: disabledButtonColor.cgColor)
+        formatImageView(imageView: mailIconBorder, color: disabledButtonColor.cgColor)
+        
+        topLabel.textColor = disabledButtonColor
+        bottomLabel.textColor = disabledButtonColor
+        
+        userIcon.image = #imageLiteral(resourceName: "user")
+        mailIcon.image = #imageLiteral(resourceName: "mail")
         
         usernameErrorLabel.isHidden = true
         emailErrorLabel.isHidden = true
@@ -83,26 +94,20 @@ class UsernameEmailController: RegisterController {
             validEmail = true
         }
         if messageFromOauth == "changeButtonTargetFB" {
-            continueButton.removeTarget(self,
-                                        action: #selector(toPasswordVC),
+            continueButton.removeTarget(nil, action: nil,
                                         for: .allEvents)
             continueButton.addTarget(self,
                                      action: #selector(oauthFBRegister),
                                      for: .touchUpInside)
             continueButton.setTitle(signupTitle, for: .normal)
         } else if messageFromOauth == "changeButtonTargetGoogle" {
-            continueButton.removeTarget(self,
-                                        action: #selector(toPasswordVC),
+            continueButton.removeTarget(nil, action: nil,
                                         for: .allEvents)
             continueButton.addTarget(self,
                                      action: #selector(oauthGoogleRegister),
                                      for: .touchUpInside)
             continueButton.setTitle(signupTitle, for: .normal)
         }
-    }
-    
-    func toPasswordVC(_ button: UIButton) {
-        self.performSegue(withIdentifier: "toPassword", sender: self)
     }
     
     func timeBeforeCheck(_ textField: UITextField) {
@@ -155,7 +160,7 @@ class UsernameEmailController: RegisterController {
                     return
                 }
                 
-                if data!["data"].boolValue { // username taken
+                if data!["data"]["taken"].boolValue { // username taken
                     self.setUsernameError("usernameTaken")
                 } else { // username available
                     self.setUsernameError("usernameAvailable")
@@ -188,7 +193,7 @@ class UsernameEmailController: RegisterController {
                     return
                 }
                 
-                if data!["data"].boolValue { // email taken
+                if data!["data"]["taken"].boolValue { // email taken
                     self.setEmailError("emailTaken")
                 } else { // email available
                     self.setEmailError("emailAvailable")
@@ -266,28 +271,14 @@ class UsernameEmailController: RegisterController {
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Send info to the next page in order to retain the field's text
-        // when traversing between the registration pages
-        if segue.identifier == "toPassword" {
-            let resultVC = segue.destination  as! PasswordController
-            resultVC.username = usernameField.text
-            resultVC.email = emailField.text
-            resultVC.password = password
-            resultVC.confirmPassword = confirmPassword
-            resultVC.gender = gender
-            resultVC.dateOfBirth = dateOfBirth
-        }
-    }
-    
     func oauthFBRegister(_ button: UIButton) {
         let parameters: Parameters = [
             "oauth_type" : "facebook",
             "username" : usernameField.text!,
             "email" : oauthJSON!["email"].stringValue,
-            "gender" : oauthJSON!["gender"].stringValue,
-            "first_name" : oauthJSON!["first_name"].stringValue,
-            "last_name" : oauthJSON!["last_name"].stringValue
+            "gender" : oauthJSON!["gender"].string ?? "",
+            "first_name" : oauthJSON!["first_name"].string ?? "",
+            "last_name" : oauthJSON!["last_name"].string ?? ""
         ]
         let header: HTTPHeaders = [
             "Authorization" : "bearer \(fbToken!)"
@@ -296,29 +287,32 @@ class UsernameEmailController: RegisterController {
                                                   header: header)
         
         let indicator = requestLoading(view: self.view)
-        
+        print(fbToken)
         request.getJSON { data, error in
             self.requestDoneLoading(view: self.view, indicator: indicator)
             
             if (error != nil) {
                 return
             }
-            
-            let user = User.init(json: data!)
-            print("User: \(user)")
-            let alert = UIAlertController(
-                title: self.signupSuccessfulMessage,
-                message: nil,
-                preferredStyle: UIAlertControllerStyle.alert
-            )
-            alert.addAction(UIAlertAction(title: "OK",
-                                          style: UIAlertActionStyle.default,
-                                          handler: { action in
-                self.navigationController?.popToRootViewController(
-                                                animated: true)
-            })
-            )
-            self.present(alert, animated: true, completion: nil)
+            if (data?["success"].boolValue)! {
+                let user = User.init(json: data!)
+                UserDefaults.standard.set(user.api_token, forKey: "api_token")
+                UserDefaults.standard.synchronize()
+                
+                let alert = UIAlertController(
+                    title: self.signupSuccessfulMessage,
+                    message: nil,
+                    preferredStyle: UIAlertControllerStyle.alert
+                )
+                alert.addAction(UIAlertAction(title: "OK",
+                                              style: UIAlertActionStyle.default,
+                                              handler: { action in
+                    UserDefaults.standard.set(user.api_token, forKey: "api_token")
+                    UserDefaults.standard.synchronize()
+                    self.transitionToHome()
+                }))
+                self.present(alert, animated: true, completion: nil)
+            }
             
         }
     }
@@ -328,7 +322,7 @@ class UsernameEmailController: RegisterController {
             "oauth_type" : "google",
             "username" : usernameField.text!,
             "email" : oauthJSON!["email"].stringValue,
-            "gender" : oauthJSON!["gender"].stringValue,
+            "gender" : oauthJSON!["gender"].string ?? "",
             "first_name" : oauthJSON!["given_name"].stringValue,
             "last_name" : oauthJSON!["family_name"].stringValue
         ]
@@ -346,21 +340,25 @@ class UsernameEmailController: RegisterController {
                 return
             }
             
-            let user = User.init(json: data!)
-            print("User: \(user)")
-            let alert = UIAlertController(
-                title: self.signupSuccessfulMessage,
-                message: nil,
-                preferredStyle: UIAlertControllerStyle.alert
-            )
-            alert.addAction(UIAlertAction(title: "OK",
-                                          style: UIAlertActionStyle.default,
-                                          handler: { action in
-                self.navigationController?.popToRootViewController(
-                                                animated: true)
-            })
-            )
-            self.present(alert, animated: true, completion: nil)
+            if (data?["success"].boolValue)! {
+                let user = User.init(json: data!)
+                UserDefaults.standard.set(user.api_token, forKey: "api_token")
+                UserDefaults.standard.synchronize()
+                
+                let alert = UIAlertController(
+                    title: self.signupSuccessfulMessage,
+                    message: nil,
+                    preferredStyle: UIAlertControllerStyle.alert
+                )
+                alert.addAction(UIAlertAction(title: "OK",
+                                              style: UIAlertActionStyle.default,
+                                              handler: { action in
+                    UserDefaults.standard.set(user.api_token, forKey: "api_token")
+                    UserDefaults.standard.synchronize()
+                    self.transitionToHome()
+                }))
+                self.present(alert, animated: true, completion: nil)
+            }
             
         }
     }

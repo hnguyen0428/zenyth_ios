@@ -32,9 +32,15 @@ class RegisterController: ModelViewController, UINavigationControllerDelegate {
     let signupSuccessfulMessage = "Signup Successful"
     let notOfAgeMessage = "You're too young!"
     
+    static let mergeMessageGoogle = "A Google account with the same email" +
+                        " has already been created. Do you want to merge?"
+    static let mergeMessageFacebook = "A Facebook account with the same email" +
+                        " has already been created. Do you want to merge?"
+    static let mergeMessageRegular = "An account with the same email" +
+                        " has already been created. Do you want to merge?"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        backgroundView.isHidden = true
     }
     
     func clearInfo() {
@@ -44,6 +50,28 @@ class RegisterController: ModelViewController, UINavigationControllerDelegate {
         confirmPassword = ""
         gender = ""
         dateOfBirth = ""
+    }
+    
+    func printInfo() {
+        print(username)
+        print(email)
+        print(password)
+        print(confirmPassword)
+        print(gender)
+        print(dateOfBirth)
+    }
+    
+    func transitionToHome() {
+        let storyboard = UIStoryboard(name: "Home", bundle: nil);
+        let mapController: MapController =
+            storyboard.instantiateInitialViewController()
+                as! MapController
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+
+        UIView.transition(with: appDelegate.window!, duration: 0.3, options: .transitionCrossDissolve,
+                          animations: {
+            appDelegate.window!.rootViewController = mapController
+        }, completion: nil)
     }
     
 }

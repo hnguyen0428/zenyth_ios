@@ -11,40 +11,42 @@ import SwiftyJSON
 class User: NSObject {
     
     let json: JSON
-    let id: UInt64
+    var id: UInt32
     var username: String
     var email: String
     var api_token: String?
-    var first_name: String?
-    var last_name: String?
-    var gender: String?
-    var birthday: String?
+    var profile: Profile
+    
+    init(id: UInt32, username: String, email: String, api_token: String?, profile: Profile) {
+        self.id = id
+        self.username = username
+        self.email = email
+        self.api_token = api_token
+        self.profile = profile
+        
+        self.json = [
+            "id" : id,
+            "username" : username,
+            "email" : email,
+            "api_token" : api_token ?? "",
+            "profile" : profile.json
+        ]
+    }
     
     init(json: JSON) {
-        self.id = json["data"]["user"]["id"].uInt64Value
+        self.id = json["data"]["user"]["id"].uInt32Value
         self.username = json["data"]["user"]["username"].stringValue
         self.email = json["data"]["user"]["email"].stringValue
         self.api_token = json["data"]["api_token"].string
-        self.first_name = json["data"]["profile"]["first_name"].string
-        self.last_name = json["data"]["profile"]["last_name"].string
-        self.gender = json["data"]["profile"]["gender"].string
         
-        let dateTime = json["data"]["profile"]["birthday"]["date"].string
-        
-        if let str = dateTime {
-            let index = str.index(str.startIndex, offsetBy: 10)
-            self.birthday = str.substring(to: index)
-        }
+        self.profile = Profile.init(json: json["data"]["profile"])
         
         let userJSON: JSON = [
             "id" : id,
             "username" : username,
             "email" : email,
-            "api_token" : api_token,
-            "first_name" : first_name,
-            "last_name" : last_name,
-            "gender" : gender,
-            "birthday" : birthday
+            "api_token" : api_token ?? "",
+            "profile" : profile.json
         ]
         self.json = userJSON
     }
@@ -53,8 +55,8 @@ class User: NSObject {
         return self.json.description
     }
     
-    func getUser() -> JSON{
-        return json
+    func getData() -> [String:Any] {
+        return self.json.dictionaryObject!
     }
     
 }

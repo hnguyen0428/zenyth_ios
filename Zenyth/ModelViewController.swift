@@ -40,7 +40,7 @@ class ModelViewController: UIViewController, UITextFieldDelegate {
         self.view.addSubview(scrollView)
         backgroundView = {
             let imageView = UIImageView(frame: scrollView.frame)
-            imageView.image = #imageLiteral(resourceName: "blurrybottom")
+            imageView.image = #imageLiteral(resourceName: "whitemountain")
             imageView.contentMode = .scaleAspectFill
             imageView.center = self.view.center
             imageView.clipsToBounds = true

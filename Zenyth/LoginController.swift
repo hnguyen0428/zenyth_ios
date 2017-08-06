@@ -14,7 +14,7 @@ import GoogleSignIn
 //import TwitterKit
 
 
-class LoginController: ModelViewController, GIDSignInUIDelegate {
+class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDelegate {
     
     @IBOutlet weak var fbButton: UIButton!
     @IBOutlet weak var gplusButton: UIButton!
@@ -29,6 +29,37 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
     @IBOutlet weak var passwordIcon: UIImageView!
     @IBOutlet weak var bars: UIImageView!
     @IBOutlet weak var logo: UIImageView!
+    
+    /* Signup View */
+    @IBOutlet weak var signupView: UIView!
+    @IBOutlet weak var textFieldOne: UITextField!
+    @IBOutlet weak var textFieldTwo: UITextField!
+    @IBOutlet weak var errorLabelOne: UILabel!
+    @IBOutlet weak var errorLabelTwo: UILabel!
+    @IBOutlet weak var indicatorOne: UIActivityIndicatorView!
+    @IBOutlet weak var indicatorTwo: UIActivityIndicatorView!
+    @IBOutlet weak var tabOne: UIButton!
+    @IBOutlet weak var tabTwo: UIButton!
+    @IBOutlet weak var tabThree: UIButton!
+    @IBOutlet weak var registerButton: UIButton!
+    @IBOutlet weak var textLabelOne: UILabel!
+    @IBOutlet weak var textLabelTwo: UILabel!
+    @IBOutlet weak var iconOne: UIImageView!
+    @IBOutlet weak var iconTwo: UIImageView!
+    @IBOutlet weak var iconOneBorder: UIImageView!
+    @IBOutlet weak var iconTwoBorder: UIImageView!
+    @IBOutlet var panGesture: UIPanGestureRecognizer!
+    
+    var currentTab: Int = 1
+    var mask: UIView?
+    var grabbed: Bool = false
+    let genderData = ["", "Male", "Female", "Non-binary"]
+    var validUsername: Bool = false
+    var validEmail: Bool = false
+    var validPw: Bool = false
+    var checkTimer: Timer? = nil
+    
+    /* End Signup View */
     
     let facebookNoEmailMessage = "Your facebook account does not contain an " +
                         "email. Please make an account through our signup page"
@@ -58,10 +89,28 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
             }
             
             if (data?["success"].boolValue)! {
-                let user = User.init(json: data!)
-                print("User: \(user)")
-                UserDefaults.standard.set(user.api_token, forKey: "api_token")
-                UserDefaults.standard.synchronize()
+                let email = data!["data"]["user"]["email"].stringValue
+                //print(email)
+                let userData = UserDefaults.standard.object(forKey: email) as? [String:Any]
+//                print(userData)
+                print(userData)
+                
+//                let api_token = data!["data"]["api_token"].stringValue
+//                UserDefaults.standard.set(api_token, forKey: "api_token")
+//                UserDefaults.standard.synchronize()
+//                print(UserDefaults.standard.object(forKey: "api_token") as? String)
+                /*
+                if let data  = UserDefaults.standard.object(forKey: email) as? Data {
+                    let users = NSKeyedUnarchiver.unarchiveObject(with: data) as? [User]
+                    let user = users?.first
+                    print(user)
+                }
+                */
+//                let user = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! User
+//                print("User: \(user)")
+//                UserDefaults.standard.set(user.api_token, forKey: "api_token")
+//                UserDefaults.standard.synchronize()
+                self.transitionToHome()
             } else {
                 let errors = (data?["errors"].arrayValue)!
                 var errorString = ""
@@ -109,18 +158,21 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
                               for: .touchUpInside)
         
         setupViews()
+        setupSignupView()
         usernameField.addTarget(self, action: #selector(editingChanged),
                                 for: .editingChanged)
         passwordField.addTarget(self, action: #selector(editingChanged),
                                 for: .editingChanged)
+        
+        signupButton.addTarget(self, action: #selector(showSignupView), for: .touchUpInside)
         
     }
     
     /* Setup images for the buttons and setups textfields
      */
     func setupViews() {
-        formatImageView(imageView: userIconBorder)
-        formatImageView(imageView: passwordIconBorder)
+        formatImageView(imageView: userIconBorder, color: UIColor.white.cgColor)
+        formatImageView(imageView: passwordIconBorder, color: UIColor.white.cgColor)
         
         fbButton.imageView?.contentMode = .scaleAspectFill
         gplusButton.imageView?.contentMode = .scaleAspectFill
@@ -134,15 +186,15 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         
         usernameField.autocorrectionType = UITextAutocorrectionType.no
         
-        formatTextField(textField: usernameField, color: UIColor.gray.cgColor)
-        formatTextField(textField: passwordField, color: UIColor.gray.cgColor)
+        formatTextField(textField: usernameField, color: UIColor.white.cgColor)
+        formatTextField(textField: passwordField, color: UIColor.white.cgColor)
         
-        scrollView.addSubview(passwordIcon)
-        scrollView.addSubview(userIcon)
-        scrollView.addSubview(userIconBorder)
-        scrollView.addSubview(passwordIconBorder)
-        scrollView.addSubview(bars)
-        scrollView.addSubview(logo)
+        scrollView.insertSubview(passwordIcon, belowSubview: signupView)
+        scrollView.insertSubview(userIcon, belowSubview: signupView)
+        scrollView.insertSubview(userIconBorder, belowSubview: signupView)
+        scrollView.insertSubview(passwordIconBorder, belowSubview: signupView)
+        scrollView.insertSubview(bars, belowSubview: signupView)
+        scrollView.insertSubview(logo, belowSubview: signupView)
         
         self.hideKeyboardWhenTappedAround()
     }
@@ -193,12 +245,12 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
             }
             
             self.oauthJSON = json
-            self.fbOauthHandler(json: json, accessToken: accessTokenString)
+            self.fbOauthHandle(json: json, accessToken: accessTokenString)
             
         }
     }
     
-    func fbOauthHandler(json: JSON, accessToken: String) {
+    func fbOauthHandle(json: JSON, accessToken: String) {
         
         // Checks if facebook email has already been used
         let request = EmailTakenRequestor.init(email: json["email"].stringValue)
@@ -209,9 +261,10 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
                 return
             }
             
-            if (data?["data"].boolValue)! { // email is taken
+            if (data?["data"]["taken"].boolValue)!
+                && (data?["data"]["confirmed"].boolValue)! { // email is taken
                 print("Email Taken")
-                self.fbOauthLogin(accessToken: accessToken)
+                self.fbOauthLogin(accessToken: accessToken, json: json)
             } else { // email is available
                 print("Email Available")
                 self.performSegue(withIdentifier: "oauthToUsernameSegue",
@@ -222,9 +275,10 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         
     }
     
-    func fbOauthLogin(accessToken: String) {
+    func fbOauthLogin(accessToken: String, json: JSON) {
         let parameters: Parameters = [
-            "oauth_type": "facebook"
+            "oauth_type": "facebook",
+            "email" : json["email"].stringValue
         ]
         let header: HTTPHeaders = [
             "Authorization": "bearer \(accessToken)"
@@ -239,19 +293,57 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
             }
             
             if (data?["success"].boolValue)! {
-                print(data)
                 let user = User.init(json: data!)
-                print("User: \(user)")
+                let userDefaults = UserDefaults.standard
+                userDefaults.set(user.api_token, forKey: "api_token")
+                userDefaults.synchronize()
+                self.transitionToHome()
             } else {
-                if (data?["data"]["merge_google"].boolValue)! {
+                if (data?["data"]["mergeable"].boolValue)! {
                     // TODO: prompts user to merge with google
-                } else if (data?["data"]["can_merge"].boolValue)! {
-                    // TODO: prompts user to merge with their created account
+                    let mergeErrors = data?["errors"].arrayValue.first?.stringValue
+                    let alert = UIAlertController(title: nil,
+                                                  message: mergeErrors,
+                                                  preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: nil))
+                    alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: {
+                        action in
+                        self.mergeAccount(accessToken: accessToken, email: json["email"].stringValue)
+                    }))
+                    self.present(alert, animated: true, completion: nil)
                 } else {
                     print(data?["errors"])
                 }
             }
             
+        }
+    }
+    
+    func mergeAccount(accessToken: String, email: String) {
+        let parameters: Parameters = [
+            "oauth_type": "facebook",
+            "email" : email,
+            "merge" : true
+        ]
+        let header: HTTPHeaders = [
+            "Authorization": "bearer \(accessToken)"
+        ]
+        let request = OauthLoginRequestor.init(parameters: parameters,
+                                               header: header)
+        let indicator = self.requestLoading(view: self.view)
+        request.getJSON { data, error in
+            self.requestDoneLoading(view: self.view,
+                                    indicator: indicator)
+            if error != nil {
+                return
+            }
+            
+            if (data?["success"].boolValue)! {
+                let user = User.init(json: data!)
+                UserDefaults.standard.set(user.api_token, forKey: "api_token")
+                UserDefaults.standard.synchronize()
+                self.transitionToHome()
+            }
         }
     }
     
@@ -303,6 +395,39 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
             resultVC.oauthJSON = self.oauthJSON
             resultVC.fbToken = self.fbToken
         }
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView,
+                    numberOfRowsInComponent component: Int) -> Int {
+        return genderData.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int,
+                    forComponent component: Int) -> String? {
+        return genderData[row]
+    }
+    
+    /* Called whenever the user picks an item on the pickerview
+     */
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int,
+                    inComponent component: Int) {
+        self.gender = genderData[row]
+        textFieldOne.text = genderData[row]
+        checkAllFields()
+    }
+    
+    /* Clears all fields of registration
+     */
+    override func clearInfo() {
+        super.clearInfo()
+        clearTextFields()
+        self.validPw = false
+        self.validEmail = false
+        self.validUsername = false
     }
     
 }

@@ -124,26 +124,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 Fabric: Copyright 2017 Google, Inc. All Rights Reserved. Use of this software is subject to the terms and conditions of the Fabric Software and Services Agreement located at https://fabric.io/terms. OSS: http://get.fabric.io/terms/opensource.txt
 
-## Firebase
-
-Copyright 2017 Google
-
-## FirebaseAnalytics
-
-Copyright 2017 Google
-
-## FirebaseAuth
-
-Copyright 2017 Google
-
-## FirebaseCore
-
-Copyright 2017 Google
-
-## FirebaseInstanceID
-
-Copyright 2017 Google
-
 ## GTMOAuth2
 
 
@@ -555,6 +535,14 @@ Copyright 2017 Google
    See the License for the specific language governing permissions and
    limitations under the License.
 
+
+## GoogleMaps
+
+Copyright 2017 Google
+
+## GooglePlaces
+
+Copyright 2017 Google
 
 ## GoogleSignIn
 

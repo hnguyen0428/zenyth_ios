@@ -9,9 +9,16 @@
 /* Begin PBXBuildFile section */
 		3725D1DBA4E1D74C7627B484 /* Pods_Zenyth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDF4603E6F5113638CE0C5ED /* Pods_Zenyth.framework */; };
 		4717A9961F188C4300CDC924 /* OauthRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4717A9951F188C4300CDC924 /* OauthRequestor.swift */; };
+		4727AA571F2185F00032F7EB /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4727AA561F2185F00032F7EB /* Home.storyboard */; };
 		47626DE51F1AF77600BB79DD /* JSON+Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47626DE41F1AF77600BB79DD /* JSON+Formatter.swift */; };
 		47626DE71F1AF77F00BB79DD /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47626DE61F1AF77F00BB79DD /* Formatter.swift */; };
+		478006331F218A380064F9E7 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478006321F218A380064F9E7 /* MapController.swift */; };
+		478006351F21B5400064F9E7 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478006341F21B5400064F9E7 /* Profile.swift */; };
+		478006391F21B5730064F9E7 /* Pinpost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478006381F21B5730064F9E7 /* Pinpost.swift */; };
 		47883CD51F16EC8B0008C7F3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 47883CD41F16EC8B0008C7F3 /* GoogleService-Info.plist */; };
+		47A488E01F22C96D006B0453 /* PinpostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A488DF1F22C96D006B0453 /* PinpostController.swift */; };
+		47A488E21F22C97B006B0453 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A488E11F22C97B006B0453 /* ProfileController.swift */; };
+		47A488E41F22C98C006B0453 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A488E31F22C98C006B0453 /* HomeController.swift */; };
 		47A745D41F16F59F00A88D5D /* APIRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745D31F16F59F00A88D5D /* APIRoutes.swift */; };
 		47A745D61F16F5A800A88D5D /* CommentRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745D51F16F5A800A88D5D /* CommentRequestor.swift */; };
 		47A745DE1F16F5B500A88D5D /* PinpostRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745D71F16F5B500A88D5D /* PinpostRequestor.swift */; };
@@ -33,10 +40,12 @@
 		47C622DE1F0A341A003BBC16 /* ZenythTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622DD1F0A341A003BBC16 /* ZenythTests.swift */; };
 		47C622E91F0A341A003BBC16 /* ZenythUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622E81F0A341A003BBC16 /* ZenythUITests.swift */; };
 		47C622F71F0A347F003BBC16 /* RegisterController+UsernameEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622F61F0A347F003BBC16 /* RegisterController+UsernameEmail.swift */; };
+		47CA09791F1E57A600EA2455 /* LoginController+Signup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CA09781F1E57A600EA2455 /* LoginController+Signup.swift */; };
+		47CA097B1F1E73BC00EA2455 /* TabThree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CA097A1F1E73BC00EA2455 /* TabThree.swift */; };
+		47CA097D1F1E75BE00EA2455 /* TabOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CA097C1F1E75BE00EA2455 /* TabOne.swift */; };
+		47CA097F1F1E75C700EA2455 /* TabTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CA097E1F1E75C700EA2455 /* TabTwo.swift */; };
 		47D838CC1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */; };
 		47D9ECB71F19755A00E3EEE4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECB61F19755A00E3EEE4 /* User.swift */; };
-		47D9ECBA1F19C3C500E3EEE4 /* RegisterController+Password.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECB91F19C3C500E3EEE4 /* RegisterController+Password.swift */; };
-		47D9ECBC1F19C3E200E3EEE4 /* RegisterController+GenderBirthday.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECBB1F19C3E200E3EEE4 /* RegisterController+GenderBirthday.swift */; };
 		47D9ECC01F19E3D300E3EEE4 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECBF1F19E3D300E3EEE4 /* RegisterController.swift */; };
 		7341F9E163A96B05940B44E8 /* Pods_ZenythTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BB6326B7B70E7CF186F4AB1 /* Pods_ZenythTests.framework */; };
 		824F43211F15E84C00031672 /* TwitterKitManual in Resources */ = {isa = PBXBuildFile; fileRef = 824F43201F15E84C00031672 /* TwitterKitManual */; };
@@ -63,9 +72,16 @@
 
 /* Begin PBXFileReference section */
 		4717A9951F188C4300CDC924 /* OauthRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OauthRequestor.swift; sourceTree = "<group>"; };
+		4727AA561F2185F00032F7EB /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		47626DE41F1AF77600BB79DD /* JSON+Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSON+Formatter.swift"; sourceTree = "<group>"; };
 		47626DE61F1AF77F00BB79DD /* Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
+		478006321F218A380064F9E7 /* MapController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
+		478006341F21B5400064F9E7 /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		478006381F21B5730064F9E7 /* Pinpost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pinpost.swift; sourceTree = "<group>"; };
 		47883CD41F16EC8B0008C7F3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		47A488DF1F22C96D006B0453 /* PinpostController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinpostController.swift; sourceTree = "<group>"; };
+		47A488E11F22C97B006B0453 /* ProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
+		47A488E31F22C98C006B0453 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		47A745D31F16F59F00A88D5D /* APIRoutes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRoutes.swift; sourceTree = "<group>"; };
 		47A745D51F16F5A800A88D5D /* CommentRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentRequestor.swift; sourceTree = "<group>"; };
 		47A745D71F16F5B500A88D5D /* PinpostRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinpostRequestor.swift; sourceTree = "<group>"; };
@@ -93,10 +109,12 @@
 		47C622E81F0A341A003BBC16 /* ZenythUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZenythUITests.swift; sourceTree = "<group>"; };
 		47C622EA1F0A341A003BBC16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		47C622F61F0A347F003BBC16 /* RegisterController+UsernameEmail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RegisterController+UsernameEmail.swift"; sourceTree = "<group>"; };
+		47CA09781F1E57A600EA2455 /* LoginController+Signup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LoginController+Signup.swift"; sourceTree = "<group>"; };
+		47CA097A1F1E73BC00EA2455 /* TabThree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabThree.swift; sourceTree = "<group>"; };
+		47CA097C1F1E75BE00EA2455 /* TabOne.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabOne.swift; sourceTree = "<group>"; };
+		47CA097E1F1E75C700EA2455 /* TabTwo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabTwo.swift; sourceTree = "<group>"; };
 		47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModelViewController+KeyboardHandler.swift"; sourceTree = "<group>"; };
 		47D9ECB61F19755A00E3EEE4 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		47D9ECB91F19C3C500E3EEE4 /* RegisterController+Password.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RegisterController+Password.swift"; sourceTree = "<group>"; };
-		47D9ECBB1F19C3E200E3EEE4 /* RegisterController+GenderBirthday.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RegisterController+GenderBirthday.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		47D9ECBF1F19E3D300E3EEE4 /* RegisterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
 		4950B87A454879669AE8F046 /* Pods_ZenythUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZenythUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BB6326B7B70E7CF186F4AB1 /* Pods_ZenythTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZenythTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -150,6 +168,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		478006311F218A100064F9E7 /* HomeControllers */ = {
+			isa = PBXGroup;
+			children = (
+				478006321F218A380064F9E7 /* MapController.swift */,
+				47A488DF1F22C96D006B0453 /* PinpostController.swift */,
+				47A488E11F22C97B006B0453 /* ProfileController.swift */,
+				47A488E31F22C98C006B0453 /* HomeController.swift */,
+			);
+			name = HomeControllers;
+			sourceTree = "<group>";
+		};
 		47883CD61F16F4C60008C7F3 /* APIRequests */ = {
 			isa = PBXGroup;
 			children = (
@@ -177,7 +206,6 @@
 				47C622C81F0A341A003BBC16 /* AppDelegate.swift */,
 				47ABAA031F0B7B7400FD479E /* UIViewController+Helper.swift */,
 				47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */,
-				47A9024B1F0B1F4400A1CEE8 /* LoginController.swift */,
 				47A745E81F16F7D000A88D5D /* ModelViewController.swift */,
 				D237226F1F1C8813004FFCFA /* ResetPasswordController.swift */,
 			);
@@ -210,6 +238,7 @@
 		47C622C71F0A341A003BBC16 /* Zenyth */ = {
 			isa = PBXGroup;
 			children = (
+				478006311F218A100064F9E7 /* HomeControllers */,
 				47D9ECB51F19752E00E3EEE4 /* ObjectModels */,
 				47A745E71F16F7B100A88D5D /* StartingControllers */,
 				47883CD61F16F4C60008C7F3 /* APIRequests */,
@@ -220,6 +249,7 @@
 				47C622D41F0A341A003BBC16 /* Info.plist */,
 				47A9024D1F0B34C900A1CEE8 /* GlobalVariables.swift */,
 				47883CD41F16EC8B0008C7F3 /* GoogleService-Info.plist */,
+				4727AA561F2185F00032F7EB /* Home.storyboard */,
 			);
 			path = Zenyth;
 			sourceTree = "<group>";
@@ -246,6 +276,8 @@
 			isa = PBXGroup;
 			children = (
 				47D9ECB61F19755A00E3EEE4 /* User.swift */,
+				478006341F21B5400064F9E7 /* Profile.swift */,
+				478006381F21B5730064F9E7 /* Pinpost.swift */,
 			);
 			name = ObjectModels;
 			sourceTree = "<group>";
@@ -253,10 +285,13 @@
 		47D9ECB81F19C37D00E3EEE4 /* RegisterControllers */ = {
 			isa = PBXGroup;
 			children = (
+				47A9024B1F0B1F4400A1CEE8 /* LoginController.swift */,
 				47C622F61F0A347F003BBC16 /* RegisterController+UsernameEmail.swift */,
-				47D9ECB91F19C3C500E3EEE4 /* RegisterController+Password.swift */,
-				47D9ECBB1F19C3E200E3EEE4 /* RegisterController+GenderBirthday.swift */,
 				47D9ECBF1F19E3D300E3EEE4 /* RegisterController.swift */,
+				47CA09781F1E57A600EA2455 /* LoginController+Signup.swift */,
+				47CA097A1F1E73BC00EA2455 /* TabThree.swift */,
+				47CA097C1F1E75BE00EA2455 /* TabOne.swift */,
+				47CA097E1F1E75C700EA2455 /* TabTwo.swift */,
 			);
 			name = RegisterControllers;
 			sourceTree = "<group>";
@@ -399,6 +434,7 @@
 				47C622D31F0A341A003BBC16 /* LaunchScreen.storyboard in Resources */,
 				47C622D01F0A341A003BBC16 /* Assets.xcassets in Resources */,
 				47C622CE1F0A341A003BBC16 /* Main.storyboard in Resources */,
+				4727AA571F2185F00032F7EB /* Home.storyboard in Resources */,
 				824F43211F15E84C00031672 /* TwitterKitManual in Resources */,
 				47883CD51F16EC8B0008C7F3 /* GoogleService-Info.plist in Resources */,
 			);
@@ -563,17 +599,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47CA097D1F1E75BE00EA2455 /* TabOne.swift in Sources */,
 				47A745E01F16F5B500A88D5D /* RegisterRequestor.swift in Sources */,
-				47D9ECBA1F19C3C500E3EEE4 /* RegisterController+Password.swift in Sources */,
+				47A488E41F22C98C006B0453 /* HomeController.swift in Sources */,
+				478006351F21B5400064F9E7 /* Profile.swift in Sources */,
 				47D9ECC01F19E3D300E3EEE4 /* RegisterController.swift in Sources */,
+				47CA097F1F1E75C700EA2455 /* TabTwo.swift in Sources */,
 				47A745D41F16F59F00A88D5D /* APIRoutes.swift in Sources */,
 				47A745E61F16F64200A88D5D /* LoginRequestor.swift in Sources */,
-				47D9ECBC1F19C3E200E3EEE4 /* RegisterController+GenderBirthday.swift in Sources */,
+				47A488E21F22C97B006B0453 /* ProfileController.swift in Sources */,
 				47626DE71F1AF77F00BB79DD /* Formatter.swift in Sources */,
+				47CA097B1F1E73BC00EA2455 /* TabThree.swift in Sources */,
+				478006331F218A380064F9E7 /* MapController.swift in Sources */,
+				47CA09791F1E57A600EA2455 /* LoginController+Signup.swift in Sources */,
 				47A745E91F16F7D000A88D5D /* ModelViewController.swift in Sources */,
 				47A745E11F16F5B500A88D5D /* RelationshipRequestor.swift in Sources */,
+				47A488E01F22C96D006B0453 /* PinpostController.swift in Sources */,
 				47C622F71F0A347F003BBC16 /* RegisterController+UsernameEmail.swift in Sources */,
 				47A9024C1F0B1F4400A1CEE8 /* LoginController.swift in Sources */,
+				478006391F21B5730064F9E7 /* Pinpost.swift in Sources */,
 				47A9024E1F0B34C900A1CEE8 /* GlobalVariables.swift in Sources */,
 				47D838CC1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift in Sources */,
 				47A745E31F16F5B500A88D5D /* ResetPasswordRequestor.swift in Sources */,
