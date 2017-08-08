@@ -1,5 +1,5 @@
 //
-//  RelationshipRequestsProtocol.swift
+//  RelationshipManagerProtocol.swift
 //  Zenyth
 //
 //  Created by Hoang on 8/7/17.

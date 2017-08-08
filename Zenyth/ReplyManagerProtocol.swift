@@ -1,5 +1,5 @@
 //
-//  ReplyRequestsProtocol.swift
+//  ReplyManagerProtocol.swift
 //  Zenyth
 //
 //  Created by Hoang on 8/7/17.

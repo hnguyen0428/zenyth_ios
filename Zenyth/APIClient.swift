@@ -1,5 +1,5 @@
 //
-//  ZenythAPIClient.swift
+//  APIClient.swift
 //  Zenyth
 //
 //  Created by Hoang on 8/7/17.
@@ -9,43 +9,50 @@
 import Alamofire
 import SwiftyJSON
 
-let baseURL = "http://54.219.134.56/api"
-
 class APIClient {
-    static func credentialManager() -> CredentialManager {
-        return CredentialManager.init()
+    var needsAuthorization: Bool = false
+    
+    func executeJSON(route: APIRoute,
+                     parameters: Parameters = Parameters.init(),
+                     headers: HTTPHeaders = HTTPHeaders.init(),
+                     onSuccess: JSONCallback?,
+                     onFailure: JSONCallback?,
+                     onRequestError: ErrorCallback?) {
+        
+        var headers = headers
+        if self.needsAuthorization {
+            let apiToken: String =
+                UserDefaults.standard.object(forKey: "api_token") as! String
+            headers.updateValue("Authorization",
+                                forKey: "bearer \(apiToken)")
+        }
+        
+        let urlString = route.0
+        let method = route.1
+        
+        Alamofire.request(urlString, method: method, parameters: parameters,
+                          headers: headers).responseJSON {
+            response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                if json["success"].boolValue {
+                    onSuccess?(json)
+                }
+                else {
+                    print(json)
+                    onFailure?(json)
+                }
+                
+            case .failure(let error):
+                debugPrint(response)
+                print(error)
+                onRequestError?(error as NSError)
+            }
+        }
     }
     
-    static func userManager() -> UserManager {
-        return UserManager.init()
+    func setAuthorization() {
+        self.needsAuthorization = true
     }
-    
-    static func pinpostManager() -> PinpostManager {
-        return PinpostManager.init()
-    }
-    
-    static func commentManager() -> CommentManager {
-        return CommentManager.init()
-    }
-    
-    static func replyManager() -> ReplyManager {
-        return ReplyManager.init()
-    }
-    
-    static func likeManager() -> LikeManager {
-        return LikeManager.init()
-    }
-    
-    static func relationshipManager() -> RelationshipManager {
-        return RelationshipManager.init()
-    }
-    
-    static func imageManager() -> ImageManager {
-        return ImageManager.init()
-    }
-    
-    static func tagManager() -> TagManager {
-        return TagManager.init()
-    }
-    
 }

@@ -9,9 +9,8 @@
 /* Begin PBXBuildFile section */
 		3725D1DBA4E1D74C7627B484 /* Pods_Zenyth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDF4603E6F5113638CE0C5ED /* Pods_Zenyth.framework */; };
 		471280781F391A4B006FE796 /* CredentialManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280771F391A4B006FE796 /* CredentialManagerProtocol.swift */; };
-		4712807A1F391B4F006FE796 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280791F391B4F006FE796 /* APIClient.swift */; };
 		4712807C1F3921DA006FE796 /* CredentialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712807B1F3921DA006FE796 /* CredentialManager.swift */; };
-		4712807E1F3929B2006FE796 /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712807D1F3929B2006FE796 /* Manager.swift */; };
+		4712807E1F3929B2006FE796 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712807D1F3929B2006FE796 /* APIClient.swift */; };
 		471280801F39381C006FE796 /* Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712807F1F39381C006FE796 /* Object.swift */; };
 		471280821F396F85006FE796 /* UserManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280811F396F85006FE796 /* UserManagerProtocol.swift */; };
 		471280841F396FCC006FE796 /* Callbacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280831F396FCC006FE796 /* Callbacks.swift */; };
@@ -37,6 +36,11 @@
 		471280AC1F3992FC006FE796 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280AB1F3992FC006FE796 /* ImageManager.swift */; };
 		471280AE1F399306006FE796 /* TagManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280AD1F399306006FE796 /* TagManager.swift */; };
 		4727AA571F2185F00032F7EB /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4727AA561F2185F00032F7EB /* Home.storyboard */; };
+		477FF6941F39D92F00FD66B4 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477FF6931F39D92F00FD66B4 /* Endpoint.swift */; };
+		477FF6961F39D97C00FD66B4 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477FF6951F39D97C00FD66B4 /* LoginManager.swift */; };
+		477FF6981F39D98C00FD66B4 /* LoginManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477FF6971F39D98C00FD66B4 /* LoginManagerProtocol.swift */; };
+		477FF69A1F39D99900FD66B4 /* RegistrationManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477FF6991F39D99900FD66B4 /* RegistrationManagerProtocol.swift */; };
+		477FF69C1F39D9A200FD66B4 /* RegistrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477FF69B1F39D9A200FD66B4 /* RegistrationManager.swift */; };
 		478006331F218A380064F9E7 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478006321F218A380064F9E7 /* MapController.swift */; };
 		478006391F21B5730064F9E7 /* Pinpost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478006381F21B5730064F9E7 /* Pinpost.swift */; };
 		47883CD51F16EC8B0008C7F3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 47883CD41F16EC8B0008C7F3 /* GoogleService-Info.plist */; };
@@ -86,9 +90,8 @@
 
 /* Begin PBXFileReference section */
 		471280771F391A4B006FE796 /* CredentialManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialManagerProtocol.swift; sourceTree = "<group>"; };
-		471280791F391B4F006FE796 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		4712807B1F3921DA006FE796 /* CredentialManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialManager.swift; sourceTree = "<group>"; };
-		4712807D1F3929B2006FE796 /* Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
+		4712807D1F3929B2006FE796 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		4712807F1F39381C006FE796 /* Object.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Object.swift; sourceTree = "<group>"; };
 		471280811F396F85006FE796 /* UserManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserManagerProtocol.swift; sourceTree = "<group>"; };
 		471280831F396FCC006FE796 /* Callbacks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Callbacks.swift; sourceTree = "<group>"; };
@@ -114,6 +117,11 @@
 		471280AB1F3992FC006FE796 /* ImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		471280AD1F399306006FE796 /* TagManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagManager.swift; sourceTree = "<group>"; };
 		4727AA561F2185F00032F7EB /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
+		477FF6931F39D92F00FD66B4 /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		477FF6951F39D97C00FD66B4 /* LoginManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
+		477FF6971F39D98C00FD66B4 /* LoginManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginManagerProtocol.swift; sourceTree = "<group>"; };
+		477FF6991F39D99900FD66B4 /* RegistrationManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationManagerProtocol.swift; sourceTree = "<group>"; };
+		477FF69B1F39D9A200FD66B4 /* RegistrationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationManager.swift; sourceTree = "<group>"; };
 		478006321F218A380064F9E7 /* MapController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
 		478006381F21B5730064F9E7 /* Pinpost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pinpost.swift; sourceTree = "<group>"; };
 		47883CD41F16EC8B0008C7F3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -199,7 +207,13 @@
 		471280761F390F88006FE796 /* ZenythAPIClient */ = {
 			isa = PBXGroup;
 			children = (
-				4712807D1F3929B2006FE796 /* Manager.swift */,
+				477FF6931F39D92F00FD66B4 /* Endpoint.swift */,
+				4712807D1F3929B2006FE796 /* APIClient.swift */,
+				471280831F396FCC006FE796 /* Callbacks.swift */,
+				477FF6991F39D99900FD66B4 /* RegistrationManagerProtocol.swift */,
+				477FF69B1F39D9A200FD66B4 /* RegistrationManager.swift */,
+				477FF6971F39D98C00FD66B4 /* LoginManagerProtocol.swift */,
+				477FF6951F39D97C00FD66B4 /* LoginManager.swift */,
 				471280771F391A4B006FE796 /* CredentialManagerProtocol.swift */,
 				4712807B1F3921DA006FE796 /* CredentialManager.swift */,
 				471280811F396F85006FE796 /* UserManagerProtocol.swift */,
@@ -218,8 +232,6 @@
 				471280AB1F3992FC006FE796 /* ImageManager.swift */,
 				4712809D1F3990DF006FE796 /* TagManagerProtocol.swift */,
 				471280AD1F399306006FE796 /* TagManager.swift */,
-				471280791F391B4F006FE796 /* APIClient.swift */,
-				471280831F396FCC006FE796 /* Callbacks.swift */,
 			);
 			name = ZenythAPIClient;
 			sourceTree = "<group>";
@@ -651,12 +663,15 @@
 				471280921F39844C006FE796 /* Tag.swift in Sources */,
 				47CA097F1F1E75C700EA2455 /* TabTwo.swift in Sources */,
 				4712809E1F3990DF006FE796 /* TagManagerProtocol.swift in Sources */,
+				477FF6941F39D92F00FD66B4 /* Endpoint.swift in Sources */,
 				4712808C1F39840D006FE796 /* Reply.swift in Sources */,
 				471280841F396FCC006FE796 /* Callbacks.swift in Sources */,
 				47A488E21F22C97B006B0453 /* ProfileController.swift in Sources */,
+				477FF69A1F39D99900FD66B4 /* RegistrationManagerProtocol.swift in Sources */,
 				471280941F398576006FE796 /* RelationshipManagerProtocol.swift in Sources */,
 				471280961F398876006FE796 /* ImageManagerProtocol.swift in Sources */,
 				47CA097B1F1E73BC00EA2455 /* TabThree.swift in Sources */,
+				477FF6961F39D97C00FD66B4 /* LoginManager.swift in Sources */,
 				478006331F218A380064F9E7 /* MapController.swift in Sources */,
 				47CA09791F1E57A600EA2455 /* LoginController+Signup.swift in Sources */,
 				471280A81F3992E8006FE796 /* LikeManager.swift in Sources */,
@@ -665,17 +680,19 @@
 				4712809C1F398D30006FE796 /* LikeManagerProtocol.swift in Sources */,
 				47C622F71F0A347F003BBC16 /* RegisterController+UsernameEmail.swift in Sources */,
 				471280AC1F3992FC006FE796 /* ImageManager.swift in Sources */,
+				477FF69C1F39D9A200FD66B4 /* RegistrationManager.swift in Sources */,
 				47A9024C1F0B1F4400A1CEE8 /* LoginController.swift in Sources */,
 				471280861F3977D3006FE796 /* PinpostManagerProtocol.swift in Sources */,
 				471280981F3989CF006FE796 /* CommentManagerProtocol.swift in Sources */,
 				471280A01F3992C6006FE796 /* UserManager.swift in Sources */,
+				477FF6981F39D98C00FD66B4 /* LoginManagerProtocol.swift in Sources */,
 				478006391F21B5730064F9E7 /* Pinpost.swift in Sources */,
 				471280A61F3992E0006FE796 /* ReplyManager.swift in Sources */,
 				471280AE1F399306006FE796 /* TagManager.swift in Sources */,
 				47A9024E1F0B34C900A1CEE8 /* GlobalVariables.swift in Sources */,
 				47D838CC1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift in Sources */,
 				471280781F391A4B006FE796 /* CredentialManagerProtocol.swift in Sources */,
-				4712807E1F3929B2006FE796 /* Manager.swift in Sources */,
+				4712807E1F3929B2006FE796 /* APIClient.swift in Sources */,
 				471280AA1F3992F3006FE796 /* RelationshipManager.swift in Sources */,
 				47ABAA041F0B7B7400FD479E /* UIViewController+Helper.swift in Sources */,
 				471280A21F3992CF006FE796 /* PinpostManager.swift in Sources */,
@@ -686,7 +703,6 @@
 				47D9ECB71F19755A00E3EEE4 /* User.swift in Sources */,
 				D23722701F1C8813004FFCFA /* ResetPasswordController.swift in Sources */,
 				4712809A1F398C7F006FE796 /* ReplyManagerProtocol.swift in Sources */,
-				4712807A1F391B4F006FE796 /* APIClient.swift in Sources */,
 				471280901F39842C006FE796 /* Relationship.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -71,9 +71,9 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
         
         let indicator = requestLoading(view: self.view)
         if self.isValidEmail(email: text) {
-            APIClient.credentialManager().login(withEmail: text,
-                                                password: passwordField.text!,
-                                                onSuccess:
+            LoginManager().login(withEmail: text,
+                                 password: passwordField.text!,
+                                 onSuccess:
                 { user, apiToken in
                     self.requestDoneLoading(view: self.view, indicator: indicator)
                     UserDefaults.standard.set(apiToken, forKey: "api_token")
@@ -86,9 +86,9 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
                                   message: error)
             })
         } else if self.isValidCharactersUsername(username: text) {
-            APIClient.credentialManager().login(withUsername: text,
-                                                password: passwordField.text!,
-                                                onSuccess:
+            LoginManager().login(withUsername: text,
+                                 password: passwordField.text!,
+                                 onSuccess:
                 { user, apiToken in
                     self.requestDoneLoading(view: self.view, indicator: indicator)
                     UserDefaults.standard.set(apiToken, forKey: "api_token")
@@ -228,8 +228,8 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
         
         // Checks if facebook email has already been used
         let email = json["email"].stringValue
-        APIClient.credentialManager().validateEmail(email: email,
-                                                    onSuccess:
+        CredentialManager().validateEmail(email: email,
+                                          onSuccess:
             { data in
                 if data["taken"].boolValue {
                     print("Email Taken")
@@ -249,10 +249,10 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
 
         let indicator = requestLoading(view: self.view)
         
-        APIClient.credentialManager().oauthLogin(withEmail: email,
-                                                 oauthType: oauthType,
-                                                 accessToken: accessToken,
-                                                 onSuccess:
+        LoginManager().oauthLogin(withEmail: email,
+                                  oauthType: oauthType,
+                                  accessToken: accessToken,
+                                  onSuccess:
             { user, apiToken in
                 self.requestDoneLoading(view: self.view, indicator: indicator)
                 UserDefaults.standard.set(apiToken, forKey: "api_token")
@@ -279,10 +279,10 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
         let indicator = self.requestLoading(view: self.view)
         let oauthType = "facebook"
         
-        APIClient.credentialManager().oauthMergeAccount(withEmail: email,
-                                                        oauthType: oauthType,
-                                                        accessToken: accessToken,
-                                                        onSuccess:
+        RegistrationManager().oauthMergeAccount(withEmail: email,
+                                                oauthType: oauthType,
+                                                accessToken: accessToken,
+                                                onSuccess:
             { user, apiToken in
                 self.requestDoneLoading(view: self.view, indicator: indicator)
                 UserDefaults.standard.set(apiToken, forKey: "api_token")

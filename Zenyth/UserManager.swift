@@ -1,5 +1,5 @@
 //
-//  UserRequests.swift
+//  UserManager.swift
 //  Zenyth
 //
 //  Created by Hoang on 8/7/17.
@@ -10,6 +10,6 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-class UserManager: Manager, UserManagerProtocol {
+class UserManager: APIClient, UserManagerProtocol {
     
 }

@@ -39,8 +39,8 @@ class ResetPasswordController: ModelViewController {
     func buttonAction(_ button: UIButton) {
         if validEmail {
             let indicator = requestLoading(view: self.view)
-            APIClient.credentialManager().sendResetPassword(toEmail: usernameEmailField.text!,
-                                                            onSuccess:
+            CredentialManager().sendResetPassword(toEmail: usernameEmailField.text!,
+                                                  onSuccess:
                 { data in
                     self.requestDoneLoading(view: self.view, indicator: indicator)
                     let email = data["email"].stringValue
@@ -49,8 +49,8 @@ class ResetPasswordController: ModelViewController {
             })
         } else if validUsername {
             let indicator = requestLoading(view: self.view)
-            APIClient.credentialManager().sendResetPassword(toUsername: usernameEmailField.text!,
-                                                            onSuccess:
+            CredentialManager().sendResetPassword(toUsername: usernameEmailField.text!,
+                                                  onSuccess:
                 { data in
                     self.requestDoneLoading(view: self.view, indicator: indicator)
                     let email = data["email"].stringValue
@@ -104,8 +104,8 @@ class ResetPasswordController: ModelViewController {
         let group = DispatchGroup()
         
         group.enter()
-        APIClient.credentialManager().validateUsername(username: text,
-                                                       onSuccess:
+        CredentialManager().validateUsername(username: text,
+                                             onSuccess:
             { data in
                 group.leave()
                 if data["taken"].boolValue {
@@ -118,8 +118,8 @@ class ResetPasswordController: ModelViewController {
                 }
         })
         group.enter()
-        APIClient.credentialManager().validateEmail(email: text,
-                                                    onSuccess:
+        CredentialManager().validateEmail(email: text,
+                                          onSuccess:
             { data in
                 group.leave()
                 if data["taken"].boolValue {

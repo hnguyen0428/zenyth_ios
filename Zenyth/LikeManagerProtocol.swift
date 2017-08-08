@@ -1,5 +1,5 @@
 //
-//  LikeRequestsProtocol.swift
+//  LikeManagerProtocol.swift
 //  Zenyth
 //
 //  Created by Hoang on 8/7/17.

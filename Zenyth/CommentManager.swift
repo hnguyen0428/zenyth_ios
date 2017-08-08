@@ -1,5 +1,5 @@
 //
-//  CommentRequests.swift
+//  CommentManager.swift
 //  Zenyth
 //
 //  Created by Hoang on 8/7/17.
@@ -10,6 +10,6 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-class CommentManager: Manager, CommentManagerProtocol {
+class CommentManager: APIClient, CommentManagerProtocol {
     
 }

@@ -59,13 +59,13 @@ extension LoginController {
         }
         let indicator = requestLoading(view: self.view)
         
-        APIClient.credentialManager().register(withUsername: username!,
-                                               email: email!,
-                                               password: password!,
-                                               passwordConfirmation: confirmPassword!,
-                                               gender: gender!.lowercased(),
-                                               birthday: dateOfBirth!,
-                                               onSuccess:
+        RegistrationManager().register(withUsername: username!,
+                                       email: email!,
+                                       password: password!,
+                                       passwordConfirmation: confirmPassword!,
+                                       gender: gender!.lowercased(),
+                                       birthday: dateOfBirth!,
+                                       onSuccess:
             { user, apiToken in
                 self.requestDoneLoading(view: self.view, indicator: indicator)
                 let alert = UIAlertController(

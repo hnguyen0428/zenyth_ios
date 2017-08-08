@@ -1,5 +1,5 @@
 //
-//  ReplyRequests.swift
+//  ReplyManager.swift
 //  Zenyth
 //
 //  Created by Hoang on 8/7/17.
@@ -10,6 +10,6 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-class ReplyManager: Manager, ReplyManagerProtocol {
+class ReplyManager: APIClient, ReplyManagerProtocol {
     
 }
