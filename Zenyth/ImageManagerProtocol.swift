@@ -9,13 +9,13 @@
 import Foundation
 
 protocol ImageRequestsProtocol {
-    func requestGetImageDataWith(imageId: UInt32,
-                                 onSuccess: DataCallback?,
-                                 onFailure: JSONCallback?,
-                                 onRequestError: ErrorCallback?)
+    func getImageData(withImageId imageId: UInt32,
+                      onSuccess: DataCallback?,
+                      onFailure: JSONCallback?,
+                      onRequestError: ErrorCallback?)
     
-    func requestDeleteImageWith(imageId: UInt32,
-                                onSuccess: JSONCallback?,
-                                onFailure: JSONCallback?,
-                                onRequestError: ErrorCallback?)
+    func deleteImage(withImageId imageId: UInt32,
+                     onSuccess: JSONCallback?,
+                     onFailure: JSONCallback?,
+                     onRequestError: ErrorCallback?)
 }

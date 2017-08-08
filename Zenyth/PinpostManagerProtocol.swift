@@ -9,62 +9,62 @@
 import Foundation
 
 protocol PinpostManagerProtocol {
-    func requestCreatePinpost(title: String, description: String,
-                              latitude: Double, longitude: Double,
-                              privacy: String, tags: String?,
-                              onSuccess: PinpostCallback?,
-                              onFailure: JSONCallback?,
-                              onRequestError: ErrorCallback?)
+    func createPinpost(withTitle title: String, description: String,
+                       latitude: Double, longitude: Double,
+                       privacy: String, tags: String?,
+                       onSuccess: PinpostCallback?,
+                       onFailure: JSONCallback?,
+                       onRequestError: ErrorCallback?)
     
-    func requestUploadImageTo(pinpostId: UInt32, imageData: Data,
-                              onSuccess: ImageCallback?,
-                              onFailure: JSONCallback?,
-                              onRequestError: ErrorCallback?)
+    func uploadImage(toPinpostId pinpostId: UInt32, imageData: Data,
+                     onSuccess: ImageCallback?,
+                     onFailure: JSONCallback?,
+                     onRequestError: ErrorCallback?)
     
-    func requestUpdatePinpostWith(pinpostId: UInt32,
-                                  title: String?, description: String?,
-                                  latitude: Double, longitude: Double,
-                                  privacy: String,
-                                  onSuccess: PinpostCallback?,
-                                  onFailure: JSONCallback?,
-                                  onRequestError: ErrorCallback?)
+    func updatePinpost(withPinpostId pinpostId: UInt32,
+                       title: String?, description: String?,
+                       latitude: Double, longitude: Double,
+                       privacy: String,
+                       onSuccess: PinpostCallback?,
+                       onFailure: JSONCallback?,
+                       onRequestError: ErrorCallback?)
     
-    func requestReadPinpostInfo(pinpostId: UInt32,
-                                onSuccess: PinpostCallback?,
-                                onFailure: JSONCallback?,
-                                onRequestError: ErrorCallback?)
+    func readPinpostInfo(withPinpostId pinpostId: UInt32,
+                         onSuccess: PinpostCallback?,
+                         onFailure: JSONCallback?,
+                         onRequestError: ErrorCallback?)
     
-    func requestReadPinpostImages(pinpostId: UInt32,
-                                  onSuccess: ImagesCallback?,
-                                  onFailure: JSONCallback?,
-                                  onRequestError: ErrorCallback?)
-    
-    func requestDeletePinpostWith(pinpostId: UInt32,
-                                  onSuccess: JSONCallback?,
-                                  onFailure: JSONCallback?,
-                                  onRequestError: ErrorCallback?)
-    
-    func requestGetCommentsOn(pinpostId: UInt32,
-                              onSuccess: CommentsCallback?,
-                              onFailure: JSONCallback?,
-                              onRequestError: ErrorCallback?)
-    
-    func requestGetLikesOn(pinpostId: UInt32,
-                           onSuccess: LikesCallback?,
+    func readPinpostImages(withPinpostId pinpostId: UInt32,
+                           onSuccess: ImagesCallback?,
                            onFailure: JSONCallback?,
                            onRequestError: ErrorCallback?)
     
-    func requestFetchPinpostByFrame(topLeftLat: Double, topLeftLong: Double,
-                                    bottomRightLat: Double, bottomRightLong: Double,
-                                    scope: String,
-                                    onSuccess: PinpostsCallback?,
-                                    onFailure: JSONCallback?,
-                                    onRequestError: ErrorCallback?)
+    func deletePinpost(withPinpostId pinpostId: UInt32,
+                       onSuccess: JSONCallback?,
+                       onFailure: JSONCallback?,
+                       onRequestError: ErrorCallback?)
     
-    func requestFetchPinpostByRadius(centerLat: Double, centerLong: Double,
-                                     radius: Double, scope: String,
-                                     unit: String,
-                                     onSuccess: PinpostsCallback?,
-                                     onFailure: JSONCallback?,
-                                     onRequestError: ErrorCallback?)
+    func getComments(onPinpostId pinpostId: UInt32,
+                     onSuccess: CommentsCallback?,
+                     onFailure: JSONCallback?,
+                     onRequestError: ErrorCallback?)
+    
+    func getLikes(onPinpostId pinpostId: UInt32,
+                  onSuccess: LikesCallback?,
+                  onFailure: JSONCallback?,
+                  onRequestError: ErrorCallback?)
+    
+    func fetchPinpostByFrame(withTopLeftLat topLeftLat: Double, topLeftLong: Double,
+                             bottomRightLat: Double, bottomRightLong: Double,
+                             scope: String,
+                             onSuccess: PinpostsCallback?,
+                             onFailure: JSONCallback?,
+                             onRequestError: ErrorCallback?)
+    
+    func fetchPinpostByRadius(withCenterLat centerLat: Double, centerLong: Double,
+                              radius: Double, scope: String,
+                              unit: String,
+                              onSuccess: PinpostsCallback?,
+                              onFailure: JSONCallback?,
+                              onRequestError: ErrorCallback?)
 }

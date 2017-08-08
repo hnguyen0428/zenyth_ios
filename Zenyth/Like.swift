@@ -7,7 +7,8 @@
 //
 
 import Foundation
+import SwiftyJSON
 
-struct Like {
+struct Like: Object {
     
 }

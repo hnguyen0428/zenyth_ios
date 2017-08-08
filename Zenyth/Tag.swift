@@ -7,7 +7,8 @@
 //
 
 import Foundation
+import SwiftyJSON
 
-struct Tag {
+struct Tag: Object {
     
 }

@@ -7,7 +7,8 @@
 //
 
 import Foundation
+import SwiftyJSON
 
-struct Reply {
+struct Reply: Object {
     
 }

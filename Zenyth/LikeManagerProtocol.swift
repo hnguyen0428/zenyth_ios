@@ -9,28 +9,28 @@
 import Foundation
 
 protocol LikeManagerProtocol {
-    func requestCreateLikeOn(pinpostId: UInt32,
-                             onSuccess: LikeCallback?,
-                             onFailure: JSONCallback?,
-                             onRequestError: ErrorCallback?)
+    func createLike(onPinpostId pinpostId: UInt32,
+                    onSuccess: LikeCallback?,
+                    onFailure: JSONCallback?,
+                    onRequestError: ErrorCallback?)
     
-    func requestCreateLikeOn(commentId: UInt32,
-                             onSuccess: LikeCallback?,
-                             onFailure: JSONCallback?,
-                             onRequestError: ErrorCallback?)
+    func createLike(onCommentId commentId: UInt32,
+                    onSuccess: LikeCallback?,
+                    onFailure: JSONCallback?,
+                    onRequestError: ErrorCallback?)
     
-    func requestCreateLikeOn(replyId: UInt32,
-                             onSuccess: LikeCallback?,
-                             onFailure: JSONCallback?,
-                             onRequestError: ErrorCallback?)
+    func createLike(onReplyId replyId: UInt32,
+                    onSuccess: LikeCallback?,
+                    onFailure: JSONCallback?,
+                    onRequestError: ErrorCallback?)
     
-    func requestReadLikeWith(likeId: UInt32,
-                             onSuccess: LikeCallback?,
-                             onFailure: JSONCallback?,
-                             onRequestError: ErrorCallback?)
+    func readLike(withLikeId likeId: UInt32,
+                  onSuccess: LikeCallback?,
+                  onFailure: JSONCallback?,
+                  onRequestError: ErrorCallback?)
     
-    func requestDeleteLikeWith(likeId: UInt32,
-                               onSuccess: JSONCallback?,
-                               onFailure: JSONCallback?,
-                               onRequestError: ErrorCallback?)
+    func deleteLike(withLikeId likeId: UInt32,
+                    onSuccess: JSONCallback?,
+                    onFailure: JSONCallback?,
+                    onRequestError: ErrorCallback?)
 }

@@ -7,7 +7,8 @@
 //
 
 import SwiftyJSON
+import SwiftyJSON
 
-struct Pinpost {
+struct Pinpost: Object {
     
 }

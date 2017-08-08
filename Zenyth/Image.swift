@@ -7,7 +7,8 @@
 //
 
 import Foundation
+import SwiftyJSON
 
-struct Image {
+struct Image: Object {
     
 }

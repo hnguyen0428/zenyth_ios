@@ -153,8 +153,8 @@ class UsernameEmailController: RegisterController {
             usernameErrorLabel.text = activityIndicatorChecking
             usernameErrorLabel.textColor = .lightGray
             
-            APIClient.credentialManager().requestValidateUsername(username: text,
-                                                                  onSuccess:
+            APIClient.credentialManager().validateUsername(username: text,
+                                                           onSuccess:
                 { data in
                     if data["taken"].boolValue { // username taken
                         self.setUsernameError("usernameTaken")
@@ -182,8 +182,8 @@ class UsernameEmailController: RegisterController {
             emailErrorLabel.text = activityIndicatorChecking
             emailErrorLabel.textColor = .lightGray
             
-            APIClient.credentialManager().requestValidateEmail(email: text,
-                                                               onSuccess:
+            APIClient.credentialManager().validateEmail(email: text,
+                                                        onSuccess:
                 { data in
                     if data["taken"].boolValue { // email taken
                         self.setEmailError("emailTaken")
@@ -273,8 +273,8 @@ class UsernameEmailController: RegisterController {
         
         let indicator = requestLoading(view: self.view)
         
-        APIClient.credentialManager().requestOAuthRegisterWith(
-            username: username, email: email,
+        APIClient.credentialManager().oauthRegister(
+            withUsername: username, email: email,
             firstName: firstName, lastName: lastName, gender: gender,
             oauthType: oauthType, accessToken: fbToken!,
             onSuccess: { user, apiToken in
@@ -306,8 +306,8 @@ class UsernameEmailController: RegisterController {
 
         let indicator = requestLoading(view: self.view)
         
-        APIClient.credentialManager().requestOAuthRegisterWith(
-            username: username, email: email,
+        APIClient.credentialManager().oauthRegister(
+            withUsername: username, email: email,
             firstName: firstName, lastName: lastName, gender: gender,
             oauthType: oauthType, accessToken: googleToken!,
             onSuccess: { user, apiToken in

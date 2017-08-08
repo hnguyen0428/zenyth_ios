@@ -9,13 +9,13 @@
 import Foundation
 
 protocol TagManagerProtocol {
-    func requestSearchTag(keyword: String,
-                          onSuccess: TagsCallback?,
-                          onFailure: JSONCallback?,
-                          onRequestError: ErrorCallback?)
+    func searchTag(withKeyword keyword: String,
+                   onSuccess: TagsCallback?,
+                   onFailure: JSONCallback?,
+                   onRequestError: ErrorCallback?)
     
-    func requestGetTagInfo(tagName: String,
-                           onSuccess: PinpostsCallback?,
-                           onFailure: JSONCallback?,
-                           onRequestError: ErrorCallback?)
+    func getTagInfo(forTagName tagName: String,
+                    onSuccess: PinpostsCallback?,
+                    onFailure: JSONCallback?,
+                    onRequestError: ErrorCallback?)
 }

@@ -9,35 +9,37 @@
 import Foundation
 
 protocol UserManagerProtocol {
-    func requestGetFriends(userId: UInt32,
-                           onSuccess: UsersCallback?,
+    func getFriends(ofUserId userId: UInt32,
+                    onSuccess: UsersCallback?,
+                    onFailure: JSONCallback?,
+                    onRequestError: ErrorCallback?)
+    
+    func getBlockedUsers(onSuccess: UsersCallback?,
+                         onFailure: JSONCallback?,
+                         onRequestError: ErrorCallback?)
+    
+    func getFriendRequests(onSuccess: UsersCallback?,
                            onFailure: JSONCallback?,
                            onRequestError: ErrorCallback?)
     
-    func requestGetBlockedUsers(onSuccess: UsersCallback?,
-                                onFailure: JSONCallback?,
-                                onRequestError: ErrorCallback?)
+    func readProfile(ofUserId userId: UInt32,
+                     onSuccess: UserCallback?,
+                     onFailure: JSONCallback?,
+                     onRequestError: ErrorCallback?)
     
-    func requestGetFriendRequests(onSuccess: UsersCallback?,
-                                  onFailure: JSONCallback?,
-                                  onRequestError: ErrorCallback?)
+    func updateProfile(firstName: String?, lastName: String?,
+                       gender: String?, birthday: String?,
+                       onSuccess: UserCallback?,
+                       onFailure: JSONCallback?,
+                       onRequestError: ErrorCallback?)
     
-    func requestReadProfile(userId: UInt32,
-                            onSuccess: UserCallback?,
-                            onFailure: JSONCallback?,
-                            onRequestError: ErrorCallback?)
-    
-    func requestUpdateProfile(onSuccess: UserCallback?,
+    func updateProfilePicture(imageData: Data,
+                              onSuccess: UserCallback?,
                               onFailure: JSONCallback?,
                               onRequestError: ErrorCallback?)
     
-    func requestUpdateProfilePicture(imageData: Data,
-                                     onSuccess: UserCallback?,
-                                     onFailure: JSONCallback?,
-                                     onRequestError: ErrorCallback?)
-    
-    func requestSearchUser(keyword: String,
-                           onSuccess: UsersCallback?,
-                           onFailure: JSONCallback?,
-                           onRequestError: ErrorCallback?)
+    func searchUser(withKeyword keyword: String,
+                    onSuccess: UsersCallback?,
+                    onFailure: JSONCallback?,
+                    onRequestError: ErrorCallback?)
 }

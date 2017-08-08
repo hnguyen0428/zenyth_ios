@@ -331,9 +331,9 @@
 				47C622F61F0A347F003BBC16 /* RegisterController+UsernameEmail.swift */,
 				47D9ECBF1F19E3D300E3EEE4 /* RegisterController.swift */,
 				47CA09781F1E57A600EA2455 /* LoginController+Signup.swift */,
-				47CA097A1F1E73BC00EA2455 /* TabThree.swift */,
 				47CA097C1F1E75BE00EA2455 /* TabOne.swift */,
 				47CA097E1F1E75C700EA2455 /* TabTwo.swift */,
+				47CA097A1F1E73BC00EA2455 /* TabThree.swift */,
 			);
 			name = RegisterControllers;
 			sourceTree = "<group>";

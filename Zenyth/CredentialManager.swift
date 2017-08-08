@@ -10,10 +10,10 @@ import Alamofire
 import SwiftyJSON
 
 class CredentialManager: Manager, CredentialManagerProtocol {
-    func requestLoginWith(username: String, password: String,
-                          onSuccess: UserCallbackWithToken? = nil,
-                          onFailure: JSONCallback? = nil,
-                          onRequestError: ErrorCallback? = nil) {
+    func login(withUsername username: String, password: String,
+               onSuccess: UserCallbackWithToken? = nil,
+               onFailure: JSONCallback? = nil,
+               onRequestError: ErrorCallback? = nil) {
         let urlString = "\(baseURL)/login"
         let parameters: Parameters = [
             "username" : username,
@@ -28,10 +28,10 @@ class CredentialManager: Manager, CredentialManagerProtocol {
         
     }
     
-    func requestLoginWith(email: String, password: String,
-                          onSuccess: UserCallbackWithToken? = nil,
-                          onFailure: JSONCallback? = nil,
-                          onRequestError: ErrorCallback? = nil) {
+    func login(withEmail email: String, password: String,
+               onSuccess: UserCallbackWithToken? = nil,
+               onFailure: JSONCallback? = nil,
+               onRequestError: ErrorCallback? = nil) {
         let urlString = "\(baseURL)/login"
         let parameters: Parameters = [
             "email" : email,
@@ -45,12 +45,12 @@ class CredentialManager: Manager, CredentialManagerProtocol {
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
-    func requestRegisterWith(username: String, email: String,
-                             password: String, passwordConfirmation: String,
-                             gender: String, birthday: String,
-                             onSuccess: UserCallbackWithToken? = nil,
-                             onFailure: JSONCallback? = nil,
-                             onRequestError: ErrorCallback? = nil) {
+    func register(withUsername username: String, email: String,
+                  password: String, passwordConfirmation: String,
+                  gender: String, birthday: String,
+                  onSuccess: UserCallbackWithToken? = nil,
+                  onFailure: JSONCallback? = nil,
+                  onRequestError: ErrorCallback? = nil) {
         let urlString = "\(baseURL)/register"
         let parameters: Parameters = [
             "username" : username,
@@ -68,11 +68,11 @@ class CredentialManager: Manager, CredentialManagerProtocol {
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
-    func requestOAuthLoginWith(email: String, oauthType: String,
-                               accessToken: String,
-                               onSuccess: UserCallbackWithToken? = nil,
-                               onFailure: JSONCallback? = nil,
-                               onRequestError: ErrorCallback? = nil) {
+    func oauthLogin(withEmail email: String, oauthType: String,
+                    accessToken: String,
+                    onSuccess: UserCallbackWithToken? = nil,
+                    onFailure: JSONCallback? = nil,
+                    onRequestError: ErrorCallback? = nil) {
         let urlString = "\(baseURL)/oauth/login"
         let parameters: Parameters = [
             "email" : email,
@@ -90,13 +90,13 @@ class CredentialManager: Manager, CredentialManagerProtocol {
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
-    func requestOAuthRegisterWith(username: String, email: String,
-                                  firstName: String, lastName: String,
-                                  gender: String, oauthType: String,
-                                  accessToken: String,
-                                  onSuccess: UserCallbackWithToken? = nil,
-                                  onFailure: JSONCallback? = nil,
-                                  onRequestError: ErrorCallback? = nil) {
+    func oauthRegister(withUsername username: String, email: String,
+                       firstName: String, lastName: String,
+                       gender: String, oauthType: String,
+                       accessToken: String,
+                       onSuccess: UserCallbackWithToken? = nil,
+                       onFailure: JSONCallback? = nil,
+                       onRequestError: ErrorCallback? = nil) {
         let urlString = "\(baseURL)/oauth/register"
         let parameters: Parameters = [
             "email" : email,
@@ -118,11 +118,11 @@ class CredentialManager: Manager, CredentialManagerProtocol {
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
-    func requestOAuthMergeAccount(email: String, oauthType: String,
-                                  accessToken: String,
-                                  onSuccess: UserCallbackWithToken? = nil,
-                                  onFailure: JSONCallback? = nil,
-                                  onRequestError: ErrorCallback? = nil) {
+    func oauthMergeAccount(withEmail email: String, oauthType: String,
+                           accessToken: String,
+                           onSuccess: UserCallbackWithToken? = nil,
+                           onFailure: JSONCallback? = nil,
+                           onRequestError: ErrorCallback? = nil) {
         let urlString = "\(baseURL)/oauth/login"
         let parameters: Parameters = [
             "email" : email,
@@ -141,10 +141,10 @@ class CredentialManager: Manager, CredentialManagerProtocol {
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
-    func requestValidateEmail(email: String,
-                              onSuccess: JSONCallback? = nil,
-                              onFailure: JSONCallback? = nil,
-                              onRequestError: ErrorCallback? = nil) {
+    func validateEmail(email: String,
+                       onSuccess: JSONCallback? = nil,
+                       onFailure: JSONCallback? = nil,
+                       onRequestError: ErrorCallback? = nil) {
         let urlString = "\(baseURL)/email_taken/\(email)"
         
         executeJSON(urlString: urlString, method: .get,
@@ -154,10 +154,10 @@ class CredentialManager: Manager, CredentialManagerProtocol {
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
-    func requestValidateUsername(username: String,
-                                 onSuccess: JSONCallback? = nil,
-                                 onFailure: JSONCallback? = nil,
-                                 onRequestError: ErrorCallback? = nil) {
+    func validateUsername(username: String,
+                          onSuccess: JSONCallback? = nil,
+                          onFailure: JSONCallback? = nil,
+                          onRequestError: ErrorCallback? = nil) {
         let urlString = "\(baseURL)/username_taken/\(username)"
         
         executeJSON(urlString: urlString, method: .get,
@@ -167,10 +167,10 @@ class CredentialManager: Manager, CredentialManagerProtocol {
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
-    func requestResetPassword(email: String,
-                              onSuccess: JSONCallback? = nil,
-                              onFailure: JSONCallback? = nil,
-                              onRequestError: ErrorCallback? = nil) {
+    func sendResetPassword(toEmail email: String,
+                           onSuccess: JSONCallback? = nil,
+                           onFailure: JSONCallback? = nil,
+                           onRequestError: ErrorCallback? = nil) {
         let urlString = "\(baseURL)/password/send_reset_password"
         let parameters: Parameters = [
             "email" : email
@@ -183,10 +183,10 @@ class CredentialManager: Manager, CredentialManagerProtocol {
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
-    func requestResetPassword(username: String,
-                              onSuccess: JSONCallback? = nil,
-                              onFailure: JSONCallback? = nil,
-                              onRequestError: ErrorCallback? = nil) {
+    func sendResetPassword(toUsername username: String,
+                           onSuccess: JSONCallback? = nil,
+                           onFailure: JSONCallback? = nil,
+                           onRequestError: ErrorCallback? = nil) {
         let urlString = "\(baseURL)/password/send_reset_password"
         let parameters: Parameters = [
             "username" : username

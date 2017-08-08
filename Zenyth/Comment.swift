@@ -7,7 +7,8 @@
 //
 
 import Foundation
+import SwiftyJSON
 
-struct Comment {
+struct Comment: Object {
     
 }

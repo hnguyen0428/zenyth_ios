@@ -7,7 +7,8 @@
 //
 
 import Foundation
+import SwiftyJSON
 
-struct Relationship {
+struct Relationship: Object {
     
 }

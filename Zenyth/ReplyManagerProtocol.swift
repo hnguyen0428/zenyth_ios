@@ -9,38 +9,38 @@
 import Foundation
 
 protocol ReplyManagerProtocol {
-    func requestCreateReplyOn(commentId: UInt32, text: String,
-                              onSuccess: ReplyCallback?,
-                              onFailure: JSONCallback?,
-                              onRequestError: ErrorCallback?)
+    func createReply(onCommentId commentId: UInt32, text: String,
+                     onSuccess: ReplyCallback?,
+                     onFailure: JSONCallback?,
+                     onRequestError: ErrorCallback?)
     
-    func requestUploadImageTo(replyId: UInt32, imageData: Data,
-                              onSuccess: ImageCallback?,
-                              onFailure: JSONCallback?,
-                              onRequestError: ErrorCallback?)
+    func uploadImage(toReplyId replyId: UInt32, imageData: Data,
+                     onSuccess: ImageCallback?,
+                     onFailure: JSONCallback?,
+                     onRequestError: ErrorCallback?)
     
-    func requestUpdateReplyWith(replyId: UInt32, text: String,
-                                onSuccess: ReplyCallback?,
-                                onFailure: JSONCallback?,
-                                onRequestError: ErrorCallback?)
+    func updateReply(withReplyId replyId: UInt32, text: String,
+                     onSuccess: ReplyCallback?,
+                     onFailure: JSONCallback?,
+                     onRequestError: ErrorCallback?)
     
-    func requestReadReplyWith(replyId: UInt32, text: String,
-                              onSuccess: ReplyCallback?,
-                              onFailure: JSONCallback?,
-                              onRequestError: ErrorCallback?)
+    func readReply(withReplyId replyId: UInt32, text: String,
+                   onSuccess: ReplyCallback?,
+                   onFailure: JSONCallback?,
+                   onRequestError: ErrorCallback?)
     
-    func requestReadReplyImages(replyId: UInt32,
-                                onSuccess: ImagesCallback?,
-                                onFailure: JSONCallback?,
-                                onRequestError: ErrorCallback?)
+    func readReplyImages(withReplyId replyId: UInt32,
+                         onSuccess: ImagesCallback?,
+                         onFailure: JSONCallback?,
+                         onRequestError: ErrorCallback?)
     
-    func requestDeleteReplyWith(replyId: UInt32,
-                                onSuccess: JSONCallback?,
-                                onFailure: JSONCallback?,
-                                onRequestError: ErrorCallback?)
+    func deleteReply(withReplyId replyId: UInt32,
+                     onSuccess: JSONCallback?,
+                     onFailure: JSONCallback?,
+                     onRequestError: ErrorCallback?)
     
-    func requestGetLikesOn(replyId: UInt32,
-                           onSuccess: LikesCallback?,
-                           onFailure: JSONCallback?,
-                           onRequestError: ErrorCallback?)
+    func getLikes(onReplyId replyId: UInt32,
+                  onSuccess: LikesCallback?,
+                  onFailure: JSONCallback?,
+                  onRequestError: ErrorCallback?)
 }

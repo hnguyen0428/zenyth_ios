@@ -9,23 +9,23 @@
 import Foundation
 
 protocol RelationshipManagerProtocol {
-    func requestSendFriendRequestTo(requesteeId: UInt32,
-                                    onSuccess: RelationshipCallback?,
-                                    onFailure: JSONCallback?,
-                                    onRequestError: ErrorCallback?)
+    func sendFriendRequest(toRequesteeId requesteeId: UInt32,
+                           onSuccess: RelationshipCallback?,
+                           onFailure: JSONCallback?,
+                           onRequestError: ErrorCallback?)
     
-    func requestRespondToFriendRequestFrom(requesterId: UInt32, status: Bool,
-                                           onSuccess: RelationshipCallback?,
-                                           onFailure: JSONCallback?,
-                                           onRequestError: ErrorCallback?)
+    func respondToFriendRequest(fromRequesterId requesterId: UInt32, status: Bool,
+                                onSuccess: RelationshipCallback?,
+                                onFailure: JSONCallback?,
+                                onRequestError: ErrorCallback?)
     
-    func requestDeleteFriendWith(userId: UInt32,
-                                 onSuccess: JSONCallback?,
-                                 onFailure: JSONCallback?,
-                                 onRequestError: ErrorCallback?)
+    func deleteFriend(withUserId userId: UInt32,
+                      onSuccess: JSONCallback?,
+                      onFailure: JSONCallback?,
+                      onRequestError: ErrorCallback?)
     
-    func requestBlockUserWith(userId: UInt32,
-                              onSuccess: RelationshipCallback?,
-                              onFailure: JSONCallback?,
-                              onRequestError: ErrorCallback?)
+    func blockUser(withUserId userId: UInt32,
+                   onSuccess: RelationshipCallback?,
+                   onFailure: JSONCallback?,
+                   onRequestError: ErrorCallback?)
 }
