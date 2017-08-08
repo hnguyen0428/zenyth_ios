@@ -67,66 +67,39 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
     var fbToken: String? = nil
     
     func loginButtonAction(_ sender: UIButton) {
-        var key = ""
         let text = usernameField.text!
-        if self.isValidEmail(email: text) {
-            key = "email"
-        } else if self.isValidCharactersUsername(username: text) {
-            key = "username"
-        }
-        let parameters: Parameters = [
-            key : usernameField.text!,
-            "password" : passwordField.text!
-        ]
-        
-        let request = LoginRequestor(parameters: parameters)
         
         let indicator = requestLoading(view: self.view)
-        request.getJSON { data, error in
-            self.requestDoneLoading(view: self.view, indicator: indicator)
-            if (error != nil) {
-                return
-            }
-            
-            if (data?["success"].boolValue)! {
-                let email = data!["data"]["user"]["email"].stringValue
-                //print(email)
-                let userData = UserDefaults.standard.object(forKey: email) as? [String:Any]
-//                print(userData)
-                print(userData)
-                
-//                let api_token = data!["data"]["api_token"].stringValue
-//                UserDefaults.standard.set(api_token, forKey: "api_token")
-//                UserDefaults.standard.synchronize()
-//                print(UserDefaults.standard.object(forKey: "api_token") as? String)
-                /*
-                if let data  = UserDefaults.standard.object(forKey: email) as? Data {
-                    let users = NSKeyedUnarchiver.unarchiveObject(with: data) as? [User]
-                    let user = users?.first
-                    print(user)
-                }
-                */
-//                let user = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! User
-//                print("User: \(user)")
-//                UserDefaults.standard.set(user.api_token, forKey: "api_token")
-//                UserDefaults.standard.synchronize()
-                self.transitionToHome()
-            } else {
-                let errors = (data?["errors"].arrayValue)!
-                var errorString = ""
-                for item in errors {
-                    errorString.append(item.stringValue + "\n")
-                }
-                // strip the newline character at the end
-                errorString.remove(at: errorString.index(
-                    before: errorString.endIndex)
-                )
-                
+        if self.isValidEmail(email: text) {
+            APIClient.credentialRequests.requestLoginWith(email: text,
+                                                          password: passwordField.text!,
+                                                          onSuccess:
+                { user, apiToken in
+                    self.requestDoneLoading(view: self.view, indicator: indicator)
+                    UserDefaults.standard.set(apiToken, forKey: "api_token")
+                    UserDefaults.standard.synchronize()
+                    self.transitionToHome()
+            }, onFailure: { json in
+                self.requestDoneLoading(view: self.view, indicator: indicator)
+                let error = json["error"]["message"].stringValue
                 self.displayAlert(view: self, title: "Login Failed",
-                                  message: errorString)
-                
-            }
-            
+                                  message: error)
+            })
+        } else if self.isValidCharactersUsername(username: text) {
+            APIClient.credentialRequests.requestLoginWith(username: text,
+                                                          password: passwordField.text!,
+                                                          onSuccess:
+                { user, apiToken in
+                    self.requestDoneLoading(view: self.view, indicator: indicator)
+                    UserDefaults.standard.set(apiToken, forKey: "api_token")
+                    UserDefaults.standard.synchronize()
+                    self.transitionToHome()
+            }, onFailure: { json in
+                self.requestDoneLoading(view: self.view, indicator: indicator)
+                let error = json["error"]["message"].stringValue
+                self.displayAlert(view: self, title: "Login Failed",
+                                  message: error)
+            })
         }
     }
     
@@ -253,98 +226,68 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
     func fbOauthHandle(json: JSON, accessToken: String) {
         
         // Checks if facebook email has already been used
-        let request = EmailTakenRequestor.init(email: json["email"].stringValue)
-        
-        request.getJSON { data, error in
-            
-            if (error != nil) {
-                return
-            }
-            
-            if (data?["data"]["taken"].boolValue)!
-                && (data?["data"]["confirmed"].boolValue)! { // email is taken
-                print("Email Taken")
-                self.fbOauthLogin(accessToken: accessToken, json: json)
-            } else { // email is available
-                print("Email Available")
-                self.performSegue(withIdentifier: "oauthToUsernameSegue",
-                                  sender: self)
-            }
-            
-        }
+        let email = json["email"].stringValue
+        APIClient.credentialRequests.requestValidateEmail(email: email,
+                                                          onSuccess:
+            { data in
+                if data["taken"].boolValue {
+                    print("Email Taken")
+                    self.fbOauthLogin(accessToken: accessToken, json: json)
+                } else { // email is available
+                    print("Email Available")
+                    self.performSegue(withIdentifier: "oauthToUsernameSegue",
+                                      sender: self)
+                }
+        })
         
     }
     
     func fbOauthLogin(accessToken: String, json: JSON) {
-        let parameters: Parameters = [
-            "oauth_type": "facebook",
-            "email" : json["email"].stringValue
-        ]
-        let header: HTTPHeaders = [
-            "Authorization": "bearer \(accessToken)"
-        ]
-        let request = OauthLoginRequestor.init(parameters: parameters,
-                                               header: header)
+        let email = json["email"].stringValue
+        let oauthType = "facebook"
+
         let indicator = requestLoading(view: self.view)
-        request.getJSON { data, error in
-            self.requestDoneLoading(view: self.view, indicator: indicator)
-            if (error != nil) {
-                return
-            }
-            
-            if (data?["success"].boolValue)! {
-                let user = User.init(json: data!)
-                let userDefaults = UserDefaults.standard
-                userDefaults.set(user.api_token, forKey: "api_token")
-                userDefaults.synchronize()
+        
+        APIClient.credentialRequests.requestOAuthLoginWith(email: email,
+                                                           oauthType: oauthType,
+                                                           accessToken: accessToken,
+                                                           onSuccess:
+            { user, apiToken in
+                self.requestDoneLoading(view: self.view, indicator: indicator)
+                UserDefaults.standard.set(apiToken, forKey: "api_token")
+                UserDefaults.standard.synchronize()
                 self.transitionToHome()
-            } else {
-                if (data?["data"]["mergeable"].boolValue)! {
-                    // TODO: prompts user to merge with google
-                    let mergeErrors = data?["errors"].arrayValue.first?.stringValue
-                    let alert = UIAlertController(title: nil,
-                                                  message: mergeErrors,
-                                                  preferredStyle: UIAlertControllerStyle.alert)
-                    alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: nil))
-                    alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: {
-                        action in
-                        self.mergeAccount(accessToken: accessToken, email: json["email"].stringValue)
-                    }))
-                    self.present(alert, animated: true, completion: nil)
-                } else {
-                    print(data?["errors"])
-                }
+        }, onFailure: { json in
+            self.requestDoneLoading(view: self.view, indicator: indicator)
+            if json["data"]["mergeable"].boolValue {
+                let message = json["message"].stringValue
+                let alert = UIAlertController(title: nil,
+                                              message: message,
+                                              preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: nil))
+                alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: {
+                    action in
+                    self.mergeAccount(accessToken: accessToken, email: email)
+                }))
+                self.present(alert, animated: true, completion: nil)
             }
-            
-        }
+        })
     }
     
     func mergeAccount(accessToken: String, email: String) {
-        let parameters: Parameters = [
-            "oauth_type": "facebook",
-            "email" : email,
-            "merge" : true
-        ]
-        let header: HTTPHeaders = [
-            "Authorization": "bearer \(accessToken)"
-        ]
-        let request = OauthLoginRequestor.init(parameters: parameters,
-                                               header: header)
         let indicator = self.requestLoading(view: self.view)
-        request.getJSON { data, error in
-            self.requestDoneLoading(view: self.view,
-                                    indicator: indicator)
-            if error != nil {
-                return
-            }
-            
-            if (data?["success"].boolValue)! {
-                let user = User.init(json: data!)
-                UserDefaults.standard.set(user.api_token, forKey: "api_token")
+        let oauthType = "facebook"
+        
+        APIClient.credentialRequests.requestOAuthMergeAccount(email: email,
+                                                              oauthType: oauthType,
+                                                              accessToken: accessToken,
+                                                              onSuccess:
+            { user, apiToken in
+                self.requestDoneLoading(view: self.view, indicator: indicator)
+                UserDefaults.standard.set(apiToken, forKey: "api_token")
                 UserDefaults.standard.synchronize()
                 self.transitionToHome()
-            }
-        }
+        })
     }
     
     override func viewWillDisappear(_ animated: Bool) {

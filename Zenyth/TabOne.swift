@@ -86,26 +86,22 @@ extension LoginController {
                 return
             }
             
-            let request = UsernameTakenRequestor.init(username: text)
-            
             // Start the activity indicator to indicate that request is loading
             indicatorOne.startAnimating()
             errorLabelOne.text = activityIndicatorChecking
             errorLabelOne.textColor = .lightGray
             
-            request.getJSON { data, error in
-                if error != nil {
-                    return
-                }
-                
-                if data!["data"]["taken"].boolValue { // username taken
-                    self.setUsernameError("usernameTaken")
-                } else { // username available
-                    self.setUsernameError("usernameAvailable")
-                }
-                self.indicatorOne.stopAnimating()
-                self.checkAllFields()
-            }
+            APIClient.credentialRequests.requestValidateUsername(username: text, onSuccess:
+                { data in
+                    if data["taken"].boolValue {
+                        self.setUsernameError("usernameTaken")
+                    } else {
+                        self.setUsernameError("usernameAvailable")
+                    }
+                    
+                    self.indicatorOne.stopAnimating()
+                    self.checkAllFields()
+            })
         }
     }
     
@@ -119,26 +115,22 @@ extension LoginController {
                 return
             }
             
-            let request = EmailTakenRequestor.init(email: text)
-            
             // Start the activity indicator to indicate that request is loading
             indicatorTwo.startAnimating()
             errorLabelTwo.text = activityIndicatorChecking
             errorLabelTwo.textColor = .lightGray
             
-            request.getJSON { data, error in
-                if error != nil {
-                    return
-                }
-                
-                if data!["data"]["taken"].boolValue { // email taken
-                    self.setEmailError("emailTaken")
-                } else { // email available
-                    self.setEmailError("emailAvailable")
-                }
-                self.indicatorTwo.stopAnimating()
-                self.checkAllFields()
-            }
+            APIClient.credentialRequests.requestValidateEmail(email: text, onSuccess:
+                { data in
+                    if data["taken"].boolValue {
+                        self.setEmailError("emailTaken")
+                    } else {
+                        self.setEmailError("emailAvailable")
+                    }
+                    
+                    self.indicatorTwo.stopAnimating()
+                    self.checkAllFields()
+            })
         }
     }
     

@@ -8,55 +8,42 @@
 
 import SwiftyJSON
 
-class User: NSObject {
-    
-    let json: JSON
+struct User : Object {
     var id: UInt32
+    var email: String?
     var username: String
-    var email: String
-    var api_token: String?
-    var profile: Profile
-    
-    init(id: UInt32, username: String, email: String, api_token: String?, profile: Profile) {
-        self.id = id
-        self.username = username
-        self.email = email
-        self.api_token = api_token
-        self.profile = profile
-        
-        self.json = [
-            "id" : id,
-            "username" : username,
-            "email" : email,
-            "api_token" : api_token ?? "",
-            "profile" : profile.json
-        ]
-    }
+    var firstName: String?
+    var lastName: String?
+    var gender: String?
+    var birthday: String?
     
     init(json: JSON) {
-        self.id = json["data"]["user"]["id"].uInt32Value
-        self.username = json["data"]["user"]["username"].stringValue
-        self.email = json["data"]["user"]["email"].stringValue
-        self.api_token = json["data"]["api_token"].string
+        let user: JSON = json["data"]["user"]
+        id = user["id"].uInt32Value
+        email = user["email"].string
+        username = user["username"].stringValue
         
-        self.profile = Profile.init(json: json["data"]["profile"])
+        let profile: JSON = user["profile"]
+        firstName = profile["first_name"].string
+        lastName = profile["last_name"].string
+        gender = profile["gender"].string
         
-        let userJSON: JSON = [
+        let date = profile["birthday"]["data"].string
+        if let str = date {
+            let index = str.index(str.startIndex, offsetBy: 10)
+            birthday = str.substring(to: index)
+        }
+    }
+    
+    func toJSON() -> JSON {
+        return [
             "id" : id,
-            "username" : username,
             "email" : email,
-            "api_token" : api_token ?? "",
-            "profile" : profile.json
+            "username" : username,
+            "first_name" : firstName,
+            "last_name" : lastName,
+            "gender" : gender,
+            "birthday" : birthday
         ]
-        self.json = userJSON
     }
-    
-    override var description: String {
-        return self.json.description
-    }
-    
-    func getData() -> [String:Any] {
-        return self.json.dictionaryObject!
-    }
-    
 }

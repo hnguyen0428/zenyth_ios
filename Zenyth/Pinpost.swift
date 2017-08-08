@@ -8,6 +8,6 @@
 
 import SwiftyJSON
 
-class Pinpost: NSObject {
+class Pinpost {
     
 }

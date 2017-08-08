@@ -8,27 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		3725D1DBA4E1D74C7627B484 /* Pods_Zenyth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDF4603E6F5113638CE0C5ED /* Pods_Zenyth.framework */; };
-		4717A9961F188C4300CDC924 /* OauthRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4717A9951F188C4300CDC924 /* OauthRequestor.swift */; };
+		471280781F391A4B006FE796 /* CredentialRequestsProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280771F391A4B006FE796 /* CredentialRequestsProtocols.swift */; };
+		4712807A1F391B4F006FE796 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280791F391B4F006FE796 /* APIClient.swift */; };
+		4712807C1F3921DA006FE796 /* CredentialRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712807B1F3921DA006FE796 /* CredentialRequests.swift */; };
+		4712807E1F3929B2006FE796 /* Requests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712807D1F3929B2006FE796 /* Requests.swift */; };
+		471280801F39381C006FE796 /* Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712807F1F39381C006FE796 /* Object.swift */; };
 		4727AA571F2185F00032F7EB /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4727AA561F2185F00032F7EB /* Home.storyboard */; };
-		47626DE51F1AF77600BB79DD /* JSON+Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47626DE41F1AF77600BB79DD /* JSON+Formatter.swift */; };
-		47626DE71F1AF77F00BB79DD /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47626DE61F1AF77F00BB79DD /* Formatter.swift */; };
 		478006331F218A380064F9E7 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478006321F218A380064F9E7 /* MapController.swift */; };
-		478006351F21B5400064F9E7 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478006341F21B5400064F9E7 /* Profile.swift */; };
 		478006391F21B5730064F9E7 /* Pinpost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478006381F21B5730064F9E7 /* Pinpost.swift */; };
 		47883CD51F16EC8B0008C7F3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 47883CD41F16EC8B0008C7F3 /* GoogleService-Info.plist */; };
 		47A488E01F22C96D006B0453 /* PinpostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A488DF1F22C96D006B0453 /* PinpostController.swift */; };
 		47A488E21F22C97B006B0453 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A488E11F22C97B006B0453 /* ProfileController.swift */; };
 		47A488E41F22C98C006B0453 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A488E31F22C98C006B0453 /* HomeController.swift */; };
-		47A745D41F16F59F00A88D5D /* APIRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745D31F16F59F00A88D5D /* APIRoutes.swift */; };
-		47A745D61F16F5A800A88D5D /* CommentRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745D51F16F5A800A88D5D /* CommentRequestor.swift */; };
-		47A745DE1F16F5B500A88D5D /* PinpostRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745D71F16F5B500A88D5D /* PinpostRequestor.swift */; };
-		47A745DF1F16F5B500A88D5D /* ProfileRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745D81F16F5B500A88D5D /* ProfileRequestor.swift */; };
-		47A745E01F16F5B500A88D5D /* RegisterRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745D91F16F5B500A88D5D /* RegisterRequestor.swift */; };
-		47A745E11F16F5B500A88D5D /* RelationshipRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745DA1F16F5B500A88D5D /* RelationshipRequestor.swift */; };
-		47A745E21F16F5B500A88D5D /* Requestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745DB1F16F5B500A88D5D /* Requestor.swift */; };
-		47A745E31F16F5B500A88D5D /* ResetPasswordRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745DC1F16F5B500A88D5D /* ResetPasswordRequestor.swift */; };
-		47A745E41F16F5B500A88D5D /* UserRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745DD1F16F5B500A88D5D /* UserRequestor.swift */; };
-		47A745E61F16F64200A88D5D /* LoginRequestor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745E51F16F64200A88D5D /* LoginRequestor.swift */; };
 		47A745E91F16F7D000A88D5D /* ModelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A745E81F16F7D000A88D5D /* ModelViewController.swift */; };
 		47A9024C1F0B1F4400A1CEE8 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A9024B1F0B1F4400A1CEE8 /* LoginController.swift */; };
 		47A9024E1F0B34C900A1CEE8 /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A9024D1F0B34C900A1CEE8 /* GlobalVariables.swift */; };
@@ -71,27 +62,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4717A9951F188C4300CDC924 /* OauthRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OauthRequestor.swift; sourceTree = "<group>"; };
+		471280771F391A4B006FE796 /* CredentialRequestsProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialRequestsProtocols.swift; sourceTree = "<group>"; };
+		471280791F391B4F006FE796 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		4712807B1F3921DA006FE796 /* CredentialRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialRequests.swift; sourceTree = "<group>"; };
+		4712807D1F3929B2006FE796 /* Requests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Requests.swift; sourceTree = "<group>"; };
+		4712807F1F39381C006FE796 /* Object.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Object.swift; sourceTree = "<group>"; };
 		4727AA561F2185F00032F7EB /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
-		47626DE41F1AF77600BB79DD /* JSON+Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSON+Formatter.swift"; sourceTree = "<group>"; };
-		47626DE61F1AF77F00BB79DD /* Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		478006321F218A380064F9E7 /* MapController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
-		478006341F21B5400064F9E7 /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		478006381F21B5730064F9E7 /* Pinpost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pinpost.swift; sourceTree = "<group>"; };
 		47883CD41F16EC8B0008C7F3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		47A488DF1F22C96D006B0453 /* PinpostController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinpostController.swift; sourceTree = "<group>"; };
 		47A488E11F22C97B006B0453 /* ProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		47A488E31F22C98C006B0453 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
-		47A745D31F16F59F00A88D5D /* APIRoutes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRoutes.swift; sourceTree = "<group>"; };
-		47A745D51F16F5A800A88D5D /* CommentRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentRequestor.swift; sourceTree = "<group>"; };
-		47A745D71F16F5B500A88D5D /* PinpostRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinpostRequestor.swift; sourceTree = "<group>"; };
-		47A745D81F16F5B500A88D5D /* ProfileRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileRequestor.swift; sourceTree = "<group>"; };
-		47A745D91F16F5B500A88D5D /* RegisterRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterRequestor.swift; sourceTree = "<group>"; };
-		47A745DA1F16F5B500A88D5D /* RelationshipRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipRequestor.swift; sourceTree = "<group>"; };
-		47A745DB1F16F5B500A88D5D /* Requestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Requestor.swift; sourceTree = "<group>"; };
-		47A745DC1F16F5B500A88D5D /* ResetPasswordRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordRequestor.swift; sourceTree = "<group>"; };
-		47A745DD1F16F5B500A88D5D /* UserRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRequestor.swift; sourceTree = "<group>"; };
-		47A745E51F16F64200A88D5D /* LoginRequestor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginRequestor.swift; sourceTree = "<group>"; };
 		47A745E81F16F7D000A88D5D /* ModelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelViewController.swift; sourceTree = "<group>"; };
 		47A9024B1F0B1F4400A1CEE8 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		47A9024D1F0B34C900A1CEE8 /* GlobalVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariables.swift; sourceTree = "<group>"; };
@@ -168,6 +150,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		471280761F390F88006FE796 /* ZenythAPIClient */ = {
+			isa = PBXGroup;
+			children = (
+				471280771F391A4B006FE796 /* CredentialRequestsProtocols.swift */,
+				4712807B1F3921DA006FE796 /* CredentialRequests.swift */,
+				471280791F391B4F006FE796 /* APIClient.swift */,
+				4712807D1F3929B2006FE796 /* Requests.swift */,
+			);
+			name = ZenythAPIClient;
+			sourceTree = "<group>";
+		};
 		478006311F218A100064F9E7 /* HomeControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -177,26 +170,6 @@
 				47A488E31F22C98C006B0453 /* HomeController.swift */,
 			);
 			name = HomeControllers;
-			sourceTree = "<group>";
-		};
-		47883CD61F16F4C60008C7F3 /* APIRequests */ = {
-			isa = PBXGroup;
-			children = (
-				47A745DB1F16F5B500A88D5D /* Requestor.swift */,
-				47A745E51F16F64200A88D5D /* LoginRequestor.swift */,
-				47A745D71F16F5B500A88D5D /* PinpostRequestor.swift */,
-				47A745D81F16F5B500A88D5D /* ProfileRequestor.swift */,
-				47A745D91F16F5B500A88D5D /* RegisterRequestor.swift */,
-				47A745DA1F16F5B500A88D5D /* RelationshipRequestor.swift */,
-				47A745DC1F16F5B500A88D5D /* ResetPasswordRequestor.swift */,
-				47A745DD1F16F5B500A88D5D /* UserRequestor.swift */,
-				47A745D51F16F5A800A88D5D /* CommentRequestor.swift */,
-				4717A9951F188C4300CDC924 /* OauthRequestor.swift */,
-				47A745D31F16F59F00A88D5D /* APIRoutes.swift */,
-				47626DE41F1AF77600BB79DD /* JSON+Formatter.swift */,
-				47626DE61F1AF77F00BB79DD /* Formatter.swift */,
-			);
-			name = APIRequests;
 			sourceTree = "<group>";
 		};
 		47A745E71F16F7B100A88D5D /* StartingControllers */ = {
@@ -238,10 +211,10 @@
 		47C622C71F0A341A003BBC16 /* Zenyth */ = {
 			isa = PBXGroup;
 			children = (
+				471280761F390F88006FE796 /* ZenythAPIClient */,
 				478006311F218A100064F9E7 /* HomeControllers */,
 				47D9ECB51F19752E00E3EEE4 /* ObjectModels */,
 				47A745E71F16F7B100A88D5D /* StartingControllers */,
-				47883CD61F16F4C60008C7F3 /* APIRequests */,
 				82AFE11E1F0F16AD00605905 /* Zenyth.entitlements */,
 				47C622CC1F0A341A003BBC16 /* Main.storyboard */,
 				47C622CF1F0A341A003BBC16 /* Assets.xcassets */,
@@ -276,8 +249,8 @@
 			isa = PBXGroup;
 			children = (
 				47D9ECB61F19755A00E3EEE4 /* User.swift */,
-				478006341F21B5400064F9E7 /* Profile.swift */,
 				478006381F21B5730064F9E7 /* Pinpost.swift */,
+				4712807F1F39381C006FE796 /* Object.swift */,
 			);
 			name = ObjectModels;
 			sourceTree = "<group>";
@@ -600,38 +573,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				47CA097D1F1E75BE00EA2455 /* TabOne.swift in Sources */,
-				47A745E01F16F5B500A88D5D /* RegisterRequestor.swift in Sources */,
 				47A488E41F22C98C006B0453 /* HomeController.swift in Sources */,
-				478006351F21B5400064F9E7 /* Profile.swift in Sources */,
 				47D9ECC01F19E3D300E3EEE4 /* RegisterController.swift in Sources */,
 				47CA097F1F1E75C700EA2455 /* TabTwo.swift in Sources */,
-				47A745D41F16F59F00A88D5D /* APIRoutes.swift in Sources */,
-				47A745E61F16F64200A88D5D /* LoginRequestor.swift in Sources */,
 				47A488E21F22C97B006B0453 /* ProfileController.swift in Sources */,
-				47626DE71F1AF77F00BB79DD /* Formatter.swift in Sources */,
 				47CA097B1F1E73BC00EA2455 /* TabThree.swift in Sources */,
 				478006331F218A380064F9E7 /* MapController.swift in Sources */,
 				47CA09791F1E57A600EA2455 /* LoginController+Signup.swift in Sources */,
 				47A745E91F16F7D000A88D5D /* ModelViewController.swift in Sources */,
-				47A745E11F16F5B500A88D5D /* RelationshipRequestor.swift in Sources */,
 				47A488E01F22C96D006B0453 /* PinpostController.swift in Sources */,
 				47C622F71F0A347F003BBC16 /* RegisterController+UsernameEmail.swift in Sources */,
 				47A9024C1F0B1F4400A1CEE8 /* LoginController.swift in Sources */,
 				478006391F21B5730064F9E7 /* Pinpost.swift in Sources */,
 				47A9024E1F0B34C900A1CEE8 /* GlobalVariables.swift in Sources */,
 				47D838CC1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift in Sources */,
-				47A745E31F16F5B500A88D5D /* ResetPasswordRequestor.swift in Sources */,
+				471280781F391A4B006FE796 /* CredentialRequestsProtocols.swift in Sources */,
+				4712807E1F3929B2006FE796 /* Requests.swift in Sources */,
 				47ABAA041F0B7B7400FD479E /* UIViewController+Helper.swift in Sources */,
-				47A745E21F16F5B500A88D5D /* Requestor.swift in Sources */,
-				47626DE51F1AF77600BB79DD /* JSON+Formatter.swift in Sources */,
-				47A745D61F16F5A800A88D5D /* CommentRequestor.swift in Sources */,
+				471280801F39381C006FE796 /* Object.swift in Sources */,
 				47C622C91F0A341A003BBC16 /* AppDelegate.swift in Sources */,
-				4717A9961F188C4300CDC924 /* OauthRequestor.swift in Sources */,
-				47A745E41F16F5B500A88D5D /* UserRequestor.swift in Sources */,
+				4712807C1F3921DA006FE796 /* CredentialRequests.swift in Sources */,
 				47D9ECB71F19755A00E3EEE4 /* User.swift in Sources */,
-				47A745DF1F16F5B500A88D5D /* ProfileRequestor.swift in Sources */,
 				D23722701F1C8813004FFCFA /* ResetPasswordController.swift in Sources */,
-				47A745DE1F16F5B500A88D5D /* PinpostRequestor.swift in Sources */,
+				4712807A1F391B4F006FE796 /* APIClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -148,27 +148,23 @@ class UsernameEmailController: RegisterController {
                 return
             }
             
-            let request = UsernameTakenRequestor.init(username: text)
-            
             // Start the activity indicator to indicate that request is loading
             usernameActivityIndicator.startAnimating()
             usernameErrorLabel.text = activityIndicatorChecking
             usernameErrorLabel.textColor = .lightGray
             
-            request.getJSON { data, error in
-                if error != nil {
-                    return
-                }
-                
-                if data!["data"]["taken"].boolValue { // username taken
-                    self.setUsernameError("usernameTaken")
-                } else { // username available
-                    self.setUsernameError("usernameAvailable")
-                }
-                self.usernameActivityIndicator.stopAnimating()
-                self.fieldCheck(validEmail: self.validEmail,
-                                validUsername: self.validUsername)
-            }
+            APIClient.credentialRequests.requestValidateUsername(username: text,
+                                                                 onSuccess:
+                { data in
+                    if data["taken"].boolValue { // username taken
+                        self.setUsernameError("usernameTaken")
+                    } else { // username available
+                        self.setUsernameError("usernameAvailable")
+                    }
+                    self.usernameActivityIndicator.stopAnimating()
+                    self.fieldCheck(validEmail: self.validEmail,
+                                    validUsername: self.validUsername)
+            })
         }
     }
     
@@ -181,27 +177,23 @@ class UsernameEmailController: RegisterController {
                 return
             }
             
-            let request = EmailTakenRequestor.init(email: text)
-            
             // Start the activity indicator to indicate that request is loading
             emailActivityIndicator.startAnimating()
             emailErrorLabel.text = activityIndicatorChecking
             emailErrorLabel.textColor = .lightGray
             
-            request.getJSON { data, error in
-                if error != nil {
-                    return
-                }
-                
-                if data!["data"]["taken"].boolValue { // email taken
-                    self.setEmailError("emailTaken")
-                } else { // email available
-                    self.setEmailError("emailAvailable")
-                }
-                self.emailActivityIndicator.stopAnimating()
-                self.fieldCheck(validEmail: self.validEmail,
-                                validUsername: self.validUsername)
-            }
+            APIClient.credentialRequests.requestValidateEmail(email: text,
+                                                              onSuccess:
+                { data in
+                    if data["taken"].boolValue { // email taken
+                        self.setEmailError("emailTaken")
+                    } else { // email available
+                        self.setEmailError("emailAvailable")
+                    }
+                    self.emailActivityIndicator.stopAnimating()
+                    self.fieldCheck(validEmail: self.validEmail,
+                                    validUsername: self.validUsername)
+            })
         }
     }
     
@@ -272,33 +264,23 @@ class UsernameEmailController: RegisterController {
     }
     
     func oauthFBRegister(_ button: UIButton) {
-        let parameters: Parameters = [
-            "oauth_type" : "facebook",
-            "username" : usernameField.text!,
-            "email" : oauthJSON!["email"].stringValue,
-            "gender" : oauthJSON!["gender"].string ?? "",
-            "first_name" : oauthJSON!["first_name"].string ?? "",
-            "last_name" : oauthJSON!["last_name"].string ?? ""
-        ]
-        let header: HTTPHeaders = [
-            "Authorization" : "bearer \(fbToken!)"
-        ]
-        let request = OauthRegisterRequestor.init(parameters: parameters,
-                                                  header: header)
+        let oauthType = "facebook"
+        let username = usernameField.text!
+        let email = oauthJSON!["email"].stringValue
+        let gender = oauthJSON!["gender"].string ?? ""
+        let firstName = oauthJSON!["first_name"].string ?? ""
+        let lastName = oauthJSON!["last_name"].string ?? ""
         
         let indicator = requestLoading(view: self.view)
-        print(fbToken)
-        request.getJSON { data, error in
-            self.requestDoneLoading(view: self.view, indicator: indicator)
-            
-            if (error != nil) {
-                return
-            }
-            if (data?["success"].boolValue)! {
-                let user = User.init(json: data!)
-                UserDefaults.standard.set(user.api_token, forKey: "api_token")
+        
+        APIClient.credentialRequests.requestOAuthRegisterWith(
+            username: username, email: email,
+            firstName: firstName, lastName: lastName, gender: gender,
+            oauthType: oauthType, accessToken: fbToken!,
+            onSuccess: { user, apiToken in
+                self.requestDoneLoading(view: self.view, indicator: indicator)
+                UserDefaults.standard.set(apiToken, forKey: "api_token")
                 UserDefaults.standard.synchronize()
-                
                 let alert = UIAlertController(
                     title: self.signupSuccessfulMessage,
                     message: nil,
@@ -306,45 +288,32 @@ class UsernameEmailController: RegisterController {
                 )
                 alert.addAction(UIAlertAction(title: "OK",
                                               style: UIAlertActionStyle.default,
-                                              handler: { action in
-                    UserDefaults.standard.set(user.api_token, forKey: "api_token")
-                    UserDefaults.standard.synchronize()
-                    self.transitionToHome()
+                                              handler:
+                    { action in
+                        self.transitionToHome()
                 }))
                 self.present(alert, animated: true, completion: nil)
-            }
-            
-        }
+        })
     }
     
     func oauthGoogleRegister(_ button: UIButton) {
-        let parameters: Parameters = [
-            "oauth_type" : "google",
-            "username" : usernameField.text!,
-            "email" : oauthJSON!["email"].stringValue,
-            "gender" : oauthJSON!["gender"].string ?? "",
-            "first_name" : oauthJSON!["given_name"].stringValue,
-            "last_name" : oauthJSON!["family_name"].stringValue
-        ]
-        let header: HTTPHeaders = [
-            "Authorization" : "bearer \(googleToken!)"
-        ]
-        let request = OauthRegisterRequestor.init(parameters: parameters,
-                                                  header: header)
+        let oauthType = "google"
+        let username = usernameField.text!
+        let email = oauthJSON!["email"].stringValue
+        let gender = oauthJSON!["gender"].string ?? ""
+        let firstName = oauthJSON!["given_name"].string ?? ""
+        let lastName = oauthJSON!["family_name"].string ?? ""
+
         let indicator = requestLoading(view: self.view)
         
-        request.getJSON { data, error in
-            self.requestDoneLoading(view: self.view, indicator: indicator)
-            
-            if (error != nil) {
-                return
-            }
-            
-            if (data?["success"].boolValue)! {
-                let user = User.init(json: data!)
-                UserDefaults.standard.set(user.api_token, forKey: "api_token")
+        APIClient.credentialRequests.requestOAuthRegisterWith(
+            username: username, email: email,
+            firstName: firstName, lastName: lastName, gender: gender,
+            oauthType: oauthType, accessToken: googleToken!,
+            onSuccess: { user, apiToken in
+                self.requestDoneLoading(view: self.view, indicator: indicator)
+                UserDefaults.standard.set(apiToken, forKey: "api_token")
                 UserDefaults.standard.synchronize()
-                
                 let alert = UIAlertController(
                     title: self.signupSuccessfulMessage,
                     message: nil,
@@ -352,15 +321,12 @@ class UsernameEmailController: RegisterController {
                 )
                 alert.addAction(UIAlertAction(title: "OK",
                                               style: UIAlertActionStyle.default,
-                                              handler: { action in
-                    UserDefaults.standard.set(user.api_token, forKey: "api_token")
-                    UserDefaults.standard.synchronize()
-                    self.transitionToHome()
+                                              handler:
+                    { action in
+                        self.transitionToHome()
                 }))
                 self.present(alert, animated: true, completion: nil)
-            }
-            
-        }
+        })
     }
     
 }

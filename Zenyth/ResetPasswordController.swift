@@ -37,29 +37,28 @@ class ResetPasswordController: ModelViewController {
     }
     
     func buttonAction(_ button: UIButton) {
-        var key = ""
         if validEmail {
-            key = "email"
+            let indicator = requestLoading(view: self.view)
+            APIClient.credentialRequests.requestResetPassword(email: usernameEmailField.text!,
+                                                              onSuccess:
+                { data in
+                    self.requestDoneLoading(view: self.view, indicator: indicator)
+                    let email = data["email"].stringValue
+                    self.displayAlert(view: self, title: self.requestSuccessMessage,
+                                      message: "\(self.checkEmailMessage)\(email)")
+            })
         } else if validUsername {
-            key = "username"
+            let indicator = requestLoading(view: self.view)
+            APIClient.credentialRequests.requestResetPassword(username: usernameEmailField.text!,
+                                                              onSuccess:
+                { data in
+                    self.requestDoneLoading(view: self.view, indicator: indicator)
+                    let email = data["email"].stringValue
+                    self.displayAlert(view: self, title: self.requestSuccessMessage,
+                                      message: "\(self.checkEmailMessage)\(email)")
+            })
         }
-        let parameters = [
-            key : usernameEmailField.text!
-        ]
         
-        let request = ResetPasswordRequestor.init(parameters: parameters)
-        
-        let indicator = requestLoading(view: self.view)
-        request.getJSON { data, error in
-            self.requestDoneLoading(view: self.view, indicator: indicator)
-            if (error != nil) {
-                return
-            }
-            let email = data!["data"].stringValue
-            
-            self.displayAlert(view: self, title: self.requestSuccessMessage,
-                              message: "\(self.checkEmailMessage)\(email)")
-        }
     }
     
     func setupViews() {
@@ -100,41 +99,37 @@ class ResetPasswordController: ModelViewController {
             return
         }
         
-        let checkUsernameRequest = UsernameTakenRequestor.init(username: text)
-        let checkEmailRequest = EmailTakenRequestor.init(email: text)
-        
         // Dispatch group used to detect when all of the asynchronous requests
         // finish
         let group = DispatchGroup()
         
         group.enter()
-        checkUsernameRequest.getJSON { data, error in
-            group.leave()
-            if error != nil {
-                return
-            }
-            if data!["data"]["taken"].boolValue {
-                self.validUsername = true
-                self.setButtonEnable(true)
-                self.errorLabel.isHidden = true
-            } else {
-                self.validUsername = false
-            }
-        }
+        APIClient.credentialRequests.requestValidateUsername(username: text,
+                                                             onSuccess:
+            { data in
+                group.leave()
+                if data["taken"].boolValue {
+                    self.validUsername = true
+                    self.setButtonEnable(true)
+                    self.errorLabel.isHidden = true
+                }
+                else {
+                    self.validUsername = false
+                }
+        })
         group.enter()
-        checkEmailRequest.getJSON { data, error in
-            group.leave()
-            if error != nil {
-                return
-            }
-            if data!["data"]["taken"].boolValue {
-                self.validEmail = true
-                self.setButtonEnable(true)
-                self.errorLabel.isHidden = true
-            } else {
-                self.validEmail = false
-            }
-        }
+        APIClient.credentialRequests.requestValidateEmail(email: text,
+                                                          onSuccess:
+            { data in
+                group.leave()
+                if data["taken"].boolValue {
+                    self.validEmail = true
+                    self.setButtonEnable(true)
+                    self.errorLabel.isHidden = true
+                } else {
+                    self.validEmail = false
+                }
+        })
         
         group.notify(queue: .main) {
             if !self.validUsername && !self.validEmail {
