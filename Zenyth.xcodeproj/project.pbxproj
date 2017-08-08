@@ -199,6 +199,7 @@
 		471280761F390F88006FE796 /* ZenythAPIClient */ = {
 			isa = PBXGroup;
 			children = (
+				4712807D1F3929B2006FE796 /* Requests.swift */,
 				471280771F391A4B006FE796 /* CredentialRequestsProtocol.swift */,
 				4712807B1F3921DA006FE796 /* CredentialRequests.swift */,
 				471280811F396F85006FE796 /* UserRequestsProtocol.swift */,
@@ -218,7 +219,6 @@
 				4712809D1F3990DF006FE796 /* TagRequestsProtocol.swift */,
 				471280AD1F399306006FE796 /* TagRequests.swift */,
 				471280791F391B4F006FE796 /* APIClient.swift */,
-				4712807D1F3929B2006FE796 /* Requests.swift */,
 				471280831F396FCC006FE796 /* Callbacks.swift */,
 			);
 			name = ZenythAPIClient;

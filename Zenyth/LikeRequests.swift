@@ -10,6 +10,6 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-class LikeRequests : LikeRequestsProtocol {
+class LikeRequests: Requests, LikeRequestsProtocol {
     
 }

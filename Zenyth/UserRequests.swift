@@ -10,6 +10,6 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-class UserRequests : UserRequestsProtocol {
+class UserRequests: Requests, UserRequestsProtocol {
     
 }

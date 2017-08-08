@@ -10,6 +10,6 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-class TagRequests : TagRequestsProtocol {
+class TagRequests: Requests, TagRequestsProtocol {
     
 }

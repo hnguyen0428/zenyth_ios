@@ -10,6 +10,6 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-class CommentRequests : CommentRequestsProtocol {
+class CommentRequests: Requests, CommentRequestsProtocol {
     
 }

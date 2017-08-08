@@ -10,6 +10,6 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-class ReplyRequests: ReplyRequestsProtocol {
+class ReplyRequests: Requests, ReplyRequestsProtocol {
     
 }

@@ -10,6 +10,6 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-class RelationshipRequests: RelationshipRequestProtocol {
+class RelationshipRequests: Requests, RelationshipRequestProtocol {
     
 }

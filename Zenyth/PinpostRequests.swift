@@ -10,6 +10,6 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-class PinpostRequests : PinpostRequestsProtocol {
+class PinpostRequests: Requests, PinpostRequestsProtocol {
     
 }

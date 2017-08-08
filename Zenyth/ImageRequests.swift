@@ -10,6 +10,6 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-class ImageRequests : ImageRequestsProtocol {
+class ImageRequests: Requests, ImageRequestsProtocol {
     
 }
