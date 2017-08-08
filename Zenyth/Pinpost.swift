@@ -8,6 +8,6 @@
 
 import SwiftyJSON
 
-class Pinpost {
+struct Pinpost {
     
 }

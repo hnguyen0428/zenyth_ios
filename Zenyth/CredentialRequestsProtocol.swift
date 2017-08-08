@@ -6,10 +6,6 @@
 //  Copyright © 2017 Hoang. All rights reserved.
 //
 
-
-typealias UserCallback = (User) -> Void
-typealias UserCallbackWithToken = (User, String) -> Void
-
 protocol CredentialRequestsProtocol {
     func requestLoginWith(username: String,
                           password: String,

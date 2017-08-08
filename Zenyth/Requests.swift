@@ -9,9 +9,6 @@
 import Alamofire
 import SwiftyJSON
 
-typealias JSONCallback = (JSON) -> Void
-typealias ErrorCallback = (NSError) -> Void
-
 class Requests {
     var needsAuthorization: Bool = false
     

@@ -23,7 +23,7 @@ class CredentialRequests: Requests, CredentialRequestsProtocol {
         executeJSON(urlString: urlString, method: .post, parameters: parameters,
                     onSuccess: { json in
                         let apiToken = json["data"]["user"]["api_token"].stringValue
-                        onSuccess?(User(json: json), apiToken)
+                        onSuccess?(User(json: json["data"]["user"]), apiToken)
         }, onFailure: onFailure, onRequestError: onRequestError)
         
     }
@@ -41,7 +41,7 @@ class CredentialRequests: Requests, CredentialRequestsProtocol {
         executeJSON(urlString: urlString, method: .post, parameters: parameters,
                     onSuccess: { json in
                         let apiToken = json["data"]["user"]["api_token"].stringValue
-                        onSuccess?(User(json: json), apiToken)
+                        onSuccess?(User(json: json["data"]["user"]), apiToken)
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
@@ -64,7 +64,7 @@ class CredentialRequests: Requests, CredentialRequestsProtocol {
         executeJSON(urlString: urlString, method: .post, parameters: parameters,
                     onSuccess: { json in
                         let apiToken = json["data"]["user"]["api_token"].stringValue
-                        onSuccess?(User(json: json), apiToken)
+                        onSuccess?(User(json: json["data"]["user"]), apiToken)
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
@@ -86,7 +86,7 @@ class CredentialRequests: Requests, CredentialRequestsProtocol {
                     headers: headers,
                     onSuccess: { json in
                         let apiToken = json["data"]["user"]["api_token"].stringValue
-                        onSuccess?(User(json: json), apiToken)
+                        onSuccess?(User(json: json["data"]["user"]), apiToken)
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
@@ -114,7 +114,7 @@ class CredentialRequests: Requests, CredentialRequestsProtocol {
                     headers: headers,
                     onSuccess: { json in
                         let apiToken = json["data"]["user"]["api_token"].stringValue
-                        onSuccess?(User(json: json), apiToken)
+                        onSuccess?(User(json: json["data"]["user"]), apiToken)
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
@@ -137,7 +137,7 @@ class CredentialRequests: Requests, CredentialRequestsProtocol {
                     headers: headers,
                     onSuccess: { json in
                         let apiToken = json["data"]["user"]["api_token"].stringValue
-                        onSuccess?(User(json: json), apiToken)
+                        onSuccess?(User(json: json["data"]["user"]), apiToken)
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
