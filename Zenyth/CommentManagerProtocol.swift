@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol CommentRequestsProtocol {
+protocol CommentManagerProtocol {
     func requestCreateCommentOn(pinpostId: UInt32, text: String,
                                 onSuccess: CommentCallback?,
                                 onFailure: JSONCallback?,

@@ -9,7 +9,7 @@
 import Alamofire
 import SwiftyJSON
 
-class Requests {
+class Manager {
     var needsAuthorization: Bool = false
     
     func executeJSON(urlString: String, method: HTTPMethod,

@@ -1,5 +1,5 @@
 //
-//  RelationshipRequests.swift
+//  UserRequests.swift
 //  Zenyth
 //
 //  Created by Hoang on 8/7/17.
@@ -10,6 +10,6 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-class RelationshipRequests: Requests, RelationshipRequestProtocol {
+class UserManager: Manager, UserManagerProtocol {
     
 }

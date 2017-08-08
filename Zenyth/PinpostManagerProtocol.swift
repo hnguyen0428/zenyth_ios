@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol PinpostRequestsProtocol {
+protocol PinpostManagerProtocol {
     func requestCreatePinpost(title: String, description: String,
                               latitude: Double, longitude: Double,
                               privacy: String, tags: String?,

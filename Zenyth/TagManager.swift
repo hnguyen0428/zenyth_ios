@@ -1,5 +1,5 @@
 //
-//  PinpostRequests.swift
+//  TagRequests.swift
 //  Zenyth
 //
 //  Created by Hoang on 8/7/17.
@@ -10,6 +10,6 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-class PinpostRequests: Requests, PinpostRequestsProtocol {
+class TagManager: Manager, TagManagerProtocol {
     
 }

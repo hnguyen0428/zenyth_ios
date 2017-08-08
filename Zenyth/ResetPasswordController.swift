@@ -39,8 +39,8 @@ class ResetPasswordController: ModelViewController {
     func buttonAction(_ button: UIButton) {
         if validEmail {
             let indicator = requestLoading(view: self.view)
-            APIClient.credentialRequests.requestResetPassword(email: usernameEmailField.text!,
-                                                              onSuccess:
+            APIClient.credentialManager().requestResetPassword(email: usernameEmailField.text!,
+                                                               onSuccess:
                 { data in
                     self.requestDoneLoading(view: self.view, indicator: indicator)
                     let email = data["email"].stringValue
@@ -49,8 +49,8 @@ class ResetPasswordController: ModelViewController {
             })
         } else if validUsername {
             let indicator = requestLoading(view: self.view)
-            APIClient.credentialRequests.requestResetPassword(username: usernameEmailField.text!,
-                                                              onSuccess:
+            APIClient.credentialManager().requestResetPassword(username: usernameEmailField.text!,
+                                                               onSuccess:
                 { data in
                     self.requestDoneLoading(view: self.view, indicator: indicator)
                     let email = data["email"].stringValue
@@ -104,8 +104,8 @@ class ResetPasswordController: ModelViewController {
         let group = DispatchGroup()
         
         group.enter()
-        APIClient.credentialRequests.requestValidateUsername(username: text,
-                                                             onSuccess:
+        APIClient.credentialManager().requestValidateUsername(username: text,
+                                                              onSuccess:
             { data in
                 group.leave()
                 if data["taken"].boolValue {
@@ -118,8 +118,8 @@ class ResetPasswordController: ModelViewController {
                 }
         })
         group.enter()
-        APIClient.credentialRequests.requestValidateEmail(email: text,
-                                                          onSuccess:
+        APIClient.credentialManager().requestValidateEmail(email: text,
+                                                           onSuccess:
             { data in
                 group.leave()
                 if data["taken"].boolValue {

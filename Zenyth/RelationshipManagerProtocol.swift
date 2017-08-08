@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol RelationshipRequestProtocol {
+protocol RelationshipManagerProtocol {
     func requestSendFriendRequestTo(requesteeId: UInt32,
                                     onSuccess: RelationshipCallback?,
                                     onFailure: JSONCallback?,

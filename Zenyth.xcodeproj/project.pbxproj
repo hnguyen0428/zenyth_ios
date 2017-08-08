@@ -8,34 +8,34 @@
 
 /* Begin PBXBuildFile section */
 		3725D1DBA4E1D74C7627B484 /* Pods_Zenyth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDF4603E6F5113638CE0C5ED /* Pods_Zenyth.framework */; };
-		471280781F391A4B006FE796 /* CredentialRequestsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280771F391A4B006FE796 /* CredentialRequestsProtocol.swift */; };
+		471280781F391A4B006FE796 /* CredentialManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280771F391A4B006FE796 /* CredentialManagerProtocol.swift */; };
 		4712807A1F391B4F006FE796 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280791F391B4F006FE796 /* APIClient.swift */; };
-		4712807C1F3921DA006FE796 /* CredentialRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712807B1F3921DA006FE796 /* CredentialRequests.swift */; };
-		4712807E1F3929B2006FE796 /* Requests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712807D1F3929B2006FE796 /* Requests.swift */; };
+		4712807C1F3921DA006FE796 /* CredentialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712807B1F3921DA006FE796 /* CredentialManager.swift */; };
+		4712807E1F3929B2006FE796 /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712807D1F3929B2006FE796 /* Manager.swift */; };
 		471280801F39381C006FE796 /* Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712807F1F39381C006FE796 /* Object.swift */; };
-		471280821F396F85006FE796 /* UserRequestsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280811F396F85006FE796 /* UserRequestsProtocol.swift */; };
+		471280821F396F85006FE796 /* UserManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280811F396F85006FE796 /* UserManagerProtocol.swift */; };
 		471280841F396FCC006FE796 /* Callbacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280831F396FCC006FE796 /* Callbacks.swift */; };
-		471280861F3977D3006FE796 /* PinpostRequestsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280851F3977D3006FE796 /* PinpostRequestsProtocol.swift */; };
+		471280861F3977D3006FE796 /* PinpostManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280851F3977D3006FE796 /* PinpostManagerProtocol.swift */; };
 		471280881F397EC5006FE796 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280871F397EC5006FE796 /* Comment.swift */; };
 		4712808A1F398403006FE796 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280891F398403006FE796 /* Image.swift */; };
 		4712808C1F39840D006FE796 /* Reply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712808B1F39840D006FE796 /* Reply.swift */; };
 		4712808E1F39841A006FE796 /* Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712808D1F39841A006FE796 /* Like.swift */; };
 		471280901F39842C006FE796 /* Relationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712808F1F39842C006FE796 /* Relationship.swift */; };
 		471280921F39844C006FE796 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280911F39844C006FE796 /* Tag.swift */; };
-		471280941F398576006FE796 /* RelationshipRequestsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280931F398576006FE796 /* RelationshipRequestsProtocol.swift */; };
-		471280961F398876006FE796 /* ImageRequestsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280951F398876006FE796 /* ImageRequestsProtocol.swift */; };
-		471280981F3989CF006FE796 /* CommentRequestsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280971F3989CF006FE796 /* CommentRequestsProtocol.swift */; };
-		4712809A1F398C7F006FE796 /* ReplyRequestsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280991F398C7F006FE796 /* ReplyRequestsProtocol.swift */; };
-		4712809C1F398D30006FE796 /* LikeRequestsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712809B1F398D30006FE796 /* LikeRequestsProtocol.swift */; };
-		4712809E1F3990DF006FE796 /* TagRequestsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712809D1F3990DF006FE796 /* TagRequestsProtocol.swift */; };
-		471280A01F3992C6006FE796 /* UserRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712809F1F3992C6006FE796 /* UserRequests.swift */; };
-		471280A21F3992CF006FE796 /* PinpostRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280A11F3992CF006FE796 /* PinpostRequests.swift */; };
-		471280A41F3992D8006FE796 /* CommentRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280A31F3992D8006FE796 /* CommentRequests.swift */; };
-		471280A61F3992E0006FE796 /* ReplyRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280A51F3992E0006FE796 /* ReplyRequests.swift */; };
-		471280A81F3992E8006FE796 /* LikeRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280A71F3992E8006FE796 /* LikeRequests.swift */; };
-		471280AA1F3992F3006FE796 /* RelationshipRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280A91F3992F3006FE796 /* RelationshipRequests.swift */; };
-		471280AC1F3992FC006FE796 /* ImageRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280AB1F3992FC006FE796 /* ImageRequests.swift */; };
-		471280AE1F399306006FE796 /* TagRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280AD1F399306006FE796 /* TagRequests.swift */; };
+		471280941F398576006FE796 /* RelationshipManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280931F398576006FE796 /* RelationshipManagerProtocol.swift */; };
+		471280961F398876006FE796 /* ImageManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280951F398876006FE796 /* ImageManagerProtocol.swift */; };
+		471280981F3989CF006FE796 /* CommentManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280971F3989CF006FE796 /* CommentManagerProtocol.swift */; };
+		4712809A1F398C7F006FE796 /* ReplyManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280991F398C7F006FE796 /* ReplyManagerProtocol.swift */; };
+		4712809C1F398D30006FE796 /* LikeManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712809B1F398D30006FE796 /* LikeManagerProtocol.swift */; };
+		4712809E1F3990DF006FE796 /* TagManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712809D1F3990DF006FE796 /* TagManagerProtocol.swift */; };
+		471280A01F3992C6006FE796 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712809F1F3992C6006FE796 /* UserManager.swift */; };
+		471280A21F3992CF006FE796 /* PinpostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280A11F3992CF006FE796 /* PinpostManager.swift */; };
+		471280A41F3992D8006FE796 /* CommentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280A31F3992D8006FE796 /* CommentManager.swift */; };
+		471280A61F3992E0006FE796 /* ReplyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280A51F3992E0006FE796 /* ReplyManager.swift */; };
+		471280A81F3992E8006FE796 /* LikeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280A71F3992E8006FE796 /* LikeManager.swift */; };
+		471280AA1F3992F3006FE796 /* RelationshipManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280A91F3992F3006FE796 /* RelationshipManager.swift */; };
+		471280AC1F3992FC006FE796 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280AB1F3992FC006FE796 /* ImageManager.swift */; };
+		471280AE1F399306006FE796 /* TagManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280AD1F399306006FE796 /* TagManager.swift */; };
 		4727AA571F2185F00032F7EB /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4727AA561F2185F00032F7EB /* Home.storyboard */; };
 		478006331F218A380064F9E7 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478006321F218A380064F9E7 /* MapController.swift */; };
 		478006391F21B5730064F9E7 /* Pinpost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478006381F21B5730064F9E7 /* Pinpost.swift */; };
@@ -85,34 +85,34 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		471280771F391A4B006FE796 /* CredentialRequestsProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialRequestsProtocol.swift; sourceTree = "<group>"; };
+		471280771F391A4B006FE796 /* CredentialManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialManagerProtocol.swift; sourceTree = "<group>"; };
 		471280791F391B4F006FE796 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
-		4712807B1F3921DA006FE796 /* CredentialRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialRequests.swift; sourceTree = "<group>"; };
-		4712807D1F3929B2006FE796 /* Requests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Requests.swift; sourceTree = "<group>"; };
+		4712807B1F3921DA006FE796 /* CredentialManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialManager.swift; sourceTree = "<group>"; };
+		4712807D1F3929B2006FE796 /* Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
 		4712807F1F39381C006FE796 /* Object.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Object.swift; sourceTree = "<group>"; };
-		471280811F396F85006FE796 /* UserRequestsProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRequestsProtocol.swift; sourceTree = "<group>"; };
+		471280811F396F85006FE796 /* UserManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserManagerProtocol.swift; sourceTree = "<group>"; };
 		471280831F396FCC006FE796 /* Callbacks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Callbacks.swift; sourceTree = "<group>"; };
-		471280851F3977D3006FE796 /* PinpostRequestsProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinpostRequestsProtocol.swift; sourceTree = "<group>"; };
+		471280851F3977D3006FE796 /* PinpostManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinpostManagerProtocol.swift; sourceTree = "<group>"; };
 		471280871F397EC5006FE796 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		471280891F398403006FE796 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		4712808B1F39840D006FE796 /* Reply.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reply.swift; sourceTree = "<group>"; };
 		4712808D1F39841A006FE796 /* Like.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Like.swift; sourceTree = "<group>"; };
 		4712808F1F39842C006FE796 /* Relationship.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Relationship.swift; sourceTree = "<group>"; };
 		471280911F39844C006FE796 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
-		471280931F398576006FE796 /* RelationshipRequestsProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipRequestsProtocol.swift; sourceTree = "<group>"; };
-		471280951F398876006FE796 /* ImageRequestsProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageRequestsProtocol.swift; sourceTree = "<group>"; };
-		471280971F3989CF006FE796 /* CommentRequestsProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentRequestsProtocol.swift; sourceTree = "<group>"; };
-		471280991F398C7F006FE796 /* ReplyRequestsProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyRequestsProtocol.swift; sourceTree = "<group>"; };
-		4712809B1F398D30006FE796 /* LikeRequestsProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeRequestsProtocol.swift; sourceTree = "<group>"; };
-		4712809D1F3990DF006FE796 /* TagRequestsProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagRequestsProtocol.swift; sourceTree = "<group>"; };
-		4712809F1F3992C6006FE796 /* UserRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRequests.swift; sourceTree = "<group>"; };
-		471280A11F3992CF006FE796 /* PinpostRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinpostRequests.swift; sourceTree = "<group>"; };
-		471280A31F3992D8006FE796 /* CommentRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentRequests.swift; sourceTree = "<group>"; };
-		471280A51F3992E0006FE796 /* ReplyRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyRequests.swift; sourceTree = "<group>"; };
-		471280A71F3992E8006FE796 /* LikeRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeRequests.swift; sourceTree = "<group>"; };
-		471280A91F3992F3006FE796 /* RelationshipRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipRequests.swift; sourceTree = "<group>"; };
-		471280AB1F3992FC006FE796 /* ImageRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageRequests.swift; sourceTree = "<group>"; };
-		471280AD1F399306006FE796 /* TagRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagRequests.swift; sourceTree = "<group>"; };
+		471280931F398576006FE796 /* RelationshipManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipManagerProtocol.swift; sourceTree = "<group>"; };
+		471280951F398876006FE796 /* ImageManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManagerProtocol.swift; sourceTree = "<group>"; };
+		471280971F3989CF006FE796 /* CommentManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentManagerProtocol.swift; sourceTree = "<group>"; };
+		471280991F398C7F006FE796 /* ReplyManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyManagerProtocol.swift; sourceTree = "<group>"; };
+		4712809B1F398D30006FE796 /* LikeManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeManagerProtocol.swift; sourceTree = "<group>"; };
+		4712809D1F3990DF006FE796 /* TagManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagManagerProtocol.swift; sourceTree = "<group>"; };
+		4712809F1F3992C6006FE796 /* UserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		471280A11F3992CF006FE796 /* PinpostManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinpostManager.swift; sourceTree = "<group>"; };
+		471280A31F3992D8006FE796 /* CommentManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentManager.swift; sourceTree = "<group>"; };
+		471280A51F3992E0006FE796 /* ReplyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyManager.swift; sourceTree = "<group>"; };
+		471280A71F3992E8006FE796 /* LikeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeManager.swift; sourceTree = "<group>"; };
+		471280A91F3992F3006FE796 /* RelationshipManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipManager.swift; sourceTree = "<group>"; };
+		471280AB1F3992FC006FE796 /* ImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
+		471280AD1F399306006FE796 /* TagManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagManager.swift; sourceTree = "<group>"; };
 		4727AA561F2185F00032F7EB /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		478006321F218A380064F9E7 /* MapController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
 		478006381F21B5730064F9E7 /* Pinpost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pinpost.swift; sourceTree = "<group>"; };
@@ -199,25 +199,25 @@
 		471280761F390F88006FE796 /* ZenythAPIClient */ = {
 			isa = PBXGroup;
 			children = (
-				4712807D1F3929B2006FE796 /* Requests.swift */,
-				471280771F391A4B006FE796 /* CredentialRequestsProtocol.swift */,
-				4712807B1F3921DA006FE796 /* CredentialRequests.swift */,
-				471280811F396F85006FE796 /* UserRequestsProtocol.swift */,
-				4712809F1F3992C6006FE796 /* UserRequests.swift */,
-				471280851F3977D3006FE796 /* PinpostRequestsProtocol.swift */,
-				471280A11F3992CF006FE796 /* PinpostRequests.swift */,
-				471280971F3989CF006FE796 /* CommentRequestsProtocol.swift */,
-				471280A31F3992D8006FE796 /* CommentRequests.swift */,
-				471280991F398C7F006FE796 /* ReplyRequestsProtocol.swift */,
-				471280A51F3992E0006FE796 /* ReplyRequests.swift */,
-				4712809B1F398D30006FE796 /* LikeRequestsProtocol.swift */,
-				471280A71F3992E8006FE796 /* LikeRequests.swift */,
-				471280931F398576006FE796 /* RelationshipRequestsProtocol.swift */,
-				471280A91F3992F3006FE796 /* RelationshipRequests.swift */,
-				471280951F398876006FE796 /* ImageRequestsProtocol.swift */,
-				471280AB1F3992FC006FE796 /* ImageRequests.swift */,
-				4712809D1F3990DF006FE796 /* TagRequestsProtocol.swift */,
-				471280AD1F399306006FE796 /* TagRequests.swift */,
+				4712807D1F3929B2006FE796 /* Manager.swift */,
+				471280771F391A4B006FE796 /* CredentialManagerProtocol.swift */,
+				4712807B1F3921DA006FE796 /* CredentialManager.swift */,
+				471280811F396F85006FE796 /* UserManagerProtocol.swift */,
+				4712809F1F3992C6006FE796 /* UserManager.swift */,
+				471280851F3977D3006FE796 /* PinpostManagerProtocol.swift */,
+				471280A11F3992CF006FE796 /* PinpostManager.swift */,
+				471280971F3989CF006FE796 /* CommentManagerProtocol.swift */,
+				471280A31F3992D8006FE796 /* CommentManager.swift */,
+				471280991F398C7F006FE796 /* ReplyManagerProtocol.swift */,
+				471280A51F3992E0006FE796 /* ReplyManager.swift */,
+				4712809B1F398D30006FE796 /* LikeManagerProtocol.swift */,
+				471280A71F3992E8006FE796 /* LikeManager.swift */,
+				471280931F398576006FE796 /* RelationshipManagerProtocol.swift */,
+				471280A91F3992F3006FE796 /* RelationshipManager.swift */,
+				471280951F398876006FE796 /* ImageManagerProtocol.swift */,
+				471280AB1F3992FC006FE796 /* ImageManager.swift */,
+				4712809D1F3990DF006FE796 /* TagManagerProtocol.swift */,
+				471280AD1F399306006FE796 /* TagManager.swift */,
 				471280791F391B4F006FE796 /* APIClient.swift */,
 				471280831F396FCC006FE796 /* Callbacks.swift */,
 			);
@@ -646,46 +646,46 @@
 				47D9ECC01F19E3D300E3EEE4 /* RegisterController.swift in Sources */,
 				471280881F397EC5006FE796 /* Comment.swift in Sources */,
 				4712808E1F39841A006FE796 /* Like.swift in Sources */,
-				471280A41F3992D8006FE796 /* CommentRequests.swift in Sources */,
+				471280A41F3992D8006FE796 /* CommentManager.swift in Sources */,
 				4712808A1F398403006FE796 /* Image.swift in Sources */,
 				471280921F39844C006FE796 /* Tag.swift in Sources */,
 				47CA097F1F1E75C700EA2455 /* TabTwo.swift in Sources */,
-				4712809E1F3990DF006FE796 /* TagRequestsProtocol.swift in Sources */,
+				4712809E1F3990DF006FE796 /* TagManagerProtocol.swift in Sources */,
 				4712808C1F39840D006FE796 /* Reply.swift in Sources */,
 				471280841F396FCC006FE796 /* Callbacks.swift in Sources */,
 				47A488E21F22C97B006B0453 /* ProfileController.swift in Sources */,
-				471280941F398576006FE796 /* RelationshipRequestsProtocol.swift in Sources */,
-				471280961F398876006FE796 /* ImageRequestsProtocol.swift in Sources */,
+				471280941F398576006FE796 /* RelationshipManagerProtocol.swift in Sources */,
+				471280961F398876006FE796 /* ImageManagerProtocol.swift in Sources */,
 				47CA097B1F1E73BC00EA2455 /* TabThree.swift in Sources */,
 				478006331F218A380064F9E7 /* MapController.swift in Sources */,
 				47CA09791F1E57A600EA2455 /* LoginController+Signup.swift in Sources */,
-				471280A81F3992E8006FE796 /* LikeRequests.swift in Sources */,
+				471280A81F3992E8006FE796 /* LikeManager.swift in Sources */,
 				47A745E91F16F7D000A88D5D /* ModelViewController.swift in Sources */,
 				47A488E01F22C96D006B0453 /* PinpostController.swift in Sources */,
-				4712809C1F398D30006FE796 /* LikeRequestsProtocol.swift in Sources */,
+				4712809C1F398D30006FE796 /* LikeManagerProtocol.swift in Sources */,
 				47C622F71F0A347F003BBC16 /* RegisterController+UsernameEmail.swift in Sources */,
-				471280AC1F3992FC006FE796 /* ImageRequests.swift in Sources */,
+				471280AC1F3992FC006FE796 /* ImageManager.swift in Sources */,
 				47A9024C1F0B1F4400A1CEE8 /* LoginController.swift in Sources */,
-				471280861F3977D3006FE796 /* PinpostRequestsProtocol.swift in Sources */,
-				471280981F3989CF006FE796 /* CommentRequestsProtocol.swift in Sources */,
-				471280A01F3992C6006FE796 /* UserRequests.swift in Sources */,
+				471280861F3977D3006FE796 /* PinpostManagerProtocol.swift in Sources */,
+				471280981F3989CF006FE796 /* CommentManagerProtocol.swift in Sources */,
+				471280A01F3992C6006FE796 /* UserManager.swift in Sources */,
 				478006391F21B5730064F9E7 /* Pinpost.swift in Sources */,
-				471280A61F3992E0006FE796 /* ReplyRequests.swift in Sources */,
-				471280AE1F399306006FE796 /* TagRequests.swift in Sources */,
+				471280A61F3992E0006FE796 /* ReplyManager.swift in Sources */,
+				471280AE1F399306006FE796 /* TagManager.swift in Sources */,
 				47A9024E1F0B34C900A1CEE8 /* GlobalVariables.swift in Sources */,
 				47D838CC1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift in Sources */,
-				471280781F391A4B006FE796 /* CredentialRequestsProtocol.swift in Sources */,
-				4712807E1F3929B2006FE796 /* Requests.swift in Sources */,
-				471280AA1F3992F3006FE796 /* RelationshipRequests.swift in Sources */,
+				471280781F391A4B006FE796 /* CredentialManagerProtocol.swift in Sources */,
+				4712807E1F3929B2006FE796 /* Manager.swift in Sources */,
+				471280AA1F3992F3006FE796 /* RelationshipManager.swift in Sources */,
 				47ABAA041F0B7B7400FD479E /* UIViewController+Helper.swift in Sources */,
-				471280A21F3992CF006FE796 /* PinpostRequests.swift in Sources */,
+				471280A21F3992CF006FE796 /* PinpostManager.swift in Sources */,
 				471280801F39381C006FE796 /* Object.swift in Sources */,
 				47C622C91F0A341A003BBC16 /* AppDelegate.swift in Sources */,
-				4712807C1F3921DA006FE796 /* CredentialRequests.swift in Sources */,
-				471280821F396F85006FE796 /* UserRequestsProtocol.swift in Sources */,
+				4712807C1F3921DA006FE796 /* CredentialManager.swift in Sources */,
+				471280821F396F85006FE796 /* UserManagerProtocol.swift in Sources */,
 				47D9ECB71F19755A00E3EEE4 /* User.swift in Sources */,
 				D23722701F1C8813004FFCFA /* ResetPasswordController.swift in Sources */,
-				4712809A1F398C7F006FE796 /* ReplyRequestsProtocol.swift in Sources */,
+				4712809A1F398C7F006FE796 /* ReplyManagerProtocol.swift in Sources */,
 				4712807A1F391B4F006FE796 /* APIClient.swift in Sources */,
 				471280901F39842C006FE796 /* Relationship.swift in Sources */,
 			);

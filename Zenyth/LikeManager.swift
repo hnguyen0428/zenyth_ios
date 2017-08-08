@@ -1,5 +1,5 @@
 //
-//  TagRequests.swift
+//  LikeRequests.swift
 //  Zenyth
 //
 //  Created by Hoang on 8/7/17.
@@ -10,6 +10,6 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-class TagRequests: Requests, TagRequestsProtocol {
+class LikeManager: Manager, LikeManagerProtocol {
     
 }

@@ -91,7 +91,7 @@ extension LoginController {
             errorLabelOne.text = activityIndicatorChecking
             errorLabelOne.textColor = .lightGray
             
-            APIClient.credentialRequests.requestValidateUsername(username: text, onSuccess:
+            APIClient.credentialManager().requestValidateUsername(username: text, onSuccess:
                 { data in
                     if data["taken"].boolValue {
                         self.setUsernameError("usernameTaken")
@@ -120,7 +120,7 @@ extension LoginController {
             errorLabelTwo.text = activityIndicatorChecking
             errorLabelTwo.textColor = .lightGray
             
-            APIClient.credentialRequests.requestValidateEmail(email: text, onSuccess:
+            APIClient.credentialManager().requestValidateEmail(email: text, onSuccess:
                 { data in
                     if data["taken"].boolValue {
                         self.setEmailError("emailTaken")

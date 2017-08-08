@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol LikeRequestsProtocol {
+protocol LikeManagerProtocol {
     func requestCreateLikeOn(pinpostId: UInt32,
                              onSuccess: LikeCallback?,
                              onFailure: JSONCallback?,

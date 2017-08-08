@@ -12,40 +12,40 @@ import SwiftyJSON
 let baseURL = "http://54.219.134.56/api"
 
 class APIClient {
-    static var credentialRequests: CredentialRequests {
-        return CredentialRequests.init()
+    static func credentialManager() -> CredentialManager {
+        return CredentialManager.init()
     }
     
-    static var userRequests: UserRequests {
-        return UserRequests.init()
+    static func userManager() -> UserManager {
+        return UserManager.init()
     }
     
-    static var pinpostRequests: PinpostRequests {
-        return PinpostRequests.init()
+    static func pinpostManager() -> PinpostManager {
+        return PinpostManager.init()
     }
     
-    static var commentRequests: CommentRequests {
-        return CommentRequests.init()
+    static func commentManager() -> CommentManager {
+        return CommentManager.init()
     }
     
-    static var replyRequests: ReplyRequests {
-        return ReplyRequests.init()
+    static func replyManager() -> ReplyManager {
+        return ReplyManager.init()
     }
     
-    static var likeRequests: LikeRequests {
-        return LikeRequests.init()
+    static func likeManager() -> LikeManager {
+        return LikeManager.init()
     }
     
-    static var relationshipRequests: RelationshipRequests {
-        return RelationshipRequests.init()
+    static func relationshipManager() -> RelationshipManager {
+        return RelationshipManager.init()
     }
     
-    static var imageRequests: ImageRequests {
-        return ImageRequests.init()
+    static func imageManager() -> ImageManager {
+        return ImageManager.init()
     }
     
-    static var tagRequests: TagRequests {
-        return TagRequests.init()
+    static func tagManager() -> TagManager {
+        return TagManager.init()
     }
     
 }

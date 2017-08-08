@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ReplyRequestsProtocol {
+protocol ReplyManagerProtocol {
     func requestCreateReplyOn(commentId: UInt32, text: String,
                               onSuccess: ReplyCallback?,
                               onFailure: JSONCallback?,

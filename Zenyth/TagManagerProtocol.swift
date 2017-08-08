@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol TagRequestsProtocol {
+protocol TagManagerProtocol {
     func requestSearchTag(keyword: String,
                           onSuccess: TagsCallback?,
                           onFailure: JSONCallback?,

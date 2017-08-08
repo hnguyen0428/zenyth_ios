@@ -1,5 +1,5 @@
 //
-//  UserRequests.swift
+//  ImageRequests.swift
 //  Zenyth
 //
 //  Created by Hoang on 8/7/17.
@@ -10,6 +10,6 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-class UserRequests: Requests, UserRequestsProtocol {
+class ImageManager: Manager, ImageManagerProtocol {
     
 }

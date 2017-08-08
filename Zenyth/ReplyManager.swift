@@ -1,5 +1,5 @@
 //
-//  CommentRequests.swift
+//  ReplyRequests.swift
 //  Zenyth
 //
 //  Created by Hoang on 8/7/17.
@@ -10,6 +10,6 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-class CommentRequests: Requests, CommentRequestsProtocol {
+class ReplyManager: Manager, ReplyManagerProtocol {
     
 }

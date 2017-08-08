@@ -9,7 +9,7 @@
 import Alamofire
 import SwiftyJSON
 
-class CredentialRequests: Requests, CredentialRequestsProtocol {
+class CredentialManager: Manager, CredentialManagerProtocol {
     func requestLoginWith(username: String, password: String,
                           onSuccess: UserCallbackWithToken? = nil,
                           onFailure: JSONCallback? = nil,

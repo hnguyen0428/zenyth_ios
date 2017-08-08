@@ -1,5 +1,5 @@
 //
-//  ImageRequests.swift
+//  PinpostRequests.swift
 //  Zenyth
 //
 //  Created by Hoang on 8/7/17.
@@ -10,6 +10,6 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-class ImageRequests: Requests, ImageRequestsProtocol {
+class PinpostManager: Manager, PinpostManagerProtocol {
     
 }

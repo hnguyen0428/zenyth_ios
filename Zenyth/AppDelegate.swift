@@ -73,8 +73,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func googleOauthHandle(json: JSON, idToken: String) {
         // Checks if email is taken
         let email = json["email"].stringValue
-        APIClient.credentialRequests.requestValidateEmail(email: email,
-                                                          onSuccess:
+        APIClient.credentialManager().requestValidateEmail(email: email,
+                                                           onSuccess:
             { data in
                 if data["taken"].boolValue{ // email is taken
                     print("Email Taken")
@@ -109,10 +109,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         let indicator = viewController.requestLoading(view: viewController.view)
         let email = json["email"].stringValue
         let oauthType = "google"
-        APIClient.credentialRequests.requestOAuthLoginWith(email: email,
-                                                           oauthType: oauthType,
-                                                           accessToken: idToken,
-                                                           onSuccess:
+        APIClient.credentialManager().requestOAuthLoginWith(email: email,
+                                                            oauthType: oauthType,
+                                                            accessToken: idToken,
+                                                            onSuccess:
             { data, apiToken in
                 viewController.requestDoneLoading(view: viewController.view,
                                                   indicator: indicator)
@@ -144,10 +144,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         let indicator = viewController.requestLoading(view: viewController.view)
         
         let oauthType = "google"
-        APIClient.credentialRequests.requestOAuthLoginWith(email: email,
-                                                           oauthType: oauthType,
-                                                           accessToken: idToken,
-                                                           onSuccess:
+        APIClient.credentialManager().requestOAuthLoginWith(email: email,
+                                                            oauthType: oauthType,
+                                                            accessToken: idToken,
+                                                            onSuccess:
             { data, user in
                 viewController.requestDoneLoading(view: viewController.view,
                                                   indicator: indicator)

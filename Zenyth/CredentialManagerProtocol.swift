@@ -6,7 +6,7 @@
 //  Copyright © 2017 Hoang. All rights reserved.
 //
 
-protocol CredentialRequestsProtocol {
+protocol CredentialManagerProtocol {
     func requestLoginWith(username: String,
                           password: String,
                           onSuccess: UserCallbackWithToken?,

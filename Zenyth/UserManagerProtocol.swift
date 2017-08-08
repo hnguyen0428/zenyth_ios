@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol UserRequestsProtocol {
+protocol UserManagerProtocol {
     func requestGetFriends(userId: UInt32,
                            onSuccess: UsersCallback?,
                            onFailure: JSONCallback?,

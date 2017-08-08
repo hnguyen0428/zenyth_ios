@@ -71,9 +71,9 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
         
         let indicator = requestLoading(view: self.view)
         if self.isValidEmail(email: text) {
-            APIClient.credentialRequests.requestLoginWith(email: text,
-                                                          password: passwordField.text!,
-                                                          onSuccess:
+            APIClient.credentialManager().requestLoginWith(email: text,
+                                                           password: passwordField.text!,
+                                                           onSuccess:
                 { user, apiToken in
                     self.requestDoneLoading(view: self.view, indicator: indicator)
                     UserDefaults.standard.set(apiToken, forKey: "api_token")
@@ -86,9 +86,9 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
                                   message: error)
             })
         } else if self.isValidCharactersUsername(username: text) {
-            APIClient.credentialRequests.requestLoginWith(username: text,
-                                                          password: passwordField.text!,
-                                                          onSuccess:
+            APIClient.credentialManager().requestLoginWith(username: text,
+                                                           password: passwordField.text!,
+                                                           onSuccess:
                 { user, apiToken in
                     self.requestDoneLoading(view: self.view, indicator: indicator)
                     UserDefaults.standard.set(apiToken, forKey: "api_token")
@@ -228,8 +228,8 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
         
         // Checks if facebook email has already been used
         let email = json["email"].stringValue
-        APIClient.credentialRequests.requestValidateEmail(email: email,
-                                                          onSuccess:
+        APIClient.credentialManager().requestValidateEmail(email: email,
+                                                           onSuccess:
             { data in
                 if data["taken"].boolValue {
                     print("Email Taken")
@@ -249,10 +249,10 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
 
         let indicator = requestLoading(view: self.view)
         
-        APIClient.credentialRequests.requestOAuthLoginWith(email: email,
-                                                           oauthType: oauthType,
-                                                           accessToken: accessToken,
-                                                           onSuccess:
+        APIClient.credentialManager().requestOAuthLoginWith(email: email,
+                                                            oauthType: oauthType,
+                                                            accessToken: accessToken,
+                                                            onSuccess:
             { user, apiToken in
                 self.requestDoneLoading(view: self.view, indicator: indicator)
                 UserDefaults.standard.set(apiToken, forKey: "api_token")
