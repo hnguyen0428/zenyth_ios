@@ -130,7 +130,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: nil))
                 alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: {
                     action in
-                    self.mergeAccount(idToken: idToken, email: json["email"].stringValue)
+                    self.mergeAccount(idToken: idToken, email: email)
                 }))
                 viewController.present(alert, animated: true, completion: nil)
             }

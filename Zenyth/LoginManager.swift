@@ -59,8 +59,7 @@ class LoginManager: LoginManagerProtocol {
             "email" : email,
             "oauth_type" : oauthType
         ]
-        APIClient.sharedClient.updateHeaders(value: "Authorization",
-                                             forKey: "bearer \(accessToken)")
+        APIClient.sharedClient.setAuthorization(token: accessToken)
         
         APIClient.sharedClient.executeJSON(route: route,
                                            parameters: parameters,

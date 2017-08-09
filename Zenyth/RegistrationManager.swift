@@ -54,8 +54,7 @@ class RegistrationManager: RegistrationManagerProtocol {
             "oauth_type" : oauthType
         ]
         
-        APIClient.sharedClient.updateHeaders(value: "Authorization",
-                                             forKey: "bearer \(accessToken)")
+        APIClient.sharedClient.setAuthorization(token: accessToken)
         
         APIClient.sharedClient.executeJSON(route: route,
                                            parameters: parameters,
@@ -78,8 +77,7 @@ class RegistrationManager: RegistrationManagerProtocol {
             "merge" : true
         ]
 
-        APIClient.sharedClient.updateHeaders(value: "Authorization",
-                                             forKey: "bearer \(accessToken)")
+        APIClient.sharedClient.setAuthorization(token: accessToken)
         
         APIClient.sharedClient.executeJSON(route: route,
                                            parameters: parameters,

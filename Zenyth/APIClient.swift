@@ -16,7 +16,7 @@ class APIClient {
     // Prevent instantiation
     private init() {}
     
-    var headers: HTTPHeaders = HTTPHeaders.init()
+    var headers: HTTPHeaders = Alamofire.SessionManager.defaultHTTPHeaders
     
     func executeJSON(route: APIRoute,
                      parameters: Parameters = Parameters.init(),
@@ -27,24 +27,31 @@ class APIClient {
         let method = route.1
         
         Alamofire.request(urlString, method: method, parameters: parameters,
-                          headers: self.headers).responseJSON {
-            response in
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
-                if json["success"].boolValue {
-                    onSuccess?(json)
+                          headers: self.headers).responseJSON
+            {
+                response in
+                switch response.result {
+                case .success(let value):
+                    let json = JSON(value)
+                    if json["success"].boolValue {
+                        onSuccess?(json)
+                    }
+                    else {
+                        print("JSONResponse: \(json)")
+                        print("HTTPHeaders: \(self.headers)")
+                        print("HTTPMethod: \(method)")
+                        print("URI: \(urlString)")
+                        onFailure?(json)
+                    }
+                    
+                case .failure(let error):
+                    debugPrint(response)
+                    print("Error: \(error)")
+                    print("HTTPHeaders: \(self.headers)")
+                    print("HTTPMethod: \(method)")
+                    onRequestError?(error as NSError)
                 }
-                else {
-                    print(json)
-                    onFailure?(json)
-                }
-                
-            case .failure(let error):
-                debugPrint(response)
-                print(error)
-                onRequestError?(error as NSError)
-            }
+                self.clearHeaders()
         }
     }
     
@@ -84,6 +91,7 @@ class APIClient {
                     print("ENCODING ERROR: \(encodingError)")
                     onRequestError?(encodingError as NSError)
                 }
+                self.clearHeaders()
         })
     }
     
@@ -104,18 +112,30 @@ class APIClient {
                     print("DOWNLOAD ERROR: \(error)")
                     onRequestError?(error as NSError)
                 }
+                self.clearHeaders()
         }
+        
     }
     
-    func setAuthorization() {
-        let apiToken: String =
-            UserDefaults.standard.object(forKey: "api_token") as! String
-        self.headers.updateValue("Authorization",
-                            forKey: "bearer \(apiToken)")
+    func setAuthorization(token: String? = nil) {
+        if token == nil {
+            let apiToken: String =
+                UserDefaults.standard.object(forKey: "api_token") as! String
+            self.headers.updateValue("bearer \(apiToken)",
+                forKey: "Authorization")
+        }
+        else {
+            self.headers.updateValue("bearer \(token!)",
+                forKey: "Authorization")
+        }
     }
     
     func updateHeaders(value: String, forKey key: String) {
         self.headers.updateValue(value, forKey: key)
+    }
+    
+    func setHeadersContentType(value: String) {
+        self.headers.updateValue(value, forKey: "Content-Type")
     }
     
     func clearHeaders() {
