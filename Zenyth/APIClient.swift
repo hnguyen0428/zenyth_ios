@@ -51,7 +51,7 @@ class APIClient {
                     print("HTTPMethod: \(method)")
                     onRequestError?(error as NSError)
                 }
-                self.clearHeaders()
+                self.resetHeaders()
         }
     }
     
@@ -91,7 +91,7 @@ class APIClient {
                     print("ENCODING ERROR: \(encodingError)")
                     onRequestError?(encodingError as NSError)
                 }
-                self.clearHeaders()
+                self.resetHeaders()
         })
     }
     
@@ -112,7 +112,7 @@ class APIClient {
                     print("DOWNLOAD ERROR: \(error)")
                     onRequestError?(error as NSError)
                 }
-                self.clearHeaders()
+                self.resetHeaders()
         }
         
     }
@@ -138,7 +138,7 @@ class APIClient {
         self.headers.updateValue(value, forKey: "Content-Type")
     }
     
-    func clearHeaders() {
-        self.headers = HTTPHeaders.init()
+    func resetHeaders() {
+        self.headers = Alamofire.SessionManager.defaultHTTPHeaders
     }
 }
