@@ -6,6 +6,7 @@
 //  Copyright © 2017 Hoang. All rights reserved.
 //
 
+import Foundation
 import SwiftyJSON
 
 struct User : APIObject {

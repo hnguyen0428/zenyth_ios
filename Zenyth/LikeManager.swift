@@ -10,7 +10,7 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-class LikeManager: APIClient, LikeManagerProtocol {
+class LikeManager: LikeManagerProtocol {
     func createLike(onPinpostId pinpostId: UInt32,
                     onSuccess: LikeCallback? = nil,
                     onFailure: JSONCallback? = nil,

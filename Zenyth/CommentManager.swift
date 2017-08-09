@@ -10,7 +10,7 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-class CommentManager: APIClient, CommentManagerProtocol {
+class CommentManager: CommentManagerProtocol {
     func createComment(onPinpostId pinpostId: UInt32, text: String,
                        onSuccess: CommentCallback?,
                        onFailure: JSONCallback?,

@@ -10,7 +10,7 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-class TagManager: APIClient, TagManagerProtocol {
+class TagManager: TagManagerProtocol {
     func searchTag(withKeyword keyword: String,
                    onSuccess: TagsCallback? = nil,
                    onFailure: JSONCallback? = nil,

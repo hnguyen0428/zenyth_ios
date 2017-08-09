@@ -10,11 +10,18 @@ import Foundation
 import SwiftyJSON
 
 struct Tag: APIObject {
+    var id: UInt32
+    var name: String
+    
     init(json: JSON) {
-        <#code#>
+        self.id = json["id"].uInt32Value
+        self.name = json["name"].stringValue
     }
     
     func toJSON() -> JSON {
-        <#code#>
+        return [
+            "id" : id,
+            "name" : name
+        ]
     }
 }

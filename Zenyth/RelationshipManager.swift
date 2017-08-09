@@ -10,7 +10,7 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-class RelationshipManager: APIClient, RelationshipManagerProtocol {
+class RelationshipManager: RelationshipManagerProtocol {
     func sendFriendRequest(toRequesteeId requesteeId: UInt32,
                            onSuccess: RelationshipCallback? = nil,
                            onFailure: JSONCallback? = nil,

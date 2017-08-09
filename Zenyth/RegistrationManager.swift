@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-class RegistrationManager: APIClient, RegistrationManagerProtocol {
+class RegistrationManager: RegistrationManagerProtocol {
     func register(withUsername username: String, email: String,
                   password: String, passwordConfirmation: String,
                   gender: String, birthday: String,
@@ -26,10 +26,11 @@ class RegistrationManager: APIClient, RegistrationManagerProtocol {
             "birthday" : birthday
         ]
         
-        executeJSON(route: Endpoint.Register.route(), parameters: parameters,
-                    onSuccess: { json in
-                        let apiToken = json["data"]["user"]["api_token"].stringValue
-                        onSuccess?(User(json: json["data"]["user"]), apiToken)
+        APIClient.sharedClient.executeJSON(route: Endpoint.Register.route(),
+                                           parameters: parameters, onSuccess:
+            { json in
+                let apiToken = json["data"]["user"]["api_token"].stringValue
+                onSuccess?(User(json: json["data"]["user"]), apiToken)
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
@@ -50,15 +51,16 @@ class RegistrationManager: APIClient, RegistrationManagerProtocol {
             "gender" : gender,
             "oauth_type" : oauthType
         ]
-        let headers: HTTPHeaders = [
-            "Authorization" : "bearer \(accessToken)"
-        ]
         
-        executeJSON(route: Endpoint.OAuthRegister.route(), parameters: parameters,
-                    headers: headers,
-                    onSuccess: { json in
-                        let apiToken = json["data"]["user"]["api_token"].stringValue
-                        onSuccess?(User(json: json["data"]["user"]), apiToken)
+        APIClient.sharedClient.updateHeaders(value: "Authorization",
+                                             forKey: "bearer \(accessToken)")
+        
+        APIClient.sharedClient.executeJSON(route: Endpoint.OAuthRegister.route(),
+                                           parameters: parameters,
+                                           onSuccess:
+            { json in
+                let apiToken = json["data"]["user"]["api_token"].stringValue
+                onSuccess?(User(json: json["data"]["user"]), apiToken)
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
@@ -72,15 +74,16 @@ class RegistrationManager: APIClient, RegistrationManagerProtocol {
             "oauth_type" : oauthType,
             "merge" : true
         ]
-        let headers: HTTPHeaders = [
-            "Authorization" : "bearer \(accessToken)"
-        ]
+
+        APIClient.sharedClient.updateHeaders(value: "Authorization",
+                                             forKey: "bearer \(accessToken)")
         
-        executeJSON(route: Endpoint.OAuthLogin.route(), parameters: parameters,
-                    headers: headers,
-                    onSuccess: { json in
-                        let apiToken = json["data"]["user"]["api_token"].stringValue
-                        onSuccess?(User(json: json["data"]["user"]), apiToken)
+        APIClient.sharedClient.executeJSON(route: Endpoint.OAuthLogin.route(),
+                                           parameters: parameters,
+                                           onSuccess:
+            { json in
+                let apiToken = json["data"]["user"]["api_token"].stringValue
+                onSuccess?(User(json: json["data"]["user"]), apiToken)
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
 }

@@ -10,11 +10,33 @@ import Foundation
 import SwiftyJSON
 
 struct Comment: APIObject {
+    var id: UInt32
+    var text: String
+    var userId: UInt32
+    var commentableId: UInt32
+    var commentableType: String
+    var createdAt: String
+    var updatedAt: String
+    
     init(json: JSON) {
-        <#code#>
+        self.id = json["id"].uInt32Value
+        self.text = json["text"].stringValue
+        self.userId = json["user_id"].uInt32Value
+        self.commentableId = json["commentable_id"].uInt32Value
+        self.commentableType = json["commentable_type"].stringValue
+        self.createdAt = json["created_at"].stringValue
+        self.updatedAt = json["updated_at"].stringValue
     }
     
     func toJSON() -> JSON {
-        <#code#>
+        return [
+            "id" : id,
+            "text" : text,
+            "user_id" : userId,
+            "commentable_id" : commentableId,
+            "commentable_type" : commentableType,
+            "created_at" : createdAt,
+            "updated_at" : updatedAt
+        ]
     }
 }

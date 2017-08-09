@@ -10,7 +10,7 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-class UserManager: APIClient, UserManagerProtocol {
+class UserManager: UserManagerProtocol {
     func getFriends(ofUserId userId: UInt32,
                     onSuccess: UsersCallback? = nil,
                     onFailure: JSONCallback? = nil,

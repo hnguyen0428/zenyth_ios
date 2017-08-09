@@ -9,15 +9,16 @@
 import Alamofire
 import SwiftyJSON
 
-class CredentialManager: APIClient, CredentialManagerProtocol {
+class CredentialManager: CredentialManagerProtocol {
     func validateEmail(email: String,
                        onSuccess: JSONCallback? = nil,
                        onFailure: JSONCallback? = nil,
                        onRequestError: ErrorCallback? = nil) {
-        executeJSON(route: Endpoint.ValidateEmail(email).route(),
-                    onSuccess: { json in
-                        let data = json["data"]
-                        onSuccess?(data)
+        APIClient.sharedClient.executeJSON(route:
+            Endpoint.ValidateEmail(email).route(), onSuccess:
+            { json in
+                let data = json["data"]
+                onSuccess?(data)
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
@@ -25,10 +26,11 @@ class CredentialManager: APIClient, CredentialManagerProtocol {
                           onSuccess: JSONCallback? = nil,
                           onFailure: JSONCallback? = nil,
                           onRequestError: ErrorCallback? = nil) {
-        executeJSON(route: Endpoint.ValidateUsername(username).route(),
-                    onSuccess: { json in
-                        let data = json["data"]
-                        onSuccess?(data)
+        APIClient.sharedClient.executeJSON(route:
+            Endpoint.ValidateUsername(username).route(), onSuccess:
+            { json in
+                let data = json["data"]
+                onSuccess?(data)
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
@@ -40,11 +42,11 @@ class CredentialManager: APIClient, CredentialManagerProtocol {
             "email" : email
         ]
         
-        executeJSON(route: Endpoint.SendResetPasswordEmail.route(),
-                    parameters: parameters,
-                    onSuccess: { json in
-                        let data = json["data"]
-                        onSuccess?(data)
+        APIClient.sharedClient.executeJSON(route: Endpoint.SendResetPasswordEmail.route(),
+                                           parameters: parameters, onSuccess:
+            { json in
+                let data = json["data"]
+                onSuccess?(data)
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
@@ -56,11 +58,11 @@ class CredentialManager: APIClient, CredentialManagerProtocol {
             "username" : username
         ]
         
-        executeJSON(route: Endpoint.SendResetPasswordEmail.route(),
-                    parameters: parameters,
-                    onSuccess: { json in
-                        let data = json["data"]
-                        onSuccess?(data)
+        APIClient.sharedClient.executeJSON(route: Endpoint.SendResetPasswordEmail.route(),
+                                           parameters: parameters, onSuccess:
+            { json in
+                let data = json["data"]
+                onSuccess?(data)
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     

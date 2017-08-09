@@ -10,7 +10,7 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-class ImageManager: APIClient, ImageManagerProtocol {
+class ImageManager: ImageManagerProtocol {
     func getImageData(withImageId imageId: UInt32,
                       onSuccess: DataCallback? = nil,
                       onFailure: JSONCallback? = nil,

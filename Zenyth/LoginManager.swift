@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-class LoginManager: APIClient, LoginManagerProtocol {
+class LoginManager: LoginManagerProtocol {
     func login(withUsername username: String, password: String,
                onSuccess: UserCallbackWithToken? = nil,
                onFailure: JSONCallback? = nil,
@@ -20,10 +20,12 @@ class LoginManager: APIClient, LoginManagerProtocol {
             "password" : password,
         ]
         
-        executeJSON(route: Endpoint.Login.route(), parameters: parameters,
-                    onSuccess: { json in
-                        let apiToken = json["data"]["user"]["api_token"].stringValue
-                        onSuccess?(User(json: json["data"]["user"]), apiToken)
+        APIClient.sharedClient.executeJSON(route: Endpoint.Login.route(),
+                                           parameters: parameters,
+                                           onSuccess:
+            { json in
+                let apiToken = json["data"]["user"]["api_token"].stringValue
+                onSuccess?(User(json: json["data"]["user"]), apiToken)
         }, onFailure: onFailure, onRequestError: onRequestError)
         
     }
@@ -37,10 +39,11 @@ class LoginManager: APIClient, LoginManagerProtocol {
             "password" : password,
         ]
         
-        executeJSON(route: Endpoint.Login.route(), parameters: parameters,
-                    onSuccess: { json in
-                        let apiToken = json["data"]["user"]["api_token"].stringValue
-                        onSuccess?(User(json: json["data"]["user"]), apiToken)
+        APIClient.sharedClient.executeJSON(route: Endpoint.Login.route(),
+                                           parameters: parameters, onSuccess:
+            { json in
+                let apiToken = json["data"]["user"]["api_token"].stringValue
+                onSuccess?(User(json: json["data"]["user"]), apiToken)
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
@@ -53,15 +56,15 @@ class LoginManager: APIClient, LoginManagerProtocol {
             "email" : email,
             "oauth_type" : oauthType
         ]
-        let headers: HTTPHeaders = [
-            "Authorization" : "bearer \(accessToken)"
-        ]
+        APIClient.sharedClient.updateHeaders(value: "Authorization",
+                                             forKey: "bearer \(accessToken)")
         
-        executeJSON(route: Endpoint.OAuthLogin.route(), parameters: parameters,
-                    headers: headers,
-                    onSuccess: { json in
-                        let apiToken = json["data"]["user"]["api_token"].stringValue
-                        onSuccess?(User(json: json["data"]["user"]), apiToken)
+        APIClient.sharedClient.executeJSON(route: Endpoint.OAuthLogin.route(),
+                                           parameters: parameters,
+                                           onSuccess:
+            { json in
+                let apiToken = json["data"]["user"]["api_token"].stringValue
+                onSuccess?(User(json: json["data"]["user"]), apiToken)
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
 }

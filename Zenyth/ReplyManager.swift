@@ -10,7 +10,7 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-class ReplyManager: APIClient, ReplyManagerProtocol {
+class ReplyManager: ReplyManagerProtocol {
     func createReply(onCommentId commentId: UInt32, text: String,
                      onSuccess: ReplyCallback? = nil,
                      onFailure: JSONCallback? = nil,

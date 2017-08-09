@@ -10,7 +10,7 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
-class PinpostManager: APIClient, PinpostManagerProtocol {
+class PinpostManager: PinpostManagerProtocol {
     func createPinpost(withTitle title: String, description: String,
                        latitude: Double, longitude: Double, privacy: String,
                        tags: String?,
