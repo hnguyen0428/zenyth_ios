@@ -9,6 +9,12 @@
 import SwiftyJSON
 import SwiftyJSON
 
-struct Pinpost: Object {
+struct Pinpost: APIObject {
+    init(json: JSON) {
+        <#code#>
+    }
     
+    func toJSON() -> JSON {
+        <#code#>
+    }
 }

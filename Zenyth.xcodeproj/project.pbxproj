@@ -11,7 +11,7 @@
 		471280781F391A4B006FE796 /* CredentialManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280771F391A4B006FE796 /* CredentialManagerProtocol.swift */; };
 		4712807C1F3921DA006FE796 /* CredentialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712807B1F3921DA006FE796 /* CredentialManager.swift */; };
 		4712807E1F3929B2006FE796 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712807D1F3929B2006FE796 /* APIClient.swift */; };
-		471280801F39381C006FE796 /* Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712807F1F39381C006FE796 /* Object.swift */; };
+		471280801F39381C006FE796 /* APIObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712807F1F39381C006FE796 /* APIObject.swift */; };
 		471280821F396F85006FE796 /* UserManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280811F396F85006FE796 /* UserManagerProtocol.swift */; };
 		471280841F396FCC006FE796 /* Callbacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280831F396FCC006FE796 /* Callbacks.swift */; };
 		471280861F3977D3006FE796 /* PinpostManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280851F3977D3006FE796 /* PinpostManagerProtocol.swift */; };
@@ -92,7 +92,7 @@
 		471280771F391A4B006FE796 /* CredentialManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialManagerProtocol.swift; sourceTree = "<group>"; };
 		4712807B1F3921DA006FE796 /* CredentialManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialManager.swift; sourceTree = "<group>"; };
 		4712807D1F3929B2006FE796 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
-		4712807F1F39381C006FE796 /* Object.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Object.swift; sourceTree = "<group>"; };
+		4712807F1F39381C006FE796 /* APIObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIObject.swift; sourceTree = "<group>"; };
 		471280811F396F85006FE796 /* UserManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserManagerProtocol.swift; sourceTree = "<group>"; };
 		471280831F396FCC006FE796 /* Callbacks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Callbacks.swift; sourceTree = "<group>"; };
 		471280851F3977D3006FE796 /* PinpostManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinpostManagerProtocol.swift; sourceTree = "<group>"; };
@@ -323,7 +323,7 @@
 		47D9ECB51F19752E00E3EEE4 /* ObjectModels */ = {
 			isa = PBXGroup;
 			children = (
-				4712807F1F39381C006FE796 /* Object.swift */,
+				4712807F1F39381C006FE796 /* APIObject.swift */,
 				47D9ECB61F19755A00E3EEE4 /* User.swift */,
 				478006381F21B5730064F9E7 /* Pinpost.swift */,
 				471280871F397EC5006FE796 /* Comment.swift */,
@@ -696,7 +696,7 @@
 				471280AA1F3992F3006FE796 /* RelationshipManager.swift in Sources */,
 				47ABAA041F0B7B7400FD479E /* UIViewController+Helper.swift in Sources */,
 				471280A21F3992CF006FE796 /* PinpostManager.swift in Sources */,
-				471280801F39381C006FE796 /* Object.swift in Sources */,
+				471280801F39381C006FE796 /* APIObject.swift in Sources */,
 				47C622C91F0A341A003BBC16 /* AppDelegate.swift in Sources */,
 				4712807C1F3921DA006FE796 /* CredentialManager.swift in Sources */,
 				471280821F396F85006FE796 /* UserManagerProtocol.swift in Sources */,

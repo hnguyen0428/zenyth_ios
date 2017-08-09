@@ -9,6 +9,12 @@
 import Foundation
 import SwiftyJSON
 
-struct Comment: Object {
+struct Comment: APIObject {
+    init(json: JSON) {
+        <#code#>
+    }
     
+    func toJSON() -> JSON {
+        <#code#>
+    }
 }

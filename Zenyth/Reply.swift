@@ -9,6 +9,12 @@
 import Foundation
 import SwiftyJSON
 
-struct Reply: Object {
+struct Reply: APIbject {
+    init(json: JSON) {
+        <#code#>
+    }
     
+    func toJSON() -> JSON {
+        <#code#>
+    }
 }

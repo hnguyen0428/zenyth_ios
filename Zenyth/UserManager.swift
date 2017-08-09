@@ -11,5 +11,51 @@ import SwiftyJSON
 import Alamofire
 
 class UserManager: APIClient, UserManagerProtocol {
+    func getFriends(ofUserId userId: UInt32,
+                    onSuccess: UsersCallback? = nil,
+                    onFailure: JSONCallback? = nil,
+                    onRequestError: ErrorCallback? = nil) {
+        <#code#>
+    }
     
+    func getBlockedUsers(onSuccess: UsersCallback? = nil,
+                         onFailure: JSONCallback? = nil,
+                         onRequestError: ErrorCallback? = nil) {
+        <#code#>
+    }
+    
+    func getFriendRequests(onSuccess: UsersCallback? = nil,
+                           onFailure: JSONCallback? = nil,
+                           onRequestError: ErrorCallback? = nil) {
+        <#code#>
+    }
+    
+    func readProfile(ofUserId userId: UInt32,
+                     onSuccess: UserCallback? = nil,
+                     onFailure: JSONCallback? = nil,
+                     onRequestError: ErrorCallback? = nil) {
+        <#code#>
+    }
+    
+    func updateProfile(firstName: String? = nil, lastName: String? = nil,
+                       gender: String? = nil, birthday: String? = nil,
+                       onSuccess: UserCallback? = nil,
+                       onFailure: JSONCallback? = nil,
+                       onRequestError: ErrorCallback? = nil) {
+        <#code#>
+    }
+    
+    func updateProfilePicture(imageData: Data,
+                              onSuccess: UserCallback? = nil,
+                              onFailure: JSONCallback? = nil,
+                              onRequestError: ErrorCallback? = nil) {
+        <#code#>
+    }
+    
+    func searchUser(withKeyword keyword: String,
+                    onSuccess: UsersCallback? = nil,
+                    onFailure: JSONCallback? = nil,
+                    onRequestError: ErrorCallback? = nil) {
+        <#code#>
+    }
 }

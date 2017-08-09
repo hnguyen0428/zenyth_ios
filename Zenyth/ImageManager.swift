@@ -11,5 +11,17 @@ import SwiftyJSON
 import Alamofire
 
 class ImageManager: APIClient, ImageManagerProtocol {
+    func getImageData(withImageId imageId: UInt32,
+                      onSuccess: DataCallback? = nil,
+                      onFailure: JSONCallback? = nil,
+                      onRequestError: ErrorCallback? = nil) {
+        <#code#>
+    }
     
+    func deleteImage(withImageId imageId: UInt32,
+                     onSuccess: JSONCallback? = nil,
+                     onFailure: JSONCallback? = nil,
+                     onRequestError: ErrorCallback? = nil) {
+        <#code#>
+    }
 }

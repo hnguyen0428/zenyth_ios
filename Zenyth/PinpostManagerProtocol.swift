@@ -23,8 +23,8 @@ protocol PinpostManagerProtocol {
     
     func updatePinpost(withPinpostId pinpostId: UInt32,
                        title: String?, description: String?,
-                       latitude: Double, longitude: Double,
-                       privacy: String,
+                       latitude: Double?, longitude: Double?,
+                       privacy: String?,
                        onSuccess: PinpostCallback?,
                        onFailure: JSONCallback?,
                        onRequestError: ErrorCallback?)

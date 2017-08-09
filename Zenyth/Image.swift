@@ -9,6 +9,12 @@
 import Foundation
 import SwiftyJSON
 
-struct Image: Object {
+struct Image: APIObject {
+    init(json: JSON) {
+        <#code#>
+    }
     
+    func toJSON() -> JSON {
+        <#code#>
+    }
 }

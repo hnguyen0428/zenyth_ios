@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ImageRequestsProtocol {
+protocol ImageManagerProtocol {
     func getImageData(withImageId imageId: UInt32,
                       onSuccess: DataCallback?,
                       onFailure: JSONCallback?,

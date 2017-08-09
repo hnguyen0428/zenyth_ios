@@ -11,5 +11,32 @@ import SwiftyJSON
 import Alamofire
 
 class RelationshipManager: APIClient, RelationshipManagerProtocol {
+    func sendFriendRequest(toRequesteeId requesteeId: UInt32,
+                           onSuccess: RelationshipCallback? = nil,
+                           onFailure: JSONCallback? = nil,
+                           onRequestError: ErrorCallback? = nil) {
+        <#code#>
+    }
     
+    func respondToFriendRequest(fromRequesterId requesterId: UInt32,
+                                status: Bool,
+                                onSuccess: RelationshipCallback? = nil,
+                                onFailure: JSONCallback? = nil,
+                                onRequestError: ErrorCallback? = nil) {
+        <#code#>
+    }
+    
+    func deleteFriend(withUserId userId: UInt32,
+                      onSuccess: JSONCallback? = nil,
+                      onFailure: JSONCallback? = nil,
+                      onRequestError: ErrorCallback? = nil) {
+        <#code#>
+    }
+    
+    func blockUser(withUserId userId: UInt32,
+                   onSuccess: RelationshipCallback? = nil,
+                   onFailure: JSONCallback? = nil,
+                   onRequestError: ErrorCallback? = nil) {
+        <#code#>
+    }
 }

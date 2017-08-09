@@ -8,7 +8,7 @@
 
 import SwiftyJSON
 
-struct User : Object {
+struct User : APIObject {
     var id: UInt32
     var email: String?
     var username: String
@@ -24,19 +24,16 @@ struct User : Object {
         email = json["email"].string
         username = json["username"].stringValue
         friends = json["friends"].uInt32Value
-        
-        let profile: JSON = json["profile"]
-        firstName = profile["first_name"].string
-        lastName = profile["last_name"].string
-        gender = profile["gender"].string
-        
-        let date = profile["birthday"].string
+        firstName = json["first_name"].string
+        lastName = json["last_name"].string
+        gender = json["gender"].string
+        let date = json["birthday"].string
         if let str = date {
             let index = str.index(str.startIndex, offsetBy: 10)
             birthday = str.substring(to: index)
         }
         
-        profilePictureId = profile["picture_id"].uInt32
+        profilePictureId = json["picture_id"].uInt32
     }
     
     func toJSON() -> JSON {
