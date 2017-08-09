@@ -117,4 +117,8 @@ class APIClient {
     func updateHeaders(value: String, forKey key: String) {
         self.headers.updateValue(value, forKey: key)
     }
+    
+    func clearHeaders() {
+        self.headers = HTTPHeaders.init()
+    }
 }

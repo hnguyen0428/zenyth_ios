@@ -36,4 +36,8 @@ struct Image: APIObject {
             "imageable_type" : imageableType
         ]
     }
+    
+    var description: String {
+        return String(describing: toJSON())
+    }
 }

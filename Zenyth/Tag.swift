@@ -24,4 +24,8 @@ struct Tag: APIObject {
             "name" : name
         ]
     }
+    
+    var description: String {
+        return String(describing: toJSON())
+    }
 }

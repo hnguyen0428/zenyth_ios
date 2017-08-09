@@ -8,8 +8,9 @@
 
 import SwiftyJSON
 
-protocol APIObject {
+protocol APIObject : CustomStringConvertible {
     init(json: JSON)
     
     func toJSON() -> JSON
+    
 }

@@ -33,4 +33,8 @@ struct Relationship: APIObject {
             "blocked" : blocked
         ]
     }
+    
+    var description: String {
+        return String(describing: toJSON())
+    }
 }

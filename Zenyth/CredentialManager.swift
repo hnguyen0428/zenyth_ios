@@ -14,8 +14,8 @@ class CredentialManager: CredentialManagerProtocol {
                        onSuccess: JSONCallback? = nil,
                        onFailure: JSONCallback? = nil,
                        onRequestError: ErrorCallback? = nil) {
-        APIClient.sharedClient.executeJSON(route:
-            Endpoint.ValidateEmail(email).route(), onSuccess:
+        let route = Endpoint.ValidateEmail(email).route()
+        APIClient.sharedClient.executeJSON(route: route, onSuccess:
             { json in
                 let data = json["data"]
                 onSuccess?(data)
@@ -26,8 +26,8 @@ class CredentialManager: CredentialManagerProtocol {
                           onSuccess: JSONCallback? = nil,
                           onFailure: JSONCallback? = nil,
                           onRequestError: ErrorCallback? = nil) {
-        APIClient.sharedClient.executeJSON(route:
-            Endpoint.ValidateUsername(username).route(), onSuccess:
+        let route = Endpoint.ValidateUsername(username).route()
+        APIClient.sharedClient.executeJSON(route: route, onSuccess:
             { json in
                 let data = json["data"]
                 onSuccess?(data)
@@ -38,11 +38,12 @@ class CredentialManager: CredentialManagerProtocol {
                            onSuccess: JSONCallback? = nil,
                            onFailure: JSONCallback? = nil,
                            onRequestError: ErrorCallback? = nil) {
+        let route = Endpoint.SendResetPasswordEmail.route()
         let parameters: Parameters = [
             "email" : email
         ]
         
-        APIClient.sharedClient.executeJSON(route: Endpoint.SendResetPasswordEmail.route(),
+        APIClient.sharedClient.executeJSON(route: route,
                                            parameters: parameters, onSuccess:
             { json in
                 let data = json["data"]
@@ -54,11 +55,12 @@ class CredentialManager: CredentialManagerProtocol {
                            onSuccess: JSONCallback? = nil,
                            onFailure: JSONCallback? = nil,
                            onRequestError: ErrorCallback? = nil) {
+        let route = Endpoint.SendResetPasswordEmail.route()
         let parameters: Parameters = [
             "username" : username
         ]
         
-        APIClient.sharedClient.executeJSON(route: Endpoint.SendResetPasswordEmail.route(),
+        APIClient.sharedClient.executeJSON(route: route,
                                            parameters: parameters, onSuccess:
             { json in
                 let data = json["data"]

@@ -43,4 +43,9 @@ protocol CommentManagerProtocol {
                   onSuccess: LikesCallback?,
                   onFailure: JSONCallback?,
                   onRequestError: ErrorCallback?)
+    
+    func getReplies(onCommentId commentId: UInt32,
+                    onSuccess: RepliesCallback?,
+                    onFailure: JSONCallback?,
+                    onRequestError: ErrorCallback?)
 }

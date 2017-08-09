@@ -15,12 +15,13 @@ class LoginManager: LoginManagerProtocol {
                onSuccess: UserCallbackWithToken? = nil,
                onFailure: JSONCallback? = nil,
                onRequestError: ErrorCallback? = nil) {
+        let route = Endpoint.Login.route()
         let parameters: Parameters = [
             "username" : username,
             "password" : password,
         ]
         
-        APIClient.sharedClient.executeJSON(route: Endpoint.Login.route(),
+        APIClient.sharedClient.executeJSON(route: route,
                                            parameters: parameters,
                                            onSuccess:
             { json in
@@ -34,12 +35,13 @@ class LoginManager: LoginManagerProtocol {
                onSuccess: UserCallbackWithToken? = nil,
                onFailure: JSONCallback? = nil,
                onRequestError: ErrorCallback? = nil) {
+        let route = Endpoint.Login.route()
         let parameters: Parameters = [
             "email" : email,
             "password" : password,
         ]
         
-        APIClient.sharedClient.executeJSON(route: Endpoint.Login.route(),
+        APIClient.sharedClient.executeJSON(route: route,
                                            parameters: parameters, onSuccess:
             { json in
                 let apiToken = json["data"]["user"]["api_token"].stringValue
@@ -52,6 +54,7 @@ class LoginManager: LoginManagerProtocol {
                     onSuccess: UserCallbackWithToken? = nil,
                     onFailure: JSONCallback? = nil,
                     onRequestError: ErrorCallback? = nil) {
+        let route = Endpoint.OAuthLogin.route()
         let parameters: Parameters = [
             "email" : email,
             "oauth_type" : oauthType
@@ -59,7 +62,7 @@ class LoginManager: LoginManagerProtocol {
         APIClient.sharedClient.updateHeaders(value: "Authorization",
                                              forKey: "bearer \(accessToken)")
         
-        APIClient.sharedClient.executeJSON(route: Endpoint.OAuthLogin.route(),
+        APIClient.sharedClient.executeJSON(route: route,
                                            parameters: parameters,
                                            onSuccess:
             { json in

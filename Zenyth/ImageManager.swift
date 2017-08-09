@@ -15,13 +15,27 @@ class ImageManager: ImageManagerProtocol {
                       onSuccess: DataCallback? = nil,
                       onFailure: JSONCallback? = nil,
                       onRequestError: ErrorCallback? = nil) {
-        <#code#>
+        let route = Endpoint.GetImageData(imageId).route()
+        APIClient.sharedClient.setAuthorization()
+        
+        APIClient.sharedClient.executeDownload(route: route,
+                                               onSuccess:
+            { data in
+                onSuccess?(data)
+        }, onRequestError: onRequestError)
     }
     
     func deleteImage(withImageId imageId: UInt32,
                      onSuccess: JSONCallback? = nil,
                      onFailure: JSONCallback? = nil,
                      onRequestError: ErrorCallback? = nil) {
-        <#code#>
+        let route = Endpoint.DeleteImage(imageId).route()
+        APIClient.sharedClient.setAuthorization()
+        
+        APIClient.sharedClient.executeJSON(route: route,
+                                           onSuccess:
+            { json in
+                onSuccess?(json)
+        }, onFailure: onFailure, onRequestError: onRequestError)
     }
 }

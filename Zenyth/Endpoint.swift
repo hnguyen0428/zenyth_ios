@@ -55,6 +55,7 @@ public enum Endpoint {
     case ReadCommentImages(UInt32)
     case DeleteComment(UInt32)
     case GetLikesOnComment(UInt32)
+    case GetRepliesOnComment(UInt32)
     
     /// ReplyManager Endpoints
     case CreateReplyOnComment(UInt32)
@@ -153,6 +154,8 @@ public enum Endpoint {
             return ("\(baseURL)/comment/\(commentId)", .delete)
         case .GetLikesOnComment(let commentId):
             return ("\(baseURL)/comment/get_likes/\(commentId)", .get)
+        case .GetRepliesOnComment(let commentId):
+            return ("\(baseURL)/comment/get_replies/\(commentId)", .get)
             
         case .CreateReplyOnComment(let commentId):
             return ("\(baseURL)/reply/\(commentId)", .post)

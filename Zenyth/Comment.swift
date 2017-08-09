@@ -17,6 +17,7 @@ struct Comment: APIObject {
     var commentableType: String
     var createdAt: String
     var updatedAt: String
+    var images: [Image] = [Image]()
     
     init(json: JSON) {
         self.id = json["id"].uInt32Value
@@ -26,6 +27,11 @@ struct Comment: APIObject {
         self.commentableType = json["commentable_type"].stringValue
         self.createdAt = json["created_at"].stringValue
         self.updatedAt = json["updated_at"].stringValue
+        
+        let imagesJSON = json["images"].arrayValue
+        for imageJSON in imagesJSON {
+            self.images.append(Image(json: imageJSON))
+        }
     }
     
     func toJSON() -> JSON {
@@ -36,7 +42,12 @@ struct Comment: APIObject {
             "commentable_id" : commentableId,
             "commentable_type" : commentableType,
             "created_at" : createdAt,
-            "updated_at" : updatedAt
+            "updated_at" : updatedAt,
+            "images" : images
         ]
+    }
+    
+    var description: String {
+        return String(describing: toJSON())
     }
 }

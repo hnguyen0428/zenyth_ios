@@ -15,34 +15,72 @@ class LikeManager: LikeManagerProtocol {
                     onSuccess: LikeCallback? = nil,
                     onFailure: JSONCallback? = nil,
                     onRequestError: ErrorCallback? = nil) {
-        <#code#>
+        let route = Endpoint.CreateLikeOnPinpost(pinpostId).route()
+        APIClient.sharedClient.setAuthorization()
+        
+        APIClient.sharedClient.executeJSON(route: route,
+                                           onSuccess:
+            { json in
+                let likeJSON = json["data"]["like"]
+                onSuccess?(Like(json: likeJSON))
+        }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
     func createLike(onCommentId commentId: UInt32,
                     onSuccess: LikeCallback? = nil,
                     onFailure: JSONCallback? = nil,
                     onRequestError: ErrorCallback? = nil) {
-        <#code#>
+        let route = Endpoint.CreateReplyOnComment(commentId).route()
+        APIClient.sharedClient.setAuthorization()
+        
+        APIClient.sharedClient.executeJSON(route: route,
+                                           onSuccess:
+            { json in
+                let likeJSON = json["data"]["like"]
+                onSuccess?(Like(json: likeJSON))
+        }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
     func createLike(onReplyId replyId: UInt32,
                     onSuccess: LikeCallback? = nil,
                     onFailure: JSONCallback? = nil,
                     onRequestError: ErrorCallback? = nil) {
-        <#code#>
+        let route = Endpoint.CreateLikeOnReply(replyId).route()
+        APIClient.sharedClient.setAuthorization()
+        
+        APIClient.sharedClient.executeJSON(route: route,
+                                           onSuccess:
+            { json in
+                let likeJSON = json["data"]["like"]
+                onSuccess?(Like(json: likeJSON))
+        }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
     func readLike(withLikeId likeId: UInt32,
                   onSuccess: LikeCallback? = nil,
                   onFailure: JSONCallback? = nil,
                   onRequestError: ErrorCallback? = nil) {
-        <#code#>
+        let route = Endpoint.ReadLike(likeId).route()
+        
+        APIClient.sharedClient.executeJSON(route: route,
+                                           onSuccess:
+            { json in
+                let likeJSON = json["data"]["like"]
+                onSuccess?(Like(json: likeJSON))
+        }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
     func deleteLike(withLikeId likeId: UInt32,
                     onSuccess: JSONCallback? = nil,
                     onFailure: JSONCallback? = nil,
                     onRequestError: ErrorCallback? = nil) {
-        <#code#>
+        let route = Endpoint.DeleteLike(likeId).route()
+        APIClient.sharedClient.setAuthorization()
+        
+        APIClient.sharedClient.executeJSON(route: route,
+                                           onSuccess:
+            { json in
+                onSuccess?(json)
+        }, onFailure: onFailure, onRequestError: onRequestError)
     }
 }

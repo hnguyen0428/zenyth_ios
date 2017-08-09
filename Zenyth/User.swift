@@ -18,23 +18,26 @@ struct User : APIObject {
     var lastName: String?
     var gender: String?
     var birthday: String?
-    var profilePictureId: UInt32?
+    var profilePicture: Image?
     
     init(json: JSON) {
-        id = json["id"].uInt32Value
-        email = json["email"].string
-        username = json["username"].stringValue
-        friends = json["friends"].uInt32Value
-        firstName = json["first_name"].string
-        lastName = json["last_name"].string
-        gender = json["gender"].string
+        self.id = json["id"].uInt32Value
+        self.email = json["email"].string
+        self.username = json["username"].stringValue
+        self.friends = json["friends"].uInt32Value
+        self.firstName = json["first_name"].string
+        self.lastName = json["last_name"].string
+        self.gender = json["gender"].string
         let date = json["birthday"].string
         if let str = date {
             let index = str.index(str.startIndex, offsetBy: 10)
-            birthday = str.substring(to: index)
+            self.birthday = str.substring(to: index)
         }
         
-        profilePictureId = json["picture_id"].uInt32
+        let imageJSON = json["picture"]
+        if imageJSON != JSON.null {
+            self.profilePicture = Image(json: imageJSON)
+        }
     }
     
     func toJSON() -> JSON {
@@ -47,7 +50,11 @@ struct User : APIObject {
             "last_name" : lastName,
             "gender" : gender,
             "birthday" : birthday,
-            "picture_id" : profilePictureId
+            "picture" : profilePicture
         ]
+    }
+    
+    var description: String {
+        return String(describing: toJSON())
     }
 }

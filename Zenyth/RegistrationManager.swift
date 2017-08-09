@@ -17,6 +17,7 @@ class RegistrationManager: RegistrationManagerProtocol {
                   onSuccess: UserCallbackWithToken? = nil,
                   onFailure: JSONCallback? = nil,
                   onRequestError: ErrorCallback? = nil) {
+        let route = Endpoint.Register.route()
         let parameters: Parameters = [
             "username" : username,
             "email" : email,
@@ -26,7 +27,7 @@ class RegistrationManager: RegistrationManagerProtocol {
             "birthday" : birthday
         ]
         
-        APIClient.sharedClient.executeJSON(route: Endpoint.Register.route(),
+        APIClient.sharedClient.executeJSON(route: route,
                                            parameters: parameters, onSuccess:
             { json in
                 let apiToken = json["data"]["user"]["api_token"].stringValue
@@ -43,6 +44,7 @@ class RegistrationManager: RegistrationManagerProtocol {
                        onSuccess: UserCallbackWithToken? = nil,
                        onFailure: JSONCallback? = nil,
                        onRequestError: ErrorCallback? = nil) {
+        let route = Endpoint.OAuthRegister.route()
         let parameters: Parameters = [
             "email" : email,
             "username" : username,
@@ -55,7 +57,7 @@ class RegistrationManager: RegistrationManagerProtocol {
         APIClient.sharedClient.updateHeaders(value: "Authorization",
                                              forKey: "bearer \(accessToken)")
         
-        APIClient.sharedClient.executeJSON(route: Endpoint.OAuthRegister.route(),
+        APIClient.sharedClient.executeJSON(route: route,
                                            parameters: parameters,
                                            onSuccess:
             { json in
@@ -69,6 +71,7 @@ class RegistrationManager: RegistrationManagerProtocol {
                            onSuccess: UserCallbackWithToken? = nil,
                            onFailure: JSONCallback? = nil,
                            onRequestError: ErrorCallback? = nil) {
+        let route = Endpoint.OAuthLogin.route()
         let parameters: Parameters = [
             "email" : email,
             "oauth_type" : oauthType,
@@ -78,7 +81,7 @@ class RegistrationManager: RegistrationManagerProtocol {
         APIClient.sharedClient.updateHeaders(value: "Authorization",
                                              forKey: "bearer \(accessToken)")
         
-        APIClient.sharedClient.executeJSON(route: Endpoint.OAuthLogin.route(),
+        APIClient.sharedClient.executeJSON(route: route,
                                            parameters: parameters,
                                            onSuccess:
             { json in

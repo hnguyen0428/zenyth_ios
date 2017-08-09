@@ -30,4 +30,8 @@ struct Like: APIObject {
             "likeable_type" : likeableType
         ]
     }
+    
+    var description: String {
+        return String(describing: toJSON())
+    }
 }

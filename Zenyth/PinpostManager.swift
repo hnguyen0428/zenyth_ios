@@ -13,18 +13,45 @@ import Alamofire
 class PinpostManager: PinpostManagerProtocol {
     func createPinpost(withTitle title: String, description: String,
                        latitude: Double, longitude: Double, privacy: String,
-                       tags: String?,
+                       tags: String? = nil,
                        onSuccess: PinpostCallback? = nil,
                        onFailure: JSONCallback? = nil,
                        onRequestError: ErrorCallback? = nil) {
-        <#code#>
+        let route = Endpoint.CreatePinpost.route()
+        APIClient.sharedClient.setAuthorization()
+        var parameters: Parameters = [
+            "title" : title,
+            "description" : description,
+            "latitude" : latitude,
+            "longitude" : longitude,
+            "privacy" : privacy
+        ]
+        if tags != nil {
+            parameters.updateValue(tags!, forKey: "tags")
+        }
+        
+        APIClient.sharedClient.executeJSON(route: route, parameters: parameters,
+                                           onSuccess:
+            { json in
+                let pinpostJSON = json["data"]["pinpost"]
+                onSuccess?(Pinpost(json: pinpostJSON))
+        }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
     func uploadImage(toPinpostId pinpostId: UInt32, imageData: Data,
                      onSuccess: ImageCallback? = nil,
                      onFailure: JSONCallback? = nil,
                      onRequestError: ErrorCallback? = nil) {
-        <#code#>
+        let route = Endpoint.UploadImageToPinpost(pinpostId).route()
+        APIClient.sharedClient.setAuthorization()
+        
+        APIClient.sharedClient.executeUpload(route: route, data: imageData,
+                                             fileKey: "image",
+                                             onSuccess:
+            { json in
+                let imageJSON = json["data"]["image"]
+                onSuccess?(Image(json: imageJSON))
+        }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
     func updatePinpost(withPinpostId pinpostId: UInt32, title: String? = nil,
@@ -33,59 +60,172 @@ class PinpostManager: PinpostManagerProtocol {
                        onSuccess: PinpostCallback? = nil,
                        onFailure: JSONCallback? = nil,
                        onRequestError: ErrorCallback? = nil) {
-        <#code#>
+        let route = Endpoint.UpdatePinpost(pinpostId).route()
+        APIClient.sharedClient.setAuthorization()
+        
+        var parameters: Parameters = Parameters.init()
+        if title != nil {
+            parameters.updateValue(title!, forKey: "title")
+        }
+        if description != nil {
+            parameters.updateValue(description!, forKey: "description")
+        }
+        if latitude != nil {
+            parameters.updateValue(latitude!, forKey: "latitude")
+        }
+        if longitude != nil {
+            parameters.updateValue(longitude!, forKey: "longitude")
+        }
+        if privacy != nil {
+            parameters.updateValue(privacy!, forKey: "privacy")
+        }
+        
+        APIClient.sharedClient.executeJSON(route: route, parameters: parameters,
+                                           onSuccess:
+            { json in
+                let pinpostJSON = json["data"]["pinpost"]
+                onSuccess?(Pinpost(json: pinpostJSON))
+        }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
     func readPinpostInfo(withPinpostId pinpostId: UInt32,
                          onSuccess: PinpostCallback? = nil,
                          onFailure: JSONCallback? = nil,
                          onRequestError: ErrorCallback? = nil) {
-        <#code#>
+        let route = Endpoint.ReadPinpostInfo(pinpostId).route()
+        
+        APIClient.sharedClient.executeJSON(route: route,
+                                           onSuccess:
+            { json in
+                let pinpostJSON = json["data"]["pinpost"]
+                onSuccess?(Pinpost(json: pinpostJSON))
+        }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
     func readPinpostImages(withPinpostId pinpostId: UInt32,
                            onSuccess: ImagesCallback? = nil,
                            onFailure: JSONCallback? = nil,
                            onRequestError: ErrorCallback? = nil) {
-        <#code#>
+        let route = Endpoint.ReadPinpostImages(pinpostId).route()
+        
+        APIClient.sharedClient.executeJSON(route: route,
+                                           onSuccess:
+            { json in
+                let imagesJSON = json["data"]["images"].arrayValue
+                var images = [Image]()
+                for imageJSON in imagesJSON {
+                    images.append(Image(json: imageJSON))
+                }
+                onSuccess?(images)
+        }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
     func deletePinpost(withPinpostId pinpostId: UInt32,
                        onSuccess: JSONCallback? = nil,
                        onFailure: JSONCallback? = nil,
                        onRequestError: ErrorCallback? = nil) {
-        <#code#>
+        let route = Endpoint.DeletePinpost(pinpostId).route()
+        APIClient.sharedClient.setAuthorization()
+        
+        APIClient.sharedClient.executeJSON(route: route,
+                                           onSuccess:
+            { json in
+                onSuccess?(json)
+        }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
     func getComments(onPinpostId pinpostId: UInt32,
                      onSuccess: CommentsCallback? = nil,
                      onFailure: JSONCallback? = nil,
                      onRequestError: ErrorCallback? = nil) {
-        <#code#>
+        let route = Endpoint.GetCommentsOnPinpost(pinpostId).route()
+        APIClient.sharedClient.setAuthorization()
+        
+        APIClient.sharedClient.executeJSON(route: route,
+                                           onSuccess:
+            { json in
+                let commentsJSON = json["data"]["comments"].arrayValue
+                var comments = [Comment]()
+                for commentJSON in commentsJSON {
+                    comments.append(Comment(json: commentJSON))
+                }
+                onSuccess?(comments)
+        }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
     func getLikes(onPinpostId pinpostId: UInt32,
                   onSuccess: LikesCallback? = nil,
                   onFailure: JSONCallback? = nil,
                   onRequestError: ErrorCallback? = nil) {
-        <#code#>
+        let route = Endpoint.GetLikesOnPinpost(pinpostId).route()
+        APIClient.sharedClient.setAuthorization()
+        
+        APIClient.sharedClient.executeJSON(route: route,
+                                           onSuccess:
+            { json in
+                let likesJSON = json["data"]["likes"].arrayValue
+                var likes = [Like]()
+                for likeJSON in likesJSON {
+                    likes.append(Like(json: likeJSON))
+                }
+                onSuccess?(likes)
+        }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
     func fetchPinpostByFrame(withTopLeftLat topLeftLat: Double,
                              topLeftLong: Double, bottomRightLat: Double,
-                             bottomRightLong: Double, scope: String,
+                             bottomRightLong: Double, scope: String = "public",
                              onSuccess: PinpostsCallback? = nil,
                              onFailure: JSONCallback? = nil,
                              onRequestError: ErrorCallback? = nil) {
-        <#code#>
+        let route = Endpoint.FetchPinposts.route()
+        APIClient.sharedClient.setAuthorization()
+        
+        let parameters: Parameters = [
+            "type" : "frame",
+            "top_left" : "\(topLeftLat),\(topLeftLong)",
+            "bottom_right" : "\(bottomRightLat),\(bottomRightLong)",
+            "scope" : scope
+        ]
+        
+        APIClient.sharedClient.executeJSON(route: route, parameters: parameters,
+                                           onSuccess:
+            { json in
+                let pinpostsJSON = json["data"]["pinposts"].arrayValue
+                var pinposts = [Pinpost]()
+                for pinpostJSON in pinpostsJSON {
+                    pinposts.append(Pinpost(json: pinpostJSON))
+                }
+                onSuccess?(pinposts)
+        }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
     func fetchPinpostByRadius(withCenterLat centerLat: Double,
-                              centerLong: Double, radius: Double, scope: String,
-                              unit: String,
+                              centerLong: Double, radius: Double,
+                              scope: String = "public", unit: String = "mi",
                               onSuccess: PinpostsCallback? = nil,
                               onFailure: JSONCallback? = nil,
                               onRequestError: ErrorCallback? = nil) {
-        <#code#>
+        let route = Endpoint.FetchPinposts.route()
+        APIClient.sharedClient.setAuthorization()
+        
+        let parameters: Parameters = [
+            "type" : "radius",
+            "center" : "\(centerLat),\(centerLong)",
+            "radius" : radius,
+            "scope" : scope,
+            "unit" : unit
+        ]
+        
+        APIClient.sharedClient.executeJSON(route: route, parameters: parameters,
+                                           onSuccess:
+            { json in
+                let pinpostsJSON = json["data"]["pinposts"].arrayValue
+                var pinposts = [Pinpost]()
+                for pinpostJSON in pinpostsJSON {
+                    pinposts.append(Pinpost(json: pinpostJSON))
+                }
+                onSuccess?(pinposts)
+        }, onFailure: onFailure, onRequestError: onRequestError)
     }
 }
