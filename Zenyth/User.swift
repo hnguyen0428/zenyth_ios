@@ -50,7 +50,7 @@ struct User : APIObject {
             "last_name" : lastName,
             "gender" : gender,
             "birthday" : birthday,
-            "picture" : profilePicture
+            "picture" : profilePicture?.toJSON()
         ]
     }
     

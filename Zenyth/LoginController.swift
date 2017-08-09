@@ -93,7 +93,7 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
                     self.requestDoneLoading(view: self.view, indicator: indicator)
                     UserDefaults.standard.set(apiToken, forKey: "api_token")
                     UserDefaults.standard.synchronize()
-                    print(user.toJSON())
+                    print(user)
                     self.transitionToHome()
             }, onFailure: { json in
                 self.requestDoneLoading(view: self.view, indicator: indicator)

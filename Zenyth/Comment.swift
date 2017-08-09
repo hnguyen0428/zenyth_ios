@@ -35,6 +35,11 @@ struct Comment: APIObject {
     }
     
     func toJSON() -> JSON {
+        var imagesJSON = [JSON]()
+        for image in images {
+            imagesJSON.append(image.toJSON())
+        }
+        
         return [
             "id" : id,
             "text" : text,
@@ -43,7 +48,7 @@ struct Comment: APIObject {
             "commentable_type" : commentableType,
             "created_at" : createdAt,
             "updated_at" : updatedAt,
-            "images" : images
+            "images" : imagesJSON
         ]
     }
     

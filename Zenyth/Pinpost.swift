@@ -39,6 +39,11 @@ struct Pinpost: APIObject {
     }
     
     func toJSON() -> JSON {
+        var imagesJSON = [JSON]()
+        for image in images {
+            imagesJSON.append(image.toJSON())
+        }
+        
         return [
             "id" : id,
             "title" : title,
@@ -49,7 +54,7 @@ struct Pinpost: APIObject {
             "privacy" : privacy,
             "created_at" : createdAt,
             "updated_at" : updatedAt,
-            "images" : images
+            "images" : imagesJSON
         ]
     }
     

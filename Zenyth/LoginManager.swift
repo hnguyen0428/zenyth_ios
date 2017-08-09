@@ -26,7 +26,8 @@ class LoginManager: LoginManagerProtocol {
                                            onSuccess:
             { json in
                 let apiToken = json["data"]["user"]["api_token"].stringValue
-                onSuccess?(User(json: json["data"]["user"]), apiToken)
+                let userJSON = json["data"]["user"]
+                onSuccess?(User(json: userJSON), apiToken)
         }, onFailure: onFailure, onRequestError: onRequestError)
         
     }
@@ -45,7 +46,8 @@ class LoginManager: LoginManagerProtocol {
                                            parameters: parameters, onSuccess:
             { json in
                 let apiToken = json["data"]["user"]["api_token"].stringValue
-                onSuccess?(User(json: json["data"]["user"]), apiToken)
+                let userJSON = json["data"]["user"]
+                onSuccess?(User(json: userJSON), apiToken)
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
@@ -66,7 +68,8 @@ class LoginManager: LoginManagerProtocol {
                                            onSuccess:
             { json in
                 let apiToken = json["data"]["user"]["api_token"].stringValue
-                onSuccess?(User(json: json["data"]["user"]), apiToken)
+                let userJSON = json["data"]["user"]
+                onSuccess?(User(json: userJSON), apiToken)
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
 }
