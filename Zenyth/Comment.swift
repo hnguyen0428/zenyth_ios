@@ -1,34 +1,30 @@
 //
-//  Pinpost.swift
+//  Comment.swift
 //  Zenyth
 //
-//  Created by Hoang on 7/20/17.
+//  Created by Hoang on 8/7/17.
 //  Copyright © 2017 Hoang. All rights reserved.
 //
 
 import Foundation
 import SwiftyJSON
 
-struct Pinpost: APIObject {
+struct Comment: APIObject {
     var id: UInt32
-    var title: String
-    var pinpostDescription: String
-    var latitude: Double
-    var longitude: Double
+    var text: String
     var userId: UInt32
-    var privacy: String
+    var commentableId: UInt32
+    var commentableType: String
     var createdAt: String
     var updatedAt: String
     var images: [Image] = [Image]()
     
     init(json: JSON) {
         self.id = json["id"].uInt32Value
-        self.title = json["title"].stringValue
-        self.pinpostDescription = json["description"].stringValue
-        self.latitude = json["latitude"].doubleValue
-        self.longitude = json["longitude"].doubleValue
+        self.text = json["text"].stringValue
         self.userId = json["user_id"].uInt32Value
-        self.privacy = json["privacy"].stringValue
+        self.commentableId = json["commentable_id"].uInt32Value
+        self.commentableType = json["commentable_type"].stringValue
         self.createdAt = json["created_at"].stringValue
         self.updatedAt = json["updated_at"].stringValue
         
@@ -46,12 +42,10 @@ struct Pinpost: APIObject {
         
         return [
             "id" : id,
-            "title" : title,
-            "description" : pinpostDescription,
-            "latitude" : latitude,
-            "longitude" : longitude,
+            "text" : text,
             "user_id" : userId,
-            "privacy" : privacy,
+            "commentable_id" : commentableId,
+            "commentable_type" : commentableType,
             "created_at" : createdAt,
             "updated_at" : updatedAt,
             "images" : imagesJSON

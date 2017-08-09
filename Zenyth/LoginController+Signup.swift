@@ -57,60 +57,33 @@ extension LoginController {
                               message: notOfAgeMessage)
             return
         }
-        
-        let parameters: Parameters = [
-            "username" : username!,
-            "email" : email!,
-            "password" : password!,
-            "password_confirmation" : confirmPassword!,
-            "gender" : gender!.lowercased(),
-            "birthday" : dateOfBirth!
-        ]
-        
-        let request = RegisterRequestor(parameters: parameters)
-        
         let indicator = requestLoading(view: self.view)
         
-        request.getJSON { data, error in
-            self.requestDoneLoading(view: self.view, indicator: indicator)
-            if (error != nil) {
-                return
-            }
-            if (data?["success"].boolValue)! {
-                let user = User.init(json: data!)
-                UserDefaults.standard.set(user.getData(), forKey: user.email)
-                UserDefaults.standard.synchronize()
+        RegistrationManager().register(withUsername: username!,
+                                       email: email!,
+                                       password: password!,
+                                       passwordConfirmation: confirmPassword!,
+                                       gender: gender!.lowercased(),
+                                       birthday: dateOfBirth!,
+                                       onSuccess:
+            { user, apiToken in
+                self.requestDoneLoading(view: self.view, indicator: indicator)
                 let alert = UIAlertController(
                     title: self.signupSuccessfulMessage,
                     message: self.checkEmailMessage,
                     preferredStyle: UIAlertControllerStyle.alert
                 )
                 alert.addAction(UIAlertAction(title: "OK",
-                                              style: UIAlertActionStyle.default, handler: { action in
-                    self.clearInfo()
-                    self.clearTextFields()
-                    self.hideSignupViewHelper()
-                    self.disableButton()
+                                              style: UIAlertActionStyle.default, handler:
+                    { action in
+                        self.clearInfo()
+                        self.clearTextFields()
+                        self.hideSignupViewHelper()
+                        self.disableButton()
                 }))
+                
                 self.present(alert, animated: true, completion: nil)
-                
-            } else {
-                let errors = (data?["errors"].arrayValue)!
-                var errorString = ""
-                for item in errors {
-                    errorString.append(item.stringValue + "\n")
-                }
-                // strip the newline character at the end
-                errorString.remove(
-                    at: errorString.index(before: errorString.endIndex)
-                )
-                
-                self.displayAlert(view: self, title: "Login Failed",
-                                  message: errorString)
-            }
-            
-        }
-        
+        })
     }
 
     

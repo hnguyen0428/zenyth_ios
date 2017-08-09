@@ -56,138 +56,103 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         guard let accessToken = user.authentication.accessToken else { return }
         guard let idToken = user.authentication.idToken else { return }
         
-        let route = Route(method: .get, urlString:
-            "https://www.googleapis.com/oauth2/v3/userinfo?access_token=" +
-            "\(accessToken)")
+        let urlString = "https://www.googleapis.com/oauth2/v3/userinfo?access_token=\(accessToken)"
         
-        let request = Requestor.init(route: route)
-        
-        request.getJSON { data, error in
-            
-            if (error != nil) {
-                return
+        Alamofire.request(urlString, method: .get).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                self.googleOauthHandle(json: JSON(value), idToken: idToken)
+                
+            case .failure(let error):
+                debugPrint(response)
+                print(error)
             }
-            
-            self.googleOauthHandle(json: data!, idToken: idToken)
-            
         }
-        
     }
     
     func googleOauthHandle(json: JSON, idToken: String) {
         // Checks if email is taken
-        let request = EmailTakenRequestor.init(email: json["email"].stringValue)
-        
-        request.getJSON { data, error in
-            
-            if (error != nil) {
-                return
-            }
-
-            if (data?["data"]["taken"].boolValue)! &&
-                (data?["data"]["confirmed"].boolValue)! { // email is taken
-                print("Email Taken")
-                self.googleOauthLogin(idToken: idToken, json: json)
-            } else { // email is available
-                print("Email Available")
-                
-                // Access the storyboard and fetch an instance of the view controller
-                let storyboard = UIStoryboard(name: "Main", bundle: nil);
-                let viewController: UsernameEmailController =
-                    storyboard.instantiateViewController(
-                        withIdentifier: "UsernameEmailController")
-                        as! UsernameEmailController;
-                
-                // Then push that view controller onto the navigation stack
-                let rootViewController = self.window!.rootViewController
-                    as! UINavigationController;
-                rootViewController.pushViewController(viewController,
-                                                      animated: true);
-                viewController.oauthJSON = json
-                viewController.messageFromOauth = "changeButtonTargetGoogle"
-                viewController.googleToken = idToken
-            }
-            
-        }
+        let email = json["email"].stringValue
+        CredentialManager().validateEmail(email: email,
+                                          onSuccess:
+            { data in
+                if data["taken"].boolValue{ // email is taken
+                    print("Email Taken")
+                    self.googleOauthLogin(idToken: idToken, json: json)
+                } else { // email is available
+                    print("Email Available")
+                    
+                    // Access the storyboard and fetch an instance of the view controller
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil);
+                    let viewController: UsernameEmailController =
+                        storyboard.instantiateViewController(
+                            withIdentifier: "UsernameEmailController")
+                            as! UsernameEmailController;
+                    
+                    // Then push that view controller onto the navigation stack
+                    let rootViewController = self.window!.rootViewController
+                        as! UINavigationController;
+                    rootViewController.pushViewController(viewController,
+                                                          animated: true);
+                    viewController.oauthJSON = json
+                    viewController.messageFromOauth = "changeButtonTargetGoogle"
+                    viewController.googleToken = idToken
+                }
+        })
     }
     
     func googleOauthLogin(idToken: String, json: JSON) {
-        let parameters: Parameters = [
-            "oauth_type" : "google",
-            "email" : json["email"].stringValue
-        ]
-        let header: HTTPHeaders = [
-            "Authorization": "bearer \(idToken)"
-        ]
-        let request = OauthLoginRequestor.init(parameters: parameters,
-                                               header: header)
         let rootViewController = self.window!.rootViewController
             as! UINavigationController
         let viewController = rootViewController.topViewController!
+        
         let indicator = viewController.requestLoading(view: viewController.view)
-        request.getJSON { data, error in
-            viewController.requestDoneLoading(view: viewController.view,
-                                              indicator: indicator)
-            if (error != nil) {
-                return
-            }
-            
-            if (data?["success"].boolValue)! {
-                let user = User.init(json: data!)
-                UserDefaults.standard.set(user.api_token, forKey: "api_token")
+        let email = json["email"].stringValue
+        let oauthType = "google"
+        LoginManager().oauthLogin(withEmail: email,
+                                  oauthType: oauthType,
+                                  accessToken: idToken,
+                                  onSuccess:
+            { data, apiToken in
+                viewController.requestDoneLoading(view: viewController.view,
+                                                  indicator: indicator)
+                UserDefaults.standard.set(apiToken, forKey: "api_token")
                 UserDefaults.standard.synchronize()
                 self.transitionToHome()
-            } else {
-                if (data?["data"]["mergeable"].boolValue)! {
-                    // TODO: prompts user to merge with facebook
-                    // create the alert
-                    let mergeErrors = data?["errors"].arrayValue.first?.stringValue
-                    let alert = UIAlertController(title: nil,
-                                                  message: mergeErrors,
-                                                  preferredStyle: UIAlertControllerStyle.alert)
-                    alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: nil))
-                    alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: {
-                        action in
-                        self.mergeAccount(idToken: idToken, email: json["email"].stringValue)
-                    }))
-                    viewController.present(alert, animated: true, completion: nil)
-                } else {
-                    print(data?["errors"])
-                }
+        }, onFailure: { json in
+            viewController.requestDoneLoading(view: viewController.view,
+                                              indicator: indicator)
+            if json["data"]["mergeable"].boolValue {
+                let message = json["message"].stringValue
+                let alert = UIAlertController(title: nil,
+                                              message: message,
+                                              preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: nil))
+                alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: {
+                    action in
+                    self.mergeAccount(idToken: idToken, email: email)
+                }))
+                viewController.present(alert, animated: true, completion: nil)
             }
-
-        }
+        })
     }
     
     func mergeAccount(idToken: String, email: String) {
-        let parameters: Parameters = [
-            "oauth_type" : "google",
-            "email" : email,
-            "merge" : true
-        ]
-        let header: HTTPHeaders = [
-            "Authorization": "bearer \(idToken)"
-        ]
-        let request = OauthLoginRequestor.init(parameters: parameters,
-                                               header: header)
         let rootViewController = self.window!.rootViewController
             as! UINavigationController
         let viewController = rootViewController.topViewController!
         let indicator = viewController.requestLoading(view: viewController.view)
-        request.getJSON { data, error in
-            viewController.requestDoneLoading(view: viewController.view,
-                                              indicator: indicator)
-            if error != nil {
-                return
-            }
-            
-            if (data?["success"].boolValue)! {
-                let user = User.init(json: data!)
-                UserDefaults.standard.set(user.api_token, forKey: "api_token")
-                UserDefaults.standard.synchronize()
+        
+        let oauthType = "google"
+        RegistrationManager().oauthMergeAccount(withEmail: email,
+                                                oauthType: oauthType,
+                                                accessToken: idToken,
+                                                onSuccess:
+            { data, user in
+                viewController.requestDoneLoading(view: viewController.view,
+                                                  indicator: indicator)
                 self.transitionToHome()
-            }
-        }
+        })
     }
     
     func transitionToHome() {
