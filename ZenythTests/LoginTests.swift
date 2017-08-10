@@ -14,10 +14,9 @@ class LoginTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
         baseURL = localhostURL
         let ex = expectation(description: "Setup")
-        RegistrationManager().register(withUsername: "testiosuserlogin",
+        RegistrationManager().register(withUsername: "logintestiosuser",
                                        email: "testiosemaillogin@zenyth.com",
                                        password: "password",
                                        passwordConfirmation: "password",
@@ -25,6 +24,7 @@ class LoginTests: XCTestCase {
                                        birthday: "1998-04-28",
                                        onSuccess:
             { user, apiToken in
+                UserDefaults.standard.set(apiToken, forKey: "api_token")
                 ex.fulfill()
         }, onFailure: { json in
             ex.fulfill()
@@ -42,18 +42,18 @@ class LoginTests: XCTestCase {
     func testLoginWithUsername() {
         
         let ex = expectation(description: "Login")
-        LoginManager().login(withUsername: "testiosuserlogin",
+        LoginManager().login(withUsername: "logintestiosuser",
                              password: "password",
                              onSuccess:
             { user, apiToken in
                 ex.fulfill()
                 XCTAssertNotNil(apiToken)
-                assertUserData(user: user, username: "testiosuserlogin",
+                assertUserData(user: user, username: "logintestiosuser",
                                email: "testiosemaillogin@zenyth.com",
                                gender: "non-binary", birthday: "1998-04-28")
         }, onFailure: { json in
             ex.fulfill()
-            XCTAssertFalse(json["success"].boolValue)
+            XCTFail("Should not get here")
         }, onRequestError: { error in
             ex.fulfill()
             XCTFail("Should not get here")
@@ -69,7 +69,7 @@ class LoginTests: XCTestCase {
             { user, apiToken in
                 ex.fulfill()
                 XCTAssertNotNil(apiToken)
-                assertUserData(user: user, username: "testiosuserlogin",
+                assertUserData(user: user, username: "logintestiosuser",
                                email: "testiosemaillogin@zenyth.com",
                                gender: "non-binary", birthday: "1998-04-28")
         }, onFailure: { json in
@@ -80,13 +80,6 @@ class LoginTests: XCTestCase {
             XCTFail("Should not get here")
         })
         waitForExpectations(timeout: 5.0, handler: nil)
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
     }
     
 }

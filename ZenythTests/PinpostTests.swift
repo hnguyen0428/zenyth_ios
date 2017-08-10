@@ -11,17 +11,15 @@ import SwiftyJSON
 @testable import Zenyth
 
 class PinpostTests: XCTestCase {
-    var userId: UInt32 = 0
-    var pinpostIdToUpdate: UInt32 = 0
-    var pinpostIdToDelete: UInt32 = 0
+    
+    var pinpostId: UInt32 = 0
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
         baseURL = localhostURL
         let ex = expectation(description: "Setup User")
         
-        RegistrationManager().register(withUsername: "testiosuserpinpost",
+        RegistrationManager().register(withUsername: "pinposttestiosuser",
                                        email: "testiosemailpinpost@zenyth.com",
                                        password: "password",
                                        passwordConfirmation: "password",
@@ -30,47 +28,39 @@ class PinpostTests: XCTestCase {
                                        onSuccess:
             { user, apiToken in
                 UserDefaults.standard.set(apiToken, forKey: "api_token")
-                self.userId = user.id
                 ex.fulfill()
         }, onFailure: { json in
-            ex.fulfill()
+            LoginManager().login(withUsername: "pinposttestiosuser",
+                                 password: "password",
+                                 onSuccess:
+                { user, apiToken in
+                    UserDefaults.standard.set(apiToken, forKey: "api_token")
+                    ex.fulfill()
+            })
         }, onRequestError: { error in
             ex.fulfill()
         })
         
-        let ex2 = expectation(description: "Setup Pinpost to Update")
-        
-        PinpostManager().createPinpost(withTitle: "test pinpost to update",
-                                       description: "test description of pinpost to update",
-                                       latitude: 22.0, longitude: 22.0,
-                                       privacy: "friends",
-                                       onSuccess:
-            { pinpost in
-                self.pinpostIdToUpdate = pinpost.id
-                ex2.fulfill()
-        }, onFailure: { json in
-            ex2.fulfill()
-        }, onRequestError: { error in
-            ex2.fulfill()
+        waitForExpectations(timeout: 10.0, handler:
+            { action in
+                let ex2 = self.expectation(description: "Setup Pinpost")
+                PinpostManager().createPinpost(withTitle: "test pinpost",
+                                               description: "test description of pinpost",
+                                               latitude: 22.0, longitude: 22.0,
+                                               privacy: "public",
+                                               onSuccess:
+                    { pinpost in
+                        self.pinpostId = pinpost.id
+                        ex2.fulfill()
+                }, onFailure: { json in
+                    ex2.fulfill()
+                }, onRequestError: { error in
+                    ex2.fulfill()
+                })
+                
+                self.waitForExpectations(timeout: 10.0, handler: nil)
         })
         
-        let ex3 = expectation(description: "Setup Pinpost to Delete")
-        
-        PinpostManager().createPinpost(withTitle: "test pinpost to delete",
-                                       description: "test description of pinpost to delete",
-                                       latitude: 22.0, longitude: 22.0,
-                                       privacy: "friends",
-                                       onSuccess:
-            { pinpost in
-                self.pinpostIdToDelete = pinpost.id
-                ex3.fulfill()
-        }, onFailure: { json in
-            ex3.fulfill()
-        }, onRequestError: { error in
-            ex3.fulfill()
-        })
-        
-        waitForExpectations(timeout: 5.0, handler: nil)
     }
     
     override func tearDown() {
@@ -93,7 +83,7 @@ class PinpostTests: XCTestCase {
                                   privacy: "self")
         }, onFailure: { json in
             ex.fulfill()
-            XCTAssertFalse(json["success"].boolValue)
+            XCTFail("Should not get here")
         }, onRequestError: { error in
             ex.fulfill()
             XCTFail("Should not get here")
@@ -103,20 +93,39 @@ class PinpostTests: XCTestCase {
     
     func testUpdatePinpost() {
         let ex = expectation(description: "Pinpost Update")
-        PinpostManager().updatePinpost(withPinpostId: pinpostIdToUpdate,
+        PinpostManager().updatePinpost(withPinpostId: pinpostId,
                                        title: "updated title",
                                        description: "updated description",
                                        onSuccess:
             { pinpost in
                 ex.fulfill()
-                print(pinpost)
                 assertPinpostData(pinpost: pinpost, title: "updated title",
                                   description: "updated description",
                                   latitude: 22.0, longitude: 22.0,
-                                  privacy: "friends")
+                                  privacy: "public")
         }, onFailure: { json in
             ex.fulfill()
-            XCTAssertFalse(json["success"].boolValue)
+            XCTFail("Should not get here")
+        }, onRequestError: { error in
+            ex.fulfill()
+            XCTFail("Should not get here")
+        })
+        waitForExpectations(timeout: 5.0, handler: nil)
+    }
+    
+    func testReadPinpost() {
+        let ex = expectation(description: "Pinpost Read")
+        PinpostManager().readPinpostInfo(withPinpostId: pinpostId,
+                                         onSuccess:
+            { pinpost in
+                ex.fulfill()
+                assertPinpostData(pinpost: pinpost, title: "test pinpost",
+                                  description: "test description of pinpost",
+                                  latitude: 22.0, longitude: 22.0,
+                                  privacy: "public")
+        }, onFailure: { json in
+            ex.fulfill()
+            XCTFail("Should not get here")
         }, onRequestError: { error in
             ex.fulfill()
             XCTFail("Should not get here")
@@ -126,14 +135,15 @@ class PinpostTests: XCTestCase {
     
     func testDeletePinpost() {
         let ex = expectation(description: "Pinpost Delete")
-        PinpostManager().deletePinpost(withPinpostId: pinpostIdToDelete,
+        PinpostManager().deletePinpost(withPinpostId: pinpostId,
                                        onSuccess:
             { json in
                 ex.fulfill()
                 XCTAssertTrue(json["success"].boolValue)
+                self.pinpostId = 0
         }, onFailure: { json in
             ex.fulfill()
-            XCTAssertFalse(json["success"].boolValue)
+            XCTFail("Should not get here")
         }, onRequestError: { json in
             ex.fulfill()
             XCTFail("Should not get here")
@@ -145,31 +155,35 @@ class PinpostTests: XCTestCase {
         let ex = expectation(description: "Pinpost Upload Image")
         let image = #imageLiteral(resourceName: "whitemountain")
         let imageData = UIImagePNGRepresentation(image)
+        var imageName = ""
         
-        PinpostManager().uploadImage(toPinpostId: pinpostIdToUpdate,
+        PinpostManager().uploadImage(toPinpostId: pinpostId,
                                      imageData: imageData!,
                                      onSuccess:
             { image in
                 ex.fulfill()
-                assertImageData(image: image, userId: self.userId,
-                                imageableId: self.pinpostIdToUpdate,
+                assertImageData(image: image, imageableId: self.pinpostId,
                                 imageableType: "Pinpost")
+                imageName = image.filename
         }, onFailure: { json in
             ex.fulfill()
-            print(json)
-            XCTAssertFalse(json["success"].boolValue)
+            XCTFail("Should not get here")
         }, onRequestError: { error in
             ex.fulfill()
             XCTFail("Should not get here")
         })
-        waitForExpectations(timeout: 10.0, handler: nil)
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+        waitForExpectations(timeout: 5.0, handler: { action in
+            let ex2 = self.expectation(description: "Pinpost Check Image")
+            PinpostManager().readPinpostInfo(withPinpostId: self.pinpostId,
+                                             onSuccess:
+                { pinpost in
+                    XCTAssertTrue(pinpost.images.count > 0)
+                    let image = pinpost.images.first
+                    assertImageData(image: image, fileName: imageName)
+                    ex2.fulfill()
+            })
+            self.waitForExpectations(timeout: 5.0, handler: nil)
+        })
     }
     
 }

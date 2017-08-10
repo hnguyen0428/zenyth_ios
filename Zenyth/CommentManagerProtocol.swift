@@ -24,7 +24,7 @@ protocol CommentManagerProtocol {
                        onFailure: JSONCallback?,
                        onRequestError: ErrorCallback?)
     
-    func readCommentInfo(withCommentId commentId: UInt32, text: String,
+    func readCommentInfo(withCommentId commentId: UInt32,
                          onSuccess: CommentCallback?,
                          onFailure: JSONCallback?,
                          onRequestError: ErrorCallback?)

@@ -19,6 +19,8 @@ struct Pinpost: APIObject {
     var privacy: String
     var createdAt: String
     var updatedAt: String
+    var comments: UInt32
+    var likes: UInt32
     var images: [Image] = [Image]()
     
     init(json: JSON) {
@@ -31,6 +33,8 @@ struct Pinpost: APIObject {
         self.privacy = json["privacy"].stringValue
         self.createdAt = json["created_at"].stringValue
         self.updatedAt = json["updated_at"].stringValue
+        self.comments = json["comments"].uInt32Value
+        self.likes = json["likes"].uInt32Value
         
         let imagesJSON = json["images"].arrayValue
         for imageJSON in imagesJSON {

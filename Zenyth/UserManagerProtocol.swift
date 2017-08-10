@@ -42,4 +42,9 @@ protocol UserManagerProtocol {
                     onSuccess: UsersCallback?,
                     onFailure: JSONCallback?,
                     onRequestError: ErrorCallback?)
+    
+    func deleteUser(withUsername username: String,
+                    onSuccess: JSONCallback?,
+                    onFailure: JSONCallback?,
+                    onRequestError: ErrorCallback?)
 }

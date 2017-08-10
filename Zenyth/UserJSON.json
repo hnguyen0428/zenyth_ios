@@ -1,0 +1,24 @@
+{
+    "success": true,
+    "data": {
+        "user": {
+            "email": "testiosuser@zenyth.com",
+            "username": "testiosuser",
+            "api_token": "QXVDdJHuATtnPWcgNjoZHirWVzX5AgeRQZrwORZonTRbZxeyVqkAOc0pakvy",
+            "id": 1,
+            "first_name": "Test",
+            "last_name": "Man",
+            "gender": "non-binary",
+            "birthday": "2000-01-01",
+            "picture": {
+                "id": 1,
+                "filename": "file.jpg",
+                "user_id": 1,
+                "imageable_type": "Profile",
+                "imageable_id": 1,
+                "directory": "profile_pictures"
+            },
+            "friends": 0
+        }
+    }
+}

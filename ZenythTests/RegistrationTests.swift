@@ -14,7 +14,6 @@ class RegistrationTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
         baseURL = localhostURL
     }
     
@@ -24,9 +23,8 @@ class RegistrationTests: XCTestCase {
     }
     
     func testRegistration() {
-        
         let ex = expectation(description: "Registration")
-        RegistrationManager().register(withUsername: "testiosuserregister",
+        RegistrationManager().register(withUsername: "registertestiosuser",
                                        email: "testiosemailregister@zenyth.com",
                                        password: "password",
                                        passwordConfirmation: "password",
@@ -35,24 +33,17 @@ class RegistrationTests: XCTestCase {
             { user, apiToken in
                 ex.fulfill()
                 XCTAssertNotNil(apiToken)
-                assertUserData(user: user, username: "testiosuserregister",
+                assertUserData(user: user, username: "registertestiosuser",
                                email: "testiosemailregister@zenyth.com",
                                gender: "non-binary", birthday: "1998-04-28")
         }, onFailure: { json in
             ex.fulfill()
-            XCTAssertFalse(json["success"].boolValue)
+            XCTFail("Should not get here")
         }, onRequestError: { error in
             ex.fulfill()
             XCTFail("Should not get here")
         })
         waitForExpectations(timeout: 5.0, handler: nil)
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
     }
     
 }

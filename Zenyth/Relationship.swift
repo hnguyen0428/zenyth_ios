@@ -18,8 +18,8 @@ struct Relationship: APIObject {
     
     init(json: JSON) {
         self.id = json["id"].uInt32Value
-        self.requesterId = json["requester_id"].uInt32Value
-        self.requesteeId = json["requestee_id"].uInt32Value
+        self.requesterId = json["requester"].uInt32Value
+        self.requesteeId = json["requestee"].uInt32Value
         self.status = json["status"].boolValue
         self.blocked = json["blocked"].boolValue
     }

@@ -16,6 +16,7 @@ struct Reply: APIObject {
     var onCommentId: UInt32
     var createdAt: String
     var updatedAt: String
+    var likes: UInt32
     var images: [Image] = [Image]()
     
     init(json: JSON) {
@@ -25,6 +26,7 @@ struct Reply: APIObject {
         self.onCommentId = json["comment_id"].uInt32Value
         self.createdAt = json["created_at"].stringValue
         self.updatedAt = json["updated_at"].stringValue
+        self.likes = json["likes"].uInt32Value
         
         let imagesJSON = json["images"].arrayValue
         for imageJSON in imagesJSON {

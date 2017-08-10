@@ -1,0 +1,12 @@
+{
+    "success": true,
+    "data": {
+        "relationship": {
+            "status": true,
+            "blocked": false,
+            "requester": 1,
+            "requestee": 2,
+            "id": 1
+        }
+    }
+}
