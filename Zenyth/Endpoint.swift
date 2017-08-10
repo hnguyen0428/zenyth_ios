@@ -9,7 +9,10 @@
 import Foundation
 import Alamofire
 
-let baseURL = "http://54.219.134.56/api"
+/// Used for testing purposes
+let localhostURL = "http://172.31.99.37/api"
+
+var baseURL = "http://54.219.134.56/api"
 typealias APIRoute = (String, HTTPMethod)
 
 public enum Endpoint {

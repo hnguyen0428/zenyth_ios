@@ -37,10 +37,6 @@ class APIClient {
                         onSuccess?(json)
                     }
                     else {
-                        print("JSONResponse: \(json)")
-                        print("HTTPHeaders: \(self.headers)")
-                        print("HTTPMethod: \(method)")
-                        print("URI: \(urlString)")
                         onFailure?(json)
                     }
                     
@@ -65,7 +61,9 @@ class APIClient {
         let method = route.1
         
         Alamofire.upload(multipartFormData: { multipartFormData in
-            multipartFormData.append(data, withName: fileKey)
+            multipartFormData.append(data, withName: fileKey,
+                                     fileName: "file.jpg",
+                                     mimeType: "image/jpg")
         }, to: urlString, method: method, headers: self.headers,
               encodingCompletion: { encodingResult in
                 switch encodingResult {

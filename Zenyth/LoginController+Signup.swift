@@ -68,6 +68,8 @@ extension LoginController {
                                        onSuccess:
             { user, apiToken in
                 self.requestDoneLoading(view: self.view, indicator: indicator)
+                print(user)
+                
                 let alert = UIAlertController(
                     title: self.signupSuccessfulMessage,
                     message: self.checkEmailMessage,

@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3725D1DBA4E1D74C7627B484 /* Pods_Zenyth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDF4603E6F5113638CE0C5ED /* Pods_Zenyth.framework */; };
+		3725D1DBA4E1D74C7627B484 /* Pods_Zenyth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDF4603E6F5113638CE0C5ED /* Pods_Zenyth.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		470127E61F3BDC7300A8E5AE /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470127E51F3BDC7300A8E5AE /* LoginTests.swift */; };
+		470127E81F3BE2EA00A8E5AE /* PinpostTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470127E71F3BE2EA00A8E5AE /* PinpostTests.swift */; };
 		471280781F391A4B006FE796 /* CredentialManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280771F391A4B006FE796 /* CredentialManagerProtocol.swift */; };
 		4712807C1F3921DA006FE796 /* CredentialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712807B1F3921DA006FE796 /* CredentialManager.swift */; };
 		4712807E1F3929B2006FE796 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712807D1F3929B2006FE796 /* APIClient.swift */; };
@@ -55,13 +57,14 @@
 		47C622CE1F0A341A003BBC16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47C622CC1F0A341A003BBC16 /* Main.storyboard */; };
 		47C622D01F0A341A003BBC16 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47C622CF1F0A341A003BBC16 /* Assets.xcassets */; };
 		47C622D31F0A341A003BBC16 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47C622D11F0A341A003BBC16 /* LaunchScreen.storyboard */; };
-		47C622DE1F0A341A003BBC16 /* ZenythTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622DD1F0A341A003BBC16 /* ZenythTests.swift */; };
 		47C622E91F0A341A003BBC16 /* ZenythUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622E81F0A341A003BBC16 /* ZenythUITests.swift */; };
 		47C622F71F0A347F003BBC16 /* RegisterController+UsernameEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622F61F0A347F003BBC16 /* RegisterController+UsernameEmail.swift */; };
 		47CA09791F1E57A600EA2455 /* LoginController+Signup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CA09781F1E57A600EA2455 /* LoginController+Signup.swift */; };
 		47CA097B1F1E73BC00EA2455 /* TabThree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CA097A1F1E73BC00EA2455 /* TabThree.swift */; };
 		47CA097D1F1E75BE00EA2455 /* TabOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CA097C1F1E75BE00EA2455 /* TabOne.swift */; };
 		47CA097F1F1E75C700EA2455 /* TabTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CA097E1F1E75C700EA2455 /* TabTwo.swift */; };
+		47CDA9081F3BC9DE0044CEE8 /* RegistrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDA9071F3BC9DE0044CEE8 /* RegistrationTests.swift */; };
+		47CDA90A1F3BCD780044CEE8 /* CustomAsserts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDA9091F3BCD780044CEE8 /* CustomAsserts.swift */; };
 		47D838CC1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */; };
 		47D9ECB71F19755A00E3EEE4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECB61F19755A00E3EEE4 /* User.swift */; };
 		47D9ECC01F19E3D300E3EEE4 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECBF1F19E3D300E3EEE4 /* RegisterController.swift */; };
@@ -89,6 +92,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		470127E51F3BDC7300A8E5AE /* LoginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
+		470127E71F3BE2EA00A8E5AE /* PinpostTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinpostTests.swift; sourceTree = "<group>"; };
 		471280771F391A4B006FE796 /* CredentialManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialManagerProtocol.swift; sourceTree = "<group>"; };
 		4712807B1F3921DA006FE796 /* CredentialManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialManager.swift; sourceTree = "<group>"; };
 		4712807D1F3929B2006FE796 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
@@ -139,7 +144,6 @@
 		47C622D21F0A341A003BBC16 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		47C622D41F0A341A003BBC16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		47C622D91F0A341A003BBC16 /* ZenythTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZenythTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		47C622DD1F0A341A003BBC16 /* ZenythTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZenythTests.swift; sourceTree = "<group>"; };
 		47C622DF1F0A341A003BBC16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		47C622E41F0A341A003BBC16 /* ZenythUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZenythUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		47C622E81F0A341A003BBC16 /* ZenythUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZenythUITests.swift; sourceTree = "<group>"; };
@@ -149,6 +153,8 @@
 		47CA097A1F1E73BC00EA2455 /* TabThree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabThree.swift; sourceTree = "<group>"; };
 		47CA097C1F1E75BE00EA2455 /* TabOne.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabOne.swift; sourceTree = "<group>"; };
 		47CA097E1F1E75C700EA2455 /* TabTwo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabTwo.swift; sourceTree = "<group>"; };
+		47CDA9071F3BC9DE0044CEE8 /* RegistrationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationTests.swift; sourceTree = "<group>"; };
+		47CDA9091F3BCD780044CEE8 /* CustomAsserts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAsserts.swift; sourceTree = "<group>"; };
 		47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModelViewController+KeyboardHandler.swift"; sourceTree = "<group>"; };
 		47D9ECB61F19755A00E3EEE4 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		47D9ECBF1F19E3D300E3EEE4 /* RegisterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
@@ -305,8 +311,11 @@
 		47C622DC1F0A341A003BBC16 /* ZenythTests */ = {
 			isa = PBXGroup;
 			children = (
-				47C622DD1F0A341A003BBC16 /* ZenythTests.swift */,
 				47C622DF1F0A341A003BBC16 /* Info.plist */,
+				47CDA9071F3BC9DE0044CEE8 /* RegistrationTests.swift */,
+				470127E51F3BDC7300A8E5AE /* LoginTests.swift */,
+				470127E71F3BE2EA00A8E5AE /* PinpostTests.swift */,
+				47CDA9091F3BCD780044CEE8 /* CustomAsserts.swift */,
 			);
 			path = ZenythTests;
 			sourceTree = "<group>";
@@ -711,7 +720,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				47C622DE1F0A341A003BBC16 /* ZenythTests.swift in Sources */,
+				470127E61F3BDC7300A8E5AE /* LoginTests.swift in Sources */,
+				470127E81F3BE2EA00A8E5AE /* PinpostTests.swift in Sources */,
+				47CDA90A1F3BCD780044CEE8 /* CustomAsserts.swift in Sources */,
+				47CDA9081F3BC9DE0044CEE8 /* RegistrationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
