@@ -60,7 +60,7 @@ class ReplyManager: ReplyManagerProtocol {
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
-    func readReplyInfo(withReplyId replyId: UInt32, text: String,
+    func readReplyInfo(withReplyId replyId: UInt32,
                        onSuccess: ReplyCallback? = nil,
                        onFailure: JSONCallback? = nil,
                        onRequestError: ErrorCallback? = nil) {

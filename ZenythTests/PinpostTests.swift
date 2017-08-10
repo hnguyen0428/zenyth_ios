@@ -155,7 +155,6 @@ class PinpostTests: XCTestCase {
         let ex = expectation(description: "Pinpost Upload Image")
         let image = #imageLiteral(resourceName: "whitemountain")
         let imageData = UIImagePNGRepresentation(image)
-        var imageName = ""
         
         PinpostManager().uploadImage(toPinpostId: pinpostId,
                                      imageData: imageData!,
@@ -164,7 +163,6 @@ class PinpostTests: XCTestCase {
                 ex.fulfill()
                 assertImageData(image: image, imageableId: self.pinpostId,
                                 imageableType: "Pinpost")
-                imageName = image.filename
         }, onFailure: { json in
             ex.fulfill()
             XCTFail("Should not get here")
@@ -172,18 +170,7 @@ class PinpostTests: XCTestCase {
             ex.fulfill()
             XCTFail("Should not get here")
         })
-        waitForExpectations(timeout: 5.0, handler: { action in
-            let ex2 = self.expectation(description: "Pinpost Check Image")
-            PinpostManager().readPinpostInfo(withPinpostId: self.pinpostId,
-                                             onSuccess:
-                { pinpost in
-                    XCTAssertTrue(pinpost.images.count > 0)
-                    let image = pinpost.images.first
-                    assertImageData(image: image, fileName: imageName)
-                    ex2.fulfill()
-            })
-            self.waitForExpectations(timeout: 5.0, handler: nil)
-        })
+        waitForExpectations(timeout: 5.0, handler: nil)
     }
     
 }

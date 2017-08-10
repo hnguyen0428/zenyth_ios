@@ -13,7 +13,6 @@
 		470127EA1F3C34E600A8E5AE /* CommentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470127E91F3C34E600A8E5AE /* CommentTests.swift */; };
 		470127EC1F3C34F300A8E5AE /* ReplyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470127EB1F3C34F300A8E5AE /* ReplyTests.swift */; };
 		470127EE1F3C350000A8E5AE /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470127ED1F3C350000A8E5AE /* UserTests.swift */; };
-		470127F01F3C351200A8E5AE /* ImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470127EF1F3C351200A8E5AE /* ImageTests.swift */; };
 		470127F21F3C351F00A8E5AE /* TagTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470127F11F3C351F00A8E5AE /* TagTests.swift */; };
 		470127F41F3C353200A8E5AE /* LikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470127F31F3C353200A8E5AE /* LikeTests.swift */; };
 		470127FA1F3C63DB00A8E5AE /* JSONDeserializeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470127F91F3C63DB00A8E5AE /* JSONDeserializeTests.swift */; };
@@ -113,7 +112,6 @@
 		470127E91F3C34E600A8E5AE /* CommentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentTests.swift; sourceTree = "<group>"; };
 		470127EB1F3C34F300A8E5AE /* ReplyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyTests.swift; sourceTree = "<group>"; };
 		470127ED1F3C350000A8E5AE /* UserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTests.swift; sourceTree = "<group>"; };
-		470127EF1F3C351200A8E5AE /* ImageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTests.swift; sourceTree = "<group>"; };
 		470127F11F3C351F00A8E5AE /* TagTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagTests.swift; sourceTree = "<group>"; };
 		470127F31F3C353200A8E5AE /* LikeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeTests.swift; sourceTree = "<group>"; };
 		470127F91F3C63DB00A8E5AE /* JSONDeserializeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONDeserializeTests.swift; sourceTree = "<group>"; };
@@ -252,7 +250,6 @@
 				470127E91F3C34E600A8E5AE /* CommentTests.swift */,
 				470127EB1F3C34F300A8E5AE /* ReplyTests.swift */,
 				470127F31F3C353200A8E5AE /* LikeTests.swift */,
-				470127EF1F3C351200A8E5AE /* ImageTests.swift */,
 				470127F11F3C351F00A8E5AE /* TagTests.swift */,
 				47CDA9091F3BCD780044CEE8 /* CustomAsserts.swift */,
 			);
@@ -803,7 +800,6 @@
 				470127F41F3C353200A8E5AE /* LikeTests.swift in Sources */,
 				470127E61F3BDC7300A8E5AE /* LoginTests.swift in Sources */,
 				470127F21F3C351F00A8E5AE /* TagTests.swift in Sources */,
-				470127F01F3C351200A8E5AE /* ImageTests.swift in Sources */,
 				470127FA1F3C63DB00A8E5AE /* JSONDeserializeTests.swift in Sources */,
 				470127EA1F3C34E600A8E5AE /* CommentTests.swift in Sources */,
 				470127EC1F3C34F300A8E5AE /* ReplyTests.swift in Sources */,

@@ -139,4 +139,60 @@ class CommentTests: XCTestCase {
         waitForExpectations(timeout: 5.0, handler: nil)
     }
     
+    func testUploadImage() {
+        let ex = expectation(description: "Comment Upload Image")
+        let image = #imageLiteral(resourceName: "whitemountain")
+        let imageData = UIImagePNGRepresentation(image)
+        
+        CommentManager().uploadImage(toCommentId: commentId,
+                                     imageData: imageData!,
+                                     onSuccess:
+            { image in
+                ex.fulfill()
+                assertImageData(image: image, imageableId: self.commentId,
+                                imageableType: "Comment")
+        }, onFailure: { json in
+            ex.fulfill()
+            XCTFail("Should not get here")
+        }, onRequestError: { error in
+            ex.fulfill()
+            XCTFail("Should not get here")
+        })
+        waitForExpectations(timeout: 5.0, handler: nil)
+    }
+    
+    func testGetReplies() {
+        let ex = expectation(description: "Get Replies on Comment")
+        CommentManager().getReplies(onCommentId: self.commentId,
+                                    onSuccess:
+            { replies in
+                XCTAssertEqual(replies.count, 0)
+                ex.fulfill()
+        }, onFailure: { json in
+            ex.fulfill()
+            XCTFail("Should not get here")
+        }, onRequestError: { error in
+            ex.fulfill()
+            XCTFail("Should not get here")
+        })
+        waitForExpectations(timeout: 5.0, handler: nil)
+    }
+    
+    func testGetLikes() {
+        let ex = expectation(description: "Get Likes on Comment")
+        CommentManager().getLikes(onCommentId: self.commentId,
+                                  onSuccess:
+            { likes in
+                XCTAssertEqual(likes.count, 0)
+                ex.fulfill()
+        }, onFailure: { json in
+            ex.fulfill()
+            XCTFail("Should not get here")
+        }, onRequestError: { error in
+            ex.fulfill()
+            XCTFail("Should not get here")
+        })
+        waitForExpectations(timeout: 5.0, handler: nil)
+    }
+    
 }
