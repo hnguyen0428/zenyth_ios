@@ -11,15 +11,10 @@ import Alamofire
 import SwiftyJSON
 import FBSDKLoginKit
 import GoogleSignIn
-//import TwitterKit
 
-
-class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDelegate {
+class LoginController: ModelViewController, GIDSignInUIDelegate {
     
-    @IBOutlet weak var fbButton: UIButton!
-    @IBOutlet weak var gplusButton: UIButton!
     @IBOutlet weak var forgotPasswordButton: UIButton!
-    @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var signinButton: UIButton!
@@ -27,44 +22,114 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
     @IBOutlet weak var passwordIconBorder: UIImageView!
     @IBOutlet weak var userIcon: UIImageView!
     @IBOutlet weak var passwordIcon: UIImageView!
-    @IBOutlet weak var bars: UIImageView!
     @IBOutlet weak var logo: UIImageView!
-    
-    /* Signup View */
-    @IBOutlet weak var signupView: UIView!
-    @IBOutlet weak var textFieldOne: UITextField!
-    @IBOutlet weak var textFieldTwo: UITextField!
-    @IBOutlet weak var errorLabelOne: UILabel!
-    @IBOutlet weak var errorLabelTwo: UILabel!
-    @IBOutlet weak var indicatorOne: UIActivityIndicatorView!
-    @IBOutlet weak var indicatorTwo: UIActivityIndicatorView!
-    @IBOutlet weak var tabOne: UIButton!
-    @IBOutlet weak var tabTwo: UIButton!
-    @IBOutlet weak var tabThree: UIButton!
-    @IBOutlet weak var registerButton: UIButton!
-    @IBOutlet weak var textLabelOne: UILabel!
-    @IBOutlet weak var textLabelTwo: UILabel!
-    @IBOutlet weak var iconOne: UIImageView!
-    @IBOutlet weak var iconTwo: UIImageView!
-    @IBOutlet weak var iconOneBorder: UIImageView!
-    @IBOutlet weak var iconTwoBorder: UIImageView!
-    @IBOutlet var panGesture: UIPanGestureRecognizer!
-    
-    var currentTab: Int = 1
-    var mask: UIView?
-    var grabbed: Bool = false
-    let genderData = ["", "Male", "Female", "Non-binary"]
-    var validUsername: Bool = false
-    var validEmail: Bool = false
-    var validPw: Bool = false
-    var checkTimer: Timer? = nil
-    
-    /* End Signup View */
+    @IBOutlet weak var signupButton: UIButton!
+    @IBOutlet weak var fbButton: UIButton!
+    @IBOutlet weak var googleButton: UIButton!
+    @IBOutlet weak var separator: UILabel!
     
     let facebookNoEmailMessage = "Your facebook account does not contain an " +
                         "email. Please make an account through our signup page"
     var oauthJSON: JSON? = nil
     var fbToken: String? = nil
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Add observer that allows for scrolling once you enter keyboard mode
+        NotificationCenter.default.addObserver(self,
+                                    selector:#selector(self.keyboardWillShow),
+                                    name: NSNotification.Name.UIKeyboardWillShow,
+                                    object: nil)
+        NotificationCenter.default.addObserver(self,
+                                    selector: #selector(self.keyboardWillHide),
+                                    name: NSNotification.Name.UIKeyboardWillHide,
+                                    object: nil)
+        
+        signinButton.addTarget(self, action: #selector(loginButtonAction),
+                               for: .touchUpInside)
+        
+        // The following is for the custom login button 
+        // (may need to call set up views prior)
+        fbButton.addTarget(self, action: #selector(handleCustomFBLogin),
+                           for: .touchUpInside)
+        
+        GIDSignIn.sharedInstance().uiDelegate = self
+        
+        // custom Google+
+        googleButton.addTarget(self, action: #selector(handleCustomGoogleLogin),
+                              for: .touchUpInside)
+        
+        setupViews()
+        usernameField.addTarget(self, action: #selector(editingChanged),
+                                for: .editingChanged)
+        passwordField.addTarget(self, action: #selector(editingChanged),
+                                for: .editingChanged)
+    }
+    
+    /* Setup images for the buttons and setups textfields
+     */
+    func setupViews() {
+        fbButton.imageView?.contentMode = .scaleAspectFill
+        googleButton.imageView?.contentMode = .scaleAspectFill
+        
+        signinButton.backgroundColor = disabledButtonColor
+        signinButton.layer.cornerRadius = 20
+        signinButton.isEnabled = false
+        signinButton.setTitleColor(UIColor.white, for: .normal)
+        
+        fbButton.backgroundColor = blueButtonColor
+        fbButton.layer.cornerRadius = 5
+        fbButton.setTitleColor(UIColor.white, for: .normal)
+        googleButton.backgroundColor = googleButtonColor
+        googleButton.layer.cornerRadius = 5
+        googleButton.setTitleColor(UIColor.white, for: .normal)
+        
+        separator.textColor = UIColor.white
+        
+        signupButton.setTitleColor(UIColor.white, for: .normal)
+        forgotPasswordButton.setTitleColor(UIColor.white, for: .normal)
+        
+        usernameField.backgroundColor = textfieldColor
+        usernameField.alpha = 0.7
+        usernameField.layer.cornerRadius = 5
+        passwordField.backgroundColor = textfieldColor
+        passwordField.alpha = 0.7
+        passwordField.layer.cornerRadius = 5
+        
+        userIconBorder.backgroundColor = textfieldColor
+        userIconBorder.alpha = 0.7
+        userIconBorder.layer.cornerRadius = 5
+        passwordIconBorder.backgroundColor = textfieldColor
+        passwordIconBorder.alpha = 0.7
+        passwordIconBorder.layer.cornerRadius = 5
+        
+        usernameField.autocorrectionType = UITextAutocorrectionType.no
+        
+        self.hideKeyboardWhenTappedAround()
+    }
+    
+    func handleCustomGoogleLogin() {
+        GIDSignIn.sharedInstance().signOut()
+        GIDSignIn.sharedInstance().signIn()
+    
+    }
+    
+    func handleCustomFBLogin() {
+        FBSDKLoginManager().logOut()
+        FBSDKLoginManager().logIn(withReadPermissions: ["email",
+                                                        "public_profile",
+                                                        "user_birthday",
+                                                        "user_friends"],
+                                  from: self) { (result, err) in
+            if err != nil {
+                print ("FB login failed:", err ?? "")
+                return
+            }
+            
+            self.graphRequest()
+        }
+    }
     
     func loginButtonAction(_ sender: UIButton) {
         let text = usernameField.text!
@@ -101,97 +166,6 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
                 self.displayAlert(view: self, title: "Login Failed",
                                   message: error)
             })
-        }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // Add observer that allows for scrolling once you enter keyboard mode
-        NotificationCenter.default.addObserver(self,
-                                    selector:#selector(self.keyboardWillShow),
-                                    name: NSNotification.Name.UIKeyboardWillShow,
-                                    object: nil)
-        NotificationCenter.default.addObserver(self,
-                                    selector: #selector(self.keyboardWillHide),
-                                    name: NSNotification.Name.UIKeyboardWillHide,
-                                    object: nil)
-        
-        signinButton.addTarget(self, action: #selector(loginButtonAction),
-                               for: .touchUpInside)
-        
-        // The following is for the custom login button 
-        // (may need to call set up views prior)
-        fbButton.addTarget(self, action: #selector(handleCustomFBLogin),
-                           for: .touchUpInside)
-        
-        GIDSignIn.sharedInstance().uiDelegate = self
-        
-        // custom Google+
-        gplusButton.addTarget(self, action: #selector(handleCustomGoogleLogin),
-                              for: .touchUpInside)
-        
-        setupViews()
-        setupSignupView()
-        usernameField.addTarget(self, action: #selector(editingChanged),
-                                for: .editingChanged)
-        passwordField.addTarget(self, action: #selector(editingChanged),
-                                for: .editingChanged)
-        
-        signupButton.addTarget(self, action: #selector(showSignupView), for: .touchUpInside)
-        
-    }
-    
-    /* Setup images for the buttons and setups textfields
-     */
-    func setupViews() {
-        formatImageView(imageView: userIconBorder, color: UIColor.white.cgColor)
-        formatImageView(imageView: passwordIconBorder, color: UIColor.white.cgColor)
-        
-        fbButton.imageView?.contentMode = .scaleAspectFill
-        gplusButton.imageView?.contentMode = .scaleAspectFill
-        
-        signinButton.backgroundColor = disabledButtonColor
-        signinButton.layer.cornerRadius = 20
-        signinButton.isEnabled = false
-        
-        signupButton.backgroundColor = blueButtonColor
-        signupButton.layer.cornerRadius = 20
-        
-        usernameField.autocorrectionType = UITextAutocorrectionType.no
-        
-        formatTextField(textField: usernameField, color: UIColor.white.cgColor)
-        formatTextField(textField: passwordField, color: UIColor.white.cgColor)
-        
-        scrollView.insertSubview(passwordIcon, belowSubview: signupView)
-        scrollView.insertSubview(userIcon, belowSubview: signupView)
-        scrollView.insertSubview(userIconBorder, belowSubview: signupView)
-        scrollView.insertSubview(passwordIconBorder, belowSubview: signupView)
-        scrollView.insertSubview(bars, belowSubview: signupView)
-        scrollView.insertSubview(logo, belowSubview: signupView)
-        
-        self.hideKeyboardWhenTappedAround()
-    }
-    
-    func handleCustomGoogleLogin() {
-        GIDSignIn.sharedInstance().signOut()
-        GIDSignIn.sharedInstance().signIn()
-    
-    }
-    
-    func handleCustomFBLogin() {
-        FBSDKLoginManager().logOut()
-        FBSDKLoginManager().logIn(withReadPermissions: ["email",
-                                                        "public_profile",
-                                                        "user_birthday",
-                                                        "user_friends"],
-                                  from: self) { (result, err) in
-            if err != nil {
-                print ("FB login failed:", err ?? "")
-                return
-            }
-            
-            self.graphRequest()
         }
     }
     
@@ -298,12 +272,7 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
         self.navigationController?.setNavigationBarHidden(false,
                                                           animated: animated)
         
-        // Make the navigation bar transparent
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(),
-                                                                for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.isTranslucent = true
-        self.navigationController?.view.backgroundColor = .clear
+        self.navigationController?.view.backgroundColor = navigationBarColor
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -333,45 +302,11 @@ class LoginController: RegisterController, GIDSignInUIDelegate, UIPickerViewDele
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "oauthToUsernameSegue" {
-            let resultVC = segue.destination as! UsernameEmailController
+        if segue.identifier == "oauthToUsernameController" {
+            let resultVC = segue.destination as! UsernameController
             resultVC.messageFromOauth = "changeButtonTargetFB"
             resultVC.oauthJSON = self.oauthJSON
             resultVC.fbToken = self.fbToken
         }
     }
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView,
-                    numberOfRowsInComponent component: Int) -> Int {
-        return genderData.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int,
-                    forComponent component: Int) -> String? {
-        return genderData[row]
-    }
-    
-    /* Called whenever the user picks an item on the pickerview
-     */
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int,
-                    inComponent component: Int) {
-        self.gender = genderData[row]
-        textFieldOne.text = genderData[row]
-        checkAllFields()
-    }
-    
-    /* Clears all fields of registration
-     */
-    override func clearInfo() {
-        super.clearInfo()
-        clearTextFields()
-        self.validPw = false
-        self.validEmail = false
-        self.validUsername = false
-    }
-    
 }

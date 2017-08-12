@@ -25,6 +25,8 @@
 		4701280B1F3C6F8E00A8E5AE /* TagJSON.json in Resources */ = {isa = PBXBuildFile; fileRef = 4701280A1F3C6F8E00A8E5AE /* TagJSON.json */; };
 		4701280D1F3C6F9B00A8E5AE /* ImageJSON.json in Resources */ = {isa = PBXBuildFile; fileRef = 4701280C1F3C6F9B00A8E5AE /* ImageJSON.json */; };
 		4701280F1F3C6FA600A8E5AE /* RelationshipJSON.json in Resources */ = {isa = PBXBuildFile; fileRef = 4701280E1F3C6FA600A8E5AE /* RelationshipJSON.json */; };
+		470A17ED1F3E93310067046F /* PasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470A17EC1F3E93310067046F /* PasswordController.swift */; };
+		470A17EF1F3E93470067046F /* PersonalInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470A17EE1F3E93470067046F /* PersonalInfoController.swift */; };
 		471280781F391A4B006FE796 /* CredentialManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280771F391A4B006FE796 /* CredentialManagerProtocol.swift */; };
 		4712807C1F3921DA006FE796 /* CredentialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712807B1F3921DA006FE796 /* CredentialManager.swift */; };
 		4712807E1F3929B2006FE796 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712807D1F3929B2006FE796 /* APIClient.swift */; };
@@ -73,16 +75,12 @@
 		47C622D01F0A341A003BBC16 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47C622CF1F0A341A003BBC16 /* Assets.xcassets */; };
 		47C622D31F0A341A003BBC16 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47C622D11F0A341A003BBC16 /* LaunchScreen.storyboard */; };
 		47C622E91F0A341A003BBC16 /* ZenythUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622E81F0A341A003BBC16 /* ZenythUITests.swift */; };
-		47C622F71F0A347F003BBC16 /* RegisterController+UsernameEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622F61F0A347F003BBC16 /* RegisterController+UsernameEmail.swift */; };
-		47CA09791F1E57A600EA2455 /* LoginController+Signup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CA09781F1E57A600EA2455 /* LoginController+Signup.swift */; };
-		47CA097B1F1E73BC00EA2455 /* TabThree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CA097A1F1E73BC00EA2455 /* TabThree.swift */; };
-		47CA097D1F1E75BE00EA2455 /* TabOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CA097C1F1E75BE00EA2455 /* TabOne.swift */; };
-		47CA097F1F1E75C700EA2455 /* TabTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CA097E1F1E75C700EA2455 /* TabTwo.swift */; };
+		47C622F71F0A347F003BBC16 /* UsernameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622F61F0A347F003BBC16 /* UsernameController.swift */; };
 		47CDA9081F3BC9DE0044CEE8 /* RegistrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDA9071F3BC9DE0044CEE8 /* RegistrationTests.swift */; };
 		47CDA90A1F3BCD780044CEE8 /* CustomAsserts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDA9091F3BCD780044CEE8 /* CustomAsserts.swift */; };
 		47D838CC1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */; };
 		47D9ECB71F19755A00E3EEE4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECB61F19755A00E3EEE4 /* User.swift */; };
-		47D9ECC01F19E3D300E3EEE4 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECBF1F19E3D300E3EEE4 /* RegisterController.swift */; };
+		47D9ECC01F19E3D300E3EEE4 /* RegistrationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECBF1F19E3D300E3EEE4 /* RegistrationModule.swift */; };
 		7341F9E163A96B05940B44E8 /* Pods_ZenythTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BB6326B7B70E7CF186F4AB1 /* Pods_ZenythTests.framework */; };
 		824F43211F15E84C00031672 /* TwitterKitManual in Resources */ = {isa = PBXBuildFile; fileRef = 824F43201F15E84C00031672 /* TwitterKitManual */; };
 		B99E2A49109EC15FB04613DB /* Pods_ZenythUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4950B87A454879669AE8F046 /* Pods_ZenythUITests.framework */; };
@@ -124,6 +122,8 @@
 		4701280A1F3C6F8E00A8E5AE /* TagJSON.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TagJSON.json; sourceTree = "<group>"; };
 		4701280C1F3C6F9B00A8E5AE /* ImageJSON.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ImageJSON.json; sourceTree = "<group>"; };
 		4701280E1F3C6FA600A8E5AE /* RelationshipJSON.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RelationshipJSON.json; sourceTree = "<group>"; };
+		470A17EC1F3E93310067046F /* PasswordController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordController.swift; sourceTree = "<group>"; };
+		470A17EE1F3E93470067046F /* PersonalInfoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalInfoController.swift; sourceTree = "<group>"; };
 		471280771F391A4B006FE796 /* CredentialManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialManagerProtocol.swift; sourceTree = "<group>"; };
 		4712807B1F3921DA006FE796 /* CredentialManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialManager.swift; sourceTree = "<group>"; };
 		4712807D1F3929B2006FE796 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
@@ -167,6 +167,7 @@
 		47A9024B1F0B1F4400A1CEE8 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		47A9024D1F0B34C900A1CEE8 /* GlobalVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariables.swift; sourceTree = "<group>"; };
 		47ABAA031F0B7B7400FD479E /* UIViewController+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Helper.swift"; sourceTree = "<group>"; };
+		47B7C0BF1F3D693000E92DAA /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		47C622C51F0A341A003BBC16 /* Zenyth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zenyth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		47C622C81F0A341A003BBC16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		47C622CD1F0A341A003BBC16 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -178,16 +179,12 @@
 		47C622E41F0A341A003BBC16 /* ZenythUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZenythUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		47C622E81F0A341A003BBC16 /* ZenythUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZenythUITests.swift; sourceTree = "<group>"; };
 		47C622EA1F0A341A003BBC16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		47C622F61F0A347F003BBC16 /* RegisterController+UsernameEmail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RegisterController+UsernameEmail.swift"; sourceTree = "<group>"; };
-		47CA09781F1E57A600EA2455 /* LoginController+Signup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LoginController+Signup.swift"; sourceTree = "<group>"; };
-		47CA097A1F1E73BC00EA2455 /* TabThree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabThree.swift; sourceTree = "<group>"; };
-		47CA097C1F1E75BE00EA2455 /* TabOne.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabOne.swift; sourceTree = "<group>"; };
-		47CA097E1F1E75C700EA2455 /* TabTwo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabTwo.swift; sourceTree = "<group>"; };
+		47C622F61F0A347F003BBC16 /* UsernameController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsernameController.swift; sourceTree = "<group>"; };
 		47CDA9071F3BC9DE0044CEE8 /* RegistrationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationTests.swift; sourceTree = "<group>"; };
 		47CDA9091F3BCD780044CEE8 /* CustomAsserts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAsserts.swift; sourceTree = "<group>"; };
 		47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModelViewController+KeyboardHandler.swift"; sourceTree = "<group>"; };
 		47D9ECB61F19755A00E3EEE4 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		47D9ECBF1F19E3D300E3EEE4 /* RegisterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
+		47D9ECBF1F19E3D300E3EEE4 /* RegistrationModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationModule.swift; sourceTree = "<group>"; };
 		4950B87A454879669AE8F046 /* Pods_ZenythUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZenythUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BB6326B7B70E7CF186F4AB1 /* Pods_ZenythTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZenythTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		824F43201F15E84C00031672 /* TwitterKitManual */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TwitterKitManual; sourceTree = "<group>"; };
@@ -233,6 +230,7 @@
 		39226A25468294258FF143B8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				47B7C0BF1F3D693000E92DAA /* libsqlite3.tbd */,
 				DDF4603E6F5113638CE0C5ED /* Pods_Zenyth.framework */,
 				7BB6326B7B70E7CF186F4AB1 /* Pods_ZenythTests.framework */,
 				4950B87A454879669AE8F046 /* Pods_ZenythUITests.framework */,
@@ -368,7 +366,6 @@
 				47A745E71F16F7B100A88D5D /* StartingControllers */,
 				82AFE11E1F0F16AD00605905 /* Zenyth.entitlements */,
 				470127FF1F3C6B7400A8E5AE /* ExampleObjectsJSONFiles */,
-				47C622CC1F0A341A003BBC16 /* Main.storyboard */,
 				47C622CF1F0A341A003BBC16 /* Assets.xcassets */,
 				47C622D11F0A341A003BBC16 /* LaunchScreen.storyboard */,
 				47C622D41F0A341A003BBC16 /* Info.plist */,
@@ -418,12 +415,11 @@
 			isa = PBXGroup;
 			children = (
 				47A9024B1F0B1F4400A1CEE8 /* LoginController.swift */,
-				47C622F61F0A347F003BBC16 /* RegisterController+UsernameEmail.swift */,
-				47D9ECBF1F19E3D300E3EEE4 /* RegisterController.swift */,
-				47CA09781F1E57A600EA2455 /* LoginController+Signup.swift */,
-				47CA097C1F1E75BE00EA2455 /* TabOne.swift */,
-				47CA097E1F1E75C700EA2455 /* TabTwo.swift */,
-				47CA097A1F1E73BC00EA2455 /* TabThree.swift */,
+				47C622F61F0A347F003BBC16 /* UsernameController.swift */,
+				470A17EC1F3E93310067046F /* PasswordController.swift */,
+				470A17EE1F3E93470067046F /* PersonalInfoController.swift */,
+				47D9ECBF1F19E3D300E3EEE4 /* RegistrationModule.swift */,
+				47C622CC1F0A341A003BBC16 /* Main.storyboard */,
 			);
 			name = RegisterControllers;
 			sourceTree = "<group>";
@@ -739,32 +735,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				47CA097D1F1E75BE00EA2455 /* TabOne.swift in Sources */,
 				47A488E41F22C98C006B0453 /* HomeController.swift in Sources */,
-				47D9ECC01F19E3D300E3EEE4 /* RegisterController.swift in Sources */,
+				470A17EF1F3E93470067046F /* PersonalInfoController.swift in Sources */,
+				47D9ECC01F19E3D300E3EEE4 /* RegistrationModule.swift in Sources */,
 				471280881F397EC5006FE796 /* Comment.swift in Sources */,
 				4712808E1F39841A006FE796 /* Like.swift in Sources */,
 				471280A41F3992D8006FE796 /* CommentManager.swift in Sources */,
 				4712808A1F398403006FE796 /* Image.swift in Sources */,
 				471280921F39844C006FE796 /* Tag.swift in Sources */,
-				47CA097F1F1E75C700EA2455 /* TabTwo.swift in Sources */,
 				4712809E1F3990DF006FE796 /* TagManagerProtocol.swift in Sources */,
 				477FF6941F39D92F00FD66B4 /* Endpoint.swift in Sources */,
 				4712808C1F39840D006FE796 /* Reply.swift in Sources */,
 				471280841F396FCC006FE796 /* Callbacks.swift in Sources */,
 				47A488E21F22C97B006B0453 /* ProfileController.swift in Sources */,
+				470A17ED1F3E93310067046F /* PasswordController.swift in Sources */,
 				477FF69A1F39D99900FD66B4 /* RegistrationManagerProtocol.swift in Sources */,
 				471280941F398576006FE796 /* RelationshipManagerProtocol.swift in Sources */,
 				471280961F398876006FE796 /* ImageManagerProtocol.swift in Sources */,
-				47CA097B1F1E73BC00EA2455 /* TabThree.swift in Sources */,
 				477FF6961F39D97C00FD66B4 /* LoginManager.swift in Sources */,
 				478006331F218A380064F9E7 /* MapController.swift in Sources */,
-				47CA09791F1E57A600EA2455 /* LoginController+Signup.swift in Sources */,
 				471280A81F3992E8006FE796 /* LikeManager.swift in Sources */,
 				47A745E91F16F7D000A88D5D /* ModelViewController.swift in Sources */,
 				47A488E01F22C96D006B0453 /* PinpostController.swift in Sources */,
 				4712809C1F398D30006FE796 /* LikeManagerProtocol.swift in Sources */,
-				47C622F71F0A347F003BBC16 /* RegisterController+UsernameEmail.swift in Sources */,
+				47C622F71F0A347F003BBC16 /* UsernameController.swift in Sources */,
 				471280AC1F3992FC006FE796 /* ImageManager.swift in Sources */,
 				477FF69C1F39D9A200FD66B4 /* RegistrationManager.swift in Sources */,
 				47A9024C1F0B1F4400A1CEE8 /* LoginController.swift in Sources */,

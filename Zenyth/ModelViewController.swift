@@ -40,10 +40,7 @@ class ModelViewController: UIViewController, UITextFieldDelegate {
         self.view.addSubview(scrollView)
         backgroundView = {
             let imageView = UIImageView(frame: scrollView.frame)
-            imageView.image = #imageLiteral(resourceName: "whitemountain")
-            imageView.contentMode = .scaleAspectFill
-            imageView.center = self.view.center
-            imageView.clipsToBounds = true
+            imageView.backgroundColor = backgroundGreen
             return imageView
         }()
         self.view.insertSubview(backgroundView, at: 0)
@@ -82,7 +79,7 @@ class ModelViewController: UIViewController, UITextFieldDelegate {
     func fieldCheck() {}
     
     func onPressingBack() {
-        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popViewController(animated: false)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -95,6 +92,19 @@ class ModelViewController: UIViewController, UITextFieldDelegate {
         }
         // Do not add a line break
         return false
+    }
+    
+    func transitionToHome() {
+        let storyboard = UIStoryboard(name: "Home", bundle: nil);
+        let mapController: MapController =
+            storyboard.instantiateInitialViewController()
+                as! MapController
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        UIView.transition(with: appDelegate.window!, duration: 0.3, options: .transitionCrossDissolve,
+                          animations: {
+                            appDelegate.window!.rootViewController = mapController
+        }, completion: nil)
     }
     
 }

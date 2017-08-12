@@ -11,7 +11,7 @@ import LBTAComponents
 import Alamofire
 import SwiftyJSON
 
-class UsernameEmailController: RegisterController {
+class UsernameController: ModelViewController, UINavigationControllerDelegate {
     
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var emailField: UITextField!
@@ -21,12 +21,9 @@ class UsernameEmailController: RegisterController {
     @IBOutlet weak var usernameActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var emailActivityIndicator: UIActivityIndicatorView!
     
-    @IBOutlet weak var topLabel: UILabel!
-    @IBOutlet weak var bottomLabel: UILabel!
-    @IBOutlet weak var userIcon: UIImageView!
     @IBOutlet weak var userIconBorder: UIImageView!
-    @IBOutlet weak var mailIcon: UIImageView!
     @IBOutlet weak var mailIconBorder: UIImageView!
+    
     var validEmail: Bool = false
     var validUsername: Bool = false
     var checkTimer: Timer? = nil
@@ -50,8 +47,20 @@ class UsernameEmailController: RegisterController {
         
         setupViews()
         
-        self.clearInfo()
         usernameField.becomeFirstResponder()
+        self.navigationController?.delegate = self
+    }
+    
+    func navigationController(_ navigationController: UINavigationController,
+                              willShow viewController: UIViewController,
+                              animated: Bool) {
+        if viewController is LoginController {
+            RegistrationModule.sharedInstance.clearInfo()
+        }
+    }
+    
+    override func onPressingBack() {
+        self.navigationController?.popViewController(animated: true)
     }
     
     func setupViews() {
@@ -66,12 +75,6 @@ class UsernameEmailController: RegisterController {
         formatTextField(textField: emailField)
         formatImageView(imageView: userIconBorder, color: disabledButtonColor.cgColor)
         formatImageView(imageView: mailIconBorder, color: disabledButtonColor.cgColor)
-        
-        topLabel.textColor = disabledButtonColor
-        bottomLabel.textColor = disabledButtonColor
-        
-        userIcon.image = #imageLiteral(resourceName: "user")
-        mailIcon.image = #imageLiteral(resourceName: "mail")
         
         usernameErrorLabel.isHidden = true
         emailErrorLabel.isHidden = true
@@ -110,6 +113,8 @@ class UsernameEmailController: RegisterController {
         }
     }
     
+    
+    
     func timeBeforeCheck(_ textField: UITextField) {
         // Reset the timer if it has been started
         if self.checkTimer != nil {
@@ -119,6 +124,11 @@ class UsernameEmailController: RegisterController {
         
         // Disable button as soon as user starts editing
         fieldCheck(validEmail: false, validUsername: false)
+        
+        // Save information to registration module
+        let module = RegistrationModule.sharedInstance
+        module.setUsername(username: usernameField.text!)
+        module.setEmail(email: emailField.text!)
         
         // If user is editing email field, start timer on checking email
         if textField == emailField {
@@ -150,7 +160,7 @@ class UsernameEmailController: RegisterController {
             
             // Start the activity indicator to indicate that request is loading
             usernameActivityIndicator.startAnimating()
-            usernameErrorLabel.text = activityIndicatorChecking
+            usernameErrorLabel.text = RegistrationModule.activityIndicatorChecking
             usernameErrorLabel.textColor = .lightGray
             
             CredentialManager().validateUsername(username: text,
@@ -179,7 +189,7 @@ class UsernameEmailController: RegisterController {
             
             // Start the activity indicator to indicate that request is loading
             emailActivityIndicator.startAnimating()
-            emailErrorLabel.text = activityIndicatorChecking
+            emailErrorLabel.text = RegistrationModule.activityIndicatorChecking
             emailErrorLabel.textColor = .lightGray
             
             CredentialManager().validateEmail(email: text,
@@ -199,7 +209,7 @@ class UsernameEmailController: RegisterController {
     
     func setUsernameError(_ type: String) {
         if type == "usernameLengthError" {
-            self.usernameErrorLabel.text = self.usernameRules
+            self.usernameErrorLabel.text = RegistrationModule.usernameRules
             self.usernameErrorLabel.isHidden = false
             self.usernameErrorLabel.textColor = .red
             self.validUsername = false
@@ -207,7 +217,7 @@ class UsernameEmailController: RegisterController {
                             validUsername: validUsername)
         }
         else if type == "notAlphaNumericError" {
-            self.usernameErrorLabel.text = self.usernameInvalidCharacters
+            self.usernameErrorLabel.text = RegistrationModule.usernameInvalidCharacters
             self.usernameErrorLabel.isHidden = false
             self.usernameErrorLabel.textColor = .red
             self.validUsername = false
@@ -216,14 +226,14 @@ class UsernameEmailController: RegisterController {
         }
         else if type == "usernameTaken" {
             self.usernameErrorLabel.text = "\(usernameField.text!) " +
-            "\(self.usernameTakenMessage)"
+            "\(RegistrationModule.usernameTakenMessage)"
             self.usernameErrorLabel.isHidden = false
             self.usernameErrorLabel.textColor = .red
             self.validUsername = false
         }
         else if type == "usernameAvailable" {
             self.usernameErrorLabel.text = "\(usernameField.text!) " +
-            "\(self.usernameAvailableMessage)"
+            "\(RegistrationModule.usernameAvailableMessage)"
             self.usernameErrorLabel.isHidden = false
             self.usernameErrorLabel.textColor = .green
             self.validUsername = true
@@ -232,7 +242,7 @@ class UsernameEmailController: RegisterController {
     
     func setEmailError(_ type: String) {
         if type == "notEmailError" {
-            self.emailErrorLabel.text = self.invalidEmailMessage
+            self.emailErrorLabel.text = RegistrationModule.invalidEmailMessage
             self.emailErrorLabel.isHidden = false
             self.emailErrorLabel.textColor = .red
             self.validEmail = false
@@ -240,13 +250,13 @@ class UsernameEmailController: RegisterController {
                             validUsername: validUsername)
         }
         else if type == "emailTaken" {
-            self.emailErrorLabel.text = self.emailTakenMessage
+            self.emailErrorLabel.text = RegistrationModule.emailTakenMessage
             self.emailErrorLabel.isHidden = false
             self.emailErrorLabel.textColor = .red
             self.validEmail = false
         }
         else if type == "emailAvailable" {
-            self.emailErrorLabel.text = self.emailAvailableMessage
+            self.emailErrorLabel.text = RegistrationModule.emailAvailableMessage
             self.emailErrorLabel.isHidden = false
             self.emailErrorLabel.textColor = .green
             self.validEmail = true
@@ -282,7 +292,7 @@ class UsernameEmailController: RegisterController {
                 UserDefaults.standard.set(apiToken, forKey: "api_token")
                 UserDefaults.standard.synchronize()
                 let alert = UIAlertController(
-                    title: self.signupSuccessfulMessage,
+                    title: RegistrationModule.signupSuccessfulMessage,
                     message: nil,
                     preferredStyle: UIAlertControllerStyle.alert
                 )
@@ -315,7 +325,7 @@ class UsernameEmailController: RegisterController {
                 UserDefaults.standard.set(apiToken, forKey: "api_token")
                 UserDefaults.standard.synchronize()
                 let alert = UIAlertController(
-                    title: self.signupSuccessfulMessage,
+                    title: RegistrationModule.signupSuccessfulMessage,
                     message: nil,
                     preferredStyle: UIAlertControllerStyle.alert
                 )
