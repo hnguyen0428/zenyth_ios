@@ -15,9 +15,10 @@ let googleButtonColor = UIColor(r: 208, g: 85, b: 61)
 let disabledBrown = UIColor(r: 116, g: 112, b: 83)
 let blueButtonColor = UIColor(r: 41, g: 82, b: 149)
 let backgroundGreen = UIColor(r: 0, g: 175, b: 97)
+let backgroundOrange = UIColor(r: 224, g: 148, b: 100)
 let navigationBarColor = UIColor(r: 249, g: 249, b: 249)
 
-let textfieldColor = UIColor(r: 0, g: 187, b: 138)
+let textfieldColor = UIColor(r: 190, g: 140, b: 92)
 
 let timeBetweenCheck = 0.6
 let minimumAge = 13

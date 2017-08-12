@@ -10,7 +10,6 @@ import UIKit
 
 class ModelViewController: UIViewController, UITextFieldDelegate {
     
-    var scrollView: UIScrollView!
     var backgroundView: UIImageView!
     
     override func viewDidLoad() {
@@ -24,23 +23,16 @@ class ModelViewController: UIViewController, UITextFieldDelegate {
             }
         }
         
-        // Add all subviews to allow for scroll once the keyboard pops up
-        for subview in view.subviews {
-            if !(subview is UIScrollView) && !(subview is UIImageView) {
-                scrollView.addSubview(subview)
-            }
-        }
-        
     }
     
     /* Setups the background
      */
     func setup() {
-        self.scrollView = UIScrollView(frame: view.frame)
-        self.view.addSubview(scrollView)
+        //self.scrollView = UIScrollView(frame: view.frame)
+        //self.view.addSubview(scrollView)
         backgroundView = {
-            let imageView = UIImageView(frame: scrollView.frame)
-            imageView.backgroundColor = backgroundGreen
+            let imageView = UIImageView(frame: self.view.frame)
+            imageView.backgroundColor = .white
             return imageView
         }()
         self.view.insertSubview(backgroundView, at: 0)

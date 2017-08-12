@@ -37,14 +37,14 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         super.viewDidLoad()
         
         // Add observer that allows for scrolling once you enter keyboard mode
-        NotificationCenter.default.addObserver(self,
-                                    selector:#selector(self.keyboardWillShow),
-                                    name: NSNotification.Name.UIKeyboardWillShow,
-                                    object: nil)
-        NotificationCenter.default.addObserver(self,
-                                    selector: #selector(self.keyboardWillHide),
-                                    name: NSNotification.Name.UIKeyboardWillHide,
-                                    object: nil)
+//        NotificationCenter.default.addObserver(self,
+//                                    selector:#selector(self.keyboardWillShow),
+//                                    name: NSNotification.Name.UIKeyboardWillShow,
+//                                    object: nil)
+//        NotificationCenter.default.addObserver(self,
+//                                    selector: #selector(self.keyboardWillHide),
+//                                    name: NSNotification.Name.UIKeyboardWillHide,
+//                                    object: nil)
         
         signinButton.addTarget(self, action: #selector(loginButtonAction),
                                for: .touchUpInside)
@@ -81,6 +81,7 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         fbButton.backgroundColor = blueButtonColor
         fbButton.layer.cornerRadius = 5
         fbButton.setTitleColor(UIColor.white, for: .normal)
+        
         googleButton.backgroundColor = googleButtonColor
         googleButton.layer.cornerRadius = 5
         googleButton.setTitleColor(UIColor.white, for: .normal)
@@ -92,17 +93,25 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         
         usernameField.backgroundColor = textfieldColor
         usernameField.alpha = 0.7
-        usernameField.layer.cornerRadius = 5
+        usernameField.rightRoundedField()
         passwordField.backgroundColor = textfieldColor
         passwordField.alpha = 0.7
-        passwordField.layer.cornerRadius = 5
+        passwordField.rightRoundedField()
         
         userIconBorder.backgroundColor = textfieldColor
         userIconBorder.alpha = 0.7
-        userIconBorder.layer.cornerRadius = 5
+        userIconBorder.leftRoundedImageView()
         passwordIconBorder.backgroundColor = textfieldColor
         passwordIconBorder.alpha = 0.7
-        passwordIconBorder.layer.cornerRadius = 5
+        passwordIconBorder.leftRoundedImageView()
+        
+        let height = signinButton.center.y
+        let frame = CGRect(x: backgroundView.frame.origin.x,
+                           y: backgroundView.frame.origin.y,
+                           width: backgroundView.frame.width, height: height)
+        let topOrange = UIImageView(frame: frame)
+        topOrange.backgroundColor = backgroundOrange
+        backgroundView.insertSubview(topOrange, at: 0)
         
         usernameField.autocorrectionType = UITextAutocorrectionType.no
         
