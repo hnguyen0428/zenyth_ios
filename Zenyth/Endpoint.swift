@@ -50,6 +50,7 @@ public enum Endpoint {
     case GetCommentsOnPinpost(UInt32)
     case GetLikesOnPinpost(UInt32)
     case FetchPinposts
+    case FetchFeed
     
     /// CommentManager Endpoints
     case CreateCommentOnPinpost(UInt32)
@@ -145,6 +146,8 @@ public enum Endpoint {
             return ("\(baseURL)/pinpost/get_likes/\(pinpostId)", .get)
         case .FetchPinposts:
             return ("\(baseURL)/pinpost/fetch", .get)
+        case .FetchFeed:
+            return ("\(baseURL)/pinpost/feed", .get)
             
         case .CreateCommentOnPinpost(let pinpostId):
             return ("\(baseURL)/pinpost/comment/\(pinpostId)", .post)

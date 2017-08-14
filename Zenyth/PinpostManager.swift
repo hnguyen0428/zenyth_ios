@@ -228,4 +228,31 @@ class PinpostManager: PinpostManagerProtocol {
                 onSuccess?(pinposts)
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
+    
+    func fetchPinpostsFeed(paginate: UInt32? = nil, scope: String? = nil,
+                           onSuccess: PinpostsCallback? = nil,
+                           onFailure: JSONCallback? = nil,
+                           onRequestError: ErrorCallback? = nil) {
+        let route = Endpoint.FetchFeed.route()
+        APIClient.sharedClient.setAuthorization()
+        
+        var parameters: Parameters = Parameters.init()
+        if paginate != nil {
+            parameters.updateValue(paginate!, forKey: "paginate")
+        }
+        if scope != nil {
+            parameters.updateValue(scope!, forKey: "scope")
+        }
+        
+        APIClient.sharedClient.executeJSON(route: route, parameters: parameters,
+                                           onSuccess:
+            { json in
+                let pinpostsJSON = json["data"]["pinposts"].arrayValue
+                var pinposts = [Pinpost]()
+                for pinpostJSON in pinpostsJSON {
+                    pinposts.append(Pinpost(json: pinpostJSON))
+                }
+                onSuccess?(pinposts)
+        }, onFailure: onFailure, onRequestError: onRequestError)
+    }
 }
