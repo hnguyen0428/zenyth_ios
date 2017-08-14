@@ -24,7 +24,7 @@ protocol ReplyManagerProtocol {
                      onFailure: JSONCallback?,
                      onRequestError: ErrorCallback?)
     
-    func readReplyInfo(withReplyId replyId: UInt32, text: String,
+    func readReplyInfo(withReplyId replyId: UInt32,
                    onSuccess: ReplyCallback?,
                    onFailure: JSONCallback?,
                    onRequestError: ErrorCallback?)

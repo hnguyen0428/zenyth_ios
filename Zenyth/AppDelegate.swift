@@ -84,10 +84,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                     
                     // Access the storyboard and fetch an instance of the view controller
                     let storyboard = UIStoryboard(name: "Main", bundle: nil);
-                    let viewController: UsernameEmailController =
+                    let viewController: UsernameController =
                         storyboard.instantiateViewController(
                             withIdentifier: "UsernameEmailController")
-                            as! UsernameEmailController;
+                            as! UsernameController;
                     
                     // Then push that view controller onto the navigation stack
                     let rootViewController = self.window!.rootViewController

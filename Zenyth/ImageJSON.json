@@ -1,0 +1,13 @@
+{
+    "success": true,
+    "data": {
+        "image": {
+            "user_id": 1,
+            "filename": "file.jpeg",
+            "imageable_type": "Profile",
+            "imageable_id": 1,
+            "directory": "profile_pictures",
+            "id": 1
+        }
+    }
+}

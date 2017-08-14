@@ -61,7 +61,7 @@ class CommentManager: CommentManagerProtocol {
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
-    func readCommentInfo(withCommentId commentId: UInt32, text: String,
+    func readCommentInfo(withCommentId commentId: UInt32,
                          onSuccess: CommentCallback? = nil,
                          onFailure: JSONCallback? = nil,
                          onRequestError: ErrorCallback? = nil) {

@@ -68,5 +68,6 @@ class HomeController: UIViewController {
         
         toolbar?.setItems(items, animated: false)
         view.addSubview(toolbar!)
+        view.backgroundColor = UIColor.white
     }
 }

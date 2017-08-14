@@ -9,7 +9,10 @@
 import Foundation
 import Alamofire
 
-let baseURL = "http://54.219.134.56/api"
+/// Used for testing purposes
+let localhostURL = "http://192.168.102.177/api"
+
+var baseURL = "http://54.219.134.56/api"
 typealias APIRoute = (String, HTTPMethod)
 
 public enum Endpoint {
@@ -35,6 +38,7 @@ public enum Endpoint {
     case UpdateProfile
     case UpdateProfilePicture
     case SearchUser
+    case DeleteUser(String)
     
     /// PinpostManager Endpoints
     case CreatePinpost
@@ -120,6 +124,8 @@ public enum Endpoint {
             return ("\(baseURL)/profile/profile_picture/upload", .post)
         case .SearchUser:
             return ("\(baseURL)/user/search_user", .get)
+        case .DeleteUser(let username):
+            return ("\(baseURL)/user/\(username)", .delete)
             
         case .CreatePinpost:
             return ("\(baseURL)/pinpost", .post)

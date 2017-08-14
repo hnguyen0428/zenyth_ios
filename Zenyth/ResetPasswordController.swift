@@ -150,5 +150,9 @@ class ResetPasswordController: ModelViewController {
             resetPasswordButton.isEnabled = false
         }
     }
+    
+    override func onPressingBack() {
+        self.navigationController?.popViewController(animated: true)
+    }
 
 }

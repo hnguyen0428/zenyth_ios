@@ -12,21 +12,25 @@ import SwiftyJSON
 struct Comment: APIObject {
     var id: UInt32
     var text: String
-    var userId: UInt32
+    var creator: User
     var commentableId: UInt32
     var commentableType: String
     var createdAt: String
     var updatedAt: String
+    var replies: UInt32
+    var likes: UInt32
     var images: [Image] = [Image]()
     
     init(json: JSON) {
         self.id = json["id"].uInt32Value
         self.text = json["text"].stringValue
-        self.userId = json["user_id"].uInt32Value
+        self.creator = User(json: json["creator"])
         self.commentableId = json["commentable_id"].uInt32Value
         self.commentableType = json["commentable_type"].stringValue
         self.createdAt = json["created_at"].stringValue
         self.updatedAt = json["updated_at"].stringValue
+        self.replies = json["replies"].uInt32Value
+        self.likes = json["likes"].uInt32Value
         
         let imagesJSON = json["images"].arrayValue
         for imageJSON in imagesJSON {
@@ -43,7 +47,7 @@ struct Comment: APIObject {
         return [
             "id" : id,
             "text" : text,
-            "user_id" : userId,
+            "creator" : creator.toJSON(),
             "commentable_id" : commentableId,
             "commentable_type" : commentableType,
             "created_at" : createdAt,

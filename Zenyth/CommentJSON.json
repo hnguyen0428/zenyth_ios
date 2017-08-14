@@ -1,0 +1,61 @@
+{
+    "success": true,
+    "data": {
+        "comment": {
+            "user_id": 1,
+            "commentable_type": "Pinpost",
+            "text": "test comment",
+            "commentable_id": 1,
+            "updated_at": "2000-01-01 00:00:00",
+            "created_at": "2000-01-01 00:00:00",
+            "id": 1,
+            "creator": {
+                "id": 1,
+                "email": "testiosuser@zenyth.com",
+                "username": "testiosuse",
+                "created_at": "2000-01-01 00:00:00",
+                "first_name": "Test",
+                "last_name": "Man",
+                "gender": "non-binary",
+                "birthday": "1998-04-28",
+                "picture": {
+                    "id": 1,
+                    "filename": "file.jpg",
+                    "user_id": 1,
+                    "imageable_type": "Profile",
+                    "imageable_id": 1,
+                    "directory": "profile_pictures"
+                },
+                "friends": 0
+            },
+            "replies": 100,
+            "likes": 100,
+            "images": [
+                       {
+                       "id": 1,
+                       "filename": "file1.jpg",
+                       "user_id": 1,
+                       "imageable_type": "Comment",
+                       "imageable_id": 1,
+                       "directory": "images"
+                       },
+                       {
+                       "id": 2,
+                       "filename": "file2.jpg",
+                       "user_id": 1,
+                       "imageable_type": "Comment",
+                       "imageable_id": 1,
+                       "directory": "images"
+                       },
+                       {
+                       "id": 3,
+                       "filename": "file3.jpg",
+                       "user_id": 1,
+                       "imageable_type": "Comment",
+                       "imageable_id": 1,
+                       "directory": "images"
+                       }
+                       ]
+        }
+    }
+}

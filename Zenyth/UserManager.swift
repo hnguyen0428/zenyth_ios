@@ -147,4 +147,18 @@ class UserManager: UserManagerProtocol {
                 onSuccess?(users)
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
+    
+    func deleteUser(withUsername username: String,
+                    onSuccess: JSONCallback? = nil,
+                    onFailure: JSONCallback? = nil,
+                    onRequestError: ErrorCallback? = nil) {
+        let route = Endpoint.DeleteUser(username).route()
+        APIClient.sharedClient.setAuthorization()
+        
+        APIClient.sharedClient.executeJSON(route: route,
+                                           onSuccess:
+            { json in
+                onSuccess?(json)
+        }, onFailure: onFailure, onRequestError: onRequestError)
+    }
 }

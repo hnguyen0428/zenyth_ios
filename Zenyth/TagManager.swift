@@ -18,7 +18,7 @@ class TagManager: TagManagerProtocol {
         let route = Endpoint.SearchTag.route()
         APIClient.sharedClient.setAuthorization()
         
-        let parameters: Parameters = ["keyword" : keyword]
+        let parameters: Parameters = ["tag" : keyword]
         APIClient.sharedClient.executeJSON(route: route, parameters: parameters,
                                            onSuccess:
             { json in

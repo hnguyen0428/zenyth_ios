@@ -1,0 +1,41 @@
+{
+    "success": true,
+    "data": {
+        "relationship": {
+            "status": true,
+            "blocked": false,
+            "requester": {
+                "id": 1,
+                "email": "testiosuser@zenyth.com",
+                "username": "testiosuser",
+                "created_at": "2000-01-01 00:00:00",
+                "first_name": "Test",
+                "last_name": "Man",
+                "gender": "non-binary",
+                "birthday": "1998-04-28",
+                "picture": {
+                    "id": 1,
+                    "filename": "file.jpg",
+                    "user_id": 1,
+                    "imageable_type": "Profile",
+                    "imageable_id": 1,
+                    "directory": "profile_pictures"
+                },
+                "friends": 1
+            },
+            "requestee": {
+                "id": 2,
+                "email": "testiosusersfriend@zenyth.com",
+                "username": "testiosusersfriend",
+                "created_at": "2000-01-01 00:00:00",
+                "first_name": "Test Friend",
+                "last_name": "Man",
+                "gender": "non-binary",
+                "birthday": "1998-04-28",
+                "picture": null,
+                "friends": 1
+            },
+            "id": 1
+        }
+    }
+}

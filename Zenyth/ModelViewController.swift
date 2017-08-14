@@ -10,7 +10,6 @@ import UIKit
 
 class ModelViewController: UIViewController, UITextFieldDelegate {
     
-    var scrollView: UIScrollView!
     var backgroundView: UIImageView!
     
     override func viewDidLoad() {
@@ -24,26 +23,16 @@ class ModelViewController: UIViewController, UITextFieldDelegate {
             }
         }
         
-        // Add all subviews to allow for scroll once the keyboard pops up
-        for subview in view.subviews {
-            if !(subview is UIScrollView) && !(subview is UIImageView) {
-                scrollView.addSubview(subview)
-            }
-        }
-        
     }
     
     /* Setups the background
      */
     func setup() {
-        self.scrollView = UIScrollView(frame: view.frame)
-        self.view.addSubview(scrollView)
+        //self.scrollView = UIScrollView(frame: view.frame)
+        //self.view.addSubview(scrollView)
         backgroundView = {
-            let imageView = UIImageView(frame: scrollView.frame)
-            imageView.image = #imageLiteral(resourceName: "whitemountain")
-            imageView.contentMode = .scaleAspectFill
-            imageView.center = self.view.center
-            imageView.clipsToBounds = true
+            let imageView = UIImageView(frame: self.view.frame)
+            imageView.backgroundColor = .white
             return imageView
         }()
         self.view.insertSubview(backgroundView, at: 0)
@@ -82,7 +71,7 @@ class ModelViewController: UIViewController, UITextFieldDelegate {
     func fieldCheck() {}
     
     func onPressingBack() {
-        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popViewController(animated: false)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -95,6 +84,23 @@ class ModelViewController: UIViewController, UITextFieldDelegate {
         }
         // Do not add a line break
         return false
+    }
+    
+    func transitionToHome() {
+        //let storyboard = UIStoryboard(name: "Home", bundle: nil);
+//        let mapController: MapController =
+//            storyboard.instantiateInitialViewController()
+//                as! MapController
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
+        appDelegate.window?.makeKeyAndVisible()
+        let homeController = HomeController()
+        
+        UIView.transition(with: appDelegate.window!, duration: 0.3, options: .transitionCrossDissolve,
+                          animations: {
+                            appDelegate.window!.rootViewController = homeController
+        }, completion: nil)
     }
     
 }
