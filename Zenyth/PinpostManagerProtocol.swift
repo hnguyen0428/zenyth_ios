@@ -67,4 +67,9 @@ protocol PinpostManagerProtocol {
                               onSuccess: PinpostsCallback?,
                               onFailure: JSONCallback?,
                               onRequestError: ErrorCallback?)
+    
+    func fetchPinpostsFeed(paginate: UInt32?, scope: String?,
+                           onSuccess: PinpostsCallback?,
+                           onFailure: JSONCallback?,
+                           onRequestError: ErrorCallback?)
 }
