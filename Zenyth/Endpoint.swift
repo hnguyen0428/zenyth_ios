@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 
 /// Used for testing purposes
-let localhostURL = "http://192.168.1.87/api"
+let localhostURL = "http://192.168.102.177/api"
 
 var baseURL = "http://54.219.134.56/api"
 typealias APIRoute = (String, HTTPMethod)

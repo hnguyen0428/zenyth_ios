@@ -83,10 +83,10 @@ class PinpostTests: XCTestCase {
                                   privacy: "self")
         }, onFailure: { json in
             ex.fulfill()
-            XCTFail("Should not get here")
+            XCTFail("Should not get here") // user error
         }, onRequestError: { error in
             ex.fulfill()
-            XCTFail("Should not get here")
+            XCTFail("Should not get here") // server error
         })
         waitForExpectations(timeout: 5.0, handler: nil)
     }

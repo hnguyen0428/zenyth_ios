@@ -50,6 +50,7 @@ class PersonalInfoController: ModelViewController, UIPickerViewDelegate {
         let module = RegistrationModule.sharedInstance
         genderField.text = module.gender
         birthdayField.text = module.birthday
+        fieldCheck()
     }
     
     /* Setups the gender picker

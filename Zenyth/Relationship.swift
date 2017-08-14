@@ -11,15 +11,15 @@ import SwiftyJSON
 
 struct Relationship: APIObject {
     var id: UInt32
-    var requesterId: UInt32
-    var requesteeId: UInt32
+    var requester: User
+    var requestee: User
     var status: Bool
     var blocked: Bool
     
     init(json: JSON) {
         self.id = json["id"].uInt32Value
-        self.requesterId = json["requester"].uInt32Value
-        self.requesteeId = json["requestee"].uInt32Value
+        self.requester = User(json: json["requester"])
+        self.requestee = User(json: json["requestee"])
         self.status = json["status"].boolValue
         self.blocked = json["blocked"].boolValue
     }
@@ -27,8 +27,8 @@ struct Relationship: APIObject {
     func toJSON() -> JSON {
         return [
             "id" : id,
-            "requester_id" : requesterId,
-            "requestee_id" : requesteeId,
+            "requester_id" : requester.toJSON(),
+            "requestee_id" : requestee.toJSON(),
             "status" : status,
             "blocked" : blocked
         ]

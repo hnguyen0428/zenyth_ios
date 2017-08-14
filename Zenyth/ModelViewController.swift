@@ -87,15 +87,19 @@ class ModelViewController: UIViewController, UITextFieldDelegate {
     }
     
     func transitionToHome() {
-        let storyboard = UIStoryboard(name: "Home", bundle: nil);
-        let mapController: MapController =
-            storyboard.instantiateInitialViewController()
-                as! MapController
+        //let storyboard = UIStoryboard(name: "Home", bundle: nil);
+//        let mapController: MapController =
+//            storyboard.instantiateInitialViewController()
+//                as! MapController
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
+        appDelegate.window?.makeKeyAndVisible()
+        let homeController = HomeController()
         
         UIView.transition(with: appDelegate.window!, duration: 0.3, options: .transitionCrossDissolve,
                           animations: {
-                            appDelegate.window!.rootViewController = mapController
+                            appDelegate.window!.rootViewController = homeController
         }, completion: nil)
     }
     

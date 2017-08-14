@@ -53,6 +53,7 @@ class PasswordController: ModelViewController {
         let module = RegistrationModule.sharedInstance
         pwField.text = module.password
         confirmPwField.text = module.passwordConfirmation
+        checkValidPassword(Timer.init())
     }
     
     func timeBeforeCheckPw(_ textField: UITextField) {

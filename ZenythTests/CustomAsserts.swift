@@ -63,7 +63,7 @@ func assertPinpostData(pinpost: Pinpost?, id: UInt32? = nil, title: String? = ni
             XCTAssertEqual(pinpost!.longitude, longitude)
         }
         if userId != nil {
-            XCTAssertEqual(pinpost!.userId, userId)
+            XCTAssertEqual(pinpost!.creator.id, userId)
         }
         if privacy != nil {
             XCTAssertEqual(pinpost!.privacy, privacy)
@@ -98,7 +98,7 @@ func assertCommentData(comment: Comment?, id: UInt32? = nil,
             XCTAssertEqual(comment!.text, text)
         }
         if userId != nil {
-            XCTAssertEqual(comment!.userId, userId)
+            XCTAssertEqual(comment!.creator.id, userId)
         }
         if commentableId != nil {
             XCTAssertEqual(comment!.commentableId, commentableId)
@@ -135,7 +135,7 @@ func assertReplyData(reply: Reply?, id: UInt32? = nil,
             XCTAssertEqual(reply!.text, text)
         }
         if userId != nil {
-            XCTAssertEqual(reply!.userId, userId)
+            XCTAssertEqual(reply!.creator.id, userId)
         }
         if onCommentId != nil {
             XCTAssertEqual(reply!.onCommentId, onCommentId)
@@ -160,7 +160,7 @@ func assertLikeData(like: Like?, id: UInt32? = nil, userId: UInt32? = nil,
             XCTAssertEqual(like!.id, id)
         }
         if userId != nil {
-            XCTAssertEqual(like!.userId, userId)
+            XCTAssertEqual(like!.user.id, userId)
         }
         if likeableId != nil {
             XCTAssertEqual(like!.likeableId, likeableId)
@@ -205,10 +205,10 @@ func assertRelationshipData(relationship: Relationship?,
     XCTAssertNotNil(relationship)
     if relationship != nil {
         if requesterId != nil {
-            XCTAssertEqual(relationship!.requesterId, requesterId)
+            XCTAssertEqual(relationship!.requester.id, requesterId)
         }
         if requesteeId != nil {
-            XCTAssertEqual(relationship!.requesteeId, requesteeId)
+            XCTAssertEqual(relationship!.requestee.id, requesteeId)
         }
         if status != nil {
             XCTAssertEqual(relationship!.status, status)
