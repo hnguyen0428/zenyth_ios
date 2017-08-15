@@ -17,12 +17,14 @@ class APIClient {
     private init() {}
     
     var headers: HTTPHeaders = Alamofire.SessionManager.defaultHTTPHeaders
+    var clientID: String = ""
     
     func executeJSON(route: APIRoute,
                      parameters: Parameters = Parameters.init(),
                      onSuccess: JSONCallback?,
                      onFailure: JSONCallback?,
                      onRequestError: ErrorCallback?) {
+        self.setClientId()
         let urlString = route.0
         let method = route.1
         
@@ -57,6 +59,7 @@ class APIClient {
                        onSuccess: JSONCallback?,
                        onFailure: JSONCallback?,
                        onRequestError: ErrorCallback?) {
+        self.setClientId()
         let urlString = route.0
         let method = route.1
         
@@ -96,6 +99,7 @@ class APIClient {
     func executeDownload(route: APIRoute,
                          onSuccess: DataCallback?,
                          onRequestError: ErrorCallback?) {
+        self.setClientId()
         let urlString = route.0
         let method = route.1
         
@@ -128,8 +132,8 @@ class APIClient {
         }
     }
     
-    func setClientId(clientId: String) {
-        self.headers.updateValue(clientId, forKey: "Client-ID")
+    func setClientId() {
+        self.headers.updateValue(clientID, forKey: "Client-ID")
     }
     
     func updateHeaders(value: String, forKey key: String) {
