@@ -9,27 +9,34 @@
 import UIKit
 
 extension UIImageView {
-    func leftRoundedImageView(){
-        let maskPAth1 = UIBezierPath(roundedRect: self.bounds,
+    
+    /**
+     Format the image view to have rounded topleft and bottomleft corners
+     */
+    func leftRoundedImageView() {
+        let maskPath = UIBezierPath(roundedRect: self.bounds,
                                      byRoundingCorners: [.topLeft , .bottomLeft],
                                      cornerRadii: CGSize(width: 5.0, height: 5.0))
         
         let maskLayer = CAShapeLayer()
         maskLayer.frame = self.bounds
-        maskLayer.path = maskPAth1.cgPath
+        maskLayer.path = maskPath.cgPath
         self.layer.mask = maskLayer
     }
 }
 
 extension UITextField {
-    func rightRoundedField(){
-        let maskPAth1 = UIBezierPath(roundedRect: self.bounds,
+    /**
+     Format the textfield to have rounded topright and bottomright corners
+     */
+    func rightRoundedField() {
+        let maskPath = UIBezierPath(roundedRect: self.bounds,
                                      byRoundingCorners: [.topRight , .bottomRight],
                                      cornerRadii: CGSize(width: 5.0, height: 5.0))
         
         let maskLayer = CAShapeLayer()
         maskLayer.frame = self.bounds
-        maskLayer.path = maskPAth1.cgPath
+        maskLayer.path = maskPath.cgPath
         self.layer.mask = maskLayer
     }
 }

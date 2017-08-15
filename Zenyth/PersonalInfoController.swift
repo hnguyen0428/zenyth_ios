@@ -8,8 +8,8 @@
 
 import UIKit
 
+/// PersonalInfoController handling the personal info page
 class PersonalInfoController: ModelViewController, UIPickerViewDelegate {
-    
     
     @IBOutlet weak var genderField: UITextField!
     @IBOutlet weak var birthdayField: UITextField!
@@ -17,16 +17,24 @@ class PersonalInfoController: ModelViewController, UIPickerViewDelegate {
     @IBOutlet weak var genderIconBorder: UIImageView!
     @IBOutlet weak var birthdayIconBorder: UIImageView!
     
+    /// Options for the gender picker view
     let genderData = ["", "Male", "Female", "Non-binary"]
     
+    /**
+     Setup views and button target
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         signupButton.addTarget(self, action: #selector(signupAction), for: .touchUpInside)
         
+        /// Make the gender picker show up as soon as the user get to the page
         genderField.becomeFirstResponder()
     }
     
+    /**
+     Setup views
+     */
     func setupViews() {
         // Remove background
         backgroundView.removeFromSuperview()
@@ -34,17 +42,22 @@ class PersonalInfoController: ModelViewController, UIPickerViewDelegate {
         setupGenderPicker()
         setupDatePicker()
         
+        // Setup signup button
         signupButton.backgroundColor = disabledButtonColor
         signupButton.isEnabled = false
         signupButton.layer.cornerRadius = 20
         
+        // Format imageviews and textfields
         formatImageView(imageView: genderIconBorder, color: UIColor.darkGray.cgColor)
         formatImageView(imageView: birthdayIconBorder, color: UIColor.darkGray.cgColor)
-        
         formatTextField(textField: genderField, color: UIColor.darkGray.cgColor)
         formatTextField(textField: birthdayField, color: UIColor.darkGray.cgColor)
     }
     
+    /**
+     Called when view has appeared.
+     Check for validity of gender field and birthday field
+     */
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let module = RegistrationModule.sharedInstance
@@ -53,7 +66,8 @@ class PersonalInfoController: ModelViewController, UIPickerViewDelegate {
         fieldCheck()
     }
     
-    /* Setups the gender picker
+    /** 
+     Setup the gender picker
      */
     func setupGenderPicker() {
         let genderPicker = UIPickerView()
@@ -61,7 +75,8 @@ class PersonalInfoController: ModelViewController, UIPickerViewDelegate {
         genderPicker.delegate = self
     }
     
-    /* Setups the gender picker
+    /** 
+     Setup the date picker
      */
     func setupDatePicker() {
         let datePicker = UIDatePicker()
@@ -71,8 +86,11 @@ class PersonalInfoController: ModelViewController, UIPickerViewDelegate {
                              for: .valueChanged)
     }
     
-    /* When picker is picked, the dateOfBirth variable is updated and the
-     * textfield is changed
+    /** 
+     When picker is picked, the date is saved to the RegistrationModule and the
+     birthday textfield is changed
+     
+     - Parameter sender: the date picker
      */
     func changeDOBValue(sender: UIDatePicker) {
         let dateFormat = DateFormatter()
@@ -85,7 +103,10 @@ class PersonalInfoController: ModelViewController, UIPickerViewDelegate {
         fieldCheck()
     }
     
-    /* Check if user passes the age limit
+    /** 
+     Check if user passes the age limit
+     
+     - Returns: Boolean indicating if user passes the age limit
      */
     func notOfAge() -> Bool {
         let dateFormatter = DateFormatter()
@@ -102,6 +123,9 @@ class PersonalInfoController: ModelViewController, UIPickerViewDelegate {
         return age < minimumAge
     }
     
+    /**
+     Check if gender and birthday textfields have been filled out
+     */
     override func fieldCheck() {
         guard
             let gender = genderField.text, !gender.isEmpty,
@@ -115,7 +139,11 @@ class PersonalInfoController: ModelViewController, UIPickerViewDelegate {
         signupButton.backgroundColor = blueButtonColor
     }
     
-    /// Send sign up request to backend
+    /**
+     Signup button action
+     
+     - Parameter sender: signup button
+     */
     func signupAction(_ sender: UIButton) {
         // Convert to yyyy-MM-dd form for the backend to understand
         let dateFormatter = DateFormatter()
@@ -125,17 +153,21 @@ class PersonalInfoController: ModelViewController, UIPickerViewDelegate {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
         let birthday = dateFormatter.string(from: date!)
+        
+        // Retrieve information from the RegistrationModule
         let username = module.username
         let email = module.email
         let password = module.password
         let passwordConfirmation = module.passwordConfirmation
         let gender = module.gender
         
+        // Check if the user is of age to register
         if self.notOfAge() {
             self.displayAlert(view: self, title: "Not Eligible",
                               message: RegistrationModule.notOfAgeMessage)
             return
         }
+        
         let indicator = requestLoading(view: self.view)
         
         RegistrationManager().register(withUsername: username!,
@@ -165,20 +197,38 @@ class PersonalInfoController: ModelViewController, UIPickerViewDelegate {
         })
     }
     
+    /**
+     Return the number of components in picker view. Conforming to the
+     UIPickerViewDelegate protocol
+     */
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
+    /**
+     Return the number of options in the picker view. Conforming to the
+     UIPickerViewDelegate protocol
+     */
     func pickerView(_ pickerView: UIPickerView,
                     numberOfRowsInComponent component: Int) -> Int {
         return genderData.count
     }
     
+    /**
+     Return the information to display for each row in the picker view.
+     Conforming to the UIPickerViewDelegate protocol
+     */
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int,
                     forComponent component: Int) -> String? {
         return genderData[row]
     }
     
+    /**
+     Called when a row in the gender picker has been picked. Save the information
+     to RegistrationModule and update the gender textfield.
+     Conforming to the UIPickerViewDelegate protocol
+     */
+
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int,
                     inComponent component: Int) {
         let gender = genderData[row]

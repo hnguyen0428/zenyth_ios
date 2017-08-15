@@ -9,8 +9,13 @@
 import LBTAComponents
 import UIKit
 
+/// Extension to UIViewController including helper methods
 extension UIViewController {
-    /* Format textfield so that it has only the line on the bottom
+    /** 
+     Format textfield so that it has the line on the bottom
+     
+     - Parameter textField: textfield to be formatted
+     - Parameter color: color of the bottom border
      */
     func formatTextField(textField: UITextField,
                          color: CGColor = disabledButtonColor.cgColor) {
@@ -26,6 +31,12 @@ extension UIViewController {
         textField.layer.masksToBounds = true
     }
     
+    /**
+     Format the image view so that it has the line on the bottom
+     
+     - Parameter imageView: image view to be formatted
+     - Parameter color: color of the bottom border
+     */
     func formatImageView(imageView: UIImageView,
                          color: CGColor = UIColor.gray.cgColor) {
         let border = CALayer()
@@ -40,6 +51,11 @@ extension UIViewController {
         imageView.layer.masksToBounds = true
     }
     
+    /**
+     Format the button so that it has the line on the bottom
+     
+     - Parameter button: button to be formatted
+     */
     func formatButton(button: UIButton) {
         let border = CALayer()
         let width = CGFloat(1.0)
@@ -53,71 +69,35 @@ extension UIViewController {
         button.layer.masksToBounds = true
     }
 
-    /* Displays an alert with title and message and an OK button
+    /** 
+     Displays an alert with title and message and an OK button
+     
+     - Parameter view: the UIViewController that is calling this function
+     - Parameter title: title of the alert
+     - Parameter message: message of the alert
      */
     func displayAlert(view: UIViewController, title: String, message: String) {
-        // create the alert
+        // Create the alert
         let alert = UIAlertController(title: title, message: message,
                                       preferredStyle: UIAlertControllerStyle.alert)
         
-        // add an action (button)
+        // Add an action (button)
         alert.addAction(UIAlertAction(title: "OK",
                                       style: UIAlertActionStyle.default,
                                       handler: nil))
         
-        // show the alert
+        // Show the alert
         view.present(alert, animated: true, completion: nil)
         
     }
-
-    func isValidEmail(email: String) -> Bool {
-        // print("validate calendar: \(testStr)")
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
-        
-        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluate(with: email)
-    }
     
-    func isValidLengthUsername(username: String) -> Bool {
-        let count = username.characters.count
-        if count < minimumUsernameLength || count > maximumUsernameLength {
-            return false
-        }
-        return true
-    }
-    
-    func isValidCharactersUsername(username: String) -> Bool {
-        let usernameRegEx = "[A-Z0-9a-z_]*"
-        
-        let usernameTest = NSPredicate(format:"SELF MATCHES %@", usernameRegEx)
-        return usernameTest.evaluate(with: username)
-    }
-    
-    func isValidUsername(username: String) -> Bool {
-        return isValidLengthUsername(username: username) &&
-                isValidCharactersUsername(username: username)
-    }
-    
-    func isAlphaNumeric(testStr:String) -> Bool {
-        let regEx = "[A-Z0-9a-z]*"
-        
-        let test = NSPredicate(format:"SELF MATCHES %@", regEx)
-        return test.evaluate(with: testStr)
-    }
-    
-    func isValidLengthPassword(password: String) -> Bool {
-        let count = password.characters.count
-        if count < minimumPasswordLength || count > maximumPasswordLength {
-            return false
-        }
-        return true
-    }
-    
-    func isValidPassword(password: String) -> Bool {
-        return isAlphaNumeric(testStr: password) &&
-                isValidLengthPassword(password: password)
-    }
-    
+    /**
+     Create an activity indicator and put it in the center of the view and dim
+     the view
+     
+     - Parameter view: the view that the indicator is presented on
+     - Returns: UIActivityIndicatorView that is created
+     */
     func requestLoading(view: UIView) -> UIActivityIndicatorView {
         let indicator = UIActivityIndicatorView(
             activityIndicatorStyle: .gray
@@ -133,6 +113,12 @@ extension UIViewController {
         return indicator
     }
     
+    /**
+     Stop the activity indicator and remove the dimmed mask from UIView
+     
+     - Parameter view: UIView
+     - Parameter indicator: activity indicator to be stopped
+     */
     func requestDoneLoading(view: UIView, indicator: UIActivityIndicatorView) {
         indicator.stopAnimating()
         view.isUserInteractionEnabled = true

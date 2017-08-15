@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                      didFinishLaunchingWithOptions launchOptions:
         [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        // Read the Info.plist file to set the client id for the APIClient
         var infoDict: NSDictionary?
         if let path = Bundle.main.path(forResource: "Info", ofType: "plist") {
             infoDict = NSDictionary(contentsOfFile: path)
@@ -33,6 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             APIClient.sharedClient.clientID = clientID
         }
         
+        // Read the GoogleService-Info.plist file to set the client id for the
+        // Google signin instance
         var googleDict: NSDictionary?
         if let path = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist") {
             googleDict = NSDictionary(contentsOfFile: path)
@@ -44,12 +47,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
         GIDSignIn.sharedInstance().delegate = self
         
-        // converted from original objective C
+        // Converted from original objective C
         FBSDKApplicationDelegate.sharedInstance().application(application,
                                 didFinishLaunchingWithOptions: launchOptions)
         
         // Twitter 
         // Twitter.sharedInstance().start(withConsumerKey:"KblBowxwd1VQruZvYEYG12Dsq", consumerSecret:"ikGB5s18LZrxjO5oDUP8fqU56xVuN5bzrsWJISWGl6DMeZPDoB")
+        
+        // Set the google map api key
         GMSServices.provideAPIKey("AIzaSyDbce3U3e0teGEnQM54kBu_r2kDGEGcOz0")
 
         
@@ -70,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         guard let idToken = user.authentication.idToken else { return }
         
         let urlString = "https://www.googleapis.com/oauth2/v3/userinfo?access_token=\(accessToken)"
-        
+        // Requesting for user's information from google
         Alamofire.request(urlString, method: .get).responseJSON { response in
             switch response.result {
             case .success(let value):
@@ -83,6 +88,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         }
     }
     
+    /**
+     Handle Google OAuth. First check if the email has been taken. If yes then
+     it will try to log the user in. If not then it will switch to UsernameController
+     in order to prompt user to enter a username for the new account
+     
+     - Parameter json: JSON object retrieved from google
+     - Parameter idToken: google id token
+     */
     func googleOauthHandle(json: JSON, idToken: String) {
         // Checks if email is taken
         let email = json["email"].stringValue
@@ -114,6 +127,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         })
     }
     
+    /**
+     Called when email has been taken. Attempt to log the user in with their
+     Google
+     
+     - Parameter idToken: google id token
+     - Parameter json: JSON object with user info retrieved from google
+     */
     func googleOauthLogin(idToken: String, json: JSON) {
         let rootViewController = self.window!.rootViewController
             as! UINavigationController
@@ -150,6 +170,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         })
     }
     
+    /**
+     Called when user agrees to merge account. This will merge the new oauth
+     account to the preexisted account
+     
+     - Parameter idToken: google id token
+     - Parameter email: gmail retrieved from the google account
+     */
     func mergeAccount(idToken: String, email: String) {
         let rootViewController = self.window!.rootViewController
             as! UINavigationController
@@ -168,15 +195,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         })
     }
     
+    /**
+     Transition to the Home page of the app. Called when successfully logged in
+     */
     func transitionToHome() {
-        let storyboard = UIStoryboard(name: "Home", bundle: nil);
-        let mapController: MapController =
-            storyboard.instantiateInitialViewController()
-                as! MapController
-
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window?.makeKeyAndVisible()
+        let homeController = HomeController()
         UIView.transition(with: self.window!, duration: 0.3, options: .transitionCrossDissolve,
                           animations: {
-            self.window!.rootViewController = mapController
+            self.window!.rootViewController = homeController
         }, completion: nil)
     }
     
