@@ -10,7 +10,8 @@ import UIKit
 
 extension ModelViewController {
     
-    /* Hides keyboard when clicking outside of the keyboard
+    /** 
+     Hide keyboard when clicking outside of the keyboard
      */
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
@@ -19,7 +20,8 @@ extension ModelViewController {
         view.addGestureRecognizer(tap)
     }
     
-    /* Dismisses keyboard, called by hideKeyboardWhenTappedAround
+    /** 
+     Dismiss keyboard, called by hideKeyboardWhenTappedAround()
      */
     func dismissKeyboard() {
         view.endEditing(true)

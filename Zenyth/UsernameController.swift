@@ -11,6 +11,7 @@ import LBTAComponents
 import Alamofire
 import SwiftyJSON
 
+/// UsernameController handling the username and email registration page
 class UsernameController: ModelViewController, UINavigationControllerDelegate {
     
     @IBOutlet weak var usernameField: UITextField!
@@ -24,16 +25,31 @@ class UsernameController: ModelViewController, UINavigationControllerDelegate {
     @IBOutlet weak var userIconBorder: UIImageView!
     @IBOutlet weak var mailIconBorder: UIImageView!
     
+    /// Indicate validity of email
     var validEmail: Bool = false
+    
+    /// Indicate validity of username
     var validUsername: Bool = false
+    
+    /// Timer used to do real time checking
     var checkTimer: Timer? = nil
+    
+    /// OAuth JSON containing information from OAuth account
     var oauthJSON: JSON? = nil
+    
+    /// Message passed in from LoginController in order to inform if the
+    /// current OAuth process if google or facebook
     var messageFromOauth: String? = nil
+    
     let signupTitle = "Sign Up"
     
+    /// OAuth access tokens
     var fbToken: String? = nil
     var googleToken: String? = nil
     
+    /**
+     Setup button targets and subviews when the main view has been loaded
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
         backgroundView.isHidden = true
@@ -47,10 +63,18 @@ class UsernameController: ModelViewController, UINavigationControllerDelegate {
         
         setupViews()
         
+        // Allow user to edit the username field as soon as the page is loaded
         usernameField.becomeFirstResponder()
+        
+        // Add navigation controller delegate in order to add a listener to
+        // the back button of the navigation bar
         self.navigationController?.delegate = self
     }
     
+    /**
+     Listener on the navigation bar's back button. If user backs out to the
+     login page, clear registration module's information
+     */
     func navigationController(_ navigationController: UINavigationController,
                               willShow viewController: UIViewController,
                               animated: Bool) {
@@ -59,18 +83,28 @@ class UsernameController: ModelViewController, UINavigationControllerDelegate {
         }
     }
     
+    /**
+     Add animation to the back button when backing out to the login page since
+     the default back action is not animated
+     */
     override func onPressingBack() {
         self.navigationController?.popViewController(animated: true)
     }
     
+    /**
+     Setup the view
+     */
     func setupViews() {
+        // Set up continue button
         continueButton.backgroundColor = disabledButtonColor
         continueButton.layer.cornerRadius = 25
         continueButton.isEnabled = false
         
+        // Remove auto correction
         usernameField.autocorrectionType = UITextAutocorrectionType.no
         emailField.autocorrectionType = UITextAutocorrectionType.no
         
+        // Format text field and image view
         formatTextField(textField: usernameField)
         formatTextField(textField: emailField)
         formatImageView(imageView: userIconBorder, color: disabledButtonColor.cgColor)
@@ -82,7 +116,7 @@ class UsernameController: ModelViewController, UINavigationControllerDelegate {
         emailActivityIndicator.hidesWhenStopped = true
         usernameActivityIndicator.hidesWhenStopped = true
         
-        // Makes the activity indicator smaller
+        // Make the activity indicator smaller
         emailActivityIndicator.transform = CGAffineTransform(
             scaleX: 0.75, y: 0.75
         )
@@ -90,12 +124,18 @@ class UsernameController: ModelViewController, UINavigationControllerDelegate {
             scaleX: 0.75, y: 0.75
         )
         
+        // Prefill the email textfield with the email retrieved from OAuth
         if let email = oauthJSON?["email"].string {
             emailField.text = email
             emailField.textColor = .lightGray
             emailField.isUserInteractionEnabled = false
             validEmail = true
         }
+        
+        // Changing the continue button targets based on the OAuth type
+        // If the message is nil then the user is in the normal registration
+        // process. If the message has a value then the user is in the OAuth
+        // registration process
         if messageFromOauth == "changeButtonTargetFB" {
             continueButton.removeTarget(nil, action: nil,
                                         for: .allEvents)
@@ -113,8 +153,14 @@ class UsernameController: ModelViewController, UINavigationControllerDelegate {
         }
     }
     
-    
-    
+    /**
+     Run the timer to check for validity of email and username. After 0.6
+     seconds, if the user has not made any further change, the timer will trigger
+     the method checkValidEmail() or checkValidUsername() depending on what field
+     is being edited.
+     
+     - Parameter textField: textfield being edited
+     */
     func timeBeforeCheck(_ textField: UITextField) {
         // Reset the timer if it has been started
         if self.checkTimer != nil {
@@ -146,6 +192,11 @@ class UsernameController: ModelViewController, UINavigationControllerDelegate {
         }
     }
     
+    /**
+     Check validity of username.
+     
+     - Parameter timer: Timer being run
+     */
     func checkValidUsername(_ timer: Timer) {
         let text = usernameField.text ?? ""
         
@@ -178,6 +229,11 @@ class UsernameController: ModelViewController, UINavigationControllerDelegate {
         }
     }
     
+    /**
+     Check validity of email.
+     
+     - Parameter timer: Timer being run
+     */
     func checkValidEmail(_ timer: Timer) {
         let text = emailField.text ?? ""
         
@@ -207,6 +263,12 @@ class UsernameController: ModelViewController, UINavigationControllerDelegate {
         }
     }
     
+    /**
+     Set the username error label based on the type of error.
+     This function is called by checkValidUsername method.
+     
+     - Parameter type: the type of error
+     */
     func setUsernameError(_ type: String) {
         if type == "usernameLengthError" {
             self.usernameErrorLabel.text = RegistrationModule.usernameRules
@@ -240,6 +302,12 @@ class UsernameController: ModelViewController, UINavigationControllerDelegate {
         }
     }
     
+    /**
+     Set the email error label based on the type of error.
+     This function is called by checkValidEmail method.
+     
+     - Parameter type: the type of error
+     */
     func setEmailError(_ type: String) {
         if type == "notEmailError" {
             self.emailErrorLabel.text = RegistrationModule.invalidEmailMessage
@@ -263,6 +331,13 @@ class UsernameController: ModelViewController, UINavigationControllerDelegate {
         }
     }
     
+    /**
+     Method checking for email validity and username validity and enable the
+     continue button if both are valid
+     
+     - Parameter validEmail: validity of email
+     - Parameter validUsername: validity of username
+     */
     func fieldCheck(validEmail: Bool, validUsername: Bool) {
         if validEmail && validUsername {
             continueButton.isEnabled = true
@@ -273,9 +348,17 @@ class UsernameController: ModelViewController, UINavigationControllerDelegate {
         }
     }
     
+    /**
+     Register for an account using Facebook OAuth
+     
+     - Parameter button: the continue button triggering this process
+     */
     func oauthFBRegister(_ button: UIButton) {
         let oauthType = "facebook"
         let username = usernameField.text!
+        
+        // Retrieving information from the JSON object passed in from
+        // LoginController
         let email = oauthJSON!["email"].stringValue
         let gender = oauthJSON!["gender"].string ?? ""
         let firstName = oauthJSON!["first_name"].string ?? ""
@@ -306,9 +389,17 @@ class UsernameController: ModelViewController, UINavigationControllerDelegate {
         })
     }
     
+    /**
+     Register for an account using Google OAuth
+     
+     - Parameter button: the continue button triggering this process
+     */
     func oauthGoogleRegister(_ button: UIButton) {
         let oauthType = "google"
         let username = usernameField.text!
+        
+        // Retrieving information from the JSON object passed in from
+        // LoginController
         let email = oauthJSON!["email"].stringValue
         let gender = oauthJSON!["gender"].string ?? ""
         let firstName = oauthJSON!["given_name"].string ?? ""

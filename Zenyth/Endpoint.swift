@@ -15,6 +15,9 @@ let localhostURL = "http://192.168.102.177/api"
 var baseURL = "http://54.219.134.56/api"
 typealias APIRoute = (String, HTTPMethod)
 
+/**
+    All of the backend API Endpoints
+ */
 public enum Endpoint {
     
     /// RegistrationManager Endpoints

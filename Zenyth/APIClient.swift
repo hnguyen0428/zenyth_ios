@@ -9,16 +9,35 @@
 import Alamofire
 import SwiftyJSON
 
+/// APIClient used to make API calls
 class APIClient {
     
+    /// A singleton shared client used by the app
     static let sharedClient = APIClient.init()
 
     // Prevent instantiation
     private init() {}
     
+    /// Headers included with every request
     var headers: HTTPHeaders = Alamofire.SessionManager.defaultHTTPHeaders
+    
+    /// Client ID used to authenticate the app to use backend's API
     var clientID: String = ""
     
+    /**
+     Execute a request that returns a JSON response.
+     
+     - Parameters:
+         - route: The route of the request, APIRoute contains the endpoint
+         and the HTTP method
+         - parameters: Parameters of the request
+         - onSuccess: Callback function with JSON parameter upon a successful
+         request
+         - onFailure: Callback function with JSON parameter upon a failure
+         response from the server
+         - onRequestError: Callback function with NSError parameter upon a
+         request error (such are InternalServerError or Request Timed Out)
+     */
     func executeJSON(route: APIRoute,
                      parameters: Parameters = Parameters.init(),
                      onSuccess: JSONCallback?,
@@ -53,6 +72,20 @@ class APIClient {
         }
     }
     
+    /**
+     Execute an upload request that returns a JSON response.
+     
+     - Parameters:
+         - route: The route of the request, APIRoute contains the endpoint
+         and the HTTP method
+         - data: The data to be uploaded
+         - onSuccess: Callback function with JSON parameter upon a successful
+         request
+         - onFailure: Callback function with JSON parameter upon a failure
+         response from the server
+         - onRequestError: Callback function with NSError parameter upon a
+         request error (such are InternalServerError or Request Timed Out)
+     */
     func executeUpload(route: APIRoute,
                        data: Data,
                        fileKey: String,
@@ -96,6 +129,17 @@ class APIClient {
         })
     }
     
+    /**
+     Executes a download request that returns Data.
+     
+     - Parameters:
+        - route: The route of the request, APIRoute contains the endpoint
+        and the HTTP method
+        - onSuccess: Callback function with Data parameter upon a successful
+        request
+        - onRequestError: Callback function with NSError parameter upon a
+        request error (such are InternalServerError or Request Timed Out)
+     */
     func executeDownload(route: APIRoute,
                          onSuccess: DataCallback?,
                          onRequestError: ErrorCallback?) {
@@ -119,6 +163,13 @@ class APIClient {
         
     }
     
+    /**
+     Set authorization token
+     
+     - Parameters:
+        - token: token to be set, if not provided, the default authorization
+        is the api_token stored in UserDefaults
+     */
     func setAuthorization(token: String? = nil) {
         if token == nil {
             let apiToken: String =
@@ -132,18 +183,30 @@ class APIClient {
         }
     }
     
+    /**
+     Set Client-ID to use REST API
+     */
     func setClientId() {
         self.headers.updateValue(clientID, forKey: "Client-ID")
     }
     
+    /**
+     Update a headers key. If the key is not there, create one
+     */
     func updateHeaders(value: String, forKey key: String) {
         self.headers.updateValue(value, forKey: key)
     }
     
+    /**
+     Set Content-Type of the header
+     */
     func setHeadersContentType(value: String) {
         self.headers.updateValue(value, forKey: "Content-Type")
     }
     
+    /**
+     Reset to the default HTTP header
+     */
     func resetHeaders() {
         self.headers = Alamofire.SessionManager.defaultHTTPHeaders
     }

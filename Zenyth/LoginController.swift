@@ -12,6 +12,7 @@ import SwiftyJSON
 import FBSDKLoginKit
 import GoogleSignIn
 
+/// LoginController handling the Login process
 class LoginController: ModelViewController, GIDSignInUIDelegate {
     
     @IBOutlet weak var forgotPasswordButton: UIButton!
@@ -30,21 +31,18 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
     
     let facebookNoEmailMessage = "Your facebook account does not contain an " +
                         "email. Please make an account through our signup page"
+    
+    /// JSON containing information from OAuth account
     var oauthJSON: JSON? = nil
+    
+    /// Facebook access token
     var fbToken: String? = nil
     
+    /**
+     Set up button actions and the views, called when the view has been loaded
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Add observer that allows for scrolling once you enter keyboard mode
-//        NotificationCenter.default.addObserver(self,
-//                                    selector:#selector(self.keyboardWillShow),
-//                                    name: NSNotification.Name.UIKeyboardWillShow,
-//                                    object: nil)
-//        NotificationCenter.default.addObserver(self,
-//                                    selector: #selector(self.keyboardWillHide),
-//                                    name: NSNotification.Name.UIKeyboardWillHide,
-//                                    object: nil)
         
         signinButton.addTarget(self, action: #selector(loginButtonAction),
                                for: .touchUpInside)
@@ -67,30 +65,34 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
                                 for: .editingChanged)
     }
     
-    /* Setup images for the buttons and setups textfields
+    /** 
+     Setup all the text fields and button images
      */
     func setupViews() {
-        fbButton.imageView?.contentMode = .scaleAspectFill
-        googleButton.imageView?.contentMode = .scaleAspectFill
-        
+        // Setup signin button
         signinButton.backgroundColor = disabledButtonColor
         signinButton.layer.cornerRadius = 20
         signinButton.isEnabled = false
         signinButton.setTitleColor(UIColor.white, for: .normal)
         
+        // Setup facebook button
         fbButton.backgroundColor = blueButtonColor
         fbButton.layer.cornerRadius = 5
         fbButton.setTitleColor(UIColor.white, for: .normal)
         
+        // Setup google button
         googleButton.backgroundColor = googleButtonColor
         googleButton.layer.cornerRadius = 5
         googleButton.setTitleColor(UIColor.white, for: .normal)
         
+        // Change color of the bar between the forgot password text and signup text
         separator.textColor = UIColor.white
         
+        // Set color of text of button
         signupButton.setTitleColor(UIColor.white, for: .normal)
         forgotPasswordButton.setTitleColor(UIColor.white, for: .normal)
         
+        // Format the text fields
         usernameField.backgroundColor = textfieldColor
         usernameField.alpha = 0.7
         usernameField.rightRoundedField()
@@ -98,6 +100,7 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         passwordField.alpha = 0.7
         passwordField.rightRoundedField()
         
+        // Format the icons next to text fields
         userIconBorder.backgroundColor = textfieldColor
         userIconBorder.alpha = 0.7
         userIconBorder.leftRoundedImageView()
@@ -105,6 +108,7 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         passwordIconBorder.alpha = 0.7
         passwordIconBorder.leftRoundedImageView()
         
+        // Set orange color of the background
         let height = signinButton.center.y
         let frame = CGRect(x: backgroundView.frame.origin.x,
                            y: backgroundView.frame.origin.y,
@@ -118,12 +122,18 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         self.hideKeyboardWhenTappedAround()
     }
     
+    /**
+     Handle Google OAuth signin
+     */
     func handleCustomGoogleLogin() {
         GIDSignIn.sharedInstance().signOut()
         GIDSignIn.sharedInstance().signIn()
     
     }
     
+    /**
+     Handle Facebook OAuth signin
+     */
     func handleCustomFBLogin() {
         FBSDKLoginManager().logOut()
         FBSDKLoginManager().logIn(withReadPermissions: ["email",
@@ -140,16 +150,24 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         }
     }
     
+    /**
+     Login button action
+     
+     - Parameter sender: The login button
+     */
     func loginButtonAction(_ sender: UIButton) {
         let text = usernameField.text!
         
+        // Create activity indicator to indicate the request is being loaded
         let indicator = requestLoading(view: self.view)
-        if self.isValidEmail(email: text) {
+        if isValidEmail(email: text) {
             LoginManager().login(withEmail: text,
                                  password: passwordField.text!,
                                  onSuccess:
                 { user, apiToken in
                     self.requestDoneLoading(view: self.view, indicator: indicator)
+                    
+                    // Save the api token to UserDefaults for later usage
                     UserDefaults.standard.set(apiToken, forKey: "api_token")
                     UserDefaults.standard.synchronize()
                     self.transitionToHome()
@@ -159,12 +177,14 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
                 self.displayAlert(view: self, title: "Login Failed",
                                   message: error)
             })
-        } else if self.isValidCharactersUsername(username: text) {
+        } else if isValidCharactersUsername(username: text) {
             LoginManager().login(withUsername: text,
                                  password: passwordField.text!,
                                  onSuccess:
                 { user, apiToken in
                     self.requestDoneLoading(view: self.view, indicator: indicator)
+                    
+                    // Save the api token to UserDefaults for later usage
                     UserDefaults.standard.set(apiToken, forKey: "api_token")
                     UserDefaults.standard.synchronize()
                     print(user)
@@ -178,6 +198,9 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         }
     }
     
+    /**
+     Make a facebook graph request to retrieve information
+     */
     func graphRequest() {
     
         // not firAuth anymore
@@ -207,6 +230,14 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         }
     }
     
+    /**
+     Handle Facebook OAuth. First check if the email has been taken. If yes then
+     it will try to log the user in. If not then it will switch to UsernameController
+     in order to prompt user to enter a username for the new account
+     
+     - Parameter json: JSON object retrieved from Facebook containing user data
+     - Parameter accessToken: Facebook access token
+     */
     func fbOauthHandle(json: JSON, accessToken: String) {
         
         // Checks if facebook email has already been used
@@ -226,6 +257,13 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         
     }
     
+    /**
+     Called when email has been taken. Attempt to log the user in with their
+     Facebook
+     
+     - Parameter accessToken: Facebook access token
+     - Parameter json: JSON object retrieved from facebook containing user data
+     */
     func fbOauthLogin(accessToken: String, json: JSON) {
         let email = json["email"].stringValue
         let oauthType = "facebook"
@@ -238,11 +276,15 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
                                   onSuccess:
             { user, apiToken in
                 self.requestDoneLoading(view: self.view, indicator: indicator)
+                
+                // Save the api token to UserDefaults for later usage
                 UserDefaults.standard.set(apiToken, forKey: "api_token")
                 UserDefaults.standard.synchronize()
                 self.transitionToHome()
         }, onFailure: { json in
             self.requestDoneLoading(view: self.view, indicator: indicator)
+            // Login failed because an account has been created before with the
+            // same email. Prompt user to merge account
             if json["data"]["mergeable"].boolValue {
                 let message = json["message"].stringValue
                 let alert = UIAlertController(title: nil,
@@ -258,6 +300,13 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         })
     }
     
+    /**
+     Called when user agrees to merge account. This will merge the new oauth
+     account to the preexisted account
+     
+     - Parameter accessToken: Facebook access token
+     - Parameter email: Facebook email
+     */
     func mergeAccount(accessToken: String, email: String) {
         let indicator = self.requestLoading(view: self.view)
         let oauthType = "facebook"
@@ -268,12 +317,17 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
                                                 onSuccess:
             { user, apiToken in
                 self.requestDoneLoading(view: self.view, indicator: indicator)
+                
+                // Save the api token to UserDefaults for later usage
                 UserDefaults.standard.set(apiToken, forKey: "api_token")
                 UserDefaults.standard.synchronize()
                 self.transitionToHome()
         })
     }
     
+    /**
+     Called when this view is about to be switched
+     */
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -284,6 +338,9 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         self.navigationController?.view.backgroundColor = navigationBarColor
     }
     
+    /**
+     Called when this view is about to appear
+     */
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -292,7 +349,10 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
                                                           animated: animated)
     }
     
-    /* Overridden rules for checking the field before enabling the button
+    /**
+     Overridden rules for checking the field before enabling the button.
+     Check if username field and password field are filled and if they fulfil
+     the requirement.
      */
     override func fieldCheck() {
         guard
@@ -310,6 +370,11 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         signinButton.backgroundColor = blueButtonColor
     }
     
+    /**
+     Prepare for the switch to the OAuth registration page by sending the
+     JSON and Facebook token over so that the registration page can call
+     the OAuth register network request with these info
+     */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "oauthToUsernameController" {
             let resultVC = segue.destination as! UsernameController

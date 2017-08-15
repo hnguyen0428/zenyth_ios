@@ -8,14 +8,21 @@
 
 import UIKit
 
+/// The model view controller that other starter controllers should extend from
+/// in order to get basic UI features
 class ModelViewController: UIViewController, UITextFieldDelegate {
     
     var backgroundView: UIImageView!
     
+    /**
+     Called once the view is loaded.
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
         
+        // Add this controller as delegate to all textfields so that
+        // textFieldShouldReturn() function can trigger
         for subview in view.subviews {
             if subview is UITextField {
                 let textField = subview as! UITextField
@@ -25,7 +32,8 @@ class ModelViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    /* Setups the background
+    /** 
+     Setup the background and the back button of the navigation bar
      */
     func setup() {
         //self.scrollView = UIScrollView(frame: view.frame)
@@ -52,8 +60,11 @@ class ModelViewController: UIViewController, UITextFieldDelegate {
         self.navigationItem.leftBarButtonItem = barButton
     }
     
-    /* Checks if the textfields are all filled out corresponding to the
-     * requirements before the button is enabled
+    /** 
+     Check if the textfields are all filled out corresponding to the
+     requirements before the button is enabled
+     
+     - Parameter textField: textfield being edited
      */
     func editingChanged(_ textField: UITextField) {
         if textField.text?.characters.count == 1 {
@@ -66,14 +77,24 @@ class ModelViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    /* To be overridden by the class that extends from this class
+    /** 
+     To be overridden by the class that extends from this class
      */
     func fieldCheck() {}
     
+    /**
+     Action done by pressing the back button on navigation controller's
+     toolbar
+     */
     func onPressingBack() {
         self.navigationController?.popViewController(animated: false)
     }
     
+    /**
+     When pressing next on the textfield, move on to the next textfield.
+     This is done by setting the tag number of the next textfield to be just
+     1 more than the current textfield's tag
+     */
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // Try to find next responder
         if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
@@ -86,6 +107,9 @@ class ModelViewController: UIViewController, UITextFieldDelegate {
         return false
     }
     
+    /**
+     Transition to the Home page of the app. Called when successfully logged in
+     */
     func transitionToHome() {
         //let storyboard = UIStoryboard(name: "Home", bundle: nil);
 //        let mapController: MapController =

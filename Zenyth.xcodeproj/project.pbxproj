@@ -63,6 +63,7 @@
 		478006331F218A380064F9E7 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478006321F218A380064F9E7 /* MapController.swift */; };
 		478006391F21B5730064F9E7 /* Pinpost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478006381F21B5730064F9E7 /* Pinpost.swift */; };
 		47883CD51F16EC8B0008C7F3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 47883CD41F16EC8B0008C7F3 /* GoogleService-Info.plist */; };
+		47A2DFB81F42C3F9001CFAA3 /* GlobalHelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A2DFB71F42C3F9001CFAA3 /* GlobalHelperFunctions.swift */; };
 		47A488E01F22C96D006B0453 /* PinpostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A488DF1F22C96D006B0453 /* PinpostController.swift */; };
 		47A488E21F22C97B006B0453 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A488E11F22C97B006B0453 /* ProfileController.swift */; };
 		47A488E41F22C98C006B0453 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A488E31F22C98C006B0453 /* HomeController.swift */; };
@@ -161,6 +162,7 @@
 		478006321F218A380064F9E7 /* MapController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
 		478006381F21B5730064F9E7 /* Pinpost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pinpost.swift; sourceTree = "<group>"; };
 		47883CD41F16EC8B0008C7F3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		47A2DFB71F42C3F9001CFAA3 /* GlobalHelperFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalHelperFunctions.swift; sourceTree = "<group>"; };
 		47A488DF1F22C96D006B0453 /* PinpostController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinpostController.swift; sourceTree = "<group>"; };
 		47A488E11F22C97B006B0453 /* ProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		47A488E31F22C98C006B0453 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -327,7 +329,6 @@
 			isa = PBXGroup;
 			children = (
 				47D9ECB81F19C37D00E3EEE4 /* RegisterControllers */,
-				47ABAA031F0B7B7400FD479E /* UIViewController+Helper.swift */,
 				47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */,
 				47A745E81F16F7D000A88D5D /* ModelViewController.swift */,
 				D237226F1F1C8813004FFCFA /* ResetPasswordController.swift */,
@@ -371,7 +372,9 @@
 				47C622CF1F0A341A003BBC16 /* Assets.xcassets */,
 				47C622D11F0A341A003BBC16 /* LaunchScreen.storyboard */,
 				47C622D41F0A341A003BBC16 /* Info.plist */,
+				47ABAA031F0B7B7400FD479E /* UIViewController+Helper.swift */,
 				47A9024D1F0B34C900A1CEE8 /* GlobalVariables.swift */,
+				47A2DFB71F42C3F9001CFAA3 /* GlobalHelperFunctions.swift */,
 				47C9D4461F3EC08500E93079 /* UIExtensions.swift */,
 				47883CD41F16EC8B0008C7F3 /* GoogleService-Info.plist */,
 				4727AA561F2185F00032F7EB /* Home.storyboard */,
@@ -749,6 +752,7 @@
 				4712809E1F3990DF006FE796 /* TagManagerProtocol.swift in Sources */,
 				477FF6941F39D92F00FD66B4 /* Endpoint.swift in Sources */,
 				4712808C1F39840D006FE796 /* Reply.swift in Sources */,
+				47A2DFB81F42C3F9001CFAA3 /* GlobalHelperFunctions.swift in Sources */,
 				471280841F396FCC006FE796 /* Callbacks.swift in Sources */,
 				47A488E21F22C97B006B0453 /* ProfileController.swift in Sources */,
 				470A17ED1F3E93310067046F /* PasswordController.swift in Sources */,

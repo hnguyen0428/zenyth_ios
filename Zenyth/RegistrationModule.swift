@@ -1,5 +1,5 @@
 //
-//  RegisterController.swift
+//  RegistrationModule.swift
 //  Zenyth
 //
 //  Created by Hoang on 7/14/17.
@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Module used for registering the user
 class RegistrationModule {
     
     var username: String?
@@ -17,10 +18,14 @@ class RegistrationModule {
     var gender: String?
     var birthday: String?
     
+    /// A shared module singleton used to share info between different pages
+    /// of registration
     static let sharedInstance = RegistrationModule()
     
+    // Prevent instantiation of another module
     private init() {}
     
+    /// MESSAGE CONSTANTS
     static let usernameTakenMessage = "is already taken!"
     static let usernameAvailableMessage = "is available!"
     static let emailTakenMessage = "Email is already taken!"
@@ -43,30 +48,57 @@ class RegistrationModule {
     static let mergeMessageRegular = "An account with the same email" +
                         " has already been created. Do you want to merge?"
 
+    /**
+     Set username
+     - Parameter username: username to be set
+     */
     func setUsername(username: String) {
         self.username = username
     }
     
+    /**
+     Set email
+     - Parameter email: email to be set
+     */
     func setEmail(email: String) {
         self.email = email
     }
     
+    /**
+     Set password
+     - Parameter password: password to be set
+     */
     func setPassword(password: String) {
         self.password = password
     }
     
+    /**
+     Set password confirmation
+     - Parameter passwordConfirmation: password confirmation to be set
+     */
     func setPasswordConfirmation(passwordConfirmation: String) {
         self.passwordConfirmation = passwordConfirmation
     }
     
+    /**
+     Set gender
+     - Parameter gender: gender to be set
+     */
     func setGender(gender: String) {
         self.gender = gender
     }
     
+    /**
+     Set birthday
+     - Parameter birthday: birthday to be set
+     */
     func setBirthday(birthday: String) {
         self.birthday = birthday
     }
     
+    /**
+     Clear the information of the module
+     */
     func clearInfo() {
         username = nil
         email = nil
@@ -74,15 +106,6 @@ class RegistrationModule {
         passwordConfirmation = nil
         gender = nil
         birthday = nil
-    }
-    
-    func printInfo() {
-        print(username)
-        print(email)
-        print(password)
-        print(passwordConfirmation)
-        print(gender)
-        print(birthday)
     }
     
 }
