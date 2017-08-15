@@ -327,7 +327,6 @@
 			isa = PBXGroup;
 			children = (
 				47D9ECB81F19C37D00E3EEE4 /* RegisterControllers */,
-				47C622C81F0A341A003BBC16 /* AppDelegate.swift */,
 				47ABAA031F0B7B7400FD479E /* UIViewController+Helper.swift */,
 				47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */,
 				47A745E81F16F7D000A88D5D /* ModelViewController.swift */,
@@ -367,6 +366,7 @@
 				478006311F218A100064F9E7 /* HomeControllers */,
 				47A745E71F16F7B100A88D5D /* StartingControllers */,
 				82AFE11E1F0F16AD00605905 /* Zenyth.entitlements */,
+				47C622C81F0A341A003BBC16 /* AppDelegate.swift */,
 				470127FF1F3C6B7400A8E5AE /* ExampleObjectsJSONFiles */,
 				47C622CF1F0A341A003BBC16 /* Assets.xcassets */,
 				47C622D11F0A341A003BBC16 /* LaunchScreen.storyboard */,
