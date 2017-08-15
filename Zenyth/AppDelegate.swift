@@ -24,13 +24,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                      didFinishLaunchingWithOptions launchOptions:
         [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        APIClient.sharedClient.setClientId(clientId: "stub")
+        var infoDict: NSDictionary?
+        if let path = Bundle.main.path(forResource: "Info", ofType: "plist") {
+            infoDict = NSDictionary(contentsOfFile: path)
+        }
+        if infoDict != nil {
+            let clientID = infoDict?.object(forKey: "CLIENT_ID") as! String
+            APIClient.sharedClient.clientID = clientID
+        }
         
-        // Twitter auth
-        // Fabric.with([Twitter.self])
+        var googleDict: NSDictionary?
+        if let path = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist") {
+            googleDict = NSDictionary(contentsOfFile: path)
+        }
+        if googleDict != nil {
+            let clientID = googleDict?.object(forKey: "CLIENT_ID") as! String
+            GIDSignIn.sharedInstance().clientID = clientID
+        }
 
-        GIDSignIn.sharedInstance().clientID =
-        "726843823228-983fiv45v8m39aoslobaiiqqipvvm2lf.apps.googleusercontent.com"
         GIDSignIn.sharedInstance().delegate = self
         
         // converted from original objective C
