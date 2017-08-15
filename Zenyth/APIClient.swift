@@ -128,6 +128,10 @@ class APIClient {
         }
     }
     
+    func setClientId(clientId: String) {
+        self.headers.updateValue(clientId, forKey: "Client-ID")
+    }
+    
     func updateHeaders(value: String, forKey key: String) {
         self.headers.updateValue(value, forKey: key)
     }

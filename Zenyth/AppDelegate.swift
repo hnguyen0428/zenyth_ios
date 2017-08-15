@@ -24,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                      didFinishLaunchingWithOptions launchOptions:
         [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        APIClient.sharedClient.setClientId(clientId: "stub")
+        
         // Twitter auth
         // Fabric.with([Twitter.self])
 
