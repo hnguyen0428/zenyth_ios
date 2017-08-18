@@ -26,11 +26,11 @@ struct Relationship: APIObject {
     
     func toJSON() -> JSON {
         return [
-            "id" : id,
-            "requester_id" : requester.toJSON(),
-            "requestee_id" : requestee.toJSON(),
-            "status" : status,
-            "blocked" : blocked
+            "id": id,
+            "requester_id": requester.toJSON(),
+            "requestee_id": requestee.toJSON(),
+            "status": status,
+            "blocked": blocked
         ]
     }
     

@@ -41,13 +41,13 @@ struct Reply: APIObject {
         }
         
         return [
-            "id" : id,
-            "text" : text,
-            "creator" : creator.toJSON(),
-            "comment_id" : onCommentId,
-            "created_at" : createdAt,
-            "updated_at" : updatedAt,
-            "images" : imagesJSON
+            "id": id,
+            "text": text,
+            "creator": creator.toJSON(),
+            "comment_id": onCommentId,
+            "created_at": createdAt,
+            "updated_at": updatedAt,
+            "images": imagesJSON
         ]
     }
     

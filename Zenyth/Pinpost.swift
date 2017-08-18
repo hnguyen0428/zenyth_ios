@@ -49,16 +49,16 @@ struct Pinpost: APIObject {
         }
         
         return [
-            "id" : id,
-            "title" : title,
-            "description" : pinpostDescription,
-            "latitude" : latitude,
-            "longitude" : longitude,
-            "creator" : creator.toJSON(),
-            "privacy" : privacy,
-            "created_at" : createdAt,
-            "updated_at" : updatedAt,
-            "images" : imagesJSON
+            "id": id,
+            "title": title,
+            "description": pinpostDescription,
+            "latitude": latitude,
+            "longitude": longitude,
+            "creator": creator.toJSON(),
+            "privacy": privacy,
+            "created_at": createdAt,
+            "updated_at": updatedAt,
+            "images": imagesJSON
         ]
     }
     

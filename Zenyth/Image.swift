@@ -16,6 +16,7 @@ struct Image: APIObject {
     var userId: UInt32
     var imageableId: UInt32
     var imageableType: String
+    var url: String
     
     init(json: JSON) {
         self.id = json["id"].uInt32Value
@@ -24,16 +25,18 @@ struct Image: APIObject {
         self.userId = json["user_id"].uInt32Value
         self.imageableId = json["imageable_id"].uInt32Value
         self.imageableType = json["imageable_type"].stringValue
+        self.url = json["url"].stringValue
     }
     
     func toJSON() -> JSON {
         return [
-            "id" : id,
-            "filename" : filename,
-            "directory" : directory,
-            "user_id" : userId,
-            "imageable_id" : imageableId,
-            "imageable_type" : imageableType
+            "id": id,
+            "filename": filename,
+            "directory": directory,
+            "user_id": userId,
+            "imageable_id": imageableId,
+            "imageable_type": imageableType,
+            "url": url
         ]
     }
     

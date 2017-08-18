@@ -42,15 +42,15 @@ struct User : APIObject {
     
     func toJSON() -> JSON {
         return [
-            "id" : id,
-            "email" : email,
-            "username" : username,
-            "friends" : friends,
-            "first_name" : firstName,
-            "last_name" : lastName,
-            "gender" : gender,
-            "birthday" : birthday,
-            "picture" : profilePicture?.toJSON()
+            "id": id,
+            "email": email,
+            "username": username,
+            "friends": friends,
+            "first_name": firstName,
+            "last_name": lastName,
+            "gender": gender,
+            "birthday": birthday,
+            "picture": profilePicture?.toJSON()
         ]
     }
     

@@ -45,14 +45,14 @@ struct Comment: APIObject {
         }
         
         return [
-            "id" : id,
-            "text" : text,
-            "creator" : creator.toJSON(),
-            "commentable_id" : commentableId,
-            "commentable_type" : commentableType,
-            "created_at" : createdAt,
-            "updated_at" : updatedAt,
-            "images" : imagesJSON
+            "id": id,
+            "text": text,
+            "creator": creator.toJSON(),
+            "commentable_id": commentableId,
+            "commentable_type": commentableType,
+            "created_at": createdAt,
+            "updated_at": updatedAt,
+            "images": imagesJSON
         ]
     }
     

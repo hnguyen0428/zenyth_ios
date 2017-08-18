@@ -20,8 +20,8 @@ struct Tag: APIObject {
     
     func toJSON() -> JSON {
         return [
-            "id" : id,
-            "name" : name
+            "id": id,
+            "name": name
         ]
     }
     

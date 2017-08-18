@@ -24,10 +24,10 @@ struct Like: APIObject {
     
     func toJSON() -> JSON {
         return [
-            "id" : id,
-            "user" : user.toJSON(),
-            "likeable_id" : likeableId,
-            "likeable_type" : likeableType
+            "id": id,
+            "user": user.toJSON(),
+            "likeable_id": likeableId,
+            "likeable_type": likeableType
         ]
     }
     
