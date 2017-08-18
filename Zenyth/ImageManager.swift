@@ -11,11 +11,11 @@ import SwiftyJSON
 import Alamofire
 
 class ImageManager: ImageManagerProtocol {
-    func getImageData(withImageId imageId: UInt32,
+    func getImageData(withImageName imageName: String,
                       onSuccess: DataCallback? = nil,
                       onFailure: JSONCallback? = nil,
                       onRequestError: ErrorCallback? = nil) {
-        let route = Endpoint.GetImageData(imageId).route()
+        let route = Endpoint.GetImageData(imageName).route()
         APIClient.sharedClient.setAuthorization()
         
         APIClient.sharedClient.executeDownload(route: route,

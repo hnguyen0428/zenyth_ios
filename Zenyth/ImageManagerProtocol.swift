@@ -12,12 +12,12 @@ protocol ImageManagerProtocol {
     /**
      Get image data
      - Parameters:
-        - imageId: ID of image to get data of
+        - imageName: name of image to download
         - onSuccess: callback function with Data parameter
         - onFailure: callback function with JSON parameter
         - onRequestError: callback function with NSError parameter
      */
-    func getImageData(withImageId imageId: UInt32,
+    func getImageData(withImageName imageName: String,
                       onSuccess: DataCallback?,
                       onFailure: JSONCallback?,
                       onRequestError: ErrorCallback?)

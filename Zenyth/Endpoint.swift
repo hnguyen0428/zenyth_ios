@@ -88,7 +88,7 @@ public enum Endpoint {
     case BlockUser
     
     /// ImageManager Endpoints
-    case GetImageData(UInt32)
+    case GetImageData(String)
     case DeleteImage(UInt32)
     
     /// TagManager Endpoints
@@ -204,8 +204,8 @@ public enum Endpoint {
         case .BlockUser:
             return ("\(baseURL)/relationship/block", .post)
             
-        case .GetImageData(let imageId):
-            return ("\(baseURL)/image/\(imageId)", .get)
+        case .GetImageData(let imageName):
+            return ("\(baseURL)/image/\(imageName)", .get)
         case .DeleteImage(let imageId):
             return ("\(baseURL)/image/\(imageId)", .delete)
             
