@@ -54,6 +54,7 @@
 		471280AA1F3992F3006FE796 /* RelationshipManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280A91F3992F3006FE796 /* RelationshipManager.swift */; };
 		471280AC1F3992FC006FE796 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280AB1F3992FC006FE796 /* ImageManager.swift */; };
 		471280AE1F399306006FE796 /* TagManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280AD1F399306006FE796 /* TagManager.swift */; };
+		477D94311F47D1FB0043A957 /* UserInfoBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477D94301F47D1FB0043A957 /* UserInfoBar.swift */; };
 		477FF6941F39D92F00FD66B4 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477FF6931F39D92F00FD66B4 /* Endpoint.swift */; };
 		477FF6961F39D97C00FD66B4 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477FF6951F39D97C00FD66B4 /* LoginManager.swift */; };
 		477FF6981F39D98C00FD66B4 /* LoginManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477FF6971F39D98C00FD66B4 /* LoginManagerProtocol.swift */; };
@@ -86,6 +87,8 @@
 		47FE3D051F47AFD300EC62EC /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE3D041F47AFD300EC62EC /* ProfileView.swift */; };
 		47FE3D081F47B63100EC62EC /* UIColor+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE3D071F47B63100EC62EC /* UIColor+Helpers.swift */; };
 		47FE3D0A1F47B66900EC62EC /* UIView+Anchors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE3D091F47B66900EC62EC /* UIView+Anchors.swift */; };
+		47FE3D0E1F47CCE100EC62EC /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE3D0D1F47CCE100EC62EC /* PinView.swift */; };
+		47FE3D101F47CD0100EC62EC /* InfoAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE3D0F1F47CD0100EC62EC /* InfoAsset.swift */; };
 		7341F9E163A96B05940B44E8 /* Pods_ZenythTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BB6326B7B70E7CF186F4AB1 /* Pods_ZenythTests.framework */; };
 		824F43211F15E84C00031672 /* TwitterKitManual in Resources */ = {isa = PBXBuildFile; fileRef = 824F43201F15E84C00031672 /* TwitterKitManual */; };
 		B99E2A49109EC15FB04613DB /* Pods_ZenythUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4950B87A454879669AE8F046 /* Pods_ZenythUITests.framework */; };
@@ -156,6 +159,7 @@
 		471280A91F3992F3006FE796 /* RelationshipManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipManager.swift; sourceTree = "<group>"; };
 		471280AB1F3992FC006FE796 /* ImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		471280AD1F399306006FE796 /* TagManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagManager.swift; sourceTree = "<group>"; };
+		477D94301F47D1FB0043A957 /* UserInfoBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoBar.swift; sourceTree = "<group>"; };
 		477FF6931F39D92F00FD66B4 /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		477FF6951F39D97C00FD66B4 /* LoginManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 		477FF6971F39D98C00FD66B4 /* LoginManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginManagerProtocol.swift; sourceTree = "<group>"; };
@@ -195,6 +199,8 @@
 		47FE3D041F47AFD300EC62EC /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		47FE3D071F47B63100EC62EC /* UIColor+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Helpers.swift"; sourceTree = "<group>"; };
 		47FE3D091F47B66900EC62EC /* UIView+Anchors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Anchors.swift"; sourceTree = "<group>"; };
+		47FE3D0D1F47CCE100EC62EC /* PinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
+		47FE3D0F1F47CD0100EC62EC /* InfoAsset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoAsset.swift; sourceTree = "<group>"; };
 		4950B87A454879669AE8F046 /* Pods_ZenythUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZenythUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BB6326B7B70E7CF186F4AB1 /* Pods_ZenythTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZenythTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		824F43201F15E84C00031672 /* TwitterKitManual */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TwitterKitManual; sourceTree = "<group>"; };
@@ -348,6 +354,9 @@
 			children = (
 				47B47D451F479A04003C8189 /* Navbar.swift */,
 				47FE3D041F47AFD300EC62EC /* ProfileView.swift */,
+				47FE3D0D1F47CCE100EC62EC /* PinView.swift */,
+				47FE3D0F1F47CD0100EC62EC /* InfoAsset.swift */,
+				477D94301F47D1FB0043A957 /* UserInfoBar.swift */,
 			);
 			name = UIObjects;
 			sourceTree = "<group>";
@@ -767,6 +776,7 @@
 			files = (
 				47A488E41F22C98C006B0453 /* HomeController.swift in Sources */,
 				470A17EF1F3E93470067046F /* PersonalInfoController.swift in Sources */,
+				47FE3D0E1F47CCE100EC62EC /* PinView.swift in Sources */,
 				47D9ECC01F19E3D300E3EEE4 /* RegistrationModule.swift in Sources */,
 				471280881F397EC5006FE796 /* Comment.swift in Sources */,
 				4712808E1F39841A006FE796 /* Like.swift in Sources */,
@@ -785,6 +795,7 @@
 				47C9D4471F3EC08500E93079 /* UIExtensions.swift in Sources */,
 				471280941F398576006FE796 /* RelationshipManagerProtocol.swift in Sources */,
 				471280961F398876006FE796 /* ImageManagerProtocol.swift in Sources */,
+				477D94311F47D1FB0043A957 /* UserInfoBar.swift in Sources */,
 				477FF6961F39D97C00FD66B4 /* LoginManager.swift in Sources */,
 				478006331F218A380064F9E7 /* FeedController.swift in Sources */,
 				47FE3D0A1F47B66900EC62EC /* UIView+Anchors.swift in Sources */,
@@ -797,6 +808,7 @@
 				477FF69C1F39D9A200FD66B4 /* RegistrationManager.swift in Sources */,
 				47A9024C1F0B1F4400A1CEE8 /* LoginController.swift in Sources */,
 				471280861F3977D3006FE796 /* PinpostManagerProtocol.swift in Sources */,
+				47FE3D101F47CD0100EC62EC /* InfoAsset.swift in Sources */,
 				471280981F3989CF006FE796 /* CommentManagerProtocol.swift in Sources */,
 				471280A01F3992C6006FE796 /* UserManager.swift in Sources */,
 				477FF6981F39D98C00FD66B4 /* LoginManagerProtocol.swift in Sources */,
