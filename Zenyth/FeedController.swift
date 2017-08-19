@@ -11,7 +11,7 @@ import GoogleMaps
 
 class FeedController: HomeController {
     
-    var mapView: GMSMapView!
+    var mapView: MapView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,10 +32,11 @@ class FeedController: HomeController {
     }
     
     func loadMap() {
-        let camera = GMSCameraPosition.camera(withLatitude: 33.81, longitude: -117.94, zoom: 6.0)
-        let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
-        mapView.frame = self.view.frame
-        self.mapView = mapView
-        view.insertSubview(mapView, at: 0)
+        let mapWidth = view.frame.width
+        let mapHeight = view.frame.height - toolbar!.frame.height
+        let mapFrame = CGRect(x: 0, y: 0, width: mapWidth,
+                              height: mapHeight)
+        mapView = MapView(frame: mapFrame, view: self.view)
+        view.insertSubview(mapView!, at: 0)
     }
 }

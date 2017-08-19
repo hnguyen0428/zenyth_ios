@@ -40,13 +40,27 @@ class ProfileController: HomeController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        self.profileView?.requestLoading()
         let userId = UserDefaults.standard.object(forKey: "id") as! UInt32
+        
+        let group = DispatchGroup()
+        group.enter()
         self.readProfile(userId: userId, handler:
             { user in
+                let innerGroup = DispatchGroup()
                 if let image = user.profilePicture {
-                    self.renderProfileImage(image: image)
+                    innerGroup.enter()
+                    self.renderProfileImage(image: image, handler:
+                        {
+                            innerGroup.leave()
+                    })
                 }
+                
+                innerGroup.enter()
+                self.renderPinImages(pinposts: user.pinposts, handler:
+                    {
+                        innerGroup.leave()
+                })
                 
                 self.profileView?.usernameLabel!.text = user.username
                 self.profileView?.bioText?.text = user.biography
@@ -54,8 +68,14 @@ class ProfileController: HomeController {
                 self.profileView?.setFollowersCount(count: user.friends)
                 self.profileView?.setPinpostsCount(count: user.numberOfPinposts!)
                 
-                self.renderPinImages(pinposts: user.pinposts)
+                innerGroup.notify(queue: .main) {
+                    group.leave()
+                }
         })
+        
+        group.notify(queue: .main) {
+            self.profileView?.requestDoneLoading()
+        }
     }
     
     func readProfile(userId: UInt32, handler: @escaping (User) -> Void) {
@@ -66,16 +86,14 @@ class ProfileController: HomeController {
         })
     }
     
-    func renderProfileImage(image: Image) {
-        ImageManager().getImageData(withUrl: image.url,
-                                    onSuccess:
-            { data in
-                let image = UIImage(data: data)
-                self.profileView?.profilePicture?.image = image
+    func renderProfileImage(image: Image, handler: @escaping (Void) -> Void) {
+        self.profileView?.profilePicture!.imageFromUrl(withUrl: image.url, handler:
+            {
+                handler()
         })
     }
     
-    func renderPinImages(pinposts: [Pinpost]) {
+    func renderPinImages(pinposts: [Pinpost], handler: @escaping (Void) -> Void) {
         var images: [Image] = [Image]()
         for pinpost in pinposts {
             if let image = pinpost.images.first {
@@ -83,17 +101,22 @@ class ProfileController: HomeController {
             }
         }
         
+        let group = DispatchGroup()
+        
         for i in 0..<images.count {
             if i > 4 {
                 break
             }
-            ImageManager().getImageData(withUrl: images[i].url, onSuccess:
-                { data in
-                    if let image = UIImage(data: data) {
-                        self.profileView?.setPinImage(image: image, index: i)
-                    }
-                    
+            let url = images[i].url
+            group.enter()
+            self.profileView?.pinView?.pinImages[i].imageFromUrl(withUrl: url, handler:
+                {
+                group.leave()
             })
+        }
+        
+        group.notify(queue: .main) {
+            handler()
         }
     }
 }

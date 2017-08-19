@@ -17,6 +17,10 @@ class ProfileView: UIView {
     var pinView: PinView?
     var userInfoBar: UserInfoBar?
     
+    // Used for simulating request loading
+    var requestLoadingMask: UIView?
+    var indicator: UIActivityIndicatorView?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -30,7 +34,6 @@ class ProfileView: UIView {
         
         self.backgroundColor = UIColor.clear
         self.bottomRoundedWithShadow(radius: 25.0)
-        //self.bottomRounded(radius: 25.0)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -42,19 +45,31 @@ class ProfileView: UIView {
         let widthPicture = heightPicture
         let profilePictureFrame = CGRect(x: 0, y: 0, width: widthPicture,
                                          height: heightPicture)
-        profilePicture = UIImageView(frame: profilePictureFrame)
         
+        let container = UIView(frame: profilePictureFrame)
+        container.clipsToBounds = false
+        container.layer.masksToBounds = false
+        container.layer.shadowPath = UIBezierPath(roundedRect: container.bounds,
+                                                  cornerRadius: profilePictureFrame.height/2).cgPath
+        container.layer.shadowColor = UIColor.black.cgColor
+        container.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
+        container.layer.shadowRadius = 2.0
+        container.layer.shadowOpacity = 0.5
         
-        self.addSubview(profilePicture!)
-        profilePicture?.anchor(topAnchor, left: leftAnchor, bottom: nil,
+        let image = UIImageView(frame: container.bounds)
+        image.layer.cornerRadius = profilePictureFrame.height/2
+        image.clipsToBounds = true
+        
+        image.backgroundColor = UIColor.clear
+        profilePicture = image
+        container.addSubview(image)
+        self.addSubview(container)
+        
+        container.anchor(topAnchor, left: leftAnchor, bottom: nil,
                                right: nil, topConstant: 25.0, leftConstant: 10.0,
                                bottomConstant: 0, rightConstant: 0,
                                widthConstant: profilePictureFrame.width,
                                heightConstant: profilePictureFrame.height)
-        
-        profilePicture!.layer.masksToBounds = false
-        profilePicture!.layer.cornerRadius = profilePicture!.frame.height/2
-        profilePicture?.clipsToBounds = true
     }
     
     func setupUsernameLabel() {
@@ -92,8 +107,9 @@ class ProfileView: UIView {
         let width = self.frame.width * 0.90
         let frame = CGRect(x: 0, y: 0, width: width, height: height)
         bioText = UITextView(frame: frame)
-        
+        bioText!.isUserInteractionEnabled = false
         bioText!.font = UIFont.systemFont(ofSize: 17.0)
+        bioText!.backgroundColor = UIColor.clear
         
         self.addSubview(bioText!)
         
@@ -162,6 +178,28 @@ class ProfileView: UIView {
     
     func setPinImage(image: UIImage, index: Int) {
         self.pinView?.pinImages[index].image = image
+    }
+    
+    func requestLoading() {
+        indicator = UIActivityIndicatorView(
+            activityIndicatorStyle: .gray
+        )
+        indicator!.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+        indicator!.center = self.center
+        indicator!.hidesWhenStopped = true
+        indicator!.startAnimating()
+        requestLoadingMask = UIView(frame: self.frame)
+        requestLoadingMask!.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        requestLoadingMask!.bottomRounded(radius: 25.0)
+        self.addSubview(requestLoadingMask!)
+        self.addSubview(indicator!)
+        self.isUserInteractionEnabled = false
+    }
+    
+    func requestDoneLoading() {
+        indicator?.removeFromSuperview()
+        requestLoadingMask?.removeFromSuperview()
+        self.isUserInteractionEnabled = true
     }
     
 }
