@@ -19,6 +19,7 @@ class ProfileController: HomeController {
         toolbar?.homeButton?.addTarget(self, action: #selector(transitionToFeed), for: .touchUpInside)
         toolbar?.notificationButton?.addTarget(self, action: #selector(transitionToNotification), for: .touchUpInside)
         toolbar?.profileButton?.addTarget(self, action: #selector(transitionToProfile), for: .touchUpInside)
+        self.profileView?.editProfileButton?.addTarget(self, action: #selector(transitionToEditProfile), for: .touchUpInside)
     }
     
     override func setupViews() {
@@ -40,42 +41,24 @@ class ProfileController: HomeController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.profileView?.requestLoading()
         let userId = UserDefaults.standard.object(forKey: "id") as! UInt32
         
-        let group = DispatchGroup()
-        group.enter()
         self.readProfile(userId: userId, handler:
             { user in
-                let innerGroup = DispatchGroup()
                 if let image = user.profilePicture {
-                    innerGroup.enter()
-                    self.renderProfileImage(image: image, handler:
-                        {
-                            innerGroup.leave()
-                    })
+                    self.renderProfileImage(image: image, handler: nil)
+                } else {
+                    self.profileView?.profilePicture?.image = #imageLiteral(resourceName: "default_profile")
                 }
                 
-                innerGroup.enter()
-                self.renderPinImages(pinposts: user.pinposts, handler:
-                    {
-                        innerGroup.leave()
-                })
+                self.renderPinImages(pinposts: user.pinposts, handler: nil)
                 
                 self.profileView?.usernameLabel!.text = user.username
                 self.profileView?.bioText?.text = user.biography
                 self.profileView?.setLikesCount(count: user.likes!)
                 self.profileView?.setFollowersCount(count: user.friends)
                 self.profileView?.setPinpostsCount(count: user.numberOfPinposts!)
-                
-                innerGroup.notify(queue: .main) {
-                    group.leave()
-                }
         })
-        
-        group.notify(queue: .main) {
-            self.profileView?.requestDoneLoading()
-        }
     }
     
     func readProfile(userId: UInt32, handler: @escaping (User) -> Void) {
@@ -86,14 +69,14 @@ class ProfileController: HomeController {
         })
     }
     
-    func renderProfileImage(image: Image, handler: @escaping (Void) -> Void) {
+    func renderProfileImage(image: Image, handler: Handler? = nil) {
         self.profileView?.profilePicture!.imageFromUrl(withUrl: image.url, handler:
             {
-                handler()
+                handler?()
         })
     }
     
-    func renderPinImages(pinposts: [Pinpost], handler: @escaping (Void) -> Void) {
+    func renderPinImages(pinposts: [Pinpost], handler: Handler? = nil) {
         var images: [Image] = [Image]()
         for pinpost in pinposts {
             if let image = pinpost.images.first {
@@ -116,7 +99,14 @@ class ProfileController: HomeController {
         }
         
         group.notify(queue: .main) {
-            handler()
+            handler?()
         }
+    }
+    
+    func transitionToEditProfile() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let controller = EditProfileController()
+        appDelegate.window!.rootViewController = controller
     }
 }

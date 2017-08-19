@@ -43,7 +43,7 @@ class PinView: UIView {
         container.layer.masksToBounds = false
         container.layer.shadowPath = UIBezierPath(roundedRect: container.bounds,
                                                   cornerRadius: frame.height/2).cgPath
-        container.layer.shadowColor = UIColor.black.cgColor
+        container.layer.shadowColor = UIColor.lightGray.cgColor
         container.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
         container.layer.shadowRadius = 2.0
         container.layer.shadowOpacity = 0.5

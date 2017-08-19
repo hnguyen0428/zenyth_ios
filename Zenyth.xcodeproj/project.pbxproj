@@ -73,6 +73,7 @@
 		47A9024C1F0B1F4400A1CEE8 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A9024B1F0B1F4400A1CEE8 /* LoginController.swift */; };
 		47A9024E1F0B34C900A1CEE8 /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A9024D1F0B34C900A1CEE8 /* GlobalVariables.swift */; };
 		47ABAA041F0B7B7400FD479E /* UIViewController+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47ABAA031F0B7B7400FD479E /* UIViewController+Helper.swift */; };
+		47B088CC1F48EFA500F4E4BB /* EditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B088CB1F48EFA500F4E4BB /* EditProfileController.swift */; };
 		47B47D461F479A04003C8189 /* Navbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B47D451F479A04003C8189 /* Navbar.swift */; };
 		47C622C91F0A341A003BBC16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622C81F0A341A003BBC16 /* AppDelegate.swift */; };
 		47C622CE1F0A341A003BBC16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47C622CC1F0A341A003BBC16 /* Main.storyboard */; };
@@ -180,6 +181,7 @@
 		47A9024B1F0B1F4400A1CEE8 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		47A9024D1F0B34C900A1CEE8 /* GlobalVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariables.swift; sourceTree = "<group>"; };
 		47ABAA031F0B7B7400FD479E /* UIViewController+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Helper.swift"; sourceTree = "<group>"; };
+		47B088CB1F48EFA500F4E4BB /* EditProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileController.swift; sourceTree = "<group>"; };
 		47B47D451F479A04003C8189 /* Navbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Navbar.swift; sourceTree = "<group>"; };
 		47B7C0BF1F3D693000E92DAA /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		47C622C51F0A341A003BBC16 /* Zenyth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zenyth.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -338,6 +340,7 @@
 				478006321F218A380064F9E7 /* FeedController.swift */,
 				47A488DF1F22C96D006B0453 /* NotificationController.swift */,
 				47A488E11F22C97B006B0453 /* ProfileController.swift */,
+				47B088CB1F48EFA500F4E4BB /* EditProfileController.swift */,
 			);
 			name = HomeControllers;
 			sourceTree = "<group>";
@@ -827,6 +830,7 @@
 				471280781F391A4B006FE796 /* CredentialManagerProtocol.swift in Sources */,
 				4712807E1F3929B2006FE796 /* APIClient.swift in Sources */,
 				471280AA1F3992F3006FE796 /* RelationshipManager.swift in Sources */,
+				47B088CC1F48EFA500F4E4BB /* EditProfileController.swift in Sources */,
 				47ABAA041F0B7B7400FD479E /* UIViewController+Helper.swift in Sources */,
 				471280A21F3992CF006FE796 /* PinpostManager.swift in Sources */,
 				471280801F39381C006FE796 /* APIObject.swift in Sources */,

@@ -12,6 +12,7 @@ class ProfileView: UIView {
     var profilePicture: UIImageView?
     var bioText: UITextView?
     var usernameLabel: UILabel?
+    var editProfileButton: UIButton?
     var settingsButton: UIButton?
     var topPinLabel: UILabel?
     var pinView: PinView?
@@ -26,6 +27,7 @@ class ProfileView: UIView {
         
         self.setupProfilePicture()
         self.setupUsernameLabel()
+        self.setupEditProfileButton()
         self.setupSettingsButton()
         self.setupBioText()
         self.setupTopPinLabel()
@@ -51,7 +53,7 @@ class ProfileView: UIView {
         container.layer.masksToBounds = false
         container.layer.shadowPath = UIBezierPath(roundedRect: container.bounds,
                                                   cornerRadius: profilePictureFrame.height/2).cgPath
-        container.layer.shadowColor = UIColor.black.cgColor
+        container.layer.shadowColor = UIColor.lightGray.cgColor
         container.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
         container.layer.shadowRadius = 2.0
         container.layer.shadowOpacity = 0.5
@@ -84,6 +86,26 @@ class ProfileView: UIView {
                               right: nil, topConstant: 10.0, leftConstant: 10.0,
                               bottomConstant: 0, rightConstant: 0,
                               widthConstant: frame.width, heightConstant: frame.height)
+    }
+    
+    func setupEditProfileButton() {
+        let height = self.frame.height * 0.08
+        let width = self.frame.width * 0.30
+        let frame = CGRect(x: 0, y: 0, width: width, height: height)
+        editProfileButton = UIButton(frame: frame)
+        editProfileButton!.setTitle("Edit Profile", for: .normal)
+        editProfileButton!.setTitleColor(UIColor.black, for: .normal)
+        editProfileButton!.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15.0)
+        
+        editProfileButton!.layer.cornerRadius = 5
+        editProfileButton!.layer.borderWidth = 1
+        editProfileButton!.layer.borderColor = UIColor.black.cgColor
+        
+        self.addSubview(editProfileButton!)
+        editProfileButton!.anchor(usernameLabel?.bottomAnchor, left: usernameLabel?.leftAnchor,
+                                  bottom: nil, right: nil, topConstant: 0, leftConstant: 0,
+                                  bottomConstant: 0, rightConstant: 0,
+                                  widthConstant: frame.width, heightConstant: frame.height)
     }
     
     func setupSettingsButton() {

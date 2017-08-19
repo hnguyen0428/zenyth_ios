@@ -27,10 +27,6 @@ class FeedController: HomeController {
         toolbar?.setHomeSelected()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
     func loadMap() {
         let mapWidth = view.frame.width
         let mapHeight = view.frame.height - toolbar!.frame.height
