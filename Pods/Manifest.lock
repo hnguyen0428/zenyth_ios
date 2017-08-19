@@ -40,7 +40,6 @@ PODS:
   - GTMSessionFetcher/Core (1.1.10)
   - GTMSessionFetcher/Full (1.1.10):
     - GTMSessionFetcher/Core (= 1.1.10)
-  - LBTAComponents (0.1.9)
   - SwiftyJSON (3.1.4)
   - TwitterCore (3.0.0)
   - TwitterKit (3.0.3):
@@ -55,7 +54,6 @@ DEPENDENCIES:
   - GoogleMaps
   - GooglePlaces
   - GoogleSignIn
-  - LBTAComponents
   - SwiftyJSON
   - TwitterKit
 
@@ -72,11 +70,10 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMOAuth2: 7fc9c10f5c745f4d9850419ea88889fe3baa6b7d
   GTMSessionFetcher: 30d874b96d0d76028f61fbd122801e3f030d47db
-  LBTAComponents: 9a5d314080d1f80208062ccc81a2d25225c5f572
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   TwitterCore: 8ce250be1eb34633a0e6acc89520d4165ec52c10
   TwitterKit: 202404be71aadd81d19f677b34579fe77d9cb67e
 
-PODFILE CHECKSUM: 396169cff5a673de45db2598e08e8885c5030e7c
+PODFILE CHECKSUM: a746be01dcea6f6a9d13b94a2deeb3cfb809bed8
 
 COCOAPODS: 1.2.1

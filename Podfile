@@ -17,7 +17,6 @@ target 'Zenyth' do
     # Pods for testing
   end
 
-  pod 'LBTAComponents'
   pod 'Alamofire', '~> 4.4'
   pod 'SwiftyJSON'
 
