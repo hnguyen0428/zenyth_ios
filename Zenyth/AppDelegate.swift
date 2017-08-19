@@ -201,10 +201,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func transitionToHome() {
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.makeKeyAndVisible()
-        let homeController = HomeController()
+        let feedController = FeedController()
         UIView.transition(with: self.window!, duration: 0.3, options: .transitionCrossDissolve,
                           animations: {
-            self.window!.rootViewController = homeController
+            self.window!.rootViewController = feedController
         }, completion: nil)
     }
     

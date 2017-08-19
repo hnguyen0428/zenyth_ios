@@ -10,11 +10,7 @@ import UIKit
 
 class HomeController: UIViewController {
     
-    var toolbar: UIToolbar?
-    var tabOne: UIBarButtonItem?
-    var tabTwo: UIBarButtonItem?
-    var tabThree: UIBarButtonItem?
-    var tabFour: UIBarButtonItem?
+    var toolbar: Navbar?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,48 +22,44 @@ class HomeController: UIViewController {
     }
     
     func setupToolbar() {
-        toolbar = {
-            let viewFrame = self.view.frame
-            let height = viewFrame.height * 0.07
-            let width = viewFrame.width
-            let x = viewFrame.origin.x
-            let y = viewFrame.height - height
-            let frame = CGRect(x: x, y: y, width: width, height: height)
-            let toolbar = UIToolbar(frame: frame)
-            toolbar.barStyle = .default
-            toolbar.isUserInteractionEnabled = true
-            return toolbar
-        }()
-        
-        tabOne = {
-            let button = UIBarButtonItem(title: "General Map", style: .plain, target: self, action: nil)
-            button.title = "General Map"
-            return button
-        }()
-        
-        tabTwo = {
-            let button = UIBarButtonItem(title: "User's Map", style: .plain, target: self, action: nil)
-            return button
-        }()
-        
-        tabThree = {
-            let button = UIBarButtonItem(title: "Pinpost", style: .plain, target: self, action: nil)
-            return button
-        }()
-        
-        tabFour = {
-            let button = UIBarButtonItem(title: "Profile", style: .plain, target: self, action: nil)
-            return button
-        }()
-        
-        let flexibleSpaceLeft = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let flexibleSpaceRight = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        
-        let items: [UIBarButtonItem] = [flexibleSpaceLeft, tabOne!, tabTwo!,
-                                        tabThree!, tabFour!, flexibleSpaceRight]
-        
-        toolbar?.setItems(items, animated: false)
+        toolbar = Navbar(view: self.view)
         view.addSubview(toolbar!)
         view.backgroundColor = UIColor.white
+    }
+    
+    func transitionToFeed() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let controller = FeedController()
+        appDelegate.window!.rootViewController = controller
+    }
+    
+    func transitionToNotification() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let controller = NotificationController()
+        appDelegate.window!.rootViewController = controller
+    }
+    
+    func transitionToProfile() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let controller = ProfileController()
+        appDelegate.window!.rootViewController = controller
+    }
+    
+    func transitionToLogin() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil);
+        
+        let loginController: UINavigationController =
+            storyboard.instantiateInitialViewController()
+                as! UINavigationController;
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        UIView.transition(with: appDelegate.window!, duration: 0.5, options: .transitionCrossDissolve,
+                          animations: {
+                            appDelegate.window!.rootViewController = loginController
+        }, completion: nil)
     }
 }

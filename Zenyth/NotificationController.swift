@@ -1,5 +1,5 @@
 //
-//  ProfileController.swift
+//  NotificationController.swift
 //  Zenyth
 //
 //  Created by Hoang on 7/21/17.
@@ -8,10 +8,7 @@
 
 import UIKit
 
-class ProfileController: HomeController {
-    
-    var profileView: ProfileView?
-    
+class NotificationController: HomeController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,9 +19,6 @@ class ProfileController: HomeController {
     
     override func setupViews() {
         super.setupViews()
-        toolbar?.setProfileSelected()
-        
-        profileView = ProfileView(view: self.view)
-        view.addSubview(profileView!)
+        toolbar?.setNotificationSelected()
     }
 }
