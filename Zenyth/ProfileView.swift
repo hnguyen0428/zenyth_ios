@@ -160,4 +160,8 @@ class ProfileView: UIView {
         userInfoBar?.followerButton?.setTitle(String(count), for: .normal)
     }
     
+    func setPinImage(image: UIImage, index: Int) {
+        self.pinView?.pinImages[index].image = image
+    }
+    
 }

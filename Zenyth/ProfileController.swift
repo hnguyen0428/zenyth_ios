@@ -53,6 +53,8 @@ class ProfileController: HomeController {
                 self.profileView?.setLikesCount(count: user.likes!)
                 self.profileView?.setFollowersCount(count: user.friends)
                 self.profileView?.setPinpostsCount(count: user.numberOfPinposts!)
+                
+                self.renderPinImages(pinposts: user.pinposts)
         })
     }
     
@@ -71,5 +73,27 @@ class ProfileController: HomeController {
                 let image = UIImage(data: data)
                 self.profileView?.profilePicture?.image = image
         })
+    }
+    
+    func renderPinImages(pinposts: [Pinpost]) {
+        var images: [Image] = [Image]()
+        for pinpost in pinposts {
+            if let image = pinpost.images.first {
+                images.append(image)
+            }
+        }
+        
+        for i in 0..<images.count {
+            if i > 4 {
+                break
+            }
+            ImageManager().getImageData(withUrl: images[i].url, onSuccess:
+                { data in
+                    if let image = UIImage(data: data) {
+                        self.profileView?.setPinImage(image: image, index: i)
+                    }
+                    
+            })
+        }
     }
 }

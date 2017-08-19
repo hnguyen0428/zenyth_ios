@@ -42,8 +42,9 @@ class PinView: UIView {
         
         image.layer.masksToBounds = false
         image.layer.cornerRadius = frame.height / 2
+        image.clipsToBounds = true
         
-        image.backgroundColor = UIColor.green
+        image.backgroundColor = UIColor.clear
         return image
     }
 }
