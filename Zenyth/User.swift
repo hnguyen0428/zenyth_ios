@@ -19,6 +19,9 @@ struct User : APIObject {
     var gender: String?
     var birthday: String?
     var profilePicture: Image?
+    var pinposts: [Pinpost] = [Pinpost]()
+    var likes: UInt32?
+    var numberOfPinposts: UInt32?
     
     init(json: JSON) {
         self.id = json["id"].uInt32Value
@@ -38,9 +41,27 @@ struct User : APIObject {
         if imageJSON != JSON.null {
             self.profilePicture = Image(json: imageJSON)
         }
+        
+        if json["pinposts"] != JSON.null {
+            let pinpostsJSON = json["pinposts"].arrayValue
+            for pinpostJSON in pinpostsJSON {
+                self.pinposts.append(Pinpost(json: pinpostJSON))
+            }
+        }
+        if json["number_of_pinposts"] != JSON.null {
+            self.numberOfPinposts = json["number_of_pinposts"].uInt32Value
+        }
+        if json["likes"] != JSON.null {
+            self.likes = json["likes"].uInt32Value
+        }
     }
     
     func toJSON() -> JSON {
+        var pinpostsJSON = [JSON]()
+        for pinpost in pinposts {
+            pinpostsJSON.append(pinpost.toJSON())
+        }
+        
         return [
             "id": id,
             "email": email,
@@ -50,7 +71,10 @@ struct User : APIObject {
             "last_name": lastName,
             "gender": gender,
             "birthday": birthday,
-            "picture": profilePicture?.toJSON()
+            "picture": profilePicture?.toJSON(),
+            "pinposts": pinpostsJSON,
+            "number_of_pinposts": numberOfPinposts,
+            "likes": likes
         ]
     }
     
