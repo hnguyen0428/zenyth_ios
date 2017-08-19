@@ -40,3 +40,22 @@ extension UITextField {
         self.layer.mask = maskLayer
     }
 }
+
+extension UIView {
+    /**
+     Format the view to have rounded bottom corners with shadow
+     */
+    func bottomRoundedWithShadow(radius: CGFloat) {
+        let shadowLayer = CAShapeLayer()
+        shadowLayer.path = UIBezierPath(roundedRect: self.bounds,
+                                        byRoundingCorners: [.bottomLeft , .bottomRight],
+                                        cornerRadii: CGSize(width: radius, height: radius)).cgPath
+        shadowLayer.fillColor = self.backgroundColor?.cgColor
+        shadowLayer.shadowColor = UIColor.black.cgColor
+        shadowLayer.shadowPath = shadowLayer.path
+        shadowLayer.shadowOffset = CGSize(width: 2.0, height: 2.0)
+        shadowLayer.shadowOpacity = 0.8
+        shadowLayer.shadowRadius = 2
+        self.layer.insertSublayer(shadowLayer, at: 0)
+    }
+}

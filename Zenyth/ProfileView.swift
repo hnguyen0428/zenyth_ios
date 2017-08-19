@@ -31,7 +31,9 @@ class ProfileView: UIView {
         self.setupPinView()
         self.setupUserInfoBar()
         
-        self.backgroundColor = UIColor.yellow
+        self.backgroundColor = UIColor.white
+        self.bottomRoundedWithShadow(radius: 25.0)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -96,10 +98,13 @@ class ProfileView: UIView {
         self.bioText?.backgroundColor = UIColor.blue
         
         self.addSubview(bioText!)
+        
+        let margin: CGFloat = 20.0
+        
         bioText?.anchor(profilePicture?.bottomAnchor,
                         left: leftAnchor,
                         bottom: nil, right: rightAnchor, topConstant: 15.0,
-                        leftConstant: 20.0, bottomConstant: 0, rightConstant: 20.0,
+                        leftConstant: margin, bottomConstant: 0, rightConstant: margin,
                         widthConstant: frame.width, heightConstant: frame.height)
     }
     
@@ -130,15 +135,16 @@ class ProfileView: UIView {
     }
     
     func setupUserInfoBar() {
-        let width = self.frame.width * 0.80
+        let width = self.frame.width * 0.75
         let height = self.frame.height * 0.08
         let frame = CGRect(x: 0, y: 0, width: width, height: height)
         userInfoBar = UserInfoBar(frame: frame)
         
         self.addSubview(userInfoBar!)
+        let verticalMargin: CGFloat = 15.0
         userInfoBar!.anchor(pinView?.bottomAnchor, left: pinView?.leftAnchor,
-                            bottom: nil, right: nil, topConstant: 15.0,
-                            leftConstant: 25.0, bottomConstant: 0,
+                            bottom: bottomAnchor, right: nil, topConstant: verticalMargin,
+                            leftConstant: 25.0, bottomConstant: verticalMargin,
                             rightConstant: 0, widthConstant: frame.width,
                             heightConstant: frame.height)
     }
