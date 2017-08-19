@@ -250,7 +250,7 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
                     self.fbOauthLogin(accessToken: accessToken, json: json)
                 } else { // email is available
                     print("Email Available")
-                    self.performSegue(withIdentifier: "oauthToUsernameSegue",
+                    self.performSegue(withIdentifier: "oauthToUsernameController",
                                       sender: self)
                 }
         })

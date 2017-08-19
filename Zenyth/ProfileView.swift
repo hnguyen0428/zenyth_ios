@@ -17,10 +17,7 @@ class ProfileView: UIView {
     var pinView: PinView?
     var userInfoBar: UserInfoBar?
     
-    init(view: UIView) {
-        let height = view.frame.height / 2
-        let width = view.frame.width
-        let frame = CGRect(x: 0, y: 0, width: width, height: height)
+    override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.setupProfilePicture()
@@ -31,9 +28,9 @@ class ProfileView: UIView {
         self.setupPinView()
         self.setupUserInfoBar()
         
-        self.backgroundColor = UIColor.white
+        self.backgroundColor = UIColor.clear
         self.bottomRoundedWithShadow(radius: 25.0)
-        
+        //self.bottomRounded(radius: 25.0)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -148,4 +145,5 @@ class ProfileView: UIView {
                             rightConstant: 0, widthConstant: frame.width,
                             heightConstant: frame.height)
     }
+    
 }

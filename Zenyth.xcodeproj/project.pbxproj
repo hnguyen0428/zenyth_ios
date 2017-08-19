@@ -55,6 +55,7 @@
 		471280AC1F3992FC006FE796 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280AB1F3992FC006FE796 /* ImageManager.swift */; };
 		471280AE1F399306006FE796 /* TagManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280AD1F399306006FE796 /* TagManager.swift */; };
 		477D94311F47D1FB0043A957 /* UserInfoBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477D94301F47D1FB0043A957 /* UserInfoBar.swift */; };
+		477D94331F4808160043A957 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477D94321F4808160043A957 /* MapView.swift */; };
 		477FF6941F39D92F00FD66B4 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477FF6931F39D92F00FD66B4 /* Endpoint.swift */; };
 		477FF6961F39D97C00FD66B4 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477FF6951F39D97C00FD66B4 /* LoginManager.swift */; };
 		477FF6981F39D98C00FD66B4 /* LoginManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477FF6971F39D98C00FD66B4 /* LoginManagerProtocol.swift */; };
@@ -160,6 +161,7 @@
 		471280AB1F3992FC006FE796 /* ImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		471280AD1F399306006FE796 /* TagManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagManager.swift; sourceTree = "<group>"; };
 		477D94301F47D1FB0043A957 /* UserInfoBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoBar.swift; sourceTree = "<group>"; };
+		477D94321F4808160043A957 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		477FF6931F39D92F00FD66B4 /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		477FF6951F39D97C00FD66B4 /* LoginManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 		477FF6971F39D98C00FD66B4 /* LoginManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginManagerProtocol.swift; sourceTree = "<group>"; };
@@ -357,6 +359,7 @@
 				47FE3D0D1F47CCE100EC62EC /* PinView.swift */,
 				47FE3D0F1F47CD0100EC62EC /* InfoAsset.swift */,
 				477D94301F47D1FB0043A957 /* UserInfoBar.swift */,
+				477D94321F4808160043A957 /* MapView.swift */,
 			);
 			name = UIObjects;
 			sourceTree = "<group>";
@@ -815,6 +818,7 @@
 				478006391F21B5730064F9E7 /* Pinpost.swift in Sources */,
 				471280A61F3992E0006FE796 /* ReplyManager.swift in Sources */,
 				471280AE1F399306006FE796 /* TagManager.swift in Sources */,
+				477D94331F4808160043A957 /* MapView.swift in Sources */,
 				47A9024E1F0B34C900A1CEE8 /* GlobalVariables.swift in Sources */,
 				47D838CC1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift in Sources */,
 				471280781F391A4B006FE796 /* CredentialManagerProtocol.swift in Sources */,

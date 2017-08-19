@@ -50,12 +50,24 @@ extension UIView {
         shadowLayer.path = UIBezierPath(roundedRect: self.bounds,
                                         byRoundingCorners: [.bottomLeft , .bottomRight],
                                         cornerRadii: CGSize(width: radius, height: radius)).cgPath
-        shadowLayer.fillColor = self.backgroundColor?.cgColor
+        shadowLayer.fillColor = UIColor.white.cgColor
         shadowLayer.shadowColor = UIColor.black.cgColor
         shadowLayer.shadowPath = shadowLayer.path
         shadowLayer.shadowOffset = CGSize(width: 2.0, height: 2.0)
         shadowLayer.shadowOpacity = 0.8
         shadowLayer.shadowRadius = 2
+        shadowLayer.frame = self.bounds
         self.layer.insertSublayer(shadowLayer, at: 0)
+    }
+    
+    func bottomRounded(radius: CGFloat) {
+        let maskPath = UIBezierPath(roundedRect: self.bounds,
+                                    byRoundingCorners: [.bottomLeft , .bottomRight],
+                                    cornerRadii: CGSize(width: radius, height: radius))
+        
+        let maskLayer = CAShapeLayer()
+        maskLayer.frame = self.bounds
+        maskLayer.path = maskPath.cgPath
+        self.layer.mask = maskLayer
     }
 }
