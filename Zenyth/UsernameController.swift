@@ -6,8 +6,7 @@
 //  Copyright © 2017 Hoang. All rights reserved.
 //
 
-
-import LBTAComponents
+import UIKit
 import Alamofire
 import SwiftyJSON
 

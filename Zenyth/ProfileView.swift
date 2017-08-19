@@ -25,7 +25,7 @@ class ProfileView: UIView {
         profilePicture?.backgroundColor = UIColor.red
         
         self.addSubview(profilePicture!)
-        profilePicture?.anchor(topAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 10.0, leftConstant: 10.0, bottomConstant: 0, rightConstant: 0, widthConstant: 50, heightConstant: 50)
+        profilePicture?.anchor(topAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 15.0, leftConstant: 15.0, bottomConstant: 0, rightConstant: 0, widthConstant: 50, heightConstant: 50)
         
         self.backgroundColor = UIColor.yellow
     }

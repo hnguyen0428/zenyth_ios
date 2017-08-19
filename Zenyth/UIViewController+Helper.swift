@@ -6,7 +6,6 @@
 //  Copyright © 2017 Hoang. All rights reserved.
 //
 
-import LBTAComponents
 import UIKit
 
 /// Extension to UIViewController including helper methods
