@@ -144,23 +144,20 @@ class APIClient {
                          onSuccess: DataCallback?,
                          onRequestError: ErrorCallback?) {
         self.setClientId()
+        
         let urlString = route.0
-        let method = route.1
         
-        Alamofire.download(urlString,
-                           method: method,
-                           headers: self.headers).responseData
-            { response in
-                switch response.result {
-                case .success(let data):
-                    onSuccess?(Data(data))
-                case .failure(let error):
-                    print("DOWNLOAD ERROR: \(error)")
-                    onRequestError?(error as NSError)
-                }
+        Alamofire.request(urlString).response {
+            response in
+            if let data = response.data {
+                onSuccess?(data)
                 self.resetHeaders()
+            }
+            if let error = response.error {
+                print("ERROR: \(error)")
+                onRequestError?(error as! NSError)
+            }
         }
-        
     }
     
     /**

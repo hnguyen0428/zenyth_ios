@@ -89,6 +89,7 @@ public enum Endpoint {
     
     /// ImageManager Endpoints
     case GetImageData(String)
+    case GetImageDataWithUrl(String)
     case DeleteImage(UInt32)
     
     /// TagManager Endpoints
@@ -206,6 +207,8 @@ public enum Endpoint {
             
         case .GetImageData(let imageName):
             return ("\(baseURL)/image/\(imageName)", .get)
+        case .GetImageDataWithUrl(let url):
+            return (url, .get)
         case .DeleteImage(let imageId):
             return ("\(baseURL)/image/\(imageId)", .delete)
             

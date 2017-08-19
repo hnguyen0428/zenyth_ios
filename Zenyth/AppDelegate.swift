@@ -146,11 +146,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                                   oauthType: oauthType,
                                   accessToken: idToken,
                                   onSuccess:
-            { data, apiToken in
+            { user, apiToken in
                 viewController.requestDoneLoading(view: viewController.view,
                                                   indicator: indicator)
-                UserDefaults.standard.set(apiToken, forKey: "api_token")
-                UserDefaults.standard.synchronize()
+                LoginController.saveLoggedInUserInfo(user: user, apiToken: apiToken)
                 self.transitionToHome()
         }, onFailure: { json in
             viewController.requestDoneLoading(view: viewController.view,
@@ -188,9 +187,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                                                 oauthType: oauthType,
                                                 accessToken: idToken,
                                                 onSuccess:
-            { data, user in
+            { user, apiToken in
                 viewController.requestDoneLoading(view: viewController.view,
                                                   indicator: indicator)
+                LoginController.saveLoggedInUserInfo(user: user, apiToken: apiToken)
                 self.transitionToHome()
         })
     }

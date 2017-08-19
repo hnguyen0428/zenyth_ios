@@ -167,9 +167,7 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
                 { user, apiToken in
                     self.requestDoneLoading(view: self.view, indicator: indicator)
                     
-                    // Save the api token to UserDefaults for later usage
-                    UserDefaults.standard.set(apiToken, forKey: "api_token")
-                    UserDefaults.standard.synchronize()
+                    LoginController.saveLoggedInUserInfo(user: user, apiToken: apiToken)
                     self.transitionToHome()
             }, onFailure: { json in
                 self.requestDoneLoading(view: self.view, indicator: indicator)
@@ -184,10 +182,8 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
                 { user, apiToken in
                     self.requestDoneLoading(view: self.view, indicator: indicator)
                     
-                    // Save the api token to UserDefaults for later usage
-                    UserDefaults.standard.set(apiToken, forKey: "api_token")
-                    UserDefaults.standard.synchronize()
-                    print(user)
+                    // Save user info
+                    LoginController.saveLoggedInUserInfo(user: user, apiToken: apiToken)
                     self.transitionToHome()
             }, onFailure: { json in
                 self.requestDoneLoading(view: self.view, indicator: indicator)
@@ -277,9 +273,7 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
             { user, apiToken in
                 self.requestDoneLoading(view: self.view, indicator: indicator)
                 
-                // Save the api token to UserDefaults for later usage
-                UserDefaults.standard.set(apiToken, forKey: "api_token")
-                UserDefaults.standard.synchronize()
+                LoginController.saveLoggedInUserInfo(user: user, apiToken: apiToken)
                 self.transitionToHome()
         }, onFailure: { json in
             self.requestDoneLoading(view: self.view, indicator: indicator)
@@ -318,9 +312,7 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
             { user, apiToken in
                 self.requestDoneLoading(view: self.view, indicator: indicator)
                 
-                // Save the api token to UserDefaults for later usage
-                UserDefaults.standard.set(apiToken, forKey: "api_token")
-                UserDefaults.standard.synchronize()
+                LoginController.saveLoggedInUserInfo(user: user, apiToken: apiToken)
                 self.transitionToHome()
         })
     }
@@ -382,5 +374,13 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
             resultVC.oauthJSON = self.oauthJSON
             resultVC.fbToken = self.fbToken
         }
+    }
+    
+    static func saveLoggedInUserInfo(user: User, apiToken: String) {
+        UserDefaults.standard.set(apiToken, forKey: "api_token")
+        UserDefaults.standard.set(user.id, forKey: "id")
+        UserDefaults.standard.set(user.email, forKey: "email")
+        UserDefaults.standard.set(user.username, forKey: "username")
+        UserDefaults.standard.synchronize()
     }
 }

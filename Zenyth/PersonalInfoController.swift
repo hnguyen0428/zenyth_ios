@@ -179,7 +179,8 @@ class PersonalInfoController: ModelViewController, UIPickerViewDelegate {
                                        onSuccess:
             { user, apiToken in
                 self.requestDoneLoading(view: self.view, indicator: indicator)
-                print(user)
+                LoginController.saveLoggedInUserInfo(user: user, apiToken: apiToken)
+                
                 
                 let alert = UIAlertController(
                     title: RegistrationModule.signupSuccessfulMessage,
@@ -190,7 +191,7 @@ class PersonalInfoController: ModelViewController, UIPickerViewDelegate {
                                               style: UIAlertActionStyle.default, handler:
                     { action in
                         RegistrationModule.sharedInstance.clearInfo()
-                        self.navigationController?.popToRootViewController(animated: true)
+                        self.transitionToHome()
                 }))
                 
                 self.present(alert, animated: true, completion: nil)

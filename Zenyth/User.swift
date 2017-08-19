@@ -18,6 +18,7 @@ struct User : APIObject {
     var lastName: String?
     var gender: String?
     var birthday: String?
+    var biography: String?
     var profilePicture: Image?
     var pinposts: [Pinpost] = [Pinpost]()
     var likes: UInt32?
@@ -36,6 +37,7 @@ struct User : APIObject {
             let index = str.index(str.startIndex, offsetBy: 10)
             self.birthday = str.substring(to: index)
         }
+        self.biography = json["biography"].string
         
         let imageJSON = json["picture"]
         if imageJSON != JSON.null {
@@ -71,6 +73,7 @@ struct User : APIObject {
             "last_name": lastName,
             "gender": gender,
             "birthday": birthday,
+            "biography": biography,
             "picture": profilePicture?.toJSON(),
             "pinposts": pinpostsJSON,
             "number_of_pinposts": numberOfPinposts,

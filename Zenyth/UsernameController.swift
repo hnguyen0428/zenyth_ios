@@ -371,8 +371,7 @@ class UsernameController: ModelViewController, UINavigationControllerDelegate {
             oauthType: oauthType, accessToken: fbToken!,
             onSuccess: { user, apiToken in
                 self.requestDoneLoading(view: self.view, indicator: indicator)
-                UserDefaults.standard.set(apiToken, forKey: "api_token")
-                UserDefaults.standard.synchronize()
+                LoginController.saveLoggedInUserInfo(user: user, apiToken: apiToken)
                 let alert = UIAlertController(
                     title: RegistrationModule.signupSuccessfulMessage,
                     message: nil,
@@ -412,8 +411,7 @@ class UsernameController: ModelViewController, UINavigationControllerDelegate {
             oauthType: oauthType, accessToken: googleToken!,
             onSuccess: { user, apiToken in
                 self.requestDoneLoading(view: self.view, indicator: indicator)
-                UserDefaults.standard.set(apiToken, forKey: "api_token")
-                UserDefaults.standard.synchronize()
+                LoginController.saveLoggedInUserInfo(user: user, apiToken: apiToken)
                 let alert = UIAlertController(
                     title: RegistrationModule.signupSuccessfulMessage,
                     message: nil,

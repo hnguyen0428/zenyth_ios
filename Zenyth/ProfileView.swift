@@ -43,7 +43,7 @@ class ProfileView: UIView {
         let profilePictureFrame = CGRect(x: 0, y: 0, width: widthPicture,
                                          height: heightPicture)
         profilePicture = UIImageView(frame: profilePictureFrame)
-        profilePicture?.backgroundColor = UIColor.red
+        
         
         self.addSubview(profilePicture!)
         profilePicture?.anchor(topAnchor, left: leftAnchor, bottom: nil,
@@ -54,6 +54,7 @@ class ProfileView: UIView {
         
         profilePicture!.layer.masksToBounds = false
         profilePicture!.layer.cornerRadius = profilePicture!.frame.height/2
+        profilePicture?.clipsToBounds = true
     }
     
     func setupUsernameLabel() {
@@ -68,7 +69,6 @@ class ProfileView: UIView {
                               right: nil, topConstant: 10.0, leftConstant: 10.0,
                               bottomConstant: 0, rightConstant: 0,
                               widthConstant: frame.width, heightConstant: frame.height)
-        usernameLabel!.text = "username stub"
     }
     
     func setupSettingsButton() {
@@ -92,7 +92,8 @@ class ProfileView: UIView {
         let width = self.frame.width * 0.90
         let frame = CGRect(x: 0, y: 0, width: width, height: height)
         bioText = UITextView(frame: frame)
-        self.bioText?.backgroundColor = UIColor.blue
+        
+        bioText!.font = UIFont.systemFont(ofSize: 17.0)
         
         self.addSubview(bioText!)
         
@@ -111,7 +112,8 @@ class ProfileView: UIView {
         let frame = CGRect(x: 0, y: 0, width: width, height: height)
         topPinLabel = UILabel(frame: frame)
         topPinLabel!.text = "Top Pins"
-        topPinLabel?.textAlignment = NSTextAlignment.center
+        topPinLabel!.textAlignment = NSTextAlignment.center
+        topPinLabel!.font = UIFont.boldSystemFont(ofSize: 17.0)
         
         self.addSubview(topPinLabel!)
         topPinLabel?.anchor(bioText?.bottomAnchor, left: centerXAnchor, bottom: nil,
@@ -144,6 +146,18 @@ class ProfileView: UIView {
                             leftConstant: 25.0, bottomConstant: verticalMargin,
                             rightConstant: 0, widthConstant: frame.width,
                             heightConstant: frame.height)
+    }
+    
+    func setLikesCount(count: UInt32) {
+        userInfoBar?.likeButton?.setTitle(String(count), for: .normal)
+    }
+    
+    func setPinpostsCount(count: UInt32) {
+        userInfoBar?.pinButton?.setTitle(String(count), for: .normal)
+    }
+    
+    func setFollowersCount(count: UInt32) {
+        userInfoBar?.followerButton?.setTitle(String(count), for: .normal)
     }
     
 }
