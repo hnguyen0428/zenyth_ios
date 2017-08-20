@@ -12,7 +12,8 @@ class ProfileController: HomeController {
     
     var profileView: ProfileView?
     var mapView: MapView?
-    var user: User?
+    var user: User? = nil
+    var profileImage: UIImage? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +45,7 @@ class ProfileController: HomeController {
         super.viewDidAppear(animated)
         let userId = UserDefaults.standard.object(forKey: "id") as! UInt32
         profileView?.requestLoading()
+        
         self.readProfile(userId: userId, handler:
             { user in
                 self.profileView?.requestDoneLoading()
@@ -73,10 +75,15 @@ class ProfileController: HomeController {
     }
     
     func renderProfileImage(image: Image, handler: Handler? = nil) {
-        self.profileView?.profilePicture!.imageFromUrl(withUrl: image.url, handler:
-            { data in
-                handler?()
-        })
+        if profileImage == nil {
+            self.profileView?.profilePicture!.imageFromUrl(withUrl: image.url, handler:
+                { data in
+                    self.profileImage = UIImage(data: data)
+                    handler?()
+            })
+        } else {
+            self.profileView?.profilePicture!.image = profileImage!
+        }
     }
     
     func renderPinImages(pinposts: [Pinpost], handler: Handler? = nil) {
@@ -111,10 +118,7 @@ class ProfileController: HomeController {
         
         let controller = EditProfileController()
         controller.user = self.user
-        
-        if let image = profileView?.profilePicture?.image {
-            controller.profileImage = image
-        }
+        controller.profileImage = profileImage
         
         appDelegate.window!.rootViewController = controller
     }

@@ -144,6 +144,9 @@ class EditProfileController: UIViewController {
                                     biography: biography,
                                     onSuccess:
             { user in
+                // Set to nil so that profile controller will render the updated
+                // profile
+                self.user = nil
                 self.transitionToProfile()
         })
     }
@@ -182,6 +185,8 @@ class EditProfileController: UIViewController {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         let controller = ProfileController()
+        controller.user = self.user
+        controller.profileImage = self.profileImage
         appDelegate.window!.rootViewController = controller
     }
 }
