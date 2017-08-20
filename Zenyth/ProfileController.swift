@@ -12,6 +12,7 @@ class ProfileController: HomeController {
     
     var profileView: ProfileView?
     var mapView: MapView?
+    var user: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,9 +43,10 @@ class ProfileController: HomeController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let userId = UserDefaults.standard.object(forKey: "id") as! UInt32
-        
+        profileView?.requestLoading()
         self.readProfile(userId: userId, handler:
             { user in
+                self.profileView?.requestDoneLoading()
                 if let image = user.profilePicture {
                     self.renderProfileImage(image: image, handler: nil)
                 } else {
@@ -65,13 +67,14 @@ class ProfileController: HomeController {
         UserManager().readProfile(ofUserId: userId,
                                   onSuccess:
             { user in
+                self.user = user
                 handler(user)
         })
     }
     
     func renderProfileImage(image: Image, handler: Handler? = nil) {
         self.profileView?.profilePicture!.imageFromUrl(withUrl: image.url, handler:
-            {
+            { data in
                 handler?()
         })
     }
@@ -93,7 +96,7 @@ class ProfileController: HomeController {
             let url = images[i].url
             group.enter()
             self.profileView?.pinView?.pinImages[i].imageFromUrl(withUrl: url, handler:
-                {
+                { data in
                 group.leave()
             })
         }
@@ -107,6 +110,12 @@ class ProfileController: HomeController {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         let controller = EditProfileController()
+        controller.user = self.user
+        
+        if let image = profileView?.profilePicture?.image {
+            controller.profileImage = image
+        }
+        
         appDelegate.window!.rootViewController = controller
     }
 }

@@ -123,5 +123,22 @@ extension UIViewController {
         view.isUserInteractionEnabled = true
         view.mask = nil
     }
+    
+    /**
+     Hide keyboard when clicking outside of the keyboard
+     */
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
+                                                                 action: #selector(ModelViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    /**
+     Dismiss keyboard, called by hideKeyboardWhenTappedAround()
+     */
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
 
 }

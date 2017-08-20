@@ -11,12 +11,12 @@ import UIKit
 typealias Handler = (Void) -> Void
 
 extension UIImageView {
-    func imageFromUrl(withUrl url: String, handler: Handler? = nil) {
+    func imageFromUrl(withUrl url: String, handler: DataCallback? = nil) {
         ImageManager().getImageData(withUrl: url,
                                     onSuccess:
             { data in
                 self.image = UIImage(data: data)
-                handler?()
+                handler?(data)
         })
     }
 }

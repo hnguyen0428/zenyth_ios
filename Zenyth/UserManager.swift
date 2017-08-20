@@ -83,6 +83,7 @@ class UserManager: UserManagerProtocol {
     
     func updateProfile(firstName: String? = nil, lastName: String? = nil,
                        gender: String? = nil, birthday: String? = nil,
+                       biography: String? = nil,
                        onSuccess: UserCallback? = nil,
                        onFailure: JSONCallback? = nil,
                        onRequestError: ErrorCallback? = nil) {
@@ -101,6 +102,9 @@ class UserManager: UserManagerProtocol {
         }
         if birthday != nil {
             parameters.updateValue(birthday!, forKey: "birthday")
+        }
+        if biography != nil {
+            parameters.updateValue(biography!, forKey: "biography")
         }
         
         APIClient.sharedClient.executeJSON(route: route, parameters: parameters,

@@ -74,6 +74,10 @@
 		47A9024E1F0B34C900A1CEE8 /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A9024D1F0B34C900A1CEE8 /* GlobalVariables.swift */; };
 		47ABAA041F0B7B7400FD479E /* UIViewController+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47ABAA031F0B7B7400FD479E /* UIViewController+Helper.swift */; };
 		47B088CC1F48EFA500F4E4BB /* EditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B088CB1F48EFA500F4E4BB /* EditProfileController.swift */; };
+		47B088CF1F49036200F4E4BB /* EditProfileToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B088CE1F49036200F4E4BB /* EditProfileToolbar.swift */; };
+		47B088D11F490FC100F4E4BB /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B088D01F490FC100F4E4BB /* ProfileEditView.swift */; };
+		47B088D31F49239B00F4E4BB /* UITextField+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B088D21F49239B00F4E4BB /* UITextField+Helpers.swift */; };
+		47B088D51F49255A00F4E4BB /* ImageTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B088D41F49255A00F4E4BB /* ImageTextFieldView.swift */; };
 		47B47D461F479A04003C8189 /* Navbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B47D451F479A04003C8189 /* Navbar.swift */; };
 		47C622C91F0A341A003BBC16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622C81F0A341A003BBC16 /* AppDelegate.swift */; };
 		47C622CE1F0A341A003BBC16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47C622CC1F0A341A003BBC16 /* Main.storyboard */; };
@@ -182,6 +186,10 @@
 		47A9024D1F0B34C900A1CEE8 /* GlobalVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariables.swift; sourceTree = "<group>"; };
 		47ABAA031F0B7B7400FD479E /* UIViewController+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Helper.swift"; sourceTree = "<group>"; };
 		47B088CB1F48EFA500F4E4BB /* EditProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileController.swift; sourceTree = "<group>"; };
+		47B088CE1F49036200F4E4BB /* EditProfileToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileToolbar.swift; sourceTree = "<group>"; };
+		47B088D01F490FC100F4E4BB /* ProfileEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
+		47B088D21F49239B00F4E4BB /* UITextField+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+Helpers.swift"; sourceTree = "<group>"; };
+		47B088D41F49255A00F4E4BB /* ImageTextFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTextFieldView.swift; sourceTree = "<group>"; };
 		47B47D451F479A04003C8189 /* Navbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Navbar.swift; sourceTree = "<group>"; };
 		47B7C0BF1F3D693000E92DAA /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		47C622C51F0A341A003BBC16 /* Zenyth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zenyth.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -335,12 +343,11 @@
 		478006311F218A100064F9E7 /* HomeControllers */ = {
 			isa = PBXGroup;
 			children = (
+				47B088CD1F49025300F4E4BB /* Profile */,
 				47B47D441F4799D9003C8189 /* UIObjects */,
 				47A488E31F22C98C006B0453 /* HomeController.swift */,
 				478006321F218A380064F9E7 /* FeedController.swift */,
 				47A488DF1F22C96D006B0453 /* NotificationController.swift */,
-				47A488E11F22C97B006B0453 /* ProfileController.swift */,
-				47B088CB1F48EFA500F4E4BB /* EditProfileController.swift */,
 			);
 			name = HomeControllers;
 			sourceTree = "<group>";
@@ -356,6 +363,17 @@
 			name = StartingControllers;
 			sourceTree = "<group>";
 		};
+		47B088CD1F49025300F4E4BB /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				47A488E11F22C97B006B0453 /* ProfileController.swift */,
+				47B088CB1F48EFA500F4E4BB /* EditProfileController.swift */,
+				47B088CE1F49036200F4E4BB /* EditProfileToolbar.swift */,
+				47B088D01F490FC100F4E4BB /* ProfileEditView.swift */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
 		47B47D441F4799D9003C8189 /* UIObjects */ = {
 			isa = PBXGroup;
 			children = (
@@ -365,6 +383,7 @@
 				47FE3D0F1F47CD0100EC62EC /* InfoAsset.swift */,
 				477D94301F47D1FB0043A957 /* UserInfoBar.swift */,
 				477D94321F4808160043A957 /* MapView.swift */,
+				47B088D41F49255A00F4E4BB /* ImageTextFieldView.swift */,
 			);
 			name = UIObjects;
 			sourceTree = "<group>";
@@ -469,6 +488,7 @@
 				47FE3D071F47B63100EC62EC /* UIColor+Helpers.swift */,
 				47FE3D091F47B66900EC62EC /* UIView+Anchors.swift */,
 				477D94341F4826E50043A957 /* UIImageView+ImageFromURL.swift */,
+				47B088D21F49239B00F4E4BB /* UITextField+Helpers.swift */,
 			);
 			name = UIHelpers;
 			sourceTree = "<group>";
@@ -790,12 +810,14 @@
 				471280881F397EC5006FE796 /* Comment.swift in Sources */,
 				4712808E1F39841A006FE796 /* Like.swift in Sources */,
 				471280A41F3992D8006FE796 /* CommentManager.swift in Sources */,
+				47B088D51F49255A00F4E4BB /* ImageTextFieldView.swift in Sources */,
 				4712808A1F398403006FE796 /* Image.swift in Sources */,
 				471280921F39844C006FE796 /* Tag.swift in Sources */,
 				4712809E1F3990DF006FE796 /* TagManagerProtocol.swift in Sources */,
 				477FF6941F39D92F00FD66B4 /* Endpoint.swift in Sources */,
 				4712808C1F39840D006FE796 /* Reply.swift in Sources */,
 				47A2DFB81F42C3F9001CFAA3 /* GlobalHelperFunctions.swift in Sources */,
+				47B088CF1F49036200F4E4BB /* EditProfileToolbar.swift in Sources */,
 				471280841F396FCC006FE796 /* Callbacks.swift in Sources */,
 				47FE3D081F47B63100EC62EC /* UIColor+Helpers.swift in Sources */,
 				47A488E21F22C97B006B0453 /* ProfileController.swift in Sources */,
@@ -804,8 +826,10 @@
 				47C9D4471F3EC08500E93079 /* UIExtensions.swift in Sources */,
 				471280941F398576006FE796 /* RelationshipManagerProtocol.swift in Sources */,
 				471280961F398876006FE796 /* ImageManagerProtocol.swift in Sources */,
+				47B088D11F490FC100F4E4BB /* ProfileEditView.swift in Sources */,
 				477D94311F47D1FB0043A957 /* UserInfoBar.swift in Sources */,
 				477FF6961F39D97C00FD66B4 /* LoginManager.swift in Sources */,
+				47B088D31F49239B00F4E4BB /* UITextField+Helpers.swift in Sources */,
 				478006331F218A380064F9E7 /* FeedController.swift in Sources */,
 				47FE3D0A1F47B66900EC62EC /* UIView+Anchors.swift in Sources */,
 				471280A81F3992E8006FE796 /* LikeManager.swift in Sources */,

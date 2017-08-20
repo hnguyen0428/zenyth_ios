@@ -99,7 +99,7 @@ class ProfileView: UIView {
         
         editProfileButton!.layer.cornerRadius = 5
         editProfileButton!.layer.borderWidth = 1
-        editProfileButton!.layer.borderColor = UIColor.black.cgColor
+        editProfileButton!.layer.borderColor = UIColor.lightGray.cgColor
         
         self.addSubview(editProfileButton!)
         editProfileButton!.anchor(usernameLabel?.bottomAnchor, left: usernameLabel?.leftAnchor,

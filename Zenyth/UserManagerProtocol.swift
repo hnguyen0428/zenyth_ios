@@ -70,6 +70,7 @@ protocol UserManagerProtocol {
      */
     func updateProfile(firstName: String?, lastName: String?,
                        gender: String?, birthday: String?,
+                       biography: String?,
                        onSuccess: UserCallback?,
                        onFailure: JSONCallback?,
                        onRequestError: ErrorCallback?)
