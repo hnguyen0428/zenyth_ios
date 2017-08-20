@@ -9,7 +9,8 @@
 import UIKit
 import Foundation
 
-class EditProfileController: UIViewController {
+class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
+                            UINavigationControllerDelegate {
     
     var navbar: EditProfileToolbar?
     var scrollView: UIScrollView?
@@ -24,6 +25,10 @@ class EditProfileController: UIViewController {
         
         navbar?.cancelButton?.addTarget(self, action: #selector(transitionToProfile), for: .touchUpInside)
         navbar?.saveButton?.addTarget(self, action: #selector(updateProfileHandler), for: .touchUpInside)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
+        profileImageView?.isUserInteractionEnabled = true
+        profileImageView?.addGestureRecognizer(tapGesture)
     }
     
     func setupViews() {
@@ -149,6 +154,26 @@ class EditProfileController: UIViewController {
                 self.user = nil
                 self.transitionToProfile()
         })
+    }
+    
+    func imageTapped(_ tapGesture: UITapGestureRecognizer) {
+        let alert = UIAlertController(title: "Change Your Profile Picture",
+                                      message: nil,
+                                      preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Choose From Library", style: .default, handler:
+            { (action) in
+                if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+                    let imagePicker = UIImagePickerController()
+                    imagePicker.delegate = self
+                    imagePicker.sourceType = .photoLibrary;
+                    imagePicker.allowsEditing = true
+                    self.present(imagePicker, animated: true, completion: nil)
+                }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
