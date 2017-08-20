@@ -26,7 +26,7 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
         super.viewDidLoad()
         setupViews()
         
-        navbar?.cancelButton?.addTarget(self, action: #selector(transitionToProfile), for: .touchUpInside)
+        navbar?.cancelButton?.addTarget(self, action: #selector(popBackToProfile), for: .touchUpInside)
         navbar?.saveButton?.addTarget(self, action: #selector(updateProfileHandler), for: .touchUpInside)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
@@ -41,7 +41,6 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
         let navbarHeight = view.frame.height * 0.09
         let navbarFrame = CGRect(x: 0, y: 0, width: navbarWidth, height: navbarHeight)
         navbar = EditProfileToolbar(frame: navbarFrame)
-        
         view.addSubview(navbar!)
         
         let scrollViewWidth: CGFloat = view.frame.width
@@ -50,7 +49,7 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
                                      width: scrollViewWidth, height: scrollViewHeight)
         scrollView = UIScrollView(frame: scrollViewFrame)
         scrollView?.contentSize.height = view.frame.height
-        scrollView?.backgroundColor = UIColor(r: 245, g: 245, b: 245)
+        scrollView?.backgroundColor = UIColor(r: 240, g: 240, b: 240)
         view.addSubview(scrollView!)
         
         self.setupProfileImageView()
@@ -128,7 +127,7 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
     func updateProfileHandler() {
         let firstName = profileEditView?.firstName()
         let lastName = profileEditView?.lastName()
-        let gender = profileEditView!.gender()
+        let gender = profileEditView!.gender().lowercased()
         
         let dateString = profileEditView!.birthday()
         
@@ -189,7 +188,6 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
                 { (action) in
                     let data = UIImageJPEGRepresentation(image, 1.0)
                     if let imageData = data {
-                        print("uploading")
                         // Update profile picture
                         self.uploadProfilePicture(data: imageData, handler:
                             {
@@ -215,7 +213,6 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
                                            onSuccess:
             { user in
                 picker.requestDoneLoading(view: picker.view, indicator: indicator)
-                print("succeeded")
                 handler?()
         }, onFailure:
             { json in
@@ -240,7 +237,8 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
             profileEditView?.setLastName(lastName)
         }
         
-        if let gender = user?.gender {
+        if var gender = user?.gender {
+            gender.capitalizeFirstLetter()
             profileEditView?.setGender(gender)
         }
         
@@ -261,9 +259,14 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
     func transitionToProfile() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
-        let controller = ProfileController()
-        controller.user = self.user
-        controller.profileImage = self.profileImage
+        let profileController = ProfileController()
+        let controller = UINavigationController(rootViewController: profileController)
+        profileController.user = self.user
+        profileController.profileImage = self.profileImage
         appDelegate.window!.rootViewController = controller
+    }
+    
+    func popBackToProfile() {
+        self.navigationController?.popViewController(animated: true)
     }
 }

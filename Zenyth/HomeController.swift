@@ -44,22 +44,7 @@ class HomeController: UIViewController {
     func transitionToProfile() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
-        let controller = ProfileController()
+        let controller = UINavigationController(rootViewController: ProfileController())
         appDelegate.window!.rootViewController = controller
-    }
-    
-    func transitionToLogin() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil);
-        
-        let loginController: UINavigationController =
-            storyboard.instantiateInitialViewController()
-                as! UINavigationController;
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        UIView.transition(with: appDelegate.window!, duration: 0.5, options: .transitionCrossDissolve,
-                          animations: {
-                            appDelegate.window!.rootViewController = loginController
-        }, completion: nil)
     }
 }

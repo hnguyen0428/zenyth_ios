@@ -17,11 +17,15 @@ class ProfileController: HomeController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.renderView()
+        self.navigationController?.setNavigationBarHidden(true,
+                                                          animated: false)
         
         toolbar?.homeButton?.addTarget(self, action: #selector(transitionToFeed), for: .touchUpInside)
         toolbar?.notificationButton?.addTarget(self, action: #selector(transitionToNotification), for: .touchUpInside)
         toolbar?.profileButton?.addTarget(self, action: #selector(transitionToProfile), for: .touchUpInside)
-        self.profileView?.editProfileButton?.addTarget(self, action: #selector(transitionToEditProfile), for: .touchUpInside)
+        profileView?.editProfileButton?.addTarget(self, action: #selector(transitionToEditProfile), for: .touchUpInside)
+        profileView?.settingsButton?.addTarget(self, action: #selector(transitionToSettings), for: .touchUpInside)
     }
     
     override func setupViews() {
@@ -41,8 +45,7 @@ class ProfileController: HomeController {
         view.insertSubview(mapView!, at: 0)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    func renderView() {
         let userId = UserDefaults.standard.object(forKey: "id") as! UInt32
         profileView?.requestLoading()
         
@@ -52,7 +55,9 @@ class ProfileController: HomeController {
                 if let image = user.profilePicture {
                     self.renderProfileImage(image: image, handler: nil)
                 } else {
-                    self.profileView?.profilePicture?.image = #imageLiteral(resourceName: "default_profile")
+                    let defaultProfile = #imageLiteral(resourceName: "default_profile")
+                    self.profileView?.profilePicture?.image = defaultProfile
+                    self.profileImage = defaultProfile
                 }
                 
                 self.renderPinImages(pinposts: user.pinposts, handler: nil)
@@ -124,12 +129,14 @@ class ProfileController: HomeController {
     }
     
     func transitionToEditProfile() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
         let controller = EditProfileController()
+        self.navigationController?.pushViewController(controller, animated: true)
         controller.user = self.user
         controller.profileImage = self.profileImage
-        
-        appDelegate.window!.rootViewController = controller
+    }
+    
+    func transitionToSettings() {
+        let controller = SettingsController()
+        self.navigationController?.pushViewController(controller, animated: true)
     }
 }
