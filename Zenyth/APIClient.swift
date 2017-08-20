@@ -99,7 +99,7 @@ class APIClient {
         Alamofire.upload(multipartFormData: { multipartFormData in
             multipartFormData.append(data, withName: fileKey,
                                      fileName: "file.jpg",
-                                     mimeType: "image/jpg")
+                                     mimeType: "image/jpeg")
         }, to: urlString, method: method, headers: self.headers,
               encodingCompletion: { encodingResult in
                 switch encodingResult {

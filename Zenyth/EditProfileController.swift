@@ -20,6 +20,8 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
     var profileImage: UIImage?
     var profileEditView: ProfileEditView?
     
+    let galleryPicker = UIImagePickerController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -159,19 +161,72 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
                                       message: nil,
                                       preferredStyle: .actionSheet)
         
-        alert.addAction(UIAlertAction(title: "Choose From Library", style: .default, handler:
+        alert.addAction(UIAlertAction(title: "Choose From Your Photo Library",
+                                      style: .default, handler:
             { (action) in
-                if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
-                    let imagePicker = UIImagePickerController()
-                    imagePicker.delegate = self
-                    imagePicker.sourceType = .photoLibrary;
-                    imagePicker.allowsEditing = true
-                    self.present(imagePicker, animated: true, completion: nil)
-                }
+                self.galleryPicker.sourceType = .photoLibrary
+                self.galleryPicker.delegate = self
+                self.present(self.galleryPicker, animated: true)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
         
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            let alert = UIAlertController(title: nil,
+                                          message: nil,
+                                          preferredStyle: .actionSheet)
+            
+            alert.addAction(UIAlertAction(title: "Save",
+                                          style: .default, handler:
+                { (action) in
+                    let data = UIImageJPEGRepresentation(image, 1.0)
+                    if let imageData = data {
+                        print("uploading")
+                        // Update profile picture
+                        self.uploadProfilePicture(data: imageData, handler:
+                            {
+                                // Dismiss photo librbary and go back to profile
+                                self.dismiss(animated: true, completion:
+                                    { action in
+                                        self.profileImage = image
+                                        self.transitionToProfile()
+                                })
+                        }, picker: picker)
+                    }
+                    
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            picker.present(alert, animated: true, completion: nil)
+            
+        }
+    }
+    
+    func uploadProfilePicture(data: Data, handler: Handler? = nil, picker: UIImagePickerController) {
+        let indicator = picker.requestLoading(view: picker.view)
+        UserManager().updateProfilePicture(imageData: data,
+                                           onSuccess:
+            { user in
+                picker.requestDoneLoading(view: picker.view, indicator: indicator)
+                print("succeeded")
+                handler?()
+        }, onFailure:
+            { json in
+                picker.requestDoneLoading(view: picker.view, indicator: indicator)
+                self.displayAlert(view: picker, title: "Image Failed To Upload",
+                                  message: "Request Error")
+        }, onRequestError:
+            { error in
+                picker.requestDoneLoading(view: picker.view, indicator: indicator)
+                self.displayAlert(view: picker, title: "Image Failed To Upload",
+                                  message: "Request Error")
+        })
     }
     
     override func viewDidAppear(_ animated: Bool) {

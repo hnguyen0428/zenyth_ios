@@ -204,7 +204,6 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         guard let accessTokenString = accessToken?.tokenString else { return }
         self.fbToken = accessTokenString
         
-        print("Successfully logged in with facebook...")
         FBSDKGraphRequest(graphPath: "/me", parameters:
             ["fields": "last_name, first_name, email, gender, birthday"])
             .start { (connnection, result, err) in
@@ -242,10 +241,8 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
                                           onSuccess:
             { data in
                 if data["taken"].boolValue {
-                    print("Email Taken")
                     self.fbOauthLogin(accessToken: accessToken, json: json)
                 } else { // email is available
-                    print("Email Available")
                     self.performSegue(withIdentifier: "oauthToUsernameController",
                                       sender: self)
                 }

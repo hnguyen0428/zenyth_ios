@@ -104,7 +104,7 @@ class ProfileController: HomeController {
             group.enter()
             self.profileView?.pinView?.pinImages[i].imageFromUrl(withUrl: url, handler:
                 { data in
-                group.leave()
+                    group.leave()
             })
         }
         
@@ -118,7 +118,7 @@ class ProfileController: HomeController {
         
         let controller = EditProfileController()
         controller.user = self.user
-        controller.profileImage = profileImage
+        controller.profileImage = self.profileImage
         
         appDelegate.window!.rootViewController = controller
     }
