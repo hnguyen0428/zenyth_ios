@@ -15,7 +15,7 @@ class MapView: GMSMapView {
     
     init(frame: CGRect, view: UIView) {
         super.init(frame: frame)
-        let camera = GMSCameraPosition.camera(withLatitude: 33.81, longitude: -117.94, zoom: 6.0)
+        let camera = GMSCameraPosition.camera(withLatitude: 33.81, longitude: -117.94, zoom: 13.0)
         self.camera = camera
         
         let buttonHeight = view.frame.height * 0.06

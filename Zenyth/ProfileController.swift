@@ -62,6 +62,16 @@ class ProfileController: HomeController {
                 self.profileView?.setLikesCount(count: user.likes!)
                 self.profileView?.setFollowersCount(count: user.friends)
                 self.profileView?.setPinpostsCount(count: user.numberOfPinposts!)
+                
+                if let firstName = user.firstName,
+                    let lastName = user.lastName {
+                    let name = "\(firstName) \(lastName)"
+                    self.profileView?.setName(name)
+                } else if let firstName = user.firstName {
+                    self.profileView?.setName(firstName)
+                } else if let lastName = user.lastName {
+                    self.profileView?.setName(lastName)
+                }
         })
     }
     

@@ -51,7 +51,7 @@ extension UIView {
                                         byRoundingCorners: [.bottomLeft , .bottomRight],
                                         cornerRadii: CGSize(width: radius, height: radius)).cgPath
         shadowLayer.fillColor = UIColor.white.cgColor
-        shadowLayer.shadowColor = UIColor.black.cgColor
+        shadowLayer.shadowColor = UIColor.lightGray.cgColor
         shadowLayer.shadowPath = shadowLayer.path
         shadowLayer.shadowOffset = CGSize(width: 2.0, height: 2.0)
         shadowLayer.shadowOpacity = 0.8

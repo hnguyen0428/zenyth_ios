@@ -10,6 +10,7 @@ import UIKit
 
 class ProfileView: UIView {
     var profilePicture: UIImageView?
+    var nameLabel: UILabel?
     var bioText: UITextView?
     var usernameLabel: UILabel?
     var editProfileButton: UIButton?
@@ -29,6 +30,7 @@ class ProfileView: UIView {
         self.setupUsernameLabel()
         self.setupEditProfileButton()
         self.setupSettingsButton()
+        self.setupNameLabel()
         self.setupBioText()
         self.setupTopPinLabel()
         self.setupPinView()
@@ -124,22 +126,38 @@ class ProfileView: UIView {
                                heightConstant: frame.height)
     }
     
+    func setupNameLabel() {
+        let height = self.frame.height * 0.05
+        let width = self.frame.width * 0.40
+        let frame = CGRect(x: 0, y: 0, width: width, height: height)
+        nameLabel = UILabel(frame: frame)
+        nameLabel?.font = UIFont.boldSystemFont(ofSize: 15.0)
+        
+        let margin: CGFloat = 20.0
+        self.addSubview(nameLabel!)
+        nameLabel?.anchor(profilePicture?.bottomAnchor,
+                          left: leftAnchor, bottom: nil,
+                          right: nil, topConstant: 5.0, leftConstant: margin,
+                          bottomConstant: 0, rightConstant: 0,
+                          widthConstant: frame.width, heightConstant: frame.height)
+    }
+    
     func setupBioText() {
         let height = self.frame.height * 0.20
         let width = self.frame.width * 0.90
         let frame = CGRect(x: 0, y: 0, width: width, height: height)
         bioText = UITextView(frame: frame)
         bioText!.isUserInteractionEnabled = false
-        bioText!.font = UIFont.systemFont(ofSize: 17.0)
+        bioText!.font = UIFont(name: "Verdana", size: 15.0)
         bioText!.backgroundColor = UIColor.clear
         
         self.addSubview(bioText!)
         
         let margin: CGFloat = 20.0
         
-        bioText?.anchor(profilePicture?.bottomAnchor,
+        bioText?.anchor(nameLabel?.bottomAnchor,
                         left: leftAnchor,
-                        bottom: nil, right: rightAnchor, topConstant: 15.0,
+                        bottom: nil, right: rightAnchor, topConstant: 0,
                         leftConstant: margin, bottomConstant: 0, rightConstant: margin,
                         widthConstant: frame.width, heightConstant: frame.height)
     }
@@ -151,7 +169,7 @@ class ProfileView: UIView {
         topPinLabel = UILabel(frame: frame)
         topPinLabel!.text = "Top Pins"
         topPinLabel!.textAlignment = NSTextAlignment.center
-        topPinLabel!.font = UIFont.boldSystemFont(ofSize: 17.0)
+        topPinLabel!.font = UIFont(name: "MarkerFelt-Wide", size: 20.0)
         
         self.addSubview(topPinLabel!)
         topPinLabel?.anchor(bioText?.bottomAnchor, left: centerXAnchor, bottom: nil,
@@ -184,6 +202,10 @@ class ProfileView: UIView {
                             leftConstant: 25.0, bottomConstant: verticalMargin,
                             rightConstant: 0, widthConstant: frame.width,
                             heightConstant: frame.height)
+    }
+    
+    func setName(_ text: String) {
+        nameLabel?.text = text
     }
     
     func setLikesCount(count: UInt32) {
