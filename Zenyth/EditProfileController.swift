@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import Photos
 
 class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
                             UINavigationControllerDelegate {
@@ -109,7 +110,7 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
     
     func setupDatePicker() {
         let datePicker = UIDatePicker()
-        profileEditView!.fields[2].textfield!.inputView = datePicker
+        profileEditView!.birthdayField!.inputView = datePicker
         datePicker.datePickerMode = UIDatePickerMode.date
         datePicker.addTarget(self, action: #selector(changeDOBValue),
                              for: .valueChanged)
@@ -123,11 +124,8 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
     }
     
     func updateProfileHandler() {
-        let name = profileEditView!.name()
-        let nameArr = name.components(separatedBy: " ")
-        let firstName = nameArr[0]
-        let lastName = nameArr.count > 1 ? nameArr[1] : nil
-        
+        let firstName = profileEditView?.firstName()
+        let lastName = profileEditView?.lastName()
         let gender = profileEditView!.gender()
         
         let dateString = profileEditView!.birthday()
@@ -179,14 +177,12 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        var name: String = ""
-        if user!.firstName != nil {
-            name = user!.firstName!
+        if let firstName = user?.firstName {
+            profileEditView?.setFirstName(firstName)
         }
-        if user!.lastName != nil {
-            name = "\(name) \(user!.lastName!)"
+        if let lastName = user?.lastName {
+            profileEditView?.setLastName(lastName)
         }
-        profileEditView?.setName(name)
         
         if let gender = user?.gender {
             profileEditView?.setGender(gender)
