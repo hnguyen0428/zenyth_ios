@@ -166,6 +166,7 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
             { (action) in
                 self.galleryPicker.sourceType = .photoLibrary
                 self.galleryPicker.delegate = self
+                self.galleryPicker.allowsEditing = true
                 self.present(self.galleryPicker, animated: true)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
@@ -178,7 +179,7 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
             let alert = UIAlertController(title: nil,
                                           message: nil,
                                           preferredStyle: .actionSheet)
