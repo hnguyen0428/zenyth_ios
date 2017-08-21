@@ -258,9 +258,10 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
         self.navigationController?.popViewController(animated: true)
         let controller = self.navigationController?.topViewController as! ProfileController
         
+        controller.profileImage = self.profileImage
+        controller.user = self.user
         // Render the updated user information
         controller.renderUserInfo(user: self.user!)
-        controller.profileImage = self.profileImage
         controller.renderProfileImage()
     }
     
