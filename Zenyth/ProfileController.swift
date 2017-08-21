@@ -14,6 +14,7 @@ class ProfileController: HomeController {
     var mapView: MapView?
     var user: User? = nil
     var profileImage: UIImage? = nil
+    var pinpostImages: [UIImage]? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,91 +33,109 @@ class ProfileController: HomeController {
         super.setupViews()
         toolbar?.setProfileSelected()
         
-        let profileFrame = CGRect(x: 0, y: 0, width: view.frame.width,
-                                  height: view.frame.height/2)
-        profileView = ProfileView(frame: profileFrame)
-        view.addSubview(profileView!)
-        
-        let mapWidth = view.frame.width
-        let mapHeight = view.frame.height - toolbar!.frame.height
-        let mapFrame = CGRect(x: 0, y: 0, width: mapWidth,
-                              height: mapHeight)
-        mapView = MapView(frame: mapFrame, view: self.view)
+        mapView = MapView(frame: view.frame, view: self.view)
         view.insertSubview(mapView!, at: 0)
     }
     
     func renderView() {
         let userId = UserDefaults.standard.object(forKey: "id") as! UInt32
-        profileView?.requestLoading()
         
+        let indicator = requestLoading(view: self.view)
         self.readProfile(userId: userId, handler:
             { user in
-                self.user = user
-                self.profileView?.requestDoneLoading()
+                let group = DispatchGroup()
+                
                 if user.profilePicture != nil {
-                    self.renderProfileImage(handler: nil)
+                    group.enter()
+                    self.renderProfileImage(handler:
+                        { image in
+                            group.leave()
+                            self.profileImage = image
+                    })
                 } else {
                     let defaultProfile = #imageLiteral(resourceName: "default_profile")
-                    self.profileView?.profilePicture?.image = defaultProfile
                     self.profileImage = defaultProfile
                 }
                 
-                self.renderPinImages(pinposts: user.pinposts, handler: nil)
+                var pinImages: [UIImage]? = nil
+                if user.pinposts.count > 0 {
+                    // Used to send in to the constructor of ProfileView so that
+                    // it creates the pin view
+                    pinImages = [UIImage]()
+                }
                 
-                self.renderUserInfo(user: user)
+                var name: String? = nil
+                if let firstName = user.firstName,
+                    let lastName = user.lastName {
+                    name = "\(firstName) \(lastName)"
+                } else if let firstName = user.firstName {
+                    name = firstName
+                } else if let lastName = user.lastName {
+                    name = lastName
+                }
+                
+                group.notify(queue: .main) {
+                    if let view = self.profileView {
+                        view.removeFromSuperview()
+                        self.profileView = nil
+                    }
+                    self.profileView = ProfileView(self,
+                                                   name: name,
+                                                   bio: user.biography,
+                                                   username: user.username,
+                                                   pinpostImages: pinImages,
+                                                   friends: user.friends, likes: user.likes!,
+                                                   numberOfPinposts: user.numberOfPinposts!,
+                                                   profilePicture: self.profileImage!)
+                    
+                    // Detecting if the images have already been rendered before
+                    if self.pinpostImages == nil {
+                        self.renderPinImages(pinposts: user.pinposts, handler:
+                            { images in
+                                self.pinpostImages = images
+                                self.profileView?.setImages(images: self.pinpostImages!)
+                        })
+                    } else {
+                        self.profileView?.setImages(images: self.pinpostImages!)
+                    }
+                    
+                    self.view.addSubview(self.profileView!)
+                    self.requestDoneLoading(view: self.view, indicator: indicator)
+                }
         })
-    }
-    
-    func renderUserInfo(user: User) {
-        self.profileView?.usernameLabel?.text = user.username
-        self.profileView?.setFollowersCount(count: user.friends)
-        
-        if let biography = user.biography {
-            self.profileView?.bioText?.text = biography
-        }
-        
-        if let likes = user.likes {
-            self.profileView?.setLikesCount(count: likes)
-        }
-        
-        if let pinposts = user.numberOfPinposts {
-            self.profileView?.setPinpostsCount(count: pinposts)
-        }
-        
-        if let firstName = user.firstName,
-            let lastName = user.lastName {
-            let name = "\(firstName) \(lastName)"
-            self.profileView?.setName(name)
-        } else if let firstName = user.firstName {
-            self.profileView?.setName(firstName)
-        } else if let lastName = user.lastName {
-            self.profileView?.setName(lastName)
-        }
     }
     
     func readProfile(userId: UInt32, handler: @escaping (User) -> Void) {
-        UserManager().readProfile(ofUserId: userId,
-                                  onSuccess:
-            { user in
-                self.user = user
-                handler(user)
-        })
-    }
-    
-    func renderProfileImage(handler: Handler? = nil) {
-        if profileImage == nil {
-            self.profileView?.profilePicture!.imageFromUrl(withUrl: self.user!.profilePicture!.url, handler:
-                { data in
-                    self.profileImage = UIImage(data: data)
-                    handler?()
+        if let usr = self.user {
+            handler(usr)
+        }
+        else {
+            UserManager().readProfile(ofUserId: userId,
+                                      onSuccess:
+                { user in
+                    self.user = user
+                    handler(user)
             })
-        } else {
-            self.profileView?.profilePicture!.image = profileImage!
         }
     }
     
-    func renderPinImages(pinposts: [Pinpost], handler: Handler? = nil) {
+    func renderProfileImage(handler: @escaping (UIImage) -> Void) {
+        if profileImage == nil {
+            ImageManager().getImageData(withUrl: user!.profilePicture!.url,
+                                        onSuccess:
+                { data in
+                    handler(UIImage(data: data)!)
+            })
+        } else {
+            self.profileView?.profilePicture!.image = profileImage!
+            handler(profileImage!)
+        }
+    }
+    
+    func renderPinImages(pinposts: [Pinpost], handler: @escaping ([UIImage]) -> Void) {
         var images: [Image] = [Image]()
+        var uiimages: [UIImage] = [UIImage]()
+        
         for pinpost in pinposts {
             if let image = pinpost.images.first {
                 images.append(image)
@@ -130,15 +149,20 @@ class ProfileController: HomeController {
                 break
             }
             let url = images[i].url
+            
             group.enter()
-            self.profileView?.pinView?.pinImages[i].imageFromUrl(withUrl: url, handler:
+            ImageManager().getImageData(withUrl: url, onSuccess:
                 { data in
+                    let image = UIImage(data: data)
+                    if let img = image {
+                        uiimages.append(img)
+                    }
                     group.leave()
             })
         }
         
         group.notify(queue: .main) {
-            handler?()
+            handler(uiimages)
         }
     }
     

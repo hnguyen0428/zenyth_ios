@@ -28,11 +28,7 @@ class FeedController: HomeController {
     }
     
     func loadMap() {
-        let mapWidth = view.frame.width
-        let mapHeight = view.frame.height - toolbar!.frame.height
-        let mapFrame = CGRect(x: 0, y: 0, width: mapWidth,
-                              height: mapHeight)
-        mapView = MapView(frame: mapFrame, view: self.view)
+        mapView = MapView(frame: view.frame, view: self.view)
         view.insertSubview(mapView!, at: 0)
     }
 }

@@ -148,6 +148,10 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
                                     biography: biography,
                                     onSuccess:
             { user in
+                var user = user
+                user.numberOfPinposts = self.user!.numberOfPinposts
+                user.pinposts = self.user!.pinposts
+                user.likes = self.user!.likes
                 self.user = user
                 self.transitionToProfile()
         })
@@ -177,31 +181,24 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
-            let alert = UIAlertController(title: nil,
-                                          message: nil,
-                                          preferredStyle: .actionSheet)
-            
-            alert.addAction(UIAlertAction(title: "Save",
-                                          style: .default, handler:
-                { (action) in
-                    let data = UIImageJPEGRepresentation(image, 1.0)
-                    if let imageData = data {
-                        // Update profile picture
-                        self.uploadProfilePicture(data: imageData, handler:
-                            { user in
-                                // Dismiss photo librbary and go back to profile
-                                self.dismiss(animated: true, completion:
-                                    { action in
-                                        self.profileImage = image
-                                        self.transitionToProfile(renderImage: true)
-                                })
-                        }, picker: picker)
-                    }
-                    
-            }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-            picker.present(alert, animated: true, completion: nil)
-            
+            let data = UIImageJPEGRepresentation(image, 1.0)
+            if let imageData = data {
+                // Update profile picture
+                self.uploadProfilePicture(data: imageData, handler:
+                    { user in
+                        // Dismiss photo library and go back to profile
+                        self.dismiss(animated: true, completion:
+                            { action in
+                                var user = user
+                                user.numberOfPinposts = self.user!.numberOfPinposts
+                                user.pinposts = self.user!.pinposts
+                                user.likes = self.user!.likes
+                                self.user = user
+                                self.profileImage = image
+                                self.transitionToProfile(renderImage: true)
+                        })
+                }, picker: picker)
+            }
         }
     }
     
@@ -260,9 +257,13 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
         
         controller.profileImage = self.profileImage
         controller.user = self.user
+        
         // Render the updated user information
-        controller.renderUserInfo(user: self.user!)
-        controller.renderProfileImage()
+        controller.renderView()
+        
+        if renderImage {
+            controller.profileView?.profilePicture?.image = self.profileImage
+        }
     }
     
     func popBackToProfile() {

@@ -19,32 +19,57 @@ class ProfileView: UIView {
     var pinView: PinView?
     var userInfoBar: UserInfoBar?
     
+    var maxHeight: CGFloat = 0
+    
     // Used for simulating request loading
     var requestLoadingMask: UIView?
     var indicator: UIActivityIndicatorView?
     
-    override init(frame: CGRect) {
+    init(_ controller: UIViewController, name: String? = nil, bio: String? = nil,
+         username: String, pinpostImages: [UIImage]? = nil, friends: UInt32, likes: UInt32,
+         numberOfPinposts: UInt32, profilePicture: UIImage) {
+        let view = controller.view!
+        let height = view.frame.height * 0.50
+        let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: height)
         super.init(frame: frame)
         
-        self.setupProfilePicture()
-        self.setupUsernameLabel()
+        self.setupProfilePicture(profileImage: profilePicture)
+        self.setupUsernameLabel(username: username)
         self.setupEditProfileButton()
         self.setupSettingsButton()
-        self.setupNameLabel()
-        self.setupBioText()
-        self.setupTopPinLabel()
-        self.setupPinView()
-        self.setupUserInfoBar()
         
+        if name != nil {
+            self.setupNameLabel(name: name!)
+        }
+        if bio != nil {
+            self.setupBioText(bio: bio!)
+        }
+        if let images = pinpostImages {
+            self.setupTopPinLabel()
+            self.setupPinView(images: images)
+        }
+        self.setupUserInfoBar(friends: friends, likes: likes,
+                              numberOfPinposts: numberOfPinposts)
+        
+
+        maxHeight = maxHeight + 15.0
+        let size = CGSize(width: self.frame.width, height: maxHeight)
+        self.frame = CGRect(origin: self.frame.origin, size: size)
         self.backgroundColor = UIColor.clear
         self.bottomRoundedWithShadow(radius: 25.0)
+        
+        // Adding target for button
+        settingsButton?.addTarget(controller, action: #selector(ProfileController.transitionToSettings),
+                                  for: .touchUpInside)
+        editProfileButton?.addTarget(controller, action: #selector(ProfileController.transitionToEditProfile),
+                                     for: .touchUpInside)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    func setupProfilePicture() {
+    func setupProfilePicture(profileImage: UIImage) {
         let heightPicture = self.frame.height * 0.20
         let widthPicture = heightPicture
         let profilePictureFrame = CGRect(x: 0, y: 0, width: widthPicture,
@@ -65,27 +90,37 @@ class ProfileView: UIView {
         image.clipsToBounds = true
         
         image.backgroundColor = UIColor.clear
+        image.image = profileImage
         profilePicture = image
+        
         container.addSubview(image)
         self.addSubview(container)
         
+        let topConstant: CGFloat = 25.0
+        let leftConstant: CGFloat = 10.0
         container.anchor(topAnchor, left: leftAnchor, bottom: nil,
-                               right: nil, topConstant: 25.0, leftConstant: 10.0,
-                               bottomConstant: 0, rightConstant: 0,
-                               widthConstant: profilePictureFrame.width,
-                               heightConstant: profilePictureFrame.height)
+                         right: nil, topConstant: topConstant, leftConstant: leftConstant,
+                         bottomConstant: 0, rightConstant: 0,
+                         widthConstant: profilePictureFrame.width,
+                         heightConstant: profilePictureFrame.height)
+        
+        maxHeight = maxHeight + heightPicture + topConstant
     }
     
-    func setupUsernameLabel() {
+    func setupUsernameLabel(username: String) {
         let height = self.frame.height * 0.10
         let width = self.frame.width * 0.40
         let frame = CGRect(x: 0, y: 0, width: width, height: height)
         usernameLabel = UILabel(frame: frame)
+        usernameLabel!.text = username
         
         self.addSubview(usernameLabel!)
+        
+        let topConstant: CGFloat = 10.0
+        let leftConstant: CGFloat = 10.0
         usernameLabel?.anchor(profilePicture?.topAnchor,
                               left: profilePicture?.rightAnchor, bottom: nil,
-                              right: nil, topConstant: 10.0, leftConstant: 10.0,
+                              right: nil, topConstant: topConstant, leftConstant: leftConstant,
                               bottomConstant: 0, rightConstant: 0,
                               widthConstant: frame.width, heightConstant: frame.height)
     }
@@ -126,40 +161,48 @@ class ProfileView: UIView {
                                heightConstant: frame.height)
     }
     
-    func setupNameLabel() {
+    func setupNameLabel(name: String) {
         let height = self.frame.height * 0.05
         let width = self.frame.width * 0.40
         let frame = CGRect(x: 0, y: 0, width: width, height: height)
         nameLabel = UILabel(frame: frame)
-        nameLabel?.font = UIFont.boldSystemFont(ofSize: 15.0)
+        nameLabel!.font = UIFont.boldSystemFont(ofSize: 15.0)
+        nameLabel!.text = name
         
-        let margin: CGFloat = 20.0
         self.addSubview(nameLabel!)
+        let margin: CGFloat = 20.0
+        let topConstant: CGFloat = 5.0
         nameLabel?.anchor(profilePicture?.bottomAnchor,
                           left: leftAnchor, bottom: nil,
-                          right: nil, topConstant: 5.0, leftConstant: margin,
+                          right: nil, topConstant: topConstant, leftConstant: margin,
                           bottomConstant: 0, rightConstant: 0,
                           widthConstant: frame.width, heightConstant: frame.height)
+        
+        maxHeight = maxHeight + height + topConstant
     }
     
-    func setupBioText() {
+    func setupBioText(bio: String) {
         let height = self.frame.height * 0.20
         let width = self.frame.width * 0.90
         let frame = CGRect(x: 0, y: 0, width: width, height: height)
         bioText = UITextView(frame: frame)
         bioText!.isUserInteractionEnabled = false
         bioText!.font = UIFont(name: "Verdana", size: 15.0)
-        bioText!.backgroundColor = UIColor.clear
+        bioText?.text = bio
+        bioText?.backgroundColor = UIColor.clear
         
         self.addSubview(bioText!)
         
         let margin: CGFloat = 20.0
-        
-        bioText?.anchor(nameLabel?.bottomAnchor,
+        let textHeight = bioText!.contentSize.height
+        let topAnchor = nameLabel == nil ? profilePicture?.bottomAnchor : nameLabel?.bottomAnchor
+        bioText?.anchor(topAnchor,
                         left: leftAnchor,
                         bottom: nil, right: rightAnchor, topConstant: 0,
                         leftConstant: margin, bottomConstant: 0, rightConstant: margin,
-                        widthConstant: frame.width, heightConstant: frame.height)
+                        widthConstant: frame.width, heightConstant: textHeight)
+        
+        maxHeight = maxHeight + textHeight
     }
     
     func setupTopPinLabel() {
@@ -172,14 +215,35 @@ class ProfileView: UIView {
         topPinLabel!.font = UIFont(name: "MarkerFelt-Wide", size: 20.0)
         
         self.addSubview(topPinLabel!)
-        topPinLabel?.anchor(bioText?.bottomAnchor, left: centerXAnchor, bottom: nil,
+        
+        var topAnchor: NSLayoutYAxisAnchor? = nil
+        if bioText != nil {
+            topAnchor = bioText?.bottomAnchor
+        }
+        else if nameLabel != nil {
+            topAnchor = nameLabel?.bottomAnchor
+        }
+        else {
+            topAnchor = profilePicture?.bottomAnchor
+        }
+        
+        topPinLabel?.anchor(topAnchor!, left: centerXAnchor, bottom: nil,
                             right: nil, topConstant: 0, leftConstant: -(frame.width/2),
                             bottomConstant: 0, rightConstant: 0,
                             widthConstant: frame.width, heightConstant: frame.height)
+        
+        maxHeight = maxHeight + height
     }
     
-    func setupPinView() {
+    func setupPinView(images: [UIImage]) {
         pinView = PinView(view: self)
+        
+        for i in 0..<images.count {
+            if i > 4 {
+                break
+            }
+            pinView?.pinImages[i].image = images[i]
+        }
         
         self.addSubview(pinView!)
         pinView?.anchor(topPinLabel?.bottomAnchor, left: nil, bottom: nil,
@@ -187,63 +251,49 @@ class ProfileView: UIView {
                         bottomConstant: 0, rightConstant: 0,
                         widthConstant: pinView!.frame.width,
                         heightConstant: pinView!.frame.height)
+        
+        maxHeight = maxHeight + pinView!.frame.height
     }
     
-    func setupUserInfoBar() {
+    func setupUserInfoBar(friends: UInt32, likes: UInt32, numberOfPinposts: UInt32) {
         let width = self.frame.width * 0.75
         let height = self.frame.height * 0.08
         let frame = CGRect(x: 0, y: 0, width: width, height: height)
         userInfoBar = UserInfoBar(frame: frame)
+        userInfoBar!.likeButton?.setTitle(String(likes), for: .normal)
+        userInfoBar!.pinButton?.setTitle(String(numberOfPinposts), for: .normal)
+        userInfoBar!.followerButton?.setTitle(String(friends), for: .normal)
         
         self.addSubview(userInfoBar!)
         let verticalMargin: CGFloat = 15.0
-        userInfoBar!.anchor(pinView?.bottomAnchor, left: pinView?.leftAnchor,
-                            bottom: bottomAnchor, right: nil, topConstant: verticalMargin,
-                            leftConstant: 25.0, bottomConstant: verticalMargin,
+        
+        var topAnchor: NSLayoutYAxisAnchor? = nil
+        if pinView != nil {
+            topAnchor = pinView?.bottomAnchor
+        }
+        else if bioText != nil {
+            topAnchor = bioText?.bottomAnchor
+        }
+        else if nameLabel != nil {
+            topAnchor = nameLabel?.bottomAnchor
+        }
+        else {
+            topAnchor = profilePicture?.bottomAnchor
+        }
+        
+        userInfoBar!.anchor(topAnchor, left: pinView?.leftAnchor,
+                            bottom: nil, right: nil, topConstant: verticalMargin,
+                            leftConstant: 25.0, bottomConstant: 0,
                             rightConstant: 0, widthConstant: frame.width,
                             heightConstant: frame.height)
+        
+        maxHeight = maxHeight + height + verticalMargin
     }
     
-    func setName(_ text: String) {
-        nameLabel?.text = text
-    }
-    
-    func setLikesCount(count: UInt32) {
-        userInfoBar?.likeButton?.setTitle(String(count), for: .normal)
-    }
-    
-    func setPinpostsCount(count: UInt32) {
-        userInfoBar?.pinButton?.setTitle(String(count), for: .normal)
-    }
-    
-    func setFollowersCount(count: UInt32) {
-        userInfoBar?.followerButton?.setTitle(String(count), for: .normal)
-    }
-    
-    func setPinImage(image: UIImage, index: Int) {
-        self.pinView?.pinImages[index].image = image
-    }
-    
-    func requestLoading() {
-        indicator = UIActivityIndicatorView(
-            activityIndicatorStyle: .gray
-        )
-        indicator!.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
-        indicator!.center = self.center
-        indicator!.hidesWhenStopped = true
-        indicator!.startAnimating()
-        requestLoadingMask = UIView(frame: self.frame)
-        requestLoadingMask!.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        requestLoadingMask!.bottomRounded(radius: 25.0)
-        self.addSubview(requestLoadingMask!)
-        self.addSubview(indicator!)
-        self.isUserInteractionEnabled = false
-    }
-    
-    func requestDoneLoading() {
-        indicator?.removeFromSuperview()
-        requestLoadingMask?.removeFromSuperview()
-        self.isUserInteractionEnabled = true
+    func setImages(images: [UIImage]) {
+        for i in 0..<images.count {
+            pinView?.pinImages[i].image = images[i]
+        }
     }
     
 }
