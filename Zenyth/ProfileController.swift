@@ -51,9 +51,10 @@ class ProfileController: HomeController {
         
         self.readProfile(userId: userId, handler:
             { user in
+                self.user = user
                 self.profileView?.requestDoneLoading()
-                if let image = user.profilePicture {
-                    self.renderProfileImage(image: image, handler: nil)
+                if user.profilePicture != nil {
+                    self.renderProfileImage(handler: nil)
                 } else {
                     let defaultProfile = #imageLiteral(resourceName: "default_profile")
                     self.profileView?.profilePicture?.image = defaultProfile
@@ -62,22 +63,35 @@ class ProfileController: HomeController {
                 
                 self.renderPinImages(pinposts: user.pinposts, handler: nil)
                 
-                self.profileView?.usernameLabel!.text = user.username
-                self.profileView?.bioText?.text = user.biography
-                self.profileView?.setLikesCount(count: user.likes!)
-                self.profileView?.setFollowersCount(count: user.friends)
-                self.profileView?.setPinpostsCount(count: user.numberOfPinposts!)
-                
-                if let firstName = user.firstName,
-                    let lastName = user.lastName {
-                    let name = "\(firstName) \(lastName)"
-                    self.profileView?.setName(name)
-                } else if let firstName = user.firstName {
-                    self.profileView?.setName(firstName)
-                } else if let lastName = user.lastName {
-                    self.profileView?.setName(lastName)
-                }
+                self.renderUserInfo(user: user)
         })
+    }
+    
+    func renderUserInfo(user: User) {
+        self.profileView?.usernameLabel?.text = user.username
+        self.profileView?.setFollowersCount(count: user.friends)
+        
+        if let biography = user.biography {
+            self.profileView?.bioText?.text = biography
+        }
+        
+        if let likes = user.likes {
+            self.profileView?.setLikesCount(count: likes)
+        }
+        
+        if let pinposts = user.numberOfPinposts {
+            self.profileView?.setPinpostsCount(count: pinposts)
+        }
+        
+        if let firstName = user.firstName,
+            let lastName = user.lastName {
+            let name = "\(firstName) \(lastName)"
+            self.profileView?.setName(name)
+        } else if let firstName = user.firstName {
+            self.profileView?.setName(firstName)
+        } else if let lastName = user.lastName {
+            self.profileView?.setName(lastName)
+        }
     }
     
     func readProfile(userId: UInt32, handler: @escaping (User) -> Void) {
@@ -89,9 +103,9 @@ class ProfileController: HomeController {
         })
     }
     
-    func renderProfileImage(image: Image, handler: Handler? = nil) {
+    func renderProfileImage(handler: Handler? = nil) {
         if profileImage == nil {
-            self.profileView?.profilePicture!.imageFromUrl(withUrl: image.url, handler:
+            self.profileView?.profilePicture!.imageFromUrl(withUrl: self.user!.profilePicture!.url, handler:
                 { data in
                     self.profileImage = UIImage(data: data)
                     handler?()

@@ -148,9 +148,7 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
                                     biography: biography,
                                     onSuccess:
             { user in
-                // Set to nil so that profile controller will render the updated
-                // profile
-                self.user = nil
+                self.user = user
                 self.transitionToProfile()
         })
     }
@@ -190,12 +188,12 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
                     if let imageData = data {
                         // Update profile picture
                         self.uploadProfilePicture(data: imageData, handler:
-                            {
+                            { user in
                                 // Dismiss photo librbary and go back to profile
                                 self.dismiss(animated: true, completion:
                                     { action in
                                         self.profileImage = image
-                                        self.transitionToProfile()
+                                        self.transitionToProfile(renderImage: true)
                                 })
                         }, picker: picker)
                     }
@@ -207,13 +205,13 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
         }
     }
     
-    func uploadProfilePicture(data: Data, handler: Handler? = nil, picker: UIImagePickerController) {
+    func uploadProfilePicture(data: Data, handler: UserCallback? = nil, picker: UIImagePickerController) {
         let indicator = picker.requestLoading(view: picker.view)
         UserManager().updateProfilePicture(imageData: data,
                                            onSuccess:
             { user in
                 picker.requestDoneLoading(view: picker.view, indicator: indicator)
-                handler?()
+                handler?(user)
         }, onFailure:
             { json in
                 picker.requestDoneLoading(view: picker.view, indicator: indicator)
@@ -256,14 +254,14 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
         }
     }
     
-    func transitionToProfile() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    func transitionToProfile(renderImage: Bool = false) {
+        self.navigationController?.popViewController(animated: true)
+        let controller = self.navigationController?.topViewController as! ProfileController
         
-        let profileController = ProfileController()
-        let controller = UINavigationController(rootViewController: profileController)
-        profileController.user = self.user
-        profileController.profileImage = self.profileImage
-        appDelegate.window!.rootViewController = controller
+        // Render the updated user information
+        controller.renderUserInfo(user: self.user!)
+        controller.profileImage = self.profileImage
+        controller.renderProfileImage()
     }
     
     func popBackToProfile() {
