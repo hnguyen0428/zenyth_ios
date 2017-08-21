@@ -68,7 +68,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             return
         }
     
-        print("Successfully logged into Google")
         // Perform any operations on signed in user here.
 
         guard let accessToken = user.authentication.accessToken else { return }
@@ -103,11 +102,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                                           onSuccess:
             { data in
                 if data["taken"].boolValue{ // email is taken
-                    print("Email Taken")
                     self.googleOauthLogin(idToken: idToken, json: json)
                 } else { // email is available
-                    print("Email Available")
-                    
                     // Access the storyboard and fetch an instance of the view controller
                     let storyboard = UIStoryboard(name: "Main", bundle: nil);
                     let viewController: UsernameController =

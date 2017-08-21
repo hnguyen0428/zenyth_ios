@@ -56,7 +56,7 @@
 		471280AE1F399306006FE796 /* TagManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280AD1F399306006FE796 /* TagManager.swift */; };
 		477D94311F47D1FB0043A957 /* UserInfoBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477D94301F47D1FB0043A957 /* UserInfoBar.swift */; };
 		477D94331F4808160043A957 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477D94321F4808160043A957 /* MapView.swift */; };
-		477D94351F4826E50043A957 /* UIImageView+ImageFromURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477D94341F4826E50043A957 /* UIImageView+ImageFromURL.swift */; };
+		477D94351F4826E50043A957 /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477D94341F4826E50043A957 /* UIImageView+Extensions.swift */; };
 		477FF6941F39D92F00FD66B4 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477FF6931F39D92F00FD66B4 /* Endpoint.swift */; };
 		477FF6961F39D97C00FD66B4 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477FF6951F39D97C00FD66B4 /* LoginManager.swift */; };
 		477FF6981F39D98C00FD66B4 /* LoginManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477FF6971F39D98C00FD66B4 /* LoginManagerProtocol.swift */; };
@@ -170,7 +170,7 @@
 		471280AD1F399306006FE796 /* TagManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagManager.swift; sourceTree = "<group>"; };
 		477D94301F47D1FB0043A957 /* UserInfoBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoBar.swift; sourceTree = "<group>"; };
 		477D94321F4808160043A957 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
-		477D94341F4826E50043A957 /* UIImageView+ImageFromURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+ImageFromURL.swift"; sourceTree = "<group>"; };
+		477D94341F4826E50043A957 /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
 		477FF6931F39D92F00FD66B4 /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		477FF6951F39D97C00FD66B4 /* LoginManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 		477FF6971F39D98C00FD66B4 /* LoginManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginManagerProtocol.swift; sourceTree = "<group>"; };
@@ -371,6 +371,10 @@
 			isa = PBXGroup;
 			children = (
 				47A488E11F22C97B006B0453 /* ProfileController.swift */,
+				47FE3D041F47AFD300EC62EC /* ProfileView.swift */,
+				47FE3D0D1F47CCE100EC62EC /* PinView.swift */,
+				47FE3D0F1F47CD0100EC62EC /* InfoAsset.swift */,
+				477D94301F47D1FB0043A957 /* UserInfoBar.swift */,
 				47B088CB1F48EFA500F4E4BB /* EditProfileController.swift */,
 				47B088CE1F49036200F4E4BB /* EditProfileToolbar.swift */,
 				47B088D01F490FC100F4E4BB /* ProfileEditView.swift */,
@@ -383,10 +387,6 @@
 			isa = PBXGroup;
 			children = (
 				47B47D451F479A04003C8189 /* Navbar.swift */,
-				47FE3D041F47AFD300EC62EC /* ProfileView.swift */,
-				47FE3D0D1F47CCE100EC62EC /* PinView.swift */,
-				47FE3D0F1F47CD0100EC62EC /* InfoAsset.swift */,
-				477D94301F47D1FB0043A957 /* UserInfoBar.swift */,
 				477D94321F4808160043A957 /* MapView.swift */,
 				47B088D41F49255A00F4E4BB /* ImageTextFieldView.swift */,
 			);
@@ -493,7 +493,7 @@
 				47ABAA031F0B7B7400FD479E /* UIViewController+Helper.swift */,
 				47FE3D071F47B63100EC62EC /* UIColor+Helpers.swift */,
 				47FE3D091F47B66900EC62EC /* UIView+Anchors.swift */,
-				477D94341F4826E50043A957 /* UIImageView+ImageFromURL.swift */,
+				477D94341F4826E50043A957 /* UIImageView+Extensions.swift */,
 				47B088D21F49239B00F4E4BB /* UITextField+Helpers.swift */,
 			);
 			name = UIHelpers;
@@ -870,7 +870,7 @@
 				47B47D461F479A04003C8189 /* Navbar.swift in Sources */,
 				47FE3D051F47AFD300EC62EC /* ProfileView.swift in Sources */,
 				4712807C1F3921DA006FE796 /* CredentialManager.swift in Sources */,
-				477D94351F4826E50043A957 /* UIImageView+ImageFromURL.swift in Sources */,
+				477D94351F4826E50043A957 /* UIImageView+Extensions.swift in Sources */,
 				471280821F396F85006FE796 /* UserManagerProtocol.swift in Sources */,
 				47D9ECB71F19755A00E3EEE4 /* User.swift in Sources */,
 				D23722701F1C8813004FFCFA /* ResetPasswordController.swift in Sources */,

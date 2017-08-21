@@ -75,25 +75,9 @@ class ProfileView: UIView {
         let profilePictureFrame = CGRect(x: 0, y: 0, width: widthPicture,
                                          height: heightPicture)
         
-        let container = UIView(frame: profilePictureFrame)
-        container.clipsToBounds = false
-        container.layer.masksToBounds = false
-        container.layer.shadowPath = UIBezierPath(roundedRect: container.bounds,
-                                                  cornerRadius: profilePictureFrame.height/2).cgPath
-        container.layer.shadowColor = UIColor.lightGray.cgColor
-        container.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
-        container.layer.shadowRadius = 2.0
-        container.layer.shadowOpacity = 0.5
-        
-        let image = UIImageView(frame: container.bounds)
-        image.layer.cornerRadius = profilePictureFrame.height/2
-        image.clipsToBounds = true
-        
-        image.backgroundColor = UIColor.clear
-        image.image = profileImage
-        profilePicture = image
-        
-        container.addSubview(image)
+        self.profilePicture = UIImageView()
+        profilePicture!.image = profileImage
+        let container = profilePicture!.roundedImageWithShadow(frame: profilePictureFrame)
         self.addSubview(container)
         
         let topConstant: CGFloat = 25.0

@@ -37,23 +37,9 @@ class PinView: UIView {
     
     func setupImageView(x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat) -> UIImageView {
         let frame = CGRect(x: x, y: y, width: width, height: height)
+        let image = UIImageView()
+        let container = image.roundedImageWithShadow(frame: frame)
         
-        let container = UIView(frame: frame)
-        container.clipsToBounds = false
-        container.layer.masksToBounds = false
-        container.layer.shadowPath = UIBezierPath(roundedRect: container.bounds,
-                                                  cornerRadius: frame.height/2).cgPath
-        container.layer.shadowColor = UIColor.lightGray.cgColor
-        container.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
-        container.layer.shadowRadius = 2.0
-        container.layer.shadowOpacity = 0.5
-        
-        let image = UIImageView(frame: container.bounds)
-        image.layer.cornerRadius = frame.height/2
-        image.clipsToBounds = true
-        
-        image.backgroundColor = UIColor.clear
-        container.addSubview(image)
         self.addSubview(container)
         return image
     }
