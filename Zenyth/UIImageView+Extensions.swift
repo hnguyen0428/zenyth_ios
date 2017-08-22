@@ -34,6 +34,7 @@ extension UIImageView {
         self.frame = container.bounds
         self.layer.cornerRadius = frame.height/2
         self.clipsToBounds = true
+        self.contentMode = .scaleAspectFill
         
         self.backgroundColor = UIColor.clear
         container.addSubview(self)

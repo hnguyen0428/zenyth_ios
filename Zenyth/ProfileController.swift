@@ -121,7 +121,7 @@ class ProfileController: HomeController {
     
     func renderProfileImage(handler: @escaping (UIImage) -> Void) {
         if profileImage == nil {
-            ImageManager().getImageData(withUrl: user!.profilePicture!.url,
+            ImageManager().getImageData(withUrl: user!.profilePicture!.getURL(size: "medium"),
                                         onSuccess:
                 { data in
                     handler(UIImage(data: data)!)
@@ -134,7 +134,7 @@ class ProfileController: HomeController {
     
     func renderPinImages(pinposts: [Pinpost], handler: @escaping ([UIImage]) -> Void) {
         var images: [Image] = [Image]()
-        var uiimages: [UIImage] = [UIImage]()
+        var uiimages: [UIImage] = [UIImage](repeating: UIImage(), count: 5)
         
         for pinpost in pinposts {
             if let image = pinpost.images.first {
@@ -148,14 +148,14 @@ class ProfileController: HomeController {
             if i > 4 {
                 break
             }
-            let url = images[i].url
+            let url = images[i].getURL(size: "large")
             
             group.enter()
             ImageManager().getImageData(withUrl: url, onSuccess:
                 { data in
                     let image = UIImage(data: data)
                     if let img = image {
-                        uiimages.append(img)
+                        uiimages[i] = img
                     }
                     group.leave()
             })

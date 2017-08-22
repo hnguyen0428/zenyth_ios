@@ -40,6 +40,15 @@ struct Image: APIObject {
         ]
     }
     
+    func getURL(size: String? = nil) -> String {
+        if let str = size {
+            return "\(url)?size=\(str.lowercased())"
+        }
+        else {
+            return url
+        }
+    }
+    
     var description: String {
         return String(describing: toJSON())
     }

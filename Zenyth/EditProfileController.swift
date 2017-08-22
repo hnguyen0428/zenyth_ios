@@ -88,7 +88,7 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
         if let image = profileImage {
             profileImageView?.image = image
         } else {
-            profileImageView?.imageFromUrl(withUrl: (user?.profilePicture?.url)!)
+            profileImageView?.imageFromUrl(withUrl: (user?.profilePicture?.getURL(size: "medium"))!)
         }
         scrollView?.addSubview(container)
 
