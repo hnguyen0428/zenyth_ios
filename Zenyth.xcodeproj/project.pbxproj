@@ -94,6 +94,7 @@
 		47C9D4471F3EC08500E93079 /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C9D4461F3EC08500E93079 /* UIExtensions.swift */; };
 		47CDA9081F3BC9DE0044CEE8 /* RegistrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDA9071F3BC9DE0044CEE8 /* RegistrationTests.swift */; };
 		47CDA90A1F3BCD780044CEE8 /* CustomAsserts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDA9091F3BCD780044CEE8 /* CustomAsserts.swift */; };
+		47D683F41F4D90F400F8EA23 /* Paginate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D683F31F4D90F400F8EA23 /* Paginate.swift */; };
 		47D838CC1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */; };
 		47D9ECB71F19755A00E3EEE4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECB61F19755A00E3EEE4 /* User.swift */; };
 		47D9ECC01F19E3D300E3EEE4 /* RegistrationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECBF1F19E3D300E3EEE4 /* RegistrationModule.swift */; };
@@ -219,6 +220,7 @@
 		47C9D4461F3EC08500E93079 /* UIExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
 		47CDA9071F3BC9DE0044CEE8 /* RegistrationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationTests.swift; sourceTree = "<group>"; };
 		47CDA9091F3BCD780044CEE8 /* CustomAsserts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAsserts.swift; sourceTree = "<group>"; };
+		47D683F31F4D90F400F8EA23 /* Paginate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paginate.swift; sourceTree = "<group>"; };
 		47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModelViewController+KeyboardHandler.swift"; sourceTree = "<group>"; };
 		47D9ECB61F19755A00E3EEE4 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		47D9ECBF1F19E3D300E3EEE4 /* RegistrationModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationModule.swift; sourceTree = "<group>"; };
@@ -489,6 +491,7 @@
 				4712808D1F39841A006FE796 /* Like.swift */,
 				4712808F1F39842C006FE796 /* Relationship.swift */,
 				471280911F39844C006FE796 /* Tag.swift */,
+				47D683F31F4D90F400F8EA23 /* Paginate.swift */,
 			);
 			name = ObjectModels;
 			sourceTree = "<group>";
@@ -847,6 +850,7 @@
 				471280841F396FCC006FE796 /* Callbacks.swift in Sources */,
 				47FE3D081F47B63100EC62EC /* UIColor+Helpers.swift in Sources */,
 				47A488E21F22C97B006B0453 /* ProfileController.swift in Sources */,
+				47D683F41F4D90F400F8EA23 /* Paginate.swift in Sources */,
 				470A17ED1F3E93310067046F /* PasswordController.swift in Sources */,
 				47C6CB381F4D75B000053218 /* FeedScrollView.swift in Sources */,
 				477FF69A1F39D99900FD66B4 /* RegistrationManagerProtocol.swift in Sources */,

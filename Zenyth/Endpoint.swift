@@ -19,6 +19,7 @@ typealias APIRoute = (String, HTTPMethod)
     All of the backend API Endpoints
  */
 public enum Endpoint {
+    case GetRequest(String)
     
     /// RegistrationManager Endpoints
     case Register
@@ -98,6 +99,8 @@ public enum Endpoint {
     
     func route() -> APIRoute {
         switch self {
+        case .GetRequest(let url):
+            return (url, .get)
         case .Register:
             return ("\(baseURL)/register", .post)
         case .OAuthRegister:

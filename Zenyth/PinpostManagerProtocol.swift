@@ -177,7 +177,20 @@ protocol PinpostManagerProtocol {
         - onRequestError: callback function with NSError parameter
      */
     func fetchPinpostsFeed(paginate: UInt32?, scope: String?,
-                           onSuccess: PinpostsCallback?,
+                           onSuccess: PinpostsCallbackWithPaginate?,
                            onFailure: JSONCallback?,
                            onRequestError: ErrorCallback?)
+    
+    /**
+     Fetch the feed
+     - Parameters:
+     - url given by pagination to fetch the next page of pinposts
+     - onSuccess: callback function with [Pinpost] parameter
+     - onFailure: callback function with JSON parameter
+     - onRequestError: callback function with NSError parameter
+     */
+    func fetchPinposts(fromURL url: String,
+                       onSuccess: PinpostsCallbackWithPaginate?,
+                       onFailure: JSONCallback?,
+                       onRequestError: ErrorCallback?)
 }

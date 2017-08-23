@@ -12,6 +12,7 @@ import UIKit
 class FeedScrollView: UIScrollView {
     
     var pinposts: [Pinpost] = [Pinpost]()
+    var currentPinpostIndex = 0
     
     init(frame: CGRect, controller: UIViewController) {
         super.init(frame: frame)

@@ -18,6 +18,7 @@ typealias UsersCallback = ([User]) -> Void
 
 typealias PinpostCallback = (Pinpost) -> Void
 typealias PinpostsCallback = ([Pinpost]) -> Void
+typealias PinpostsCallbackWithPaginate = ([Pinpost], Paginate) -> Void
 
 typealias CommentCallback = (Comment) -> Void
 typealias CommentsCallback = ([Comment]) -> Void
