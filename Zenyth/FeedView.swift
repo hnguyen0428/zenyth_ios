@@ -32,10 +32,32 @@ class FeedView: UIView {
         
         self.setupFeedInfoView(title: title, description: description,
                                name: name, username: username)
-        self.setupThumbnailView()
-        self.setupProfilePic()
         
-        self.topRounded(radius: 25.0)
+        if hasThumbnail {
+            self.setupThumbnailView()
+            _ = self.setupProfilePic()
+            self.topRounded(radius: 25.0)
+        }
+        else {
+            let imageContainer = self.setupProfilePic()
+            let extraHeight = profilePicView!.frame.height/2
+            
+            let newHeight = feedInfoView!.frame.height + extraHeight
+            let heightLost = self.frame.height - newHeight
+            let newY = self.frame.origin.y + heightLost
+            
+            self.frame = CGRect(x: self.frame.origin.x, y: newY,
+                                width: self.frame.width, height: newHeight)
+            feedInfoView!.frame.origin = CGPoint(x: 0, y: extraHeight)
+            feedInfoView!.topRounded(radius: 25.0)
+            
+            let profileFrame = profilePicView!.frame
+            let newProfileFrame = CGRect(x: imageContainer.frame.origin.x, y: 0,
+                                         width: profileFrame.width, height: profileFrame.height)
+            imageContainer.frame = newProfileFrame
+        }
+        
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -69,7 +91,7 @@ class FeedView: UIView {
         self.addSubview(thumbnailView!)
     }
     
-    func setupProfilePic() {
+    func setupProfilePic() -> UIView {
         let width = self.frame.width * FeedView.PROFILE_PIC_SIZE
         let height = width
         let margin = self.frame.width * FeedView.MARGIN
@@ -79,6 +101,7 @@ class FeedView: UIView {
         profilePicView = UIImageView()
         let container = profilePicView!.roundedImageWithShadow(frame: frame)
         self.addSubview(container)
+        return container
     }
     
     func setThumbnailImage(image: UIImage) {
@@ -87,6 +110,16 @@ class FeedView: UIView {
     
     func setProfileImage(image: UIImage) {
         self.profilePicView?.image = image
+    }
+    
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        for subview in subviews {
+            if !subview.isHidden && subview.alpha > 0 && subview.isUserInteractionEnabled
+                && subview.point(inside: convert(point, to: subview), with: event) {
+                return true
+            }
+        }
+        return false
     }
     
 }
