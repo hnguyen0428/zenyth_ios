@@ -54,6 +54,26 @@ class PinpostManager: PinpostManagerProtocol {
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
+    func uploadImages(toPinpostId pinpostId: UInt32, imagesData: [Data],
+                      onSuccess: ImagesCallback? = nil,
+                      onFailure: JSONCallback? = nil,
+                      onRequestError: ErrorCallback? = nil) {
+        let route = Endpoint.UploadImageToPinpost(pinpostId).route()
+        APIClient.sharedClient.setAuthorization()
+        
+        APIClient.sharedClient.executeUpload(route: route, data: imagesData,
+                                             fileKey: "images[]",
+                                             onSuccess:
+            { json in
+                var images = [Image]()
+                let imagesJSON = json["data"]["images"].arrayValue
+                for imageJSON in imagesJSON {
+                    images.append(Image(json: imageJSON))
+                }
+                onSuccess?(images)
+        }, onFailure: onFailure, onRequestError: onRequestError)
+    }
+    
     func updatePinpost(withPinpostId pinpostId: UInt32, title: String? = nil,
                        description: String? = nil, latitude: Double? = nil,
                        longitude: Double? = nil, privacy: String? = nil,

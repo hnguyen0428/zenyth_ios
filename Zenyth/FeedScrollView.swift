@@ -13,6 +13,8 @@ class FeedScrollView: UIScrollView {
     
     var pinposts: [Pinpost] = [Pinpost]()
     var currentPinpostIndex = 0
+    static let VELOCITY_TO_SWITCH: CGFloat = 500
+    static let SWITCH_DURATION: Double = 0.2
     
     init(frame: CGRect, controller: UIViewController) {
         super.init(frame: frame)

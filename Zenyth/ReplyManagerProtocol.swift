@@ -24,7 +24,7 @@ protocol ReplyManagerProtocol {
                      onRequestError: ErrorCallback?)
     
     /**
-     Upload image to a reply
+     Upload an image to a reply
      - Parameters:
         - replyId: ID of reply to be uploaded to
         - imageData: image data to be uploaded
@@ -36,6 +36,20 @@ protocol ReplyManagerProtocol {
                      onSuccess: ImageCallback?,
                      onFailure: JSONCallback?,
                      onRequestError: ErrorCallback?)
+    
+    /**
+     Upload images to a reply
+     - Parameters:
+     - replyId: ID of reply to be uploaded to
+     - imagesData: array of images data to be uploaded
+     - onSuccess: callback function with [Image] parameter
+     - onFailure: callback function with JSON parameter
+     - onRequestError: callback function with NSError parameter
+     */
+    func uploadImages(toReplyId replyId: UInt32, imagesData: [Data],
+                      onSuccess: ImagesCallback?,
+                      onFailure: JSONCallback?,
+                      onRequestError: ErrorCallback?)
     
     /**
      Update a reply

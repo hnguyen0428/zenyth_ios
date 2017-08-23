@@ -17,8 +17,9 @@ class FeedController: HomeController, UIScrollViewDelegate {
     // Save the next page and prev page of pagination
     var paginateObject: Paginate?
     var pageNum = 0
+    var loading: Bool = false
     
-    static let paginate: UInt32 = 5
+    static let paginate: UInt32 = 10
 
     // Y coordinate of feed in percent of view height
     static let Y_COORD_FEED: CGFloat = 0.35
@@ -75,17 +76,24 @@ class FeedController: HomeController, UIScrollViewDelegate {
     }
     
     func setupFeedView() {
-        self.fetchFeed(handler:
-            { pinposts in
-                self.renderFeedScrollView(pinposts: pinposts)
-        })
+        if !loading {
+            self.fetchFeed(handler:
+                { pinposts in
+                    self.renderFeedScrollView(pinposts: pinposts)
+            })
+        }
     }
     
-    func renderFeedScrollView(pinposts: [Pinpost]) {
+    func renderFeedScrollView(pinposts: [Pinpost], handler: Handler? = nil) {
+        // Set loading to true so that only one request to render the feed
+        // can fire at a time
+        self.loading = true
         let feedWidth = self.view.frame.width
         let y = self.feedScrollView!.frame.origin.y
         let feedHeight = self.toolbar!.frame.origin.y - y
         
+        // Dispatch group for handling completion
+        let group = DispatchGroup()
         for i in 0..<pinposts.count {
             
             let x = CGFloat(i + self.pageNum * Int(FeedController.paginate)) * self.feedScrollView!.frame.width
@@ -99,27 +107,36 @@ class FeedController: HomeController, UIScrollViewDelegate {
             self.feedScrollView?.addSubview(feedView)
             self.feedScrollView?.pinposts.append(pinpost)
             
+            group.enter()
             self.renderPinImage(pinpost: pinpost, handler:
                 { image in
                     if let img = image {
                         feedView.setThumbnailImage(image: img)
                     }
+                    group.leave()
             })
             
+            group.enter()
             self.renderProfileImage(creator: creator, handler:
                 { image in
                     feedView.setProfileImage(image: image)
+                    group.leave()
             })
+        }
+        group.notify(queue: .main) {
+            self.loading = false
         }
     }
     
     func loadNextPage() {
         let scrollView = feedScrollView!
         if scrollView.currentPinpostIndex == scrollView.pinposts.count - 1 {
-            self.fetchNextPage(handler:
-                { pinposts in
-                    self.renderFeedScrollView(pinposts: pinposts)
-            })
+            if !loading {
+                self.fetchNextPage(handler:
+                    { pinposts in
+                        self.renderFeedScrollView(pinposts: pinposts)
+                })
+            }
         }
     }
     
@@ -132,10 +149,10 @@ class FeedController: HomeController, UIScrollViewDelegate {
         let velocity = sender.velocity(in: scrollView)
         var snapRight: Bool = false
         var snapLeft: Bool = false
-        if velocity.x < -1200 {
+        if velocity.x < -FeedScrollView.VELOCITY_TO_SWITCH {
             snapRight = true
         }
-        if velocity.x > 1200 {
+        if velocity.x > FeedScrollView.VELOCITY_TO_SWITCH {
             snapLeft = true
         }
         
@@ -150,7 +167,7 @@ class FeedController: HomeController, UIScrollViewDelegate {
             let maxX = (index + 1) * feedWidth
             
             // Duration of animation
-            var duration: Double = 0.2
+            let duration: Double = FeedScrollView.SWITCH_DURATION
             
             if x > scrollView.contentSize.width - feedWidth { // snap back to the left
                 UIView.animate(withDuration: duration, animations:
@@ -173,7 +190,6 @@ class FeedController: HomeController, UIScrollViewDelegate {
             let enoughOfLeftShown = (maxX - x)/scrollView.frame.width > 0.30
             
             if snapRight { // snap right if swiping left fast enough
-                duration = 0.15
                 scrollView.currentPinpostIndex += 1
                 UIView.animate(withDuration: duration, animations:
                     { animation in
@@ -185,7 +201,6 @@ class FeedController: HomeController, UIScrollViewDelegate {
                 return
             }
             if snapLeft { // snap left if swiping right fast enough
-                duration = 0.15
                 scrollView.currentPinpostIndex -= 1
                 UIView.animate(withDuration: duration, animations:
                     { animation in
