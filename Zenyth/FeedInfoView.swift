@@ -119,7 +119,7 @@ class FeedInfoView: UIView {
         descriptionText = UITextView(frame: frame)
         descriptionText?.font = UIFont(name: "Verdana", size: 16.0)
         descriptionText?.text = description
-        descriptionText?.allowsEditingTextAttributes = false
+        descriptionText?.isUserInteractionEnabled = false
         
         self.addSubview(descriptionText!)
         

@@ -25,6 +25,8 @@ class FeedView: UIView {
     // Left margin of profile pic
     static let MARGIN: CGFloat = 0.05
     
+    static let ROUNDED_TOP_RADIUS: CGFloat = 40.0
+    
     init(frame: CGRect, controller: UIViewController,
          title: String, description: String, name: String? = nil,
          username: String, hasThumbnail: Bool) {
@@ -36,7 +38,7 @@ class FeedView: UIView {
         if hasThumbnail {
             self.setupThumbnailView()
             _ = self.setupProfilePic()
-            self.topRounded(radius: 25.0)
+            self.topRounded(radius: FeedView.ROUNDED_TOP_RADIUS)
         }
         else {
             let imageContainer = self.setupProfilePic()
@@ -49,7 +51,7 @@ class FeedView: UIView {
             self.frame = CGRect(x: self.frame.origin.x, y: newY,
                                 width: self.frame.width, height: newHeight)
             feedInfoView!.frame.origin = CGPoint(x: 0, y: extraHeight)
-            feedInfoView!.topRounded(radius: 25.0)
+            feedInfoView!.topRounded(radius: FeedView.ROUNDED_TOP_RADIUS)
             
             let profileFrame = profilePicView!.frame
             let newProfileFrame = CGRect(x: imageContainer.frame.origin.x, y: 0,
@@ -87,6 +89,7 @@ class FeedView: UIView {
         thumbnailView = UIImageView(frame: frame)
         thumbnailView?.contentMode = .scaleAspectFill
         thumbnailView?.clipsToBounds = true
+        thumbnailView?.isUserInteractionEnabled = true
         
         self.addSubview(thumbnailView!)
     }

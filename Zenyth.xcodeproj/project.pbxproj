@@ -90,6 +90,7 @@
 		47C622F71F0A347F003BBC16 /* UsernameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C622F61F0A347F003BBC16 /* UsernameController.swift */; };
 		47C6CB341F4D058700053218 /* FeedInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C6CB331F4D058700053218 /* FeedInfoView.swift */; };
 		47C6CB361F4D0F8A00053218 /* PostActionBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C6CB351F4D0F8A00053218 /* PostActionBar.swift */; };
+		47C6CB381F4D75B000053218 /* FeedScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C6CB371F4D75B000053218 /* FeedScrollView.swift */; };
 		47C9D4471F3EC08500E93079 /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C9D4461F3EC08500E93079 /* UIExtensions.swift */; };
 		47CDA9081F3BC9DE0044CEE8 /* RegistrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDA9071F3BC9DE0044CEE8 /* RegistrationTests.swift */; };
 		47CDA90A1F3BCD780044CEE8 /* CustomAsserts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDA9091F3BCD780044CEE8 /* CustomAsserts.swift */; };
@@ -214,6 +215,7 @@
 		47C622F61F0A347F003BBC16 /* UsernameController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsernameController.swift; sourceTree = "<group>"; };
 		47C6CB331F4D058700053218 /* FeedInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedInfoView.swift; sourceTree = "<group>"; };
 		47C6CB351F4D0F8A00053218 /* PostActionBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostActionBar.swift; sourceTree = "<group>"; };
+		47C6CB371F4D75B000053218 /* FeedScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedScrollView.swift; sourceTree = "<group>"; };
 		47C9D4461F3EC08500E93079 /* UIExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
 		47CDA9071F3BC9DE0044CEE8 /* RegistrationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationTests.swift; sourceTree = "<group>"; };
 		47CDA9091F3BCD780044CEE8 /* CustomAsserts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAsserts.swift; sourceTree = "<group>"; };
@@ -396,6 +398,7 @@
 				47B088DB1F4CFCC500F4E4BB /* FeedView.swift */,
 				47C6CB331F4D058700053218 /* FeedInfoView.swift */,
 				47C6CB351F4D0F8A00053218 /* PostActionBar.swift */,
+				47C6CB371F4D75B000053218 /* FeedScrollView.swift */,
 			);
 			name = Feed;
 			sourceTree = "<group>";
@@ -845,6 +848,7 @@
 				47FE3D081F47B63100EC62EC /* UIColor+Helpers.swift in Sources */,
 				47A488E21F22C97B006B0453 /* ProfileController.swift in Sources */,
 				470A17ED1F3E93310067046F /* PasswordController.swift in Sources */,
+				47C6CB381F4D75B000053218 /* FeedScrollView.swift in Sources */,
 				477FF69A1F39D99900FD66B4 /* RegistrationManagerProtocol.swift in Sources */,
 				47C9D4471F3EC08500E93079 /* UIExtensions.swift in Sources */,
 				471280941F398576006FE796 /* RelationshipManagerProtocol.swift in Sources */,
