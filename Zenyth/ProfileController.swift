@@ -33,7 +33,7 @@ class ProfileController: HomeController {
         super.setupViews()
         toolbar?.setProfileSelected()
         
-        mapView = MapView(frame: view.frame, view: self.view)
+        mapView = MapView(frame: view.frame, controller: self)
         view.insertSubview(mapView!, at: 0)
     }
     

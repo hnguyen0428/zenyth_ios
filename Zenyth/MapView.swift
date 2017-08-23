@@ -13,8 +13,9 @@ class MapView: GMSMapView {
     var searchButton: UIButton?
     var recenterButton: UIButton?
     
-    init(frame: CGRect, view: UIView) {
+    init(frame: CGRect, controller: UIViewController) {
         super.init(frame: frame)
+        let view = controller.view!
         let camera = GMSCameraPosition.camera(withLatitude: 33.81, longitude: -117.94, zoom: 13.0)
         self.camera = camera
         

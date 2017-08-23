@@ -70,4 +70,15 @@ extension UIView {
         maskLayer.path = maskPath.cgPath
         self.layer.mask = maskLayer
     }
+    
+    func topRounded(radius: CGFloat) {
+        let maskPath = UIBezierPath(roundedRect: self.bounds,
+                                    byRoundingCorners: [.topLeft , .topRight],
+                                    cornerRadii: CGSize(width: radius, height: radius))
+        
+        let maskLayer = CAShapeLayer()
+        maskLayer.frame = self.bounds
+        maskLayer.path = maskPath.cgPath
+        self.layer.mask = maskLayer
+    }
 }

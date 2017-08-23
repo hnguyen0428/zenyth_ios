@@ -36,3 +36,6 @@ typealias TagsCallback = ([Tag]) -> Void
 
 typealias RelationshipCallback = (Relationship) -> Void
 typealias RelationshipsCallback = ([Relationship]) -> Void
+
+
+typealias UIImageCallback = (UIImage) -> Void
