@@ -94,36 +94,17 @@ class FeedController: HomeController, UIScrollViewDelegate {
             
             let pinpost = pinposts[i]
             let creator = pinpost.creator!
-            var name: String? = nil
-            if let firstName = creator.firstName,
-                let lastName = creator.lastName {
-                name = "\(firstName) \(lastName)"
-            } else if let firstName = creator.firstName {
-                name = firstName
-            } else if let lastName = creator.lastName {
-                name = lastName
-            }
             
-            var hasThumbnail: Bool = false
-            if pinpost.images.count > 0 {
-                hasThumbnail = true
-            }
-            
-            let feedView = FeedView(self, frame: frame,
-                                    title: pinpost.title,
-                                    description: pinpost.pinpostDescription,
-                                    name: name,
-                                    username: creator.username,
-                                    hasThumbnail: hasThumbnail)
+            let feedView = FeedView(self, frame: frame, pinpost: pinpost)
             self.feedScrollView?.addSubview(feedView)
             self.feedScrollView?.pinposts.append(pinpost)
             
-            if hasThumbnail {
-                self.renderPinImage(pinpost: pinpost, handler:
-                    { image in
-                        feedView.setThumbnailImage(image: image)
-                })
-            }
+            self.renderPinImage(pinpost: pinpost, handler:
+                { image in
+                    if let img = image {
+                        feedView.setThumbnailImage(image: img)
+                    }
+            })
             
             self.renderProfileImage(creator: creator, handler:
                 { image in
@@ -317,16 +298,18 @@ class FeedController: HomeController, UIScrollViewDelegate {
         
     }
     
-    func renderPinImage(pinpost: Pinpost, handler: @escaping (UIImage) -> Void) {
-        let pinThumbnail = pinpost.images[0]
-        let url = pinThumbnail.getURL()
-        ImageManager().getImageData(withUrl: url,
-                                    onSuccess:
-            { data in
-                if let image = UIImage(data: data){
-                    handler(image)
-                }
-        })
+    func renderPinImage(pinpost: Pinpost, handler: @escaping (UIImage?) -> Void) {
+        if let image = pinpost.images.first {
+            let url = image.getURL()
+            ImageManager().getImageData(withUrl: url,
+                                        onSuccess:
+                { data in
+                    handler(UIImage(data: data))
+            })
+        }
+        else {
+            handler(nil)
+        }
     }
     
     func expandPost(_ sender: UITapGestureRecognizer) {

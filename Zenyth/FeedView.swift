@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 import UIKit
 
 class FeedView: UIView {
@@ -15,6 +16,7 @@ class FeedView: UIView {
     var profilePicView: UIImageView?
     var thumbnailView: UIImageView?
     var tapGesture: UITapGestureRecognizer
+    var pinpost: Pinpost
     
     var maxHeight: CGFloat = 0
     
@@ -28,12 +30,25 @@ class FeedView: UIView {
     
     static let ROUNDED_TOP_RADIUS: CGFloat = 40.0
     
-    init(_ controller: UIViewController, frame: CGRect,
-         title: String, description: String, name: String? = nil,
-         username: String, hasThumbnail: Bool) {
+    init(_ controller: UIViewController, frame: CGRect, pinpost: Pinpost) {
         tapGesture = UITapGestureRecognizer(target: controller, action: #selector(FeedController.expandPost))
+        self.pinpost = pinpost
         super.init(frame: frame)
         
+        let title = pinpost.title
+        let description = pinpost.pinpostDescription
+        let creator = pinpost.creator!
+        let username = creator.username
+        var name: String? = nil
+        if let firstName = creator.firstName,
+            let lastName = creator.lastName {
+            name = "\(firstName) \(lastName)"
+        } else if let firstName = creator.firstName {
+            name = firstName
+        } else if let lastName = creator.lastName {
+            name = lastName
+        }
+        let hasThumbnail = pinpost.images.count > 0
         self.setupFeedInfoView(title: title, description: description,
                                name: name, username: username)
         
@@ -66,6 +81,7 @@ class FeedView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         tapGesture = UITapGestureRecognizer(target: nil, action: nil)
+        pinpost = Pinpost(json: JSON.null)
         super.init(coder: aDecoder)
     }
     
