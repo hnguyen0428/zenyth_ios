@@ -23,6 +23,7 @@ class FeedController: HomeController, UIScrollViewDelegate {
         toolbar?.homeButton?.addTarget(self, action: #selector(transitionToFeed), for: .touchUpInside)
         toolbar?.notificationButton?.addTarget(self, action: #selector(transitionToNotification), for: .touchUpInside)
         toolbar?.profileButton?.addTarget(self, action: #selector(transitionToProfile), for: .touchUpInside)
+        feedScrollView!.panGestureRecognizer.addTarget(self, action: #selector(snapToPin))
     }
     
     override func setupViews() {
@@ -63,7 +64,6 @@ class FeedController: HomeController, UIScrollViewDelegate {
         let feedHeight = self.toolbar!.frame.origin.y - y
         let frame = CGRect(x: x, y: y, width: feedWidth, height: feedHeight)
         feedScrollView = FeedScrollView(frame: frame, controller: self)
-        feedScrollView!.panGestureRecognizer.addTarget(self, action: #selector(snapToPin))
         feedScrollView!.delegate = self
         view.insertSubview(feedScrollView!, belowSubview: toolbar!)
     }
@@ -99,12 +99,12 @@ class FeedController: HomeController, UIScrollViewDelegate {
                         hasThumbnail = true
                     }
                     
-                    let feedView = FeedView(frame: frame, controller: self,
-                                             title: pinpost.title,
-                                             description: pinpost.pinpostDescription,
-                                             name: name,
-                                             username: creator.username,
-                                             hasThumbnail: hasThumbnail)
+                    let feedView = FeedView(self, frame: frame,
+                                            title: pinpost.title,
+                                            description: pinpost.pinpostDescription,
+                                            name: name,
+                                            username: creator.username,
+                                            hasThumbnail: hasThumbnail)
                     self.feedScrollView?.addSubview(feedView)
                     
                     
@@ -261,5 +261,9 @@ class FeedController: HomeController, UIScrollViewDelegate {
                     handler(image)
                 }
         })
+    }
+    
+    func expandPost(_ sender: UITapGestureRecognizer) {
+        print("Tapped")
     }
 }

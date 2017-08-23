@@ -14,6 +14,7 @@ class FeedView: UIView {
     var feedInfoView: FeedInfoView?
     var profilePicView: UIImageView?
     var thumbnailView: UIImageView?
+    var tapGesture: UITapGestureRecognizer
     
     var maxHeight: CGFloat = 0
     
@@ -27,9 +28,10 @@ class FeedView: UIView {
     
     static let ROUNDED_TOP_RADIUS: CGFloat = 40.0
     
-    init(frame: CGRect, controller: UIViewController,
+    init(_ controller: UIViewController, frame: CGRect,
          title: String, description: String, name: String? = nil,
          username: String, hasThumbnail: Bool) {
+        tapGesture = UITapGestureRecognizer(target: controller, action: #selector(FeedController.expandPost))
         super.init(frame: frame)
         
         self.setupFeedInfoView(title: title, description: description,
@@ -59,10 +61,11 @@ class FeedView: UIView {
             imageContainer.frame = newProfileFrame
         }
         
-        
+        feedInfoView!.descriptionText!.addGestureRecognizer(tapGesture)
     }
     
     required init?(coder aDecoder: NSCoder) {
+        tapGesture = UITapGestureRecognizer(target: nil, action: nil)
         super.init(coder: aDecoder)
     }
     

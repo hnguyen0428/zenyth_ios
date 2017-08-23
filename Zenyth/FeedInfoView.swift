@@ -119,7 +119,7 @@ class FeedInfoView: UIView {
         descriptionText = UITextView(frame: frame)
         descriptionText?.font = UIFont(name: "Verdana", size: 16.0)
         descriptionText?.text = description
-        descriptionText?.isUserInteractionEnabled = false
+        descriptionText?.isEditable = false
         
         self.addSubview(descriptionText!)
         
@@ -127,7 +127,8 @@ class FeedInfoView: UIView {
         let contentHeight = descriptionText!.contentSize.height
         let newHeight = contentHeight < height ? contentHeight : height
         descriptionText!.frame = CGRect(x: x, y: y, width: width, height: newHeight)
-        
+        descriptionText?.isScrollEnabled = false
+        descriptionText?.textContainer.lineBreakMode = NSLineBreakMode.byTruncatingTail
         
         maxHeight = maxHeight + newHeight + gap
     }
