@@ -19,6 +19,13 @@ class FeedController: HomeController, UIScrollViewDelegate {
     var pageNum = 0
     var loading: Bool = false
     
+    // Timer for triggering creating pinpost form
+    var timer: Timer? = nil
+    var longPressGestureRec: UILongPressGestureRecognizer = {
+        let gesture = UILongPressGestureRecognizer()
+        return gesture
+    }()
+    
     static let paginate: UInt32 = 10
 
     // Y coordinate of feed in percent of view height
@@ -40,6 +47,7 @@ class FeedController: HomeController, UIScrollViewDelegate {
         self.loadMap()
         self.setupScrollView()
         self.setupFeedView()
+        self.setupLongPressGesture()
     }
     
     func loadMap() {
@@ -82,6 +90,11 @@ class FeedController: HomeController, UIScrollViewDelegate {
                     self.renderFeedScrollView(pinposts: pinposts)
             })
         }
+    }
+    
+    func setupLongPressGesture() {
+        longPressGestureRec.addTarget(self, action: #selector(transitionToPinpostForm))
+        self.mapView?.addGestureRecognizer(longPressGestureRec)
     }
     
     func renderFeedScrollView(pinposts: [Pinpost], handler: Handler? = nil) {
@@ -329,5 +342,15 @@ class FeedController: HomeController, UIScrollViewDelegate {
     
     func expandPost(_ sender: UITapGestureRecognizer) {
         print("Tapped")
+    }
+    
+    func transitionToPinpostForm() {
+        let controller = PinpostFormController()
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
 }
