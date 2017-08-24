@@ -333,7 +333,7 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
-        PinpostForm.shared.coordinate = coordinate
+        PinpostForm.shared.pressedCoordinate = coordinate
         let geocoder = GMSGeocoder()
         geocoder.reverseGeocodeCoordinate(coordinate, completionHandler:
             { response, error in

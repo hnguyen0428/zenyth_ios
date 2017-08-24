@@ -76,6 +76,7 @@ class PinpostFormView: UIView {
         locationField = UITextField(frame: frame)
         locationField.placeholder = "Add a location"
         locationField.backgroundColor = UIColor.white
+        locationField.tintColor = UIColor.clear
         self.addSubview(locationField)
     }
     

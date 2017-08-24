@@ -21,9 +21,11 @@ class PinpostForm {
     var description: String = String()
     var privacy: String = String()
     var location: GMSAddress = GMSAddress()
+    var pressedCoordinate: CLLocationCoordinate2D = CLLocationCoordinate2D()
     
     func clearInfo() {
         coordinate = CLLocationCoordinate2D()
+        pressedCoordinate = CLLocationCoordinate2D()
         title = String()
         description = String()
         privacy = String()

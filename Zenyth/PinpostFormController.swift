@@ -80,12 +80,19 @@ class PinpostFormController: UIViewController, UITextViewDelegate,
     func autocomplete(_ sender: UITextField) {
         let autocompleteController = GMSAutocompleteViewController()
         autocompleteController.delegate = self
-        autocompleteController.view.backgroundColor = UIColor.clear
         
         // Set a filter to return only addresses.
         let filter = GMSAutocompleteFilter()
-        filter.type = .noFilter
+        let nwCoord = CLLocationCoordinate2D(latitude: 41.738528, longitude: -124.365234)
+        let seCoord = CLLocationCoordinate2D(latitude: 32.509762, longitude: -114.082031)
+        let bounds = GMSCoordinateBounds(coordinate: nwCoord, coordinate: seCoord)
+        filter.type = .establishment
+        
+        autocompleteController.autocompleteBounds = bounds
         autocompleteController.autocompleteFilter = filter
+        
+        autocompleteController.tableCellBackgroundColor = .white
+        autocompleteController.tintColor = UIColor.black
         
         present(autocompleteController, animated: true, completion: nil)
     }
@@ -172,9 +179,9 @@ class PinpostFormController: UIViewController, UITextViewDelegate,
         print("Place address: \(place.formattedAddress)")
         print("Place attributions: \(place.attributions)")
         
-        // TODO: Add code to get address components from the selected place.
+        pinpostFormView.locationField.text = place.name
+        PinpostForm.shared.coordinate = place.coordinate
         
-        // Close the autocomplete widget.
         dismiss(animated: true, completion: nil)
     }
     
