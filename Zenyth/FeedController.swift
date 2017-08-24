@@ -344,9 +344,10 @@ class FeedController: HomeController, UIScrollViewDelegate {
         print("Tapped")
     }
     
-    func transitionToPinpostForm() {
-        let controller = PinpostFormController()
-        self.navigationController?.pushViewController(controller, animated: true)
+    func transitionToPinpostForm(_ sender: UILongPressGestureRecognizer) {
+        
+//        let controller = PinpostFormController()
+//        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
