@@ -13,6 +13,8 @@ class MapView: GMSMapView {
     var searchButton: UIButton?
     var recenterButton: UIButton?
     
+    static let LONG_PRESS_DURATION = 1.5
+    
     init(frame: CGRect, controller: UIViewController) {
         super.init(frame: frame)
         let view = controller.view!

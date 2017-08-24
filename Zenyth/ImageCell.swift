@@ -15,10 +15,6 @@ class ImageCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-//        let width = frame.width * 0.99
-//        let height = frame.height * 0.99
-//        let frame = CGRect(origin: CGPoint.zero, size: CGSize(width: width, height: height))
         self.imageView = UIImageView(frame: frame)
         self.imageView.clipsToBounds = true
         self.imageView.contentMode = .scaleAspectFill

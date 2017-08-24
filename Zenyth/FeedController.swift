@@ -9,7 +9,7 @@
 import UIKit
 import GoogleMaps
 
-class FeedController: HomeController, UIScrollViewDelegate {
+class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
     
     var mapView: MapView?
     var feedScrollView: FeedScrollView?
@@ -18,13 +18,6 @@ class FeedController: HomeController, UIScrollViewDelegate {
     var paginateObject: Paginate?
     var pageNum = 0
     var loading: Bool = false
-    
-    // Timer for triggering creating pinpost form
-    var timer: Timer? = nil
-    var longPressGestureRec: UILongPressGestureRecognizer = {
-        let gesture = UILongPressGestureRecognizer()
-        return gesture
-    }()
     
     static let paginate: UInt32 = 10
 
@@ -47,7 +40,6 @@ class FeedController: HomeController, UIScrollViewDelegate {
         self.loadMap()
         self.setupScrollView()
         self.setupFeedView()
-        self.setupLongPressGesture()
     }
     
     func loadMap() {
@@ -70,6 +62,7 @@ class FeedController: HomeController, UIScrollViewDelegate {
                                             y: searchButtonY)
         mapView!.searchButton!.frame = CGRect(origin: searchButtonNewOrigin,
                                               size: searchButtonSize)
+        mapView?.delegate = self
     }
     
     func setupScrollView() {
@@ -90,11 +83,6 @@ class FeedController: HomeController, UIScrollViewDelegate {
                     self.renderFeedScrollView(pinposts: pinposts)
             })
         }
-    }
-    
-    func setupLongPressGesture() {
-        longPressGestureRec.addTarget(self, action: #selector(transitionToPinpostForm))
-        self.mapView?.addGestureRecognizer(longPressGestureRec)
     }
     
     func renderFeedScrollView(pinposts: [Pinpost], handler: Handler? = nil) {
@@ -344,10 +332,21 @@ class FeedController: HomeController, UIScrollViewDelegate {
         print("Tapped")
     }
     
-    func transitionToPinpostForm(_ sender: UILongPressGestureRecognizer) {
-        
-//        let controller = PinpostFormController()
-//        self.navigationController?.pushViewController(controller, animated: true)
+    func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
+        PinpostForm.shared.coordinate = coordinate
+        let geocoder = GMSGeocoder()
+        geocoder.reverseGeocodeCoordinate(coordinate, completionHandler:
+            { response, error in
+                if let address = response?.firstResult() {
+                    PinpostForm.shared.location = address
+                }
+        })
+        transitionToPinpostForm()
+    }
+    
+    func transitionToPinpostForm() {
+        let controller = PinpostFormController()
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {

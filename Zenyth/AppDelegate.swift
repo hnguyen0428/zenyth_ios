@@ -12,6 +12,7 @@ import GoogleSignIn
 import Alamofire
 import SwiftyJSON
 import GoogleMaps
+import GooglePlaces
 //import TwitterKit
 //import Fabric
 
@@ -56,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         // Set the google map api key
         GMSServices.provideAPIKey("AIzaSyDbce3U3e0teGEnQM54kBu_r2kDGEGcOz0")
-
+        GMSPlacesClient.provideAPIKey("AIzaSyDkcMF5HUh0upEqqEdyO-1BFzLNjN-GjU8")
         
         return true
     }

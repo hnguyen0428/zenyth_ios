@@ -98,7 +98,9 @@
 		47D683F61F4E4D9900F8EA23 /* ImageGalleryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D683F51F4E4D9900F8EA23 /* ImageGalleryController.swift */; };
 		47D683F81F4E59E700F8EA23 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D683F71F4E59E700F8EA23 /* ImageCell.swift */; };
 		47D683FC1F4E837B00F8EA23 /* PinpostFormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D683FB1F4E837B00F8EA23 /* PinpostFormController.swift */; };
-		47D683FF1F4E854100F8EA23 /* PinpostForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D683FE1F4E854100F8EA23 /* PinpostForm.swift */; };
+		47D683FF1F4E854100F8EA23 /* PinpostFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D683FE1F4E854100F8EA23 /* PinpostFormView.swift */; };
+		47D684011F4EA1DA00F8EA23 /* PinpostForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D684001F4EA1DA00F8EA23 /* PinpostForm.swift */; };
+		47D684031F4EB3D200F8EA23 /* UIViewController+GMSAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D684021F4EB3D200F8EA23 /* UIViewController+GMSAutocomplete.swift */; };
 		47D838CC1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */; };
 		47D9ECB71F19755A00E3EEE4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECB61F19755A00E3EEE4 /* User.swift */; };
 		47D9ECC01F19E3D300E3EEE4 /* RegistrationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECBF1F19E3D300E3EEE4 /* RegistrationModule.swift */; };
@@ -228,7 +230,9 @@
 		47D683F51F4E4D9900F8EA23 /* ImageGalleryController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageGalleryController.swift; sourceTree = "<group>"; };
 		47D683F71F4E59E700F8EA23 /* ImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		47D683FB1F4E837B00F8EA23 /* PinpostFormController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinpostFormController.swift; sourceTree = "<group>"; };
-		47D683FE1F4E854100F8EA23 /* PinpostForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinpostForm.swift; sourceTree = "<group>"; };
+		47D683FE1F4E854100F8EA23 /* PinpostFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinpostFormView.swift; sourceTree = "<group>"; };
+		47D684001F4EA1DA00F8EA23 /* PinpostForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinpostForm.swift; sourceTree = "<group>"; };
+		47D684021F4EB3D200F8EA23 /* UIViewController+GMSAutocomplete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+GMSAutocomplete.swift"; sourceTree = "<group>"; };
 		47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModelViewController+KeyboardHandler.swift"; sourceTree = "<group>"; };
 		47D9ECB61F19755A00E3EEE4 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		47D9ECBF1F19E3D300E3EEE4 /* RegistrationModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationModule.swift; sourceTree = "<group>"; };
@@ -494,7 +498,8 @@
 				47D683F71F4E59E700F8EA23 /* ImageCell.swift */,
 				47D683F51F4E4D9900F8EA23 /* ImageGalleryController.swift */,
 				47D683FB1F4E837B00F8EA23 /* PinpostFormController.swift */,
-				47D683FE1F4E854100F8EA23 /* PinpostForm.swift */,
+				47D683FE1F4E854100F8EA23 /* PinpostFormView.swift */,
+				47D684001F4EA1DA00F8EA23 /* PinpostForm.swift */,
 			);
 			name = PinpostForm;
 			sourceTree = "<group>";
@@ -538,6 +543,7 @@
 				47FE3D091F47B66900EC62EC /* UIView+Anchors.swift */,
 				477D94341F4826E50043A957 /* UIImageView+Extensions.swift */,
 				47B088D21F49239B00F4E4BB /* UITextField+Helpers.swift */,
+				47D684021F4EB3D200F8EA23 /* UIViewController+GMSAutocomplete.swift */,
 			);
 			name = UIHelpers;
 			sourceTree = "<group>";
@@ -864,6 +870,7 @@
 				471280921F39844C006FE796 /* Tag.swift in Sources */,
 				4712809E1F3990DF006FE796 /* TagManagerProtocol.swift in Sources */,
 				477FF6941F39D92F00FD66B4 /* Endpoint.swift in Sources */,
+				47D684031F4EB3D200F8EA23 /* UIViewController+GMSAutocomplete.swift in Sources */,
 				4712808C1F39840D006FE796 /* Reply.swift in Sources */,
 				47A2DFB81F42C3F9001CFAA3 /* GlobalHelperFunctions.swift in Sources */,
 				47B088CF1F49036200F4E4BB /* EditProfileToolbar.swift in Sources */,
@@ -893,7 +900,7 @@
 				47C622F71F0A347F003BBC16 /* UsernameController.swift in Sources */,
 				471280AC1F3992FC006FE796 /* ImageManager.swift in Sources */,
 				477FF69C1F39D9A200FD66B4 /* RegistrationManager.swift in Sources */,
-				47D683FF1F4E854100F8EA23 /* PinpostForm.swift in Sources */,
+				47D683FF1F4E854100F8EA23 /* PinpostFormView.swift in Sources */,
 				47A9024C1F0B1F4400A1CEE8 /* LoginController.swift in Sources */,
 				471280861F3977D3006FE796 /* PinpostManagerProtocol.swift in Sources */,
 				47FE3D101F47CD0100EC62EC /* InfoAsset.swift in Sources */,
@@ -911,6 +918,7 @@
 				47A9024E1F0B34C900A1CEE8 /* GlobalVariables.swift in Sources */,
 				47D838CC1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift in Sources */,
 				471280781F391A4B006FE796 /* CredentialManagerProtocol.swift in Sources */,
+				47D684011F4EA1DA00F8EA23 /* PinpostForm.swift in Sources */,
 				47B088D91F49A8EA00F4E4BB /* SettingsController.swift in Sources */,
 				4712807E1F3929B2006FE796 /* APIClient.swift in Sources */,
 				471280AA1F3992F3006FE796 /* RelationshipManager.swift in Sources */,

@@ -31,6 +31,7 @@ target 'Zenyth' do
   pod 'TwitterKit'
   
   pod 'GoogleMaps'
+	pod 'GooglePlacePicker'
   pod 'GooglePlaces'
 
 end

@@ -540,6 +540,10 @@ Fabric: Copyright 2017 Google, Inc. All Rights Reserved. Use of this software is
 
 Copyright 2017 Google
 
+## GooglePlacePicker
+
+Copyright 2017 Google
+
 ## GooglePlaces
 
 Copyright 2017 Google
