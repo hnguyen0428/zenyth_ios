@@ -95,6 +95,8 @@
 		47CDA9081F3BC9DE0044CEE8 /* RegistrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDA9071F3BC9DE0044CEE8 /* RegistrationTests.swift */; };
 		47CDA90A1F3BCD780044CEE8 /* CustomAsserts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDA9091F3BCD780044CEE8 /* CustomAsserts.swift */; };
 		47D683F41F4D90F400F8EA23 /* Paginate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D683F31F4D90F400F8EA23 /* Paginate.swift */; };
+		47D683F61F4E4D9900F8EA23 /* ImageGalleryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D683F51F4E4D9900F8EA23 /* ImageGalleryController.swift */; };
+		47D683F81F4E59E700F8EA23 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D683F71F4E59E700F8EA23 /* ImageCell.swift */; };
 		47D838CC1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */; };
 		47D9ECB71F19755A00E3EEE4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECB61F19755A00E3EEE4 /* User.swift */; };
 		47D9ECC01F19E3D300E3EEE4 /* RegistrationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECBF1F19E3D300E3EEE4 /* RegistrationModule.swift */; };
@@ -221,6 +223,8 @@
 		47CDA9071F3BC9DE0044CEE8 /* RegistrationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationTests.swift; sourceTree = "<group>"; };
 		47CDA9091F3BCD780044CEE8 /* CustomAsserts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAsserts.swift; sourceTree = "<group>"; };
 		47D683F31F4D90F400F8EA23 /* Paginate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paginate.swift; sourceTree = "<group>"; };
+		47D683F51F4E4D9900F8EA23 /* ImageGalleryController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageGalleryController.swift; sourceTree = "<group>"; };
+		47D683F71F4E59E700F8EA23 /* ImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModelViewController+KeyboardHandler.swift"; sourceTree = "<group>"; };
 		47D9ECB61F19755A00E3EEE4 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		47D9ECBF1F19E3D300E3EEE4 /* RegistrationModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationModule.swift; sourceTree = "<group>"; };
@@ -401,6 +405,8 @@
 				47C6CB331F4D058700053218 /* FeedInfoView.swift */,
 				47C6CB351F4D0F8A00053218 /* PostActionBar.swift */,
 				47C6CB371F4D75B000053218 /* FeedScrollView.swift */,
+				47D683F51F4E4D9900F8EA23 /* ImageGalleryController.swift */,
+				47D683F71F4E59E700F8EA23 /* ImageCell.swift */,
 			);
 			name = Feed;
 			sourceTree = "<group>";
@@ -851,6 +857,7 @@
 				47FE3D081F47B63100EC62EC /* UIColor+Helpers.swift in Sources */,
 				47A488E21F22C97B006B0453 /* ProfileController.swift in Sources */,
 				47D683F41F4D90F400F8EA23 /* Paginate.swift in Sources */,
+				47D683F61F4E4D9900F8EA23 /* ImageGalleryController.swift in Sources */,
 				470A17ED1F3E93310067046F /* PasswordController.swift in Sources */,
 				47C6CB381F4D75B000053218 /* FeedScrollView.swift in Sources */,
 				477FF69A1F39D99900FD66B4 /* RegistrationManagerProtocol.swift in Sources */,
@@ -882,6 +889,7 @@
 				477FF6981F39D98C00FD66B4 /* LoginManagerProtocol.swift in Sources */,
 				478006391F21B5730064F9E7 /* Pinpost.swift in Sources */,
 				471280A61F3992E0006FE796 /* ReplyManager.swift in Sources */,
+				47D683F81F4E59E700F8EA23 /* ImageCell.swift in Sources */,
 				471280AE1F399306006FE796 /* TagManager.swift in Sources */,
 				477D94331F4808160043A957 /* MapView.swift in Sources */,
 				47A9024E1F0B34C900A1CEE8 /* GlobalVariables.swift in Sources */,
