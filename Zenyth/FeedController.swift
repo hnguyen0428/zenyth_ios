@@ -17,6 +17,10 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
     // Save the next page and prev page of pagination
     var paginateObject: Paginate?
     var pageNum = 0
+    
+    // For the feed to know where to start adding on to the previous pins on
+    // the scroll view
+    var startIndex = 0
     var loading: Bool = false
     
     static let paginate: UInt32 = 10
@@ -77,12 +81,10 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
     }
     
     func setupFeedView() {
-        if !loading {
-            self.fetchFeed(handler:
-                { pinposts in
-                    self.renderFeedScrollView(pinposts: pinposts)
-            })
-        }
+        self.fetchFeed(handler:
+            { pinposts in
+                self.renderFeedScrollView(pinposts: pinposts)
+        })
     }
     
     func renderFeedScrollView(pinposts: [Pinpost], handler: Handler? = nil) {
@@ -96,8 +98,7 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
         // Dispatch group for handling completion
         let group = DispatchGroup()
         for i in 0..<pinposts.count {
-            
-            let x = CGFloat(i + self.pageNum * Int(FeedController.paginate)) * self.feedScrollView!.frame.width
+            let x = CGFloat(i + startIndex) * self.feedScrollView!.frame.width
             self.feedScrollView!.contentSize.width += self.feedScrollView!.frame.width
             let frame = CGRect(x: x, y: 0, width: feedWidth, height: feedHeight)
             
@@ -126,18 +127,17 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
         }
         group.notify(queue: .main) {
             self.loading = false
+            self.startIndex += pinposts.count
         }
     }
     
     func loadNextPage() {
         let scrollView = feedScrollView!
         if scrollView.currentPinpostIndex == scrollView.pinposts.count - 1 {
-            if !loading {
-                self.fetchNextPage(handler:
-                    { pinposts in
-                        self.renderFeedScrollView(pinposts: pinposts)
-                })
-            }
+            self.fetchNextPage(handler:
+                { pinposts in
+                    self.renderFeedScrollView(pinposts: pinposts)
+            })
         }
     }
     
