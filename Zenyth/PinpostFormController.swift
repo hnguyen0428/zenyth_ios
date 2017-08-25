@@ -17,7 +17,7 @@ class PinpostFormController: UIViewController, UITextViewDelegate,
     
     var pinpostFormView: PinpostFormView!
     
-    let privacyOptions = ["Only for yourself", "For you and your friends",
+    let privacyOptions = ["", "Only for yourself", "For you and your friends",
                           "Everyone"]
     
     override func viewDidLoad() {
@@ -29,6 +29,7 @@ class PinpostFormController: UIViewController, UITextViewDelegate,
                                                            action: #selector(fillLocation),
                                                            for: .touchUpInside)
         pinpostFormView.locationField.addTarget(self, action: #selector(autocomplete), for: .editingDidBegin)
+        pinpostFormView.titleField.addTarget(self, action: #selector(fieldCheck), for: .editingChanged)
     }
     
     func setupViews() {
@@ -63,6 +64,7 @@ class PinpostFormController: UIViewController, UITextViewDelegate,
             textView.text = "Give a description"
             textView.textColor = UIColor.lightGray
         }
+        fieldCheck()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -75,6 +77,8 @@ class PinpostFormController: UIViewController, UITextViewDelegate,
         
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.title = "Create a Pinpost"
+        
+        _ = fieldCheck()
     }
     
     func autocomplete(_ sender: UITextField) {
@@ -104,6 +108,7 @@ class PinpostFormController: UIViewController, UITextViewDelegate,
         if let str = line {
             pinpostFormView.locationField.text = str
         }
+        _ = fieldCheck()
     }
     
     func transitionToImageGallery(_ sender: UIBarButtonItem) {
@@ -129,8 +134,10 @@ class PinpostFormController: UIViewController, UITextViewDelegate,
             let location = pinpostFormView.locationField.text, !location.isEmpty,
             let privacy = pinpostFormView.privacyField.text, !privacy.isEmpty
             else {
+                self.navigationItem.rightBarButtonItem?.isEnabled = false
                 return false
         }
+        self.navigationItem.rightBarButtonItem?.isEnabled = true
         return true
     }
     
@@ -168,8 +175,18 @@ class PinpostFormController: UIViewController, UITextViewDelegate,
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let privacy = privacyOptions[row]
-        PinpostForm.shared.privacy = privacy
+        switch row {
+        case 1:
+            PinpostForm.shared.privacy = "self"
+        case 2:
+            PinpostForm.shared.privacy = "friends"
+        case 3:
+            PinpostForm.shared.privacy = "public"
+        default:
+            break
+        }
         pinpostFormView.privacyField.text = privacy
+        _ = fieldCheck()
     }
     
     // Handle the user's selection.
@@ -181,8 +198,12 @@ class PinpostFormController: UIViewController, UITextViewDelegate,
         
         pinpostFormView.locationField.text = place.name
         PinpostForm.shared.coordinate = place.coordinate
+        PinpostForm.shared.usePressedCoordinate = false
         
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion:
+            {
+                _ = self.fieldCheck()
+        })
     }
     
     public func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {

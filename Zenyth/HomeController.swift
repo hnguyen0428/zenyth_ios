@@ -30,7 +30,7 @@ class HomeController: UIViewController {
     func transitionToFeed() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
-        let controller = FeedController()
+        let controller = UINavigationController(rootViewController: FeedController())
         appDelegate.window!.rootViewController = controller
     }
     

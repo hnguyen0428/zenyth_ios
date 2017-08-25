@@ -181,7 +181,7 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
-            let data = UIImageJPEGRepresentation(image, 1.0)
+            let data = UIImageJPEGRepresentation(image, 0.5)
             if let imageData = data {
                 // Update profile picture
                 self.uploadProfilePicture(data: imageData, handler:

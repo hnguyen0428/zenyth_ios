@@ -121,7 +121,7 @@ class ProfileController: HomeController {
     
     func renderProfileImage(handler: @escaping (UIImage) -> Void) {
         if profileImage == nil {
-            ImageManager().getImageData(withUrl: user!.profilePicture!.getURL(size: "medium"),
+            ImageManager().getImageData(withUrl: user!.profilePicture!.getURL(size: "small"),
                                         onSuccess:
                 { data in
                     handler(UIImage(data: data)!)
@@ -148,7 +148,7 @@ class ProfileController: HomeController {
             if i > 4 {
                 break
             }
-            let url = images[i].getURL(size: "large")
+            let url = images[i].getURL(size: "medium")
             
             group.enter()
             ImageManager().getImageData(withUrl: url, onSuccess:

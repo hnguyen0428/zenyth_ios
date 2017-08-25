@@ -39,15 +39,19 @@ class PinpostManager: PinpostManagerProtocol {
     }
     
     func uploadImage(toPinpostId pinpostId: UInt32, imageData: Data,
+                     thumbnailData: Data,
                      onSuccess: ImageCallback? = nil,
                      onFailure: JSONCallback? = nil,
                      onRequestError: ErrorCallback? = nil) {
         let route = Endpoint.UploadImageToPinpost(pinpostId).route()
         APIClient.sharedClient.setAuthorization()
         
-        APIClient.sharedClient.executeUpload(route: route, data: imageData,
-                                             fileKey: "image",
-                                             onSuccess:
+        APIClient.sharedClient.executeUploadWithThumbnail(route: route,
+                                                          image: imageData,
+                                                          imageKey: "image",
+                                                          thumbnail: thumbnailData,
+                                                          thumbnailKey: "thumbnail",
+                                                          onSuccess:
             { json in
                 let imageJSON = json["data"]["image"]
                 onSuccess?(Image(json: imageJSON))

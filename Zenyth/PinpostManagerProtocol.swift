@@ -34,11 +34,13 @@ protocol PinpostManagerProtocol {
      - Parameters:
         - pinpostId: ID of pinpost to be uploaded to
         - imageData: image data to be uploaded
+        - thumbnailData: thumbnail data to be uploaded
         - onSuccess: callback function with Image parameter
         - onFailure: callback function with JSON parameter
         - onRequestError: callback function with NSError parameter
      */
     func uploadImage(toPinpostId pinpostId: UInt32, imageData: Data,
+                     thumbnailData: Data,
                      onSuccess: ImageCallback?,
                      onFailure: JSONCallback?,
                      onRequestError: ErrorCallback?)
