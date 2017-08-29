@@ -44,6 +44,26 @@ class ReplyManager: ReplyManagerProtocol {
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
+    func uploadImages(toReplyId replyId: UInt32, imagesData: [Data],
+                      onSuccess: ImagesCallback? = nil,
+                      onFailure: JSONCallback? = nil,
+                      onRequestError: ErrorCallback? = nil) {
+        let route = Endpoint.UploadImageToReply(replyId).route()
+        APIClient.sharedClient.setAuthorization()
+        
+        APIClient.sharedClient.executeUpload(route: route, data: imagesData,
+                                             fileKey: "images[]",
+                                             onSuccess:
+            { json in
+                var images = [Image]()
+                let imagesJSON = json["data"]["images"].arrayValue
+                for imageJSON in imagesJSON {
+                    images.append(Image(json: imageJSON))
+                }
+                onSuccess?(images)
+        }, onFailure: onFailure, onRequestError: onRequestError)
+    }
+    
     func updateReply(withReplyId replyId: UInt32, text: String,
                      onSuccess: ReplyCallback? = nil,
                      onFailure: JSONCallback? = nil,

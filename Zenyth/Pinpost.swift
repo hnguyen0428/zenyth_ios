@@ -15,7 +15,7 @@ struct Pinpost: APIObject {
     var pinpostDescription: String
     var latitude: Double
     var longitude: Double
-    var creator: User
+    var creator: User?
     var privacy: String
     var createdAt: String
     var updatedAt: String
@@ -29,7 +29,10 @@ struct Pinpost: APIObject {
         self.pinpostDescription = json["description"].stringValue
         self.latitude = json["latitude"].doubleValue
         self.longitude = json["longitude"].doubleValue
-        self.creator = User(json: json["creator"])
+        
+        if json["creator"] != JSON.null {
+            self.creator = User(json: json["creator"])
+        }
         self.privacy = json["privacy"].stringValue
         self.createdAt = json["created_at"].stringValue
         self.updatedAt = json["updated_at"].stringValue
@@ -54,7 +57,7 @@ struct Pinpost: APIObject {
             "description": pinpostDescription,
             "latitude": latitude,
             "longitude": longitude,
-            "creator": creator.toJSON(),
+            "creator": creator?.toJSON(),
             "privacy": privacy,
             "created_at": createdAt,
             "updated_at": updatedAt,

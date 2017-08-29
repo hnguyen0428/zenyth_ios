@@ -10,15 +10,17 @@ import Foundation
 import Alamofire
 
 /// Used for testing purposes
-let localhostURL = "http://192.168.102.177/api"
+let localhostURL = "http://192.168.100.190/api"
 
-var baseURL = "http://54.219.134.56/api"
+//var baseURL = "http://54.219.134.56/api"
+var baseURL = localhostURL
 typealias APIRoute = (String, HTTPMethod)
 
 /**
     All of the backend API Endpoints
  */
 public enum Endpoint {
+    case GetRequest(String)
     
     /// RegistrationManager Endpoints
     case Register
@@ -34,9 +36,10 @@ public enum Endpoint {
     case SendResetPasswordEmail
     
     /// UserManager Endpoints
-    case GetFriends(UInt32)
+    case GetFollowers(UInt32)
     case GetBlockedUsers
-    case GetFriendRequests
+    case GetFollowerRequests
+    case GetRelationship(UInt32)
     case ReadProfile(UInt32)
     case UpdateProfile
     case UpdateProfilePicture
@@ -82,13 +85,14 @@ public enum Endpoint {
     case DeleteLike(UInt32)
     
     /// RelationshipManager Endpoints
-    case SendFriendRequests
-    case RespondToFriendRequests
-    case DeleteFriend(UInt32)
+    case SendFollowerRequests
+    case RespondToFollowerRequests
+    case Unfollow(UInt32)
     case BlockUser
     
     /// ImageManager Endpoints
     case GetImageData(String)
+    case GetImageDataWithUrl(String)
     case DeleteImage(UInt32)
     
     /// TagManager Endpoints
@@ -97,6 +101,8 @@ public enum Endpoint {
     
     func route() -> APIRoute {
         switch self {
+        case .GetRequest(let url):
+            return (url, .get)
         case .Register:
             return ("\(baseURL)/register", .post)
         case .OAuthRegister:
@@ -114,12 +120,14 @@ public enum Endpoint {
         case .SendResetPasswordEmail:
             return ("\(baseURL)/password/send_reset_password", .post)
             
-        case .GetFriends(let userId):
-            return ("\(baseURL)/user/get_friends/\(userId)", .get)
+        case .GetFollowers(let userId):
+            return ("\(baseURL)/user/get_followers/\(userId)", .get)
         case .GetBlockedUsers:
             return ("\(baseURL)/user/blocked_users", .get)
-        case .GetFriendRequests:
-            return ("\(baseURL)/user/friend_requests", .get)
+        case .GetFollowerRequests:
+            return ("\(baseURL)/user/follower_requests", .get)
+        case .GetRelationship(let userId):
+            return ("\(baseURL)/user/relationship/\(userId)", .get)
         case .ReadProfile(let userId):
             return ("\(baseURL)/profile/\(userId)", .get)
         case .UpdateProfile:
@@ -195,17 +203,19 @@ public enum Endpoint {
         case .DeleteLike(let likeId):
             return ("\(baseURL)/like/\(likeId)", .delete)
             
-        case .SendFriendRequests:
-            return ("\(baseURL)/relationship/friend_request", .post)
-        case .RespondToFriendRequests:
+        case .SendFollowerRequests:
+            return ("\(baseURL)/relationship/follow_request", .post)
+        case .RespondToFollowerRequests:
             return ("\(baseURL)/relationship/response", .post)
-        case .DeleteFriend(let userId):
-            return ("\(baseURL)/relationship/delete/\(userId)", .delete)
+        case .Unfollow(let userId):
+            return ("\(baseURL)/relationship/unfollow/\(userId)", .delete)
         case .BlockUser:
             return ("\(baseURL)/relationship/block", .post)
             
         case .GetImageData(let imageName):
             return ("\(baseURL)/image/\(imageName)", .get)
+        case .GetImageDataWithUrl(let url):
+            return (url, .get)
         case .DeleteImage(let imageId):
             return ("\(baseURL)/image/\(imageId)", .delete)
             

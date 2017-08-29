@@ -17,7 +17,6 @@ target 'Zenyth' do
     # Pods for testing
   end
 
-  pod 'LBTAComponents'
   pod 'Alamofire', '~> 4.4'
   pod 'SwiftyJSON'
 
@@ -32,6 +31,7 @@ target 'Zenyth' do
   pod 'TwitterKit'
   
   pod 'GoogleMaps'
+	pod 'GooglePlacePicker'
   pod 'GooglePlaces'
 
 end

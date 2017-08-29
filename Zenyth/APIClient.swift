@@ -99,7 +99,7 @@ class APIClient {
         Alamofire.upload(multipartFormData: { multipartFormData in
             multipartFormData.append(data, withName: fileKey,
                                      fileName: "file.jpg",
-                                     mimeType: "image/jpg")
+                                     mimeType: "image/jpeg")
         }, to: urlString, method: method, headers: self.headers,
               encodingCompletion: { encodingResult in
                 switch encodingResult {
@@ -130,6 +130,128 @@ class APIClient {
     }
     
     /**
+     Execute an upload request that returns a JSON response.
+     
+     - Parameters:
+     - route: The route of the request, APIRoute contains the endpoint
+     and the HTTP method
+     - data: array of data to be uploaded
+     - onSuccess: Callback function with JSON parameter upon a successful
+     request
+     - onFailure: Callback function with JSON parameter upon a failure
+     response from the server
+     - onRequestError: Callback function with NSError parameter upon a
+     request error (such are InternalServerError or Request Timed Out)
+     */
+    func executeUpload(route: APIRoute,
+                       data: [Data],
+                       fileKey: String,
+                       onSuccess: JSONCallback?,
+                       onFailure: JSONCallback?,
+                       onRequestError: ErrorCallback?) {
+        self.setClientId()
+        let urlString = route.0
+        let method = route.1
+        
+        Alamofire.upload(multipartFormData: { multipartFormData in
+            for imageData in data {
+                multipartFormData.append(imageData, withName: fileKey,
+                                         fileName: "file.jpg",
+                                         mimeType: "image/jpeg")
+            }
+        }, to: urlString, method: method, headers: self.headers,
+           encodingCompletion: { encodingResult in
+            switch encodingResult {
+            case .success(let upload, _, _):
+                upload.responseJSON { response in
+                    switch response.result {
+                    case .success(let value):
+                        let json = JSON(value)
+                        if json["success"].boolValue {
+                            onSuccess?(json)
+                        }
+                        else {
+                            print(json)
+                            debugPrint(response)
+                            onFailure?(json)
+                        }
+                    case .failure(let error):
+                        print("RESPONSE JSON ERROR: \(error)")
+                        onRequestError?(error as NSError)
+                    }
+                }
+            case .failure(let encodingError):
+                print("ENCODING ERROR: \(encodingError)")
+                onRequestError?(encodingError as NSError)
+            }
+            self.resetHeaders()
+        })
+    }
+    
+    /**
+     Execute an upload request that returns a JSON response.
+     
+     - Parameters:
+     - route: The route of the request, APIRoute contains the endpoint
+     and the HTTP method
+     - image: Data of image
+     - imageKey: image key
+     - thumbnail: Data of thumbnail image
+     - thumbnailKey: thumbnail key
+     - onSuccess: Callback function with JSON parameter upon a successful
+     request
+     - onFailure: Callback function with JSON parameter upon a failure
+     response from the server
+     - onRequestError: Callback function with NSError parameter upon a
+     request error (such are InternalServerError or Request Timed Out)
+     */
+    func executeUploadWithThumbnail(route: APIRoute,
+                                    image: Data, imageKey: String,
+                                    thumbnail: Data, thumbnailKey: String,
+                                    onSuccess: JSONCallback?,
+                                    onFailure: JSONCallback?,
+                                    onRequestError: ErrorCallback?) {
+        self.setClientId()
+        let urlString = route.0
+        let method = route.1
+        
+        Alamofire.upload(multipartFormData: { multipartFormData in
+            multipartFormData.append(image, withName: imageKey,
+                                     fileName: "image.jpg",
+                                     mimeType: "image/jpeg")
+            multipartFormData.append(thumbnail, withName: thumbnailKey,
+                                     fileName: "image.jpg",
+                                     mimeType: "image/jpeg")
+        }, to: urlString, method: method, headers: self.headers,
+           encodingCompletion: { encodingResult in
+            switch encodingResult {
+            case .success(let upload, _, _):
+                upload.responseJSON { response in
+                    switch response.result {
+                    case .success(let value):
+                        let json = JSON(value)
+                        if json["success"].boolValue {
+                            onSuccess?(json)
+                        }
+                        else {
+                            print(json)
+                            debugPrint(response)
+                            onFailure?(json)
+                        }
+                    case .failure(let error):
+                        print("RESPONSE JSON ERROR: \(error)")
+                        onRequestError?(error as NSError)
+                    }
+                }
+            case .failure(let encodingError):
+                print("ENCODING ERROR: \(encodingError)")
+                onRequestError?(encodingError as NSError)
+            }
+            self.resetHeaders()
+        })
+    }
+    
+    /**
      Executes a download request that returns Data.
      
      - Parameters:
@@ -144,23 +266,20 @@ class APIClient {
                          onSuccess: DataCallback?,
                          onRequestError: ErrorCallback?) {
         self.setClientId()
+        
         let urlString = route.0
-        let method = route.1
         
-        Alamofire.download(urlString,
-                           method: method,
-                           headers: self.headers).responseData
-            { response in
-                switch response.result {
-                case .success(let data):
-                    onSuccess?(Data(data))
-                case .failure(let error):
-                    print("DOWNLOAD ERROR: \(error)")
-                    onRequestError?(error as NSError)
-                }
+        Alamofire.request(urlString).response {
+            response in
+            if let data = response.data {
+                onSuccess?(data)
                 self.resetHeaders()
+            }
+            if let error = response.error {
+                print("ERROR: \(error)")
+                onRequestError?(error as! NSError)
+            }
         }
-        
     }
     
     /**

@@ -10,40 +10,40 @@ import Foundation
 
 protocol RelationshipManagerProtocol {
     /**
-     Send a friend request to a user
+     Send a follower request to a user
      - Parameters:
         - requesteeId: ID of user for the request to be sent to
         - onSuccess: callback function with Relationship parameter
         - onFailure: callback function with JSON parameter
         - onRequestError: callback function with NSError parameter
      */
-    func sendFriendRequest(toRequesteeId requesteeId: UInt32,
-                           onSuccess: RelationshipCallback?,
-                           onFailure: JSONCallback?,
-                           onRequestError: ErrorCallback?)
+    func sendFollowerRequest(toRequesteeId requesteeId: UInt32,
+                             onSuccess: RelationshipCallback?,
+                             onFailure: JSONCallback?,
+                             onRequestError: ErrorCallback?)
     
     /**
-     Respond to a friend request from a user
+     Respond to a follower request from a user
      - Parameters:
         - requesterId: ID of user the request is from
         - onSuccess: callback function with Relationship parameter
         - onFailure: callback function with JSON parameter
         - onRequestError: callback function with NSError parameter
      */
-    func respondToFriendRequest(fromRequesterId requesterId: UInt32, status: Bool,
-                                onSuccess: RelationshipCallback?,
-                                onFailure: JSONCallback?,
-                                onRequestError: ErrorCallback?)
+    func respondToFollowerRequest(fromRequesterId requesterId: UInt32, status: Bool,
+                                  onSuccess: RelationshipCallback?,
+                                  onFailure: JSONCallback?,
+                                  onRequestError: ErrorCallback?)
     
     /**
-     Delete friend
+     Unfollow user
      - Parameters:
-        - userId: ID of friend to be deleted
+        - userId: ID of user to be unfollowed
         - onSuccess: callback function with JSON parameter
         - onFailure: callback function with JSON parameter
         - onRequestError: callback function with NSError parameter
      */
-    func deleteFriend(withUserId userId: UInt32,
+    func unfollowUser(withUserId userId: UInt32,
                       onSuccess: JSONCallback?,
                       onFailure: JSONCallback?,
                       onRequestError: ErrorCallback?)

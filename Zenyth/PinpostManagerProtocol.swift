@@ -34,14 +34,30 @@ protocol PinpostManagerProtocol {
      - Parameters:
         - pinpostId: ID of pinpost to be uploaded to
         - imageData: image data to be uploaded
+        - thumbnailData: thumbnail data to be uploaded
         - onSuccess: callback function with Image parameter
         - onFailure: callback function with JSON parameter
         - onRequestError: callback function with NSError parameter
      */
     func uploadImage(toPinpostId pinpostId: UInt32, imageData: Data,
+                     thumbnailData: Data,
                      onSuccess: ImageCallback?,
                      onFailure: JSONCallback?,
                      onRequestError: ErrorCallback?)
+    
+    /**
+     Upload images to a pinpost
+     - Parameters:
+     - pinpostId: ID of pinpost to be uploaded to
+     - imagesData: array of images data to be uploaded
+     - onSuccess: callback function with [Image] parameter
+     - onFailure: callback function with JSON parameter
+     - onRequestError: callback function with NSError parameter
+     */
+    func uploadImages(toPinpostId pinpostId: UInt32, imagesData: [Data],
+                      onSuccess: ImagesCallback?,
+                      onFailure: JSONCallback?,
+                      onRequestError: ErrorCallback?)
     
     /**
      Update a pinpost
@@ -177,7 +193,20 @@ protocol PinpostManagerProtocol {
         - onRequestError: callback function with NSError parameter
      */
     func fetchPinpostsFeed(paginate: UInt32?, scope: String?,
-                           onSuccess: PinpostsCallback?,
+                           onSuccess: PinpostsCallbackWithPaginate?,
                            onFailure: JSONCallback?,
                            onRequestError: ErrorCallback?)
+    
+    /**
+     Fetch the feed
+     - Parameters:
+     - url given by pagination to fetch the next page of pinposts
+     - onSuccess: callback function with [Pinpost] parameter
+     - onFailure: callback function with JSON parameter
+     - onRequestError: callback function with NSError parameter
+     */
+    func fetchPinposts(fromURL url: String,
+                       onSuccess: PinpostsCallbackWithPaginate?,
+                       onFailure: JSONCallback?,
+                       onRequestError: ErrorCallback?)
 }

@@ -11,11 +11,11 @@ import SwiftyJSON
 import Alamofire
 
 class RelationshipManager: RelationshipManagerProtocol {
-    func sendFriendRequest(toRequesteeId requesteeId: UInt32,
-                           onSuccess: RelationshipCallback? = nil,
-                           onFailure: JSONCallback? = nil,
-                           onRequestError: ErrorCallback? = nil) {
-        let route = Endpoint.SendFriendRequests.route()
+    func sendFollowerRequest(toRequesteeId requesteeId: UInt32,
+                             onSuccess: RelationshipCallback? = nil,
+                             onFailure: JSONCallback? = nil,
+                             onRequestError: ErrorCallback? = nil) {
+        let route = Endpoint.SendFollowerRequests.route()
         APIClient.sharedClient.setAuthorization()
         
         let parameters: Parameters = ["requestee_id" : requesteeId]
@@ -28,12 +28,12 @@ class RelationshipManager: RelationshipManagerProtocol {
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
-    func respondToFriendRequest(fromRequesterId requesterId: UInt32,
-                                status: Bool,
-                                onSuccess: RelationshipCallback? = nil,
-                                onFailure: JSONCallback? = nil,
-                                onRequestError: ErrorCallback? = nil) {
-        let route = Endpoint.RespondToFriendRequests.route()
+    func respondToFollowerRequest(fromRequesterId requesterId: UInt32,
+                                  status: Bool,
+                                  onSuccess: RelationshipCallback? = nil,
+                                  onFailure: JSONCallback? = nil,
+                                  onRequestError: ErrorCallback? = nil) {
+        let route = Endpoint.RespondToFollowerRequests.route()
         APIClient.sharedClient.setAuthorization()
         
         let parameters: Parameters = [
@@ -49,11 +49,11 @@ class RelationshipManager: RelationshipManagerProtocol {
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
-    func deleteFriend(withUserId userId: UInt32,
+    func unfollowUser(withUserId userId: UInt32,
                       onSuccess: JSONCallback? = nil,
                       onFailure: JSONCallback? = nil,
                       onRequestError: ErrorCallback? = nil) {
-        let route = Endpoint.DeleteFriend(userId).route()
+        let route = Endpoint.Unfollow(userId).route()
         APIClient.sharedClient.setAuthorization()
         
         APIClient.sharedClient.executeJSON(route: route,

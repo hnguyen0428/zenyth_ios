@@ -6,7 +6,6 @@
 //  Copyright © 2017 Hoang. All rights reserved.
 //
 
-import LBTAComponents
 import UIKit
 
 /// Extension to UIViewController including helper methods
@@ -123,6 +122,23 @@ extension UIViewController {
         indicator.stopAnimating()
         view.isUserInteractionEnabled = true
         view.mask = nil
+    }
+    
+    /**
+     Hide keyboard when clicking outside of the keyboard
+     */
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
+                                                                 action: #selector(ModelViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    /**
+     Dismiss keyboard, called by hideKeyboardWhenTappedAround()
+     */
+    func dismissKeyboard() {
+        view.endEditing(true)
     }
 
 }

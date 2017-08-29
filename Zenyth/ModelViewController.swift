@@ -111,19 +111,15 @@ class ModelViewController: UIViewController, UITextFieldDelegate {
      Transition to the Home page of the app. Called when successfully logged in
      */
     func transitionToHome() {
-        //let storyboard = UIStoryboard(name: "Home", bundle: nil);
-//        let mapController: MapController =
-//            storyboard.instantiateInitialViewController()
-//                as! MapController
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
         appDelegate.window?.makeKeyAndVisible()
-        let homeController = HomeController()
+        let feedController = UINavigationController(rootViewController: FeedController())
         
         UIView.transition(with: appDelegate.window!, duration: 0.3, options: .transitionCrossDissolve,
                           animations: {
-                            appDelegate.window!.rootViewController = homeController
+                            appDelegate.window!.rootViewController = feedController
         }, completion: nil)
     }
     

@@ -44,6 +44,26 @@ class CommentManager: CommentManagerProtocol {
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
+    func uploadImages(toCommentId commentId: UInt32, imagesData: [Data],
+                      onSuccess: ImagesCallback? = nil,
+                      onFailure: JSONCallback? = nil,
+                      onRequestError: ErrorCallback? = nil) {
+        let route = Endpoint.UploadImageToComment(commentId).route()
+        APIClient.sharedClient.setAuthorization()
+        
+        APIClient.sharedClient.executeUpload(route: route, data: imagesData,
+                                             fileKey: "images[]",
+                                             onSuccess:
+            { json in
+                var images = [Image]()
+                let imagesJSON = json["data"]["images"].arrayValue
+                for imageJSON in imagesJSON {
+                    images.append(Image(json: imageJSON))
+                }
+                onSuccess?(images)
+        }, onFailure: onFailure, onRequestError: onRequestError)
+    }
+    
     func updateComment(withCommentId commentId: UInt32, text: String,
                        onSuccess: CommentCallback? = nil,
                        onFailure: JSONCallback? = nil,

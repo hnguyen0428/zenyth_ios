@@ -14,12 +14,21 @@ protocol ImageManagerProtocol {
      - Parameters:
         - imageName: name of image to download
         - onSuccess: callback function with Data parameter
-        - onFailure: callback function with JSON parameter
         - onRequestError: callback function with NSError parameter
      */
     func getImageData(withImageName imageName: String,
                       onSuccess: DataCallback?,
-                      onFailure: JSONCallback?,
+                      onRequestError: ErrorCallback?)
+    
+    /**
+     Get image data
+     - Parameters:
+        - url: url of image
+        - onSuccess: callback function with Data parameter
+        - onRequestError: callback function with NSError parameter
+     */
+    func getImageData(withUrl url: String,
+                      onSuccess: DataCallback?,
                       onRequestError: ErrorCallback?)
     
     /**

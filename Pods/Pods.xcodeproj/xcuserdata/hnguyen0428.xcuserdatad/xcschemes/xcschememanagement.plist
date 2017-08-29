@@ -44,11 +44,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>LBTAComponents.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-Zenyth.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -72,22 +67,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0D2ECD8279905613009B0D57A87B9163</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>10613FC569E9495FD7F6E9C38F7681DA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1A196107BC8DB338FC11C9CE9510573C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>21FBDF0568E52B56D40D7591046C8E02</key>
+		<key>3CB815339C3CB65E71DCBF116E41CEA7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -103,6 +88,11 @@
 			<true/>
 		</dict>
 		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>97D9888CECB04CDCA3EE40EE0C91E971</key>
 		<dict>
 			<key>primary</key>
 			<true/>

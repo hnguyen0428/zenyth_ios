@@ -24,7 +24,7 @@ protocol CommentManagerProtocol {
                        onRequestError: ErrorCallback?)
     
     /**
-     Upload image to a comment
+     Upload an image to a comment
      - Parameters:
         - commentId: ID of comment to be uploaded to
         - imageData: image data to be uploaded
@@ -36,6 +36,20 @@ protocol CommentManagerProtocol {
                      onSuccess: ImageCallback?,
                      onFailure: JSONCallback?,
                      onRequestError: ErrorCallback?)
+    
+    /**
+     Upload images to a comment
+     - Parameters:
+     - commentId: ID of comment to be uploaded to
+     - imagesData: array of images data to be uploaded
+     - onSuccess: callback function with [Image] parameter
+     - onFailure: callback function with JSON parameter
+     - onRequestError: callback function with NSError parameter
+     */
+    func uploadImages(toCommentId commentId: UInt32, imagesData: [Data],
+                      onSuccess: ImagesCallback?,
+                      onFailure: JSONCallback?,
+                      onRequestError: ErrorCallback?)
     
     /**
      Update a comment

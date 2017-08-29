@@ -6,7 +6,7 @@
 //  Copyright © 2017 Hoang. All rights reserved.
 //
 
-import LBTAComponents
+import UIKit
 import Alamofire
 import SwiftyJSON
 import FBSDKLoginKit
@@ -167,9 +167,7 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
                 { user, apiToken in
                     self.requestDoneLoading(view: self.view, indicator: indicator)
                     
-                    // Save the api token to UserDefaults for later usage
-                    UserDefaults.standard.set(apiToken, forKey: "api_token")
-                    UserDefaults.standard.synchronize()
+                    LoginController.saveLoggedInUserInfo(user: user, apiToken: apiToken)
                     self.transitionToHome()
             }, onFailure: { json in
                 self.requestDoneLoading(view: self.view, indicator: indicator)
@@ -184,10 +182,8 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
                 { user, apiToken in
                     self.requestDoneLoading(view: self.view, indicator: indicator)
                     
-                    // Save the api token to UserDefaults for later usage
-                    UserDefaults.standard.set(apiToken, forKey: "api_token")
-                    UserDefaults.standard.synchronize()
-                    print(user)
+                    // Save user info
+                    LoginController.saveLoggedInUserInfo(user: user, apiToken: apiToken)
                     self.transitionToHome()
             }, onFailure: { json in
                 self.requestDoneLoading(view: self.view, indicator: indicator)
@@ -208,7 +204,6 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         guard let accessTokenString = accessToken?.tokenString else { return }
         self.fbToken = accessTokenString
         
-        print("Successfully logged in with facebook...")
         FBSDKGraphRequest(graphPath: "/me", parameters:
             ["fields": "last_name, first_name, email, gender, birthday"])
             .start { (connnection, result, err) in
@@ -246,11 +241,9 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
                                           onSuccess:
             { data in
                 if data["taken"].boolValue {
-                    print("Email Taken")
                     self.fbOauthLogin(accessToken: accessToken, json: json)
                 } else { // email is available
-                    print("Email Available")
-                    self.performSegue(withIdentifier: "oauthToUsernameSegue",
+                    self.performSegue(withIdentifier: "oauthToUsernameController",
                                       sender: self)
                 }
         })
@@ -277,9 +270,7 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
             { user, apiToken in
                 self.requestDoneLoading(view: self.view, indicator: indicator)
                 
-                // Save the api token to UserDefaults for later usage
-                UserDefaults.standard.set(apiToken, forKey: "api_token")
-                UserDefaults.standard.synchronize()
+                LoginController.saveLoggedInUserInfo(user: user, apiToken: apiToken)
                 self.transitionToHome()
         }, onFailure: { json in
             self.requestDoneLoading(view: self.view, indicator: indicator)
@@ -318,9 +309,7 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
             { user, apiToken in
                 self.requestDoneLoading(view: self.view, indicator: indicator)
                 
-                // Save the api token to UserDefaults for later usage
-                UserDefaults.standard.set(apiToken, forKey: "api_token")
-                UserDefaults.standard.synchronize()
+                LoginController.saveLoggedInUserInfo(user: user, apiToken: apiToken)
                 self.transitionToHome()
         })
     }
@@ -382,5 +371,13 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
             resultVC.oauthJSON = self.oauthJSON
             resultVC.fbToken = self.fbToken
         }
+    }
+    
+    static func saveLoggedInUserInfo(user: User, apiToken: String) {
+        UserDefaults.standard.set(apiToken, forKey: "api_token")
+        UserDefaults.standard.set(user.id, forKey: "id")
+        UserDefaults.standard.set(user.email, forKey: "email")
+        UserDefaults.standard.set(user.username, forKey: "username")
+        UserDefaults.standard.synchronize()
     }
 }

@@ -39,18 +39,42 @@ class PinpostManager: PinpostManagerProtocol {
     }
     
     func uploadImage(toPinpostId pinpostId: UInt32, imageData: Data,
+                     thumbnailData: Data,
                      onSuccess: ImageCallback? = nil,
                      onFailure: JSONCallback? = nil,
                      onRequestError: ErrorCallback? = nil) {
         let route = Endpoint.UploadImageToPinpost(pinpostId).route()
         APIClient.sharedClient.setAuthorization()
         
-        APIClient.sharedClient.executeUpload(route: route, data: imageData,
-                                             fileKey: "image",
-                                             onSuccess:
+        APIClient.sharedClient.executeUploadWithThumbnail(route: route,
+                                                          image: imageData,
+                                                          imageKey: "image",
+                                                          thumbnail: thumbnailData,
+                                                          thumbnailKey: "thumbnail",
+                                                          onSuccess:
             { json in
                 let imageJSON = json["data"]["image"]
                 onSuccess?(Image(json: imageJSON))
+        }, onFailure: onFailure, onRequestError: onRequestError)
+    }
+    
+    func uploadImages(toPinpostId pinpostId: UInt32, imagesData: [Data],
+                      onSuccess: ImagesCallback? = nil,
+                      onFailure: JSONCallback? = nil,
+                      onRequestError: ErrorCallback? = nil) {
+        let route = Endpoint.UploadImageToPinpost(pinpostId).route()
+        APIClient.sharedClient.setAuthorization()
+        
+        APIClient.sharedClient.executeUpload(route: route, data: imagesData,
+                                             fileKey: "images[]",
+                                             onSuccess:
+            { json in
+                var images = [Image]()
+                let imagesJSON = json["data"]["images"].arrayValue
+                for imageJSON in imagesJSON {
+                    images.append(Image(json: imageJSON))
+                }
+                onSuccess?(images)
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
@@ -230,7 +254,7 @@ class PinpostManager: PinpostManagerProtocol {
     }
     
     func fetchPinpostsFeed(paginate: UInt32? = nil, scope: String? = nil,
-                           onSuccess: PinpostsCallback? = nil,
+                           onSuccess: PinpostsCallbackWithPaginate? = nil,
                            onFailure: JSONCallback? = nil,
                            onRequestError: ErrorCallback? = nil) {
         let route = Endpoint.FetchFeed.route()
@@ -252,7 +276,30 @@ class PinpostManager: PinpostManagerProtocol {
                 for pinpostJSON in pinpostsJSON {
                     pinposts.append(Pinpost(json: pinpostJSON))
                 }
-                onSuccess?(pinposts)
+                
+                let paginate = Paginate(json: json["data"])
+                onSuccess?(pinposts, paginate)
+        }, onFailure: onFailure, onRequestError: onRequestError)
+    }
+    
+    func fetchPinposts(fromURL url: String,
+                       onSuccess: PinpostsCallbackWithPaginate? = nil,
+                       onFailure: JSONCallback? = nil,
+                       onRequestError: ErrorCallback? = nil) {
+        let route = Endpoint.GetRequest(url).route()
+        APIClient.sharedClient.setAuthorization()
+        
+        APIClient.sharedClient.executeJSON(route: route,
+                                           onSuccess:
+            { json in
+                let pinpostsJSON = json["data"]["pinposts"].arrayValue
+                var pinposts = [Pinpost]()
+                for pinpostJSON in pinpostsJSON {
+                    pinposts.append(Pinpost(json: pinpostJSON))
+                }
+                
+                let paginate = Paginate(json: json["data"])
+                onSuccess?(pinposts, paginate)
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
 }

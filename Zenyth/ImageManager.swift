@@ -13,9 +13,20 @@ import Alamofire
 class ImageManager: ImageManagerProtocol {
     func getImageData(withImageName imageName: String,
                       onSuccess: DataCallback? = nil,
-                      onFailure: JSONCallback? = nil,
                       onRequestError: ErrorCallback? = nil) {
         let route = Endpoint.GetImageData(imageName).route()
+        APIClient.sharedClient.setAuthorization()
+        
+        APIClient.sharedClient.executeDownload(route: route,
+                                               onSuccess:
+            { data in
+                onSuccess?(data)
+        }, onRequestError: onRequestError)
+    }
+    
+    func getImageData(withUrl url: String, onSuccess: DataCallback? = nil,
+                      onRequestError: ErrorCallback? = nil) {
+        let route = Endpoint.GetImageDataWithUrl(url).route()
         APIClient.sharedClient.setAuthorization()
         
         APIClient.sharedClient.executeDownload(route: route,

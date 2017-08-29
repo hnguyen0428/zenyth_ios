@@ -12,6 +12,7 @@ import GoogleSignIn
 import Alamofire
 import SwiftyJSON
 import GoogleMaps
+import GooglePlaces
 //import TwitterKit
 //import Fabric
 
@@ -56,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         // Set the google map api key
         GMSServices.provideAPIKey("AIzaSyDbce3U3e0teGEnQM54kBu_r2kDGEGcOz0")
-
+        GMSPlacesClient.provideAPIKey("AIzaSyAM71tm5Rgc1Z7TbIOqHhQvESu7gjqmcFI")
         
         return true
     }
@@ -68,7 +69,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             return
         }
     
-        print("Successfully logged into Google")
         // Perform any operations on signed in user here.
 
         guard let accessToken = user.authentication.accessToken else { return }
@@ -103,11 +103,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                                           onSuccess:
             { data in
                 if data["taken"].boolValue{ // email is taken
-                    print("Email Taken")
                     self.googleOauthLogin(idToken: idToken, json: json)
                 } else { // email is available
-                    print("Email Available")
-                    
                     // Access the storyboard and fetch an instance of the view controller
                     let storyboard = UIStoryboard(name: "Main", bundle: nil);
                     let viewController: UsernameController =
@@ -146,11 +143,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                                   oauthType: oauthType,
                                   accessToken: idToken,
                                   onSuccess:
-            { data, apiToken in
+            { user, apiToken in
                 viewController.requestDoneLoading(view: viewController.view,
                                                   indicator: indicator)
-                UserDefaults.standard.set(apiToken, forKey: "api_token")
-                UserDefaults.standard.synchronize()
+                LoginController.saveLoggedInUserInfo(user: user, apiToken: apiToken)
                 self.transitionToHome()
         }, onFailure: { json in
             viewController.requestDoneLoading(view: viewController.view,
@@ -188,9 +184,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                                                 oauthType: oauthType,
                                                 accessToken: idToken,
                                                 onSuccess:
-            { data, user in
+            { user, apiToken in
                 viewController.requestDoneLoading(view: viewController.view,
                                                   indicator: indicator)
+                LoginController.saveLoggedInUserInfo(user: user, apiToken: apiToken)
                 self.transitionToHome()
         })
     }
@@ -201,10 +198,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func transitionToHome() {
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.makeKeyAndVisible()
-        let homeController = HomeController()
+        let feedController = UINavigationController(rootViewController: FeedController())
         UIView.transition(with: self.window!, duration: 0.3, options: .transitionCrossDissolve,
                           animations: {
-            self.window!.rootViewController = homeController
+            self.window!.rootViewController = feedController
         }, completion: nil)
     }
     

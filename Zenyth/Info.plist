@@ -28,6 +28,8 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>CLIENT_ID</key>
+	<string>fvGLKyX6oCfdjIwV0Zia3w1NMzWjeSQx5sPdQ8kjIyPGCHyPqZtPacemFgpS</string>
 	<key>FacebookAppID</key>
 	<string>664338180441981</string>
 	<key>FacebookDisplayName</key>
@@ -55,8 +57,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>CLIENT_ID</key>
-	<string>fvGLKyX6oCfdjIwV0Zia3w1NMzWjeSQx5sPdQ8kjIyPGCHyPqZtPacemFgpS</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>App needs access the camera</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
