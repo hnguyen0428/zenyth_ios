@@ -66,6 +66,21 @@ class UserManager: UserManagerProtocol {
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
+    func getRelationship(withUserHavingUserId userId: UInt32,
+                         onSuccess: RelationshipCallback? = nil,
+                         onFailure: JSONCallback? = nil,
+                         onRequestError: ErrorCallback? = nil) {
+        let route = Endpoint.GetRelationship(userId).route()
+        APIClient.sharedClient.setAuthorization()
+        
+        APIClient.sharedClient.executeJSON(route: route,
+                                           onSuccess:
+            { json in
+                let relationshipJSON = json["data"]["relationship"]
+                onSuccess?(Relationship(json: relationshipJSON))
+        }, onFailure: onFailure, onRequestError: onRequestError)
+    }
+    
     func readProfile(ofUserId userId: UInt32,
                      onSuccess: UserCallback? = nil,
                      onFailure: JSONCallback? = nil,
