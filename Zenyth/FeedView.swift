@@ -15,10 +15,11 @@ class FeedView: UIView {
     var feedInfoView: FeedInfoView?
     var profilePicView: UIImageView?
     var thumbnailView: UIImageView?
+    var hasThumbnail: Bool = false
     var tapGesture: UITapGestureRecognizer
     var pinpost: Pinpost
     
-    var maxHeight: CGFloat = 0
+    var topY: CGFloat = 0
     
     // Height in percentage
     static let HEIGHT_OF_FEEDINFOVIEW: CGFloat = 0.45
@@ -49,6 +50,7 @@ class FeedView: UIView {
             name = lastName
         }
         let hasThumbnail = pinpost.images.count > 0
+        self.hasThumbnail = hasThumbnail
         self.setupFeedInfoView(title: title, description: description,
                                name: name, username: username)
         
@@ -56,6 +58,7 @@ class FeedView: UIView {
             self.setupThumbnailView()
             _ = self.setupProfilePic()
             self.topRounded(radius: FeedView.ROUNDED_TOP_RADIUS)
+            self.topY = frame.origin.y
         }
         else {
             let imageContainer = self.setupProfilePic()
@@ -64,6 +67,7 @@ class FeedView: UIView {
             let newHeight = feedInfoView!.frame.height + extraHeight
             let heightLost = self.frame.height - newHeight
             let newY = self.frame.origin.y + heightLost
+            self.topY = newY + extraHeight
             
             self.frame = CGRect(x: self.frame.origin.x, y: newY,
                                 width: self.frame.width, height: newHeight)
