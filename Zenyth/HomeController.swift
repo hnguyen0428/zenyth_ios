@@ -44,7 +44,12 @@ class HomeController: UIViewController {
     func transitionToProfile() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
-        let controller = UINavigationController(rootViewController: ProfileController())
+        let profileController = ProfileController()
+        let controller = UINavigationController(rootViewController: profileController)
+        let userId = UserDefaults.standard.object(forKey: "id") as! UInt32
+        profileController.userId = userId
+        profileController.shouldSetProfileSelected = true
+        
         appDelegate.window!.rootViewController = controller
     }
 }

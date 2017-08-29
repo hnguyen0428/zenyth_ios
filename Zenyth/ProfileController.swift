@@ -15,6 +15,8 @@ class ProfileController: HomeController {
     var user: User? = nil
     var profileImage: UIImage? = nil
     var pinpostImages: [UIImage]? = nil
+    var userId: UInt32 = 0
+    var shouldSetProfileSelected: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,20 +27,24 @@ class ProfileController: HomeController {
         toolbar?.homeButton?.addTarget(self, action: #selector(transitionToFeed), for: .touchUpInside)
         toolbar?.notificationButton?.addTarget(self, action: #selector(transitionToNotification), for: .touchUpInside)
         toolbar?.profileButton?.addTarget(self, action: #selector(transitionToProfile), for: .touchUpInside)
-        profileView?.editProfileButton?.addTarget(self, action: #selector(transitionToEditProfile), for: .touchUpInside)
         profileView?.settingsButton?.addTarget(self, action: #selector(transitionToSettings), for: .touchUpInside)
     }
     
     override func setupViews() {
         super.setupViews()
-        toolbar?.setProfileSelected()
+        
+        if shouldSetProfileSelected {
+            toolbar?.setProfileSelected()
+        }
         
         mapView = MapView(frame: view.frame, controller: self)
         view.insertSubview(mapView!, at: 0)
     }
     
     func renderView() {
-        let userId = UserDefaults.standard.object(forKey: "id") as! UInt32
+        let loggedInUserId = UserDefaults.standard.object(forKey: "id") as! UInt32
+        let frame = CGRect(x: 0, y: 0, width: view.frame.width,
+                           height: view.frame.height/2)
         
         let indicator = requestLoading(view: self.view)
         self.readProfile(userId: userId, handler:
@@ -79,14 +85,21 @@ class ProfileController: HomeController {
                         view.removeFromSuperview()
                         self.profileView = nil
                     }
-                    self.profileView = ProfileView(self,
+                    
+                    var foreign = false
+                    if loggedInUserId != self.userId {
+                        foreign = true
+                    }
+                    
+                    self.profileView = ProfileView(self, frame: frame,
                                                    name: name,
                                                    bio: user.biography,
                                                    username: user.username,
                                                    pinpostImages: pinImages,
                                                    friends: user.friends, likes: user.likes!,
                                                    numberOfPinposts: user.numberOfPinposts!,
-                                                   profilePicture: self.profileImage!)
+                                                   profilePicture: self.profileImage!,
+                                                   foreign: foreign)
                     
                     // Detecting if the images have already been rendered before
                     if self.pinpostImages == nil {

@@ -13,28 +13,35 @@ class EditProfileToolbar: UIToolbar {
     var cancelButton: UIButton?
     var saveButton: UIButton?
     
+    // UI Sizing
+    static let HEIGHT_OF_BUTTON: CGFloat = 0.75
+    static let WIDTH_OF_BUTTON: CGFloat = 0.30
+    static let FONT_SIZE: CGFloat = 15.0
+    static let LEFT_INSET: CGFloat = 0.03
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let buttonWidth = frame.width * 0.30
-        let buttonHeight = frame.height * 0.75
+        let buttonWidth = frame.width * EditProfileToolbar.WIDTH_OF_BUTTON
+        let buttonHeight = frame.height * EditProfileToolbar.HEIGHT_OF_BUTTON
         let buttonFrame = CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight)
+        let fontSize = EditProfileToolbar.FONT_SIZE
         
         saveButton = UIButton(type: .system)
         saveButton!.frame = buttonFrame
         saveButton!.setTitle("Save", for: .normal)
         saveButton!.setTitleColor(UIColor.black, for: .normal)
         saveButton?.contentHorizontalAlignment = .right
-        saveButton!.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15.0)
+        saveButton!.titleLabel?.font = UIFont.boldSystemFont(ofSize: fontSize)
         
         cancelButton = UIButton(type: .system)
         cancelButton!.frame = buttonFrame
         cancelButton!.setTitle("Cancel", for: .normal)
         cancelButton!.setTitleColor(UIColor.black, for: .normal)
         cancelButton?.contentHorizontalAlignment = .left
-        cancelButton!.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15.0)
+        cancelButton!.titleLabel?.font = UIFont.boldSystemFont(ofSize: fontSize)
         
-        let horizontalInset: CGFloat = 15.0
+        let horizontalInset: CGFloat = self.frame.width * EditProfileToolbar.LEFT_INSET
         let container = UIView(frame: frame)
         container.backgroundColor = UIColor.clear
         container.addSubview(saveButton!)

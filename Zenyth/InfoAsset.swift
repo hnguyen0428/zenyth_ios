@@ -16,11 +16,6 @@ class InfoAsset: UIButton {
         self.setTitleColor(UIColor.black, for: .normal)
         self.setImage(image, for: .normal)
         
-//        let widthImage = image.size.width
-//        let edgeX = widthImage / 2 + CGFloat(10)
-        
-//        self.titleEdgeInsets = UIEdgeInsetsMake(0, -edgeX, 0, 0)
-//        self.imageEdgeInsets = UIEdgeInsetsMake(0, edgeX, 0, 0)
         self.imageView?.contentMode = .scaleAspectFit
         self.backgroundColor = UIColor.clear
     }
