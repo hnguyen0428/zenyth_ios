@@ -10,17 +10,17 @@ import Foundation
 
 protocol UserManagerProtocol {
     /**
-     Get friends of user with user ID
+     Get followers of user with user ID
      - Parameters:
         - userId: ID of user to be looked up
         - onSuccess: callback function with [User] parameter
         - onFailure: callback function with JSON parameter
         - onRequestError: callback function with NSError parameter
      */
-    func getFriends(ofUserId userId: UInt32,
-                    onSuccess: UsersCallback?,
-                    onFailure: JSONCallback?,
-                    onRequestError: ErrorCallback?)
+    func getFollowers(ofUserId userId: UInt32,
+                      onSuccess: UsersCallback?,
+                      onFailure: JSONCallback?,
+                      onRequestError: ErrorCallback?)
     
     /**
      Get blocked users of the person logged in
@@ -34,15 +34,15 @@ protocol UserManagerProtocol {
                          onRequestError: ErrorCallback?)
     
     /**
-     Get friend requesters of the person logged in
+     Get all follower requesters of the person logged in
      - Parameters:
         - onSuccess: callback function with [User] parameter
         - onFailure: callback function with JSON parameter
         - onRequestError: callback function with NSError parameter
      */
-    func getFriendRequests(onSuccess: UsersCallback?,
-                           onFailure: JSONCallback?,
-                           onRequestError: ErrorCallback?)
+    func getFollowerRequests(onSuccess: UsersCallback?,
+                             onFailure: JSONCallback?,
+                             onRequestError: ErrorCallback?)
     
     /**
      Get profile information of the user with user ID
@@ -64,6 +64,7 @@ protocol UserManagerProtocol {
         - lastName: last name to be changed to
         - gender: gender to be changed to
         - birthday: birthday to be changed to
+        - biography: biography to be changed to
         - onSuccess: callback function with User parameter
         - onFailure: callback function with JSON parameter
         - onRequestError: callback function with NSError parameter
@@ -71,6 +72,23 @@ protocol UserManagerProtocol {
     func updateProfile(firstName: String?, lastName: String?,
                        gender: String?, birthday: String?,
                        biography: String?,
+                       onSuccess: UserCallback?,
+                       onFailure: JSONCallback?,
+                       onRequestError: ErrorCallback?)
+    
+    /**
+     Update privacy of the person logged in
+     - Parameters:
+     - emailPrivacy: email privacy
+     - genderPrivacy: gender privacy
+     - birthdayPrivacy: birthday privacy
+     - followPrivacy: follow privacy
+     - onSuccess: callback function with User parameter
+     - onFailure: callback function with JSON parameter
+     - onRequestError: callback function with NSError parameter
+     */
+    func updatePrivacy(emailPrivacy: String?, genderPrivacy: String?,
+                       birthdayPrivacy: String?, followPrivacy: String?,
                        onSuccess: UserCallback?,
                        onFailure: JSONCallback?,
                        onRequestError: ErrorCallback?)

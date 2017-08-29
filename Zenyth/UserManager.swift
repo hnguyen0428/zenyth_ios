@@ -11,11 +11,11 @@ import SwiftyJSON
 import Alamofire
 
 class UserManager: UserManagerProtocol {
-    func getFriends(ofUserId userId: UInt32,
-                    onSuccess: UsersCallback? = nil,
-                    onFailure: JSONCallback? = nil,
-                    onRequestError: ErrorCallback? = nil) {
-        let route = Endpoint.GetFriends(userId).route()
+    func getFollowers(ofUserId userId: UInt32,
+                      onSuccess: UsersCallback? = nil,
+                      onFailure: JSONCallback? = nil,
+                      onRequestError: ErrorCallback? = nil) {
+        let route = Endpoint.GetFollowers(userId).route()
         APIClient.sharedClient.setAuthorization()
         
         APIClient.sharedClient.executeJSON(route: route,
@@ -48,10 +48,10 @@ class UserManager: UserManagerProtocol {
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     
-    func getFriendRequests(onSuccess: UsersCallback? = nil,
-                           onFailure: JSONCallback? = nil,
-                           onRequestError: ErrorCallback? = nil) {
-        let route = Endpoint.GetFriendRequests.route()
+    func getFollowerRequests(onSuccess: UsersCallback? = nil,
+                             onFailure: JSONCallback? = nil,
+                             onRequestError: ErrorCallback? = nil) {
+        let route = Endpoint.GetFollowerRequests.route()
         APIClient.sharedClient.setAuthorization()
         
         APIClient.sharedClient.executeJSON(route: route,
@@ -105,6 +105,36 @@ class UserManager: UserManagerProtocol {
         }
         if biography != nil {
             parameters.updateValue(biography!, forKey: "biography")
+        }
+        
+        APIClient.sharedClient.executeJSON(route: route, parameters: parameters,
+                                           onSuccess:
+            { json in
+                let userJSON = json["data"]["user"]
+                onSuccess?(User(json: userJSON))
+        }, onFailure: onFailure, onRequestError: onRequestError)
+    }
+    
+    func updatePrivacy(emailPrivacy: String? = nil, genderPrivacy: String? = nil,
+                       birthdayPrivacy: String? = nil, followPrivacy: String? = nil,
+                       onSuccess: UserCallback? = nil,
+                       onFailure: JSONCallback? = nil,
+                       onRequestError: ErrorCallback? = nil) {
+        let route = Endpoint.UpdateProfile.route()
+        APIClient.sharedClient.setAuthorization()
+        
+        var parameters: Parameters = Parameters.init()
+        if emailPrivacy != nil {
+            parameters.updateValue(emailPrivacy!, forKey: "email_privacy")
+        }
+        if genderPrivacy != nil {
+            parameters.updateValue(genderPrivacy!, forKey: "gender_privacy")
+        }
+        if birthdayPrivacy != nil {
+            parameters.updateValue(birthdayPrivacy!, forKey: "birthday_privacy")
+        }
+        if followPrivacy != nil {
+            parameters.updateValue(followPrivacy!, forKey: "follow_privacy")
         }
         
         APIClient.sharedClient.executeJSON(route: route, parameters: parameters,
