@@ -21,8 +21,6 @@ class ProfileController: HomeController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.renderView()
-        self.navigationController?.setNavigationBarHidden(true,
-                                                          animated: false)
         
         toolbar?.homeButton?.addTarget(self, action: #selector(transitionToFeed), for: .touchUpInside)
         toolbar?.notificationButton?.addTarget(self, action: #selector(transitionToNotification), for: .touchUpInside)
@@ -43,8 +41,20 @@ class ProfileController: HomeController {
     
     func renderView() {
         let loggedInUserId = UserDefaults.standard.object(forKey: "id") as! UInt32
-        let frame = CGRect(x: 0, y: 0, width: view.frame.width,
+        var frame: CGRect!
+        if loggedInUserId != self.userId {
+            self.navigationController?.setNavigationBarHidden(false,
+                                                              animated: false)
+            let bar = self.navigationController?.navigationBar
+            frame = CGRect(x: 0, y: bar!.frame.maxY, width: view.frame.width,
                            height: view.frame.height/2)
+        }
+        else {
+            self.navigationController?.setNavigationBarHidden(true,
+                                                              animated: false)
+            frame = CGRect(x: 0, y: 0, width: view.frame.width,
+                           height: view.frame.height/2)
+        }
         
         let indicator = requestLoading(view: self.view)
         self.readProfile(userId: userId, handler:
@@ -80,15 +90,33 @@ class ProfileController: HomeController {
                     name = lastName
                 }
                 
+                var foreign = false
+                var status: String? = nil
+                if loggedInUserId != self.userId {
+                    foreign = true
+                    group.enter()
+                    UserManager().getRelationship(withUserHavingUserId: self.userId,
+                                                  onSuccess:
+                        { relationship in
+                            if let rel = relationship {
+                                if rel.status {
+                                    status = "Following"
+                                }
+                                else {
+                                    status = "Request Sent"
+                                }
+                            }
+                            else {
+                                status = "Not following"
+                            }
+                            group.leave()
+                    })
+                }
+                
                 group.notify(queue: .main) {
                     if let view = self.profileView {
                         view.removeFromSuperview()
                         self.profileView = nil
-                    }
-                    
-                    var foreign = false
-                    if loggedInUserId != self.userId {
-                        foreign = true
                     }
                     
                     self.profileView = ProfileView(self, frame: frame,
@@ -99,7 +127,7 @@ class ProfileController: HomeController {
                                                    friends: user.friends, likes: user.likes!,
                                                    numberOfPinposts: user.numberOfPinposts!,
                                                    profilePicture: self.profileImage!,
-                                                   foreign: foreign)
+                                                   foreign: foreign, followStatus: status)
                     
                     // Detecting if the images have already been rendered before
                     if self.pinpostImages == nil {

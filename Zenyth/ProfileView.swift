@@ -27,7 +27,7 @@ class ProfileView: UIView {
     // Username
     static let HEIGHT_OF_USERNAME_LABEL: CGFloat = 0.10
     static let WIDTH_OF_USERNAME_LABEL: CGFloat = 0.40
-    static let USERNAME_TOP_INSET: CGFloat = 0.10
+    static let USERNAME_TOP_INSET: CGFloat = 0.08
     static let USERNAME_LEFT_INSET: CGFloat = 0.03
     
     // Action button
@@ -35,7 +35,7 @@ class ProfileView: UIView {
     static let WIDTH_OF_ACTION_BUTTON: CGFloat = 0.30
     static let TITLE_FONT_SIZE: CGFloat = 15.0
     static let EDIT_PROFILE_CORNER_RADIUS: CGFloat = 5.0
-    static let FOREIGN_BUTTON_CORNER_RADIUS: CGFloat = 20.0
+    static let FOREIGN_BUTTON_CORNER_RADIUS: CGFloat = 10.0
     static let FOREIGN_BUTTON_COLOR: UIColor = UIColor(r: 0, g: 131, b: 129)
     static let BORDER_WIDTH: CGFloat = 1.0
     
@@ -71,7 +71,7 @@ class ProfileView: UIView {
     // General
     static let LEFT_INSET: CGFloat = 0.02
     static let RIGHT_INSET: CGFloat = 0.02
-    static let TOP_INSET: CGFloat = 0.08
+    static let TOP_INSET: CGFloat = 0.06
     
     // Used for simulating request loading
     var requestLoadingMask: UIView?
@@ -197,7 +197,7 @@ class ProfileView: UIView {
             else if status == "Following" {
                 button.setTitle("Following", for: .normal)
             }
-            else if status == "Not Followed" {
+            else if status == "Not following" {
                 button.setTitle("Follow +", for: .normal)
             }
             button.setTitleColor(UIColor.white, for: .normal)
@@ -247,8 +247,10 @@ class ProfileView: UIView {
     }
     
     func setupBioText(bio: String) {
+        let height = self.frame.height * ProfileView.HEIGHT_OF_BIO
         let width = self.frame.width * ProfileView.WIDTH_OF_BIO
-        bioText = UITextView()
+        let frame = CGRect(x: 0, y: 0, width: width, height: height)
+        bioText = UITextView(frame: frame)
         bioText!.isUserInteractionEnabled = false
         bioText!.font = UIFont(name: ProfileView.BIO_FONT, size: ProfileView.BIO_FONT_SIZE)
         bioText?.text = bio

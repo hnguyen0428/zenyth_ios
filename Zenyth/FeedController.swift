@@ -411,6 +411,16 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
         print("Tapped")
     }
     
+    func showProfile(_ sender: UITapGestureRecognizer) {
+        let currentFeedView = feedScrollView!.feedViews[feedScrollView!.currentPinpostIndex]
+        let pinpost = currentFeedView.pinpost
+        let userId = pinpost!.creator!.id
+        
+        let profileController = ProfileController()
+        profileController.userId = userId
+        self.navigationController?.pushViewController(profileController, animated: true)
+    }
+    
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
         PinpostForm.shared.pressedCoordinate = coordinate
         let geocoder = GMSGeocoder()

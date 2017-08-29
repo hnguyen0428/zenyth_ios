@@ -67,7 +67,7 @@ class UserManager: UserManagerProtocol {
     }
     
     func getRelationship(withUserHavingUserId userId: UInt32,
-                         onSuccess: RelationshipCallback? = nil,
+                         onSuccess: OptionalRelationshipCallback? = nil,
                          onFailure: JSONCallback? = nil,
                          onRequestError: ErrorCallback? = nil) {
         let route = Endpoint.GetRelationship(userId).route()
@@ -77,7 +77,12 @@ class UserManager: UserManagerProtocol {
                                            onSuccess:
             { json in
                 let relationshipJSON = json["data"]["relationship"]
-                onSuccess?(Relationship(json: relationshipJSON))
+                if relationshipJSON != JSON.null {
+                    onSuccess?(Relationship(json: relationshipJSON))
+                }
+                else {
+                    onSuccess?(nil)
+                }
         }, onFailure: onFailure, onRequestError: onRequestError)
     }
     

@@ -16,8 +16,9 @@ class FeedView: UIView {
     var profilePicView: UIImageView?
     var thumbnailView: UIImageView?
     var hasThumbnail: Bool = false
-    var tapGesture: UITapGestureRecognizer
-    var pinpost: Pinpost
+    var tgExpandPost: UITapGestureRecognizer!
+    var tgProfile: UITapGestureRecognizer!
+    var pinpost: Pinpost!
     
     var topY: CGFloat = 0
     
@@ -32,7 +33,8 @@ class FeedView: UIView {
     static let ROUNDED_TOP_RADIUS: CGFloat = 40.0
     
     init(_ controller: UIViewController, frame: CGRect, pinpost: Pinpost) {
-        tapGesture = UITapGestureRecognizer(target: controller, action: #selector(FeedController.expandPost))
+        tgExpandPost = UITapGestureRecognizer(target: controller, action: #selector(FeedController.expandPost))
+        tgProfile = UITapGestureRecognizer(target: controller, action: #selector(FeedController.showProfile))
         self.pinpost = pinpost
         super.init(frame: frame)
         
@@ -80,12 +82,12 @@ class FeedView: UIView {
             imageContainer.frame = newProfileFrame
         }
         
-        feedInfoView!.descriptionText!.addGestureRecognizer(tapGesture)
+        feedInfoView!.descriptionText!.addGestureRecognizer(tgExpandPost)
+        profilePicView!.addGestureRecognizer(tgProfile)
+        profilePicView!.isUserInteractionEnabled = true
     }
     
     required init?(coder aDecoder: NSCoder) {
-        tapGesture = UITapGestureRecognizer(target: nil, action: nil)
-        pinpost = Pinpost(json: JSON.null)
         super.init(coder: aDecoder)
     }
     
