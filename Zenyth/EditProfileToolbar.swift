@@ -15,7 +15,7 @@ class EditProfileToolbar: UIToolbar {
     
     // UI Sizing
     static let HEIGHT_OF_BUTTON: CGFloat = 0.75
-    static let WIDTH_OF_BUTTON: CGFloat = 0.30
+    static let WIDTH_OF_BUTTON: CGFloat = 0.20
     static let FONT_SIZE: CGFloat = 15.0
     static let LEFT_INSET: CGFloat = 0.03
     
@@ -59,6 +59,10 @@ class EditProfileToolbar: UIToolbar {
                              rightConstant: 0, widthConstant: buttonWidth,
                              heightConstant: buttonHeight)
         
+        self.backgroundColor = UIColor.white
+        self.tintColor = UIColor.white
+        self.isTranslucent = false
+        self.barTintColor = UIColor.white
         self.addSubview(container)
     }
     

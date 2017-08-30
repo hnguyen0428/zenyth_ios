@@ -27,7 +27,7 @@ class ProfileView: UIView {
     // Username
     static let HEIGHT_OF_USERNAME_LABEL: CGFloat = 0.10
     static let WIDTH_OF_USERNAME_LABEL: CGFloat = 0.40
-    static let USERNAME_TOP_INSET: CGFloat = 0.08
+    static let USERNAME_TOP_INSET: CGFloat = 0.06
     static let USERNAME_LEFT_INSET: CGFloat = 0.03
     
     // Action button
@@ -43,7 +43,7 @@ class ProfileView: UIView {
     static let HEIGHT_OF_SETTINGS_BUTTON: CGFloat = 0.08
     
     // Name
-    static let HEIGHT_OF_NAME_LABEL: CGFloat = 0.05
+    static let HEIGHT_OF_NAME_LABEL: CGFloat = 0.06
     static let WIDTH_OF_NAME_LABEL: CGFloat = 0.40
     static let NAME_LEFT_INSET: CGFloat = 0.05
     static let NAME_TOP_INSET: CGFloat = 0.01
@@ -71,14 +71,14 @@ class ProfileView: UIView {
     // General
     static let LEFT_INSET: CGFloat = 0.02
     static let RIGHT_INSET: CGFloat = 0.02
-    static let TOP_INSET: CGFloat = 0.06
+    static let TOP_INSET: CGFloat = 0.04
     
     // Used for simulating request loading
     var requestLoadingMask: UIView?
     var indicator: UIActivityIndicatorView?
     
     init(_ controller: UIViewController, frame: CGRect, name: String? = nil, bio: String? = nil,
-         username: String, pinpostImages: [UIImage]? = nil, friends: UInt32, likes: UInt32,
+         username: String, pinpostImages: [UIImage]? = nil, followers: UInt32, likes: UInt32,
          numberOfPinposts: UInt32, profilePicture: UIImage, foreign: Bool = false,
          followStatus: String? = nil) {
         super.init(frame: frame)
@@ -86,7 +86,8 @@ class ProfileView: UIView {
         self.setupProfilePicture(profileImage: profilePicture)
         self.setupUsernameLabel(username: username)
         
-        self.setupActionButton(foreign: foreign, followStatus: followStatus)
+        self.setupActionButton(foreign: foreign, followStatus: followStatus,
+                               controller: controller)
         if !foreign {
             self.setupSettingsButton()
         }
@@ -101,7 +102,7 @@ class ProfileView: UIView {
             self.setupTopPinLabel()
             self.setupPinView(images: images)
         }
-        self.setupUserInfoBar(friends: friends, likes: likes,
+        self.setupUserInfoBar(followers: followers, likes: likes,
                               numberOfPinposts: numberOfPinposts)
         
 
@@ -164,7 +165,8 @@ class ProfileView: UIView {
                               widthConstant: width, heightConstant: height)
     }
     
-    func setupActionButton(foreign: Bool, followStatus: String? = nil) {
+    func setupActionButton(foreign: Bool, followStatus: String? = nil,
+                           controller: UIViewController) {
         let height = self.frame.height * ProfileView.HEIGHT_OF_ACTION_BUTTON
         let width = self.frame.width * ProfileView.WIDTH_OF_ACTION_BUTTON
         actionButton = UIButton()
@@ -178,7 +180,7 @@ class ProfileView: UIView {
             actionButton!.layer.borderColor = UIColor.lightGray.cgColor
         } else {
             if let status = followStatus {
-                configureActionButton(status: status)
+                configureActionButton(status: status, controller: controller)
             }
         }
         
@@ -189,15 +191,24 @@ class ProfileView: UIView {
                              widthConstant: width, heightConstant: height)
     }
     
-    func configureActionButton(status: String) {
+    func configureActionButton(status: String, controller: UIViewController) {
         if let button = actionButton {
             if status == "Request Sent" {
+                button.removeTarget(nil, action: nil, for: .allEvents)
+                button.addTarget(controller, action: #selector(ProfileController.unfollowUser),
+                                 for: .touchUpInside)
                 button.setTitle("Request Sent", for: .normal)
             }
             else if status == "Following" {
+                button.removeTarget(nil, action: nil, for: .allEvents)
+                button.addTarget(controller, action: #selector(ProfileController.unfollowUser),
+                                 for: .touchUpInside)
                 button.setTitle("Following", for: .normal)
             }
             else if status == "Not following" {
+                button.removeTarget(nil, action: nil, for: .allEvents)
+                button.addTarget(controller, action: #selector(ProfileController.followUser),
+                                 for: .touchUpInside)
                 button.setTitle("Follow +", for: .normal)
             }
             button.setTitleColor(UIColor.white, for: .normal)
@@ -322,14 +333,14 @@ class ProfileView: UIView {
         maxHeight = maxHeight + pinView!.frame.height
     }
     
-    func setupUserInfoBar(friends: UInt32, likes: UInt32, numberOfPinposts: UInt32) {
+    func setupUserInfoBar(followers: UInt32, likes: UInt32, numberOfPinposts: UInt32) {
         let width = self.frame.width * ProfileView.WIDTH_OF_BAR
         let height = self.frame.height * ProfileView.HEIGHT_OF_BAR
         let frame = CGRect(x: 0, y: 0, width: width, height: height)
         userInfoBar = UserInfoBar(frame: frame)
         userInfoBar!.likeButton?.setTitle(String(likes), for: .normal)
         userInfoBar!.pinButton?.setTitle(String(numberOfPinposts), for: .normal)
-        userInfoBar!.followerButton?.setTitle(String(friends), for: .normal)
+        userInfoBar!.followerButton?.setTitle(String(followers), for: .normal)
         
         self.addSubview(userInfoBar!)
         

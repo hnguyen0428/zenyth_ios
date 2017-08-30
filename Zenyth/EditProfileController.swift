@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 import Photos
 
-class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
+class EditProfileController: HomeController, UIImagePickerControllerDelegate,
                             UINavigationControllerDelegate {
     
     var navbar: EditProfileToolbar?
@@ -24,17 +24,21 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
         
         navbar?.cancelButton?.addTarget(self, action: #selector(popBackToProfile), for: .touchUpInside)
         navbar?.saveButton?.addTarget(self, action: #selector(updateProfileHandler), for: .touchUpInside)
+        
+        toolbar?.homeButton?.addTarget(self, action: #selector(transitionToFeed), for: .touchUpInside)
+        toolbar?.notificationButton?.addTarget(self, action: #selector(transitionToNotification), for: .touchUpInside)
+        toolbar?.profileButton?.addTarget(self, action: #selector(transitionToProfile), for: .touchUpInside)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
         profileImageView?.isUserInteractionEnabled = true
         profileImageView?.addGestureRecognizer(tapGesture)
     }
     
-    func setupViews() {
+    override func setupViews() {
+        super.setupViews()
         view.backgroundColor = UIColor.white
         
         let navbarWidth = view.frame.width
@@ -50,7 +54,7 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
         scrollView = UIScrollView(frame: scrollViewFrame)
         scrollView?.contentSize.height = view.frame.height
         scrollView?.backgroundColor = UIColor(r: 240, g: 240, b: 240)
-        view.addSubview(scrollView!)
+        view.insertSubview(scrollView!, at: 0)
         
         self.setupProfileImageView()
         self.setupProfileEditView()
@@ -249,6 +253,11 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate,
         if let biography = user?.biography {
             profileEditView?.setBiography(biography)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     func transitionToProfile(renderImage: Bool = false) {

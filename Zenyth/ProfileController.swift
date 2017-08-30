@@ -20,6 +20,8 @@ class ProfileController: HomeController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.setNavigationBarHidden(false,
+                                                          animated: false)
         self.renderView()
         
         toolbar?.homeButton?.addTarget(self, action: #selector(transitionToFeed), for: .touchUpInside)
@@ -42,23 +44,17 @@ class ProfileController: HomeController {
     func renderView() {
         let loggedInUserId = UserDefaults.standard.object(forKey: "id") as! UInt32
         var frame: CGRect!
-        if loggedInUserId != self.userId {
-            self.navigationController?.setNavigationBarHidden(false,
-                                                              animated: false)
-            let bar = self.navigationController?.navigationBar
-            frame = CGRect(x: 0, y: bar!.frame.maxY, width: view.frame.width,
-                           height: view.frame.height/2)
+        if loggedInUserId == self.userId {
+            self.navigationItem.leftBarButtonItem = nil
         }
-        else {
-            self.navigationController?.setNavigationBarHidden(true,
-                                                              animated: false)
-            frame = CGRect(x: 0, y: 0, width: view.frame.width,
-                           height: view.frame.height/2)
-        }
+        let bar = self.navigationController?.navigationBar
+        frame = CGRect(x: 0, y: bar!.frame.maxY, width: view.frame.width,
+                       height: view.frame.height/2)
         
         let indicator = requestLoading(view: self.view)
         self.readProfile(userId: userId, handler:
             { user in
+                self.navigationItem.title = user.username
                 let group = DispatchGroup()
                 
                 if user.profilePicture != nil {
@@ -124,7 +120,7 @@ class ProfileController: HomeController {
                                                    bio: user.biography,
                                                    username: user.username,
                                                    pinpostImages: pinImages,
-                                                   friends: user.friends, likes: user.likes!,
+                                                   followers: user.followers, likes: user.likes!,
                                                    numberOfPinposts: user.numberOfPinposts!,
                                                    profilePicture: self.profileImage!,
                                                    foreign: foreign, followStatus: status)
@@ -207,6 +203,41 @@ class ProfileController: HomeController {
         }
     }
     
+    func followUser(_ button: UIButton) {
+        RelationshipManager().sendFollowerRequest(toRequesteeId: self.userId,
+                                                  onSuccess:
+            { relationship in
+                if relationship.status {
+                    self.profileView?.configureActionButton(status: "Following",
+                                                            controller: self)
+                }
+                else {
+                    self.profileView?.configureActionButton(status: "Request Sent",
+                                                            controller: self)
+                }
+        })
+                                                  
+    }
+    
+    func unfollowUser(_ button: UIButton) {
+        let alert = UIAlertController(title: "Unfollow \(user!.username)",
+                                      message: nil,
+                                      preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Unfollow", style: .default, handler:
+            { action in
+                RelationshipManager().unfollowUser(withUserId: self.userId,
+                                                   onSuccess:
+                    { json in
+                        if json["success"].boolValue {
+                            self.profileView?.configureActionButton(status: "Not following",
+                                                                    controller: self)
+                        }
+                })
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func transitionToEditProfile() {
         let controller = EditProfileController()
         self.navigationController?.pushViewController(controller, animated: true)
@@ -217,5 +248,10 @@ class ProfileController: HomeController {
     func transitionToSettings() {
         let controller = SettingsController()
         self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
 }

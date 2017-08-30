@@ -11,6 +11,7 @@ import UIKit
 class HomeController: UIViewController {
     
     var toolbar: Navbar?
+    var backButton: UIBarButtonItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,25 @@ class HomeController: UIViewController {
         toolbar = Navbar(view: self.view)
         view.addSubview(toolbar!)
         view.backgroundColor = UIColor.white
+        
+        let backButton: UIButton = {
+            let frame = CGRect(x: 0, y: 0, width: 15,
+                               height: 25)
+            let button = UIButton(frame: frame)
+            button.contentMode = .scaleAspectFill
+            button.backgroundColor = .clear
+            button.setImage(#imageLiteral(resourceName: "back_black"), for: .normal)
+            button.addTarget(self, action: #selector(onPressingBack),
+                             for: .touchUpInside)
+            return button
+        }()
+        let barButton = UIBarButtonItem(customView: backButton)
+        self.backButton = barButton
+        self.navigationItem.leftBarButtonItem = barButton
+    }
+    
+    func onPressingBack() {
+        self.navigationController?.popViewController(animated: true)
     }
     
     func transitionToFeed() {
