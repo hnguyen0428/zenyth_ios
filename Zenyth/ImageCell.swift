@@ -34,17 +34,11 @@ class ImageCell: UICollectionViewCell {
     }
     
     func turnonShade() {
-//        shade = UIView(frame: imageView.frame)
-//        shade?.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-//        shade?.isUserInteractionEnabled = false
         self.picked = true
         self.imageView.alpha = 0.5
-//        self.addSubview(shade!)
     }
     
     func turnoffShade() {
-//        shade?.removeFromSuperview()
-//        shade = nil
         self.imageView.alpha = 1.0
         self.picked = false
     }
