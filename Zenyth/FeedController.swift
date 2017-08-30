@@ -13,6 +13,7 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
     
     var mapView: MapView?
     var feedScrollView: FeedScrollView?
+    var feedDragger: UIButton?
     
     // Save the next page and prev page of pagination
     var paginateObject: Paginate?
@@ -23,10 +24,17 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
     var startIndex = 0
     var loading: Bool = false
     
+    var feedShown: Bool = false
+    
     static let paginate: UInt32 = 10
 
     // Y coordinate of feed in percent of view height
     static let Y_COORD_FEED: CGFloat = 0.35
+    static let WIDTH_OF_DRAGGER: CGFloat = 0.11
+    static let HEIGHT_OF_FEED: CGFloat = 0.60
+    
+    // Percent of dragger shown
+    static let DRAGGER_SHOWN: CGFloat = 0.70
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +43,7 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
         toolbar?.notificationButton?.addTarget(self, action: #selector(transitionToNotification), for: .touchUpInside)
         toolbar?.profileButton?.addTarget(self, action: #selector(transitionToProfile), for: .touchUpInside)
         feedScrollView!.panGestureRecognizer.addTarget(self, action: #selector(snapToPin))
+        feedDragger?.addTarget(self, action: #selector(toggleFeed), for: .touchUpInside)
     }
     
     override func setupViews() {
@@ -72,12 +81,24 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
     func setupScrollView() {
         let feedWidth = self.view.frame.width
         let x = self.view.frame.origin.x
-        let y = self.view.frame.height * FeedController.Y_COORD_FEED
-        let feedHeight = self.toolbar!.frame.origin.y - y
+        let y = toolbar!.frame.origin.y
+        let feedHeight = self.view.frame.height * FeedController.HEIGHT_OF_FEED
         let frame = CGRect(x: x, y: y, width: feedWidth, height: feedHeight)
         feedScrollView = FeedScrollView(frame: frame, controller: self)
         feedScrollView!.delegate = self
         view.insertSubview(feedScrollView!, belowSubview: toolbar!)
+        
+        let draggerWidth = view.frame.width * FeedController.WIDTH_OF_DRAGGER
+        let draggerHeight = draggerWidth
+        let draggerX = feedScrollView!.center.x - draggerWidth/2
+        let draggerY = toolbar!.frame.origin.y - draggerHeight * FeedController.DRAGGER_SHOWN
+
+        let draggerFrame = CGRect(x: draggerX, y: draggerY,
+                                  width: draggerWidth, height: draggerHeight)
+        feedDragger = UIButton(frame: draggerFrame)
+        feedDragger!.setImage(#imageLiteral(resourceName: "up_icon"), for: .normal)
+
+        view.insertSubview(feedDragger!, belowSubview: feedScrollView!)
     }
     
     func setupFeedView() {
@@ -92,8 +113,7 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
         // can fire at a time
         self.loading = true
         let feedWidth = self.view.frame.width
-        let y = self.feedScrollView!.frame.origin.y
-        let feedHeight = self.toolbar!.frame.origin.y - y
+        let feedHeight = self.view.frame.height * FeedController.HEIGHT_OF_FEED
         
         // Dispatch group for handling completion
         let group = DispatchGroup()
@@ -107,7 +127,7 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
             
             let feedView = FeedView(self, frame: frame, pinpost: pinpost)
             self.feedScrollView?.addSubview(feedView)
-            self.feedScrollView?.pinposts.append(pinpost)
+            self.feedScrollView?.feedViews.append(feedView)
             
             group.enter()
             self.renderPinImage(pinpost: pinpost, handler:
@@ -133,7 +153,7 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
     
     func loadNextPage() {
         let scrollView = feedScrollView!
-        if scrollView.currentPinpostIndex == scrollView.pinposts.count - 1 {
+        if scrollView.currentPinpostIndex == scrollView.feedViews.count - 1 {
             self.fetchNextPage(handler:
                 { pinposts in
                     self.renderFeedScrollView(pinposts: pinposts)
@@ -192,9 +212,14 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
             
             if snapRight { // snap right if swiping left fast enough
                 scrollView.currentPinpostIndex += 1
+                let feedView = scrollView.feedViews[scrollView.currentPinpostIndex]
+                let topY = feedView.topY + scrollView.frame.origin.y
+                let newDraggerY = topY - feedDragger!.frame.height * FeedController.DRAGGER_SHOWN
+
                 UIView.animate(withDuration: duration, animations:
                     { animation in
                         scrollView.contentOffset = CGPoint(x: maxX, y: y)
+                        self.feedDragger!.frame.origin.y = newDraggerY
                 }, completion:
                     { action in
                         self.loadNextPage()
@@ -203,9 +228,13 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
             }
             if snapLeft { // snap left if swiping right fast enough
                 scrollView.currentPinpostIndex -= 1
+                let feedView = scrollView.feedViews[scrollView.currentPinpostIndex]
+                let topY = feedView.topY + scrollView.frame.origin.y
+                let newDraggerY = topY - feedDragger!.frame.height * FeedController.DRAGGER_SHOWN
                 UIView.animate(withDuration: duration, animations:
                     { animation in
                         scrollView.contentOffset = CGPoint(x: minX, y: y)
+                        self.feedDragger!.frame.origin.y = newDraggerY
                 })
                 return
             }
@@ -214,9 +243,14 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
             if !swipingRight {
                 if enoughOfRightShown {
                     scrollView.currentPinpostIndex += 1
+                    let feedView = scrollView.feedViews[scrollView.currentPinpostIndex]
+                    let topY = feedView.topY + scrollView.frame.origin.y
+                    let newDraggerY = topY - feedDragger!.frame.height * FeedController.DRAGGER_SHOWN
+
                     UIView.animate(withDuration: duration, animations:
                         { animation in
                             scrollView.contentOffset = CGPoint(x: maxX, y: y)
+                            self.feedDragger!.frame.origin.y = newDraggerY
                     }, completion:
                         { action in
                             self.loadNextPage()
@@ -233,9 +267,14 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
                 // snap left if enough of left is shown, else snap back right
                 if enoughOfLeftShown {
                     scrollView.currentPinpostIndex -= 1
+                    let feedView = scrollView.feedViews[scrollView.currentPinpostIndex]
+                    let topY = feedView.topY + scrollView.frame.origin.y
+                    let newDraggerY = topY - feedDragger!.frame.height * FeedController.DRAGGER_SHOWN
+
                     UIView.animate(withDuration: duration, animations:
                         { animation in
                             scrollView.contentOffset = CGPoint(x: minX, y: y)
+                            self.feedDragger!.frame.origin.y = newDraggerY
                     })
                 } else {
                     UIView.animate(withDuration: duration, animations:
@@ -328,8 +367,58 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
         }
     }
     
+    func toggleFeed(_ button: UIButton) {
+        if feedScrollView?.feedViews.count == 0 { // if there is no pinpost do nothing
+            return
+        }
+        
+        if feedShown { // hide feed
+            let feedY = feedScrollView!.frame.origin.y
+            let newButtonY = toolbar!.frame.origin.y - feedDragger!.frame.height *
+                FeedController.DRAGGER_SHOWN
+            let height = feedScrollView!.frame.height
+            UIView.animate(withDuration: 0.5, animations:
+                {
+                    self.feedScrollView?.frame.origin.y = feedY + height
+                    self.feedDragger?.frame.origin.y = newButtonY
+            }, completion:
+                { action in
+                    self.feedShown = false
+                    self.feedDragger?.setImage(#imageLiteral(resourceName: "up_icon"), for: .normal)
+            })
+        } else { // show feed
+            let feedY = feedScrollView!.frame.origin.y
+            let buttonY = feedDragger!.frame.origin.y
+            let height = feedScrollView!.frame.height
+            let currentFeedView = feedScrollView!.feedViews[feedScrollView!.currentPinpostIndex]
+            let feedViewHeight = currentFeedView.hasThumbnail ?
+                currentFeedView.frame.height :
+                currentFeedView.frame.height - currentFeedView.profilePicView!.frame.height/2
+            
+            UIView.animate(withDuration: 0.5, animations:
+                {
+                    self.feedScrollView?.frame.origin.y = feedY - height
+                    self.feedDragger?.frame.origin.y = buttonY - feedViewHeight
+            }, completion:
+                { action in
+                    self.feedShown = true
+                    self.feedDragger?.setImage(#imageLiteral(resourceName: "down_icon"), for: .normal)
+            })
+        }
+    }
+    
     func expandPost(_ sender: UITapGestureRecognizer) {
         print("Tapped")
+    }
+    
+    func showProfile(_ sender: UITapGestureRecognizer) {
+        let currentFeedView = feedScrollView!.feedViews[feedScrollView!.currentPinpostIndex]
+        let pinpost = currentFeedView.pinpost
+        let userId = pinpost!.creator!.id
+        
+        let profileController = ProfileController()
+        profileController.userId = userId
+        self.navigationController?.pushViewController(profileController, animated: true)
     }
     
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
@@ -351,6 +440,10 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
 }

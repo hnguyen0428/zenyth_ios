@@ -12,8 +12,8 @@ import Alamofire
 /// Used for testing purposes
 let localhostURL = "http://192.168.100.190/api"
 
-//var baseURL = "http://54.219.134.56/api"
-var baseURL = localhostURL
+var baseURL = "http://54.219.134.56/api"
+//var baseURL = localhostURL
 typealias APIRoute = (String, HTTPMethod)
 
 /**

@@ -15,10 +15,12 @@ class FeedView: UIView {
     var feedInfoView: FeedInfoView?
     var profilePicView: UIImageView?
     var thumbnailView: UIImageView?
-    var tapGesture: UITapGestureRecognizer
-    var pinpost: Pinpost
+    var hasThumbnail: Bool = false
+    var tgExpandPost: UITapGestureRecognizer!
+    var tgProfile: UITapGestureRecognizer!
+    var pinpost: Pinpost!
     
-    var maxHeight: CGFloat = 0
+    var topY: CGFloat = 0
     
     // Height in percentage
     static let HEIGHT_OF_FEEDINFOVIEW: CGFloat = 0.45
@@ -31,7 +33,8 @@ class FeedView: UIView {
     static let ROUNDED_TOP_RADIUS: CGFloat = 40.0
     
     init(_ controller: UIViewController, frame: CGRect, pinpost: Pinpost) {
-        tapGesture = UITapGestureRecognizer(target: controller, action: #selector(FeedController.expandPost))
+        tgExpandPost = UITapGestureRecognizer(target: controller, action: #selector(FeedController.expandPost))
+        tgProfile = UITapGestureRecognizer(target: controller, action: #selector(FeedController.showProfile))
         self.pinpost = pinpost
         super.init(frame: frame)
         
@@ -49,6 +52,7 @@ class FeedView: UIView {
             name = lastName
         }
         let hasThumbnail = pinpost.images.count > 0
+        self.hasThumbnail = hasThumbnail
         self.setupFeedInfoView(title: title, description: description,
                                name: name, username: username)
         
@@ -56,6 +60,7 @@ class FeedView: UIView {
             self.setupThumbnailView()
             _ = self.setupProfilePic()
             self.topRounded(radius: FeedView.ROUNDED_TOP_RADIUS)
+            self.topY = frame.origin.y
         }
         else {
             let imageContainer = self.setupProfilePic()
@@ -64,6 +69,7 @@ class FeedView: UIView {
             let newHeight = feedInfoView!.frame.height + extraHeight
             let heightLost = self.frame.height - newHeight
             let newY = self.frame.origin.y + heightLost
+            self.topY = newY + extraHeight
             
             self.frame = CGRect(x: self.frame.origin.x, y: newY,
                                 width: self.frame.width, height: newHeight)
@@ -76,12 +82,12 @@ class FeedView: UIView {
             imageContainer.frame = newProfileFrame
         }
         
-        feedInfoView!.descriptionText!.addGestureRecognizer(tapGesture)
+        feedInfoView!.descriptionText!.addGestureRecognizer(tgExpandPost)
+        profilePicView!.addGestureRecognizer(tgProfile)
+        profilePicView!.isUserInteractionEnabled = true
     }
     
     required init?(coder aDecoder: NSCoder) {
-        tapGesture = UITapGestureRecognizer(target: nil, action: nil)
-        pinpost = Pinpost(json: JSON.null)
         super.init(coder: aDecoder)
     }
     

@@ -9,18 +9,22 @@
 import Foundation
 import UIKit
 
-class SettingsController: UIViewController {
+class SettingsController: HomeController {
     
     var logoutButton: UIButton?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
         
         logoutButton?.addTarget(self, action: #selector(alertLoggingOut), for: .touchUpInside)
+        toolbar?.homeButton?.addTarget(self, action: #selector(transitionToFeed), for: .touchUpInside)
+        toolbar?.notificationButton?.addTarget(self, action: #selector(transitionToNotification), for: .touchUpInside)
+        toolbar?.profileButton?.addTarget(self, action: #selector(transitionToProfile), for: .touchUpInside)
+
     }
     
-    func setupViews() {
+    override func setupViews() {
+        super.setupViews()
         view.backgroundColor = UIColor(r: 245, g: 245, b: 245)
         
         let height = view.frame.height * 0.07
@@ -68,10 +72,5 @@ class SettingsController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
 }

@@ -13,7 +13,7 @@ struct User : APIObject {
     var id: UInt32
     var email: String?
     var username: String
-    var friends: UInt32
+    var followers: UInt32
     var firstName: String?
     var lastName: String?
     var gender: String?
@@ -28,7 +28,7 @@ struct User : APIObject {
         self.id = json["id"].uInt32Value
         self.email = json["email"].string
         self.username = json["username"].stringValue
-        self.friends = json["friends"].uInt32Value
+        self.followers = json["followers"].uInt32Value
         self.firstName = json["first_name"].string
         self.lastName = json["last_name"].string
         self.gender = json["gender"].string
@@ -68,7 +68,7 @@ struct User : APIObject {
             "id": id,
             "email": email,
             "username": username,
-            "friends": friends,
+            "friends": followers,
             "first_name": firstName,
             "last_name": lastName,
             "gender": gender,

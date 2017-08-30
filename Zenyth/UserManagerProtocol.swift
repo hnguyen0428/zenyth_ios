@@ -45,6 +45,19 @@ protocol UserManagerProtocol {
                              onRequestError: ErrorCallback?)
     
     /**
+     Get relationship between the logged in user and the specified user
+     - Parameters:
+     - userId: userId of user to get relationship with
+     - onSuccess: callback function with Relationship? parameter
+     - onFailure: callback function with JSON parameter
+     - onRequestError: callback function with NSError parameter
+     */
+    func getRelationship(withUserHavingUserId userId: UInt32,
+                         onSuccess: OptionalRelationshipCallback?,
+                         onFailure: JSONCallback?,
+                         onRequestError: ErrorCallback?)
+    
+    /**
      Get profile information of the user with user ID
      - Parameters:
         - userId: ID of user to be looked up

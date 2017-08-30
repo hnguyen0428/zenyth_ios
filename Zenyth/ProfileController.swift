@@ -15,34 +15,46 @@ class ProfileController: HomeController {
     var user: User? = nil
     var profileImage: UIImage? = nil
     var pinpostImages: [UIImage]? = nil
+    var userId: UInt32 = 0
+    var shouldSetProfileSelected: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.renderView()
-        self.navigationController?.setNavigationBarHidden(true,
+        self.navigationController?.setNavigationBarHidden(false,
                                                           animated: false)
+        self.renderView()
         
         toolbar?.homeButton?.addTarget(self, action: #selector(transitionToFeed), for: .touchUpInside)
         toolbar?.notificationButton?.addTarget(self, action: #selector(transitionToNotification), for: .touchUpInside)
         toolbar?.profileButton?.addTarget(self, action: #selector(transitionToProfile), for: .touchUpInside)
-        profileView?.editProfileButton?.addTarget(self, action: #selector(transitionToEditProfile), for: .touchUpInside)
         profileView?.settingsButton?.addTarget(self, action: #selector(transitionToSettings), for: .touchUpInside)
     }
     
     override func setupViews() {
         super.setupViews()
-        toolbar?.setProfileSelected()
+        
+        if shouldSetProfileSelected {
+            toolbar?.setProfileSelected()
+        }
         
         mapView = MapView(frame: view.frame, controller: self)
         view.insertSubview(mapView!, at: 0)
     }
     
     func renderView() {
-        let userId = UserDefaults.standard.object(forKey: "id") as! UInt32
+        let loggedInUserId = UserDefaults.standard.object(forKey: "id") as! UInt32
+        var frame: CGRect!
+        if loggedInUserId == self.userId {
+            self.navigationItem.leftBarButtonItem = nil
+        }
+        let bar = self.navigationController?.navigationBar
+        frame = CGRect(x: 0, y: bar!.frame.maxY, width: view.frame.width,
+                       height: view.frame.height/2)
         
         let indicator = requestLoading(view: self.view)
         self.readProfile(userId: userId, handler:
             { user in
+                self.navigationItem.title = user.username
                 let group = DispatchGroup()
                 
                 if user.profilePicture != nil {
@@ -74,19 +86,44 @@ class ProfileController: HomeController {
                     name = lastName
                 }
                 
+                var foreign = false
+                var status: String? = nil
+                if loggedInUserId != self.userId {
+                    foreign = true
+                    group.enter()
+                    UserManager().getRelationship(withUserHavingUserId: self.userId,
+                                                  onSuccess:
+                        { relationship in
+                            if let rel = relationship {
+                                if rel.status {
+                                    status = "Following"
+                                }
+                                else {
+                                    status = "Request Sent"
+                                }
+                            }
+                            else {
+                                status = "Not following"
+                            }
+                            group.leave()
+                    })
+                }
+                
                 group.notify(queue: .main) {
                     if let view = self.profileView {
                         view.removeFromSuperview()
                         self.profileView = nil
                     }
-                    self.profileView = ProfileView(self,
+                    
+                    self.profileView = ProfileView(self, frame: frame,
                                                    name: name,
                                                    bio: user.biography,
                                                    username: user.username,
                                                    pinpostImages: pinImages,
-                                                   friends: user.friends, likes: user.likes!,
+                                                   followers: user.followers, likes: user.likes!,
                                                    numberOfPinposts: user.numberOfPinposts!,
-                                                   profilePicture: self.profileImage!)
+                                                   profilePicture: self.profileImage!,
+                                                   foreign: foreign, followStatus: status)
                     
                     // Detecting if the images have already been rendered before
                     if self.pinpostImages == nil {
@@ -166,6 +203,41 @@ class ProfileController: HomeController {
         }
     }
     
+    func followUser(_ button: UIButton) {
+        RelationshipManager().sendFollowerRequest(toRequesteeId: self.userId,
+                                                  onSuccess:
+            { relationship in
+                if relationship.status {
+                    self.profileView?.configureActionButton(status: "Following",
+                                                            controller: self)
+                }
+                else {
+                    self.profileView?.configureActionButton(status: "Request Sent",
+                                                            controller: self)
+                }
+        })
+                                                  
+    }
+    
+    func unfollowUser(_ button: UIButton) {
+        let alert = UIAlertController(title: "Unfollow \(user!.username)",
+                                      message: nil,
+                                      preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Unfollow", style: .default, handler:
+            { action in
+                RelationshipManager().unfollowUser(withUserId: self.userId,
+                                                   onSuccess:
+                    { json in
+                        if json["success"].boolValue {
+                            self.profileView?.configureActionButton(status: "Not following",
+                                                                    controller: self)
+                        }
+                })
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func transitionToEditProfile() {
         let controller = EditProfileController()
         self.navigationController?.pushViewController(controller, animated: true)
@@ -176,5 +248,10 @@ class ProfileController: HomeController {
     func transitionToSettings() {
         let controller = SettingsController()
         self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
 }

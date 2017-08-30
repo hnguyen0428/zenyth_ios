@@ -12,14 +12,19 @@ class PinView: UIView {
     
     var pinImages: [UIImageView] = [UIImageView]()
     
+    // UI Sizing
+    static let HEIGHT_OF_PIN_VIEW: CGFloat = 0.15
+    static let LEFT_INSET: CGFloat = 0.025
+    static let GAP: CGFloat = 0.05
+    
     init(view: UIView) {
-        let height = view.frame.width * 0.15
+        let height = view.frame.width * PinView.HEIGHT_OF_PIN_VIEW
         let width = view.frame.width
         let frame = CGRect(x: 0, y: 0, width: width, height: height)
         super.init(frame: frame)
         
-        let margin = view.frame.width * 0.025
-        let gap = view.frame.width * 0.05
+        let margin = view.frame.width * PinView.LEFT_INSET
+        let gap = view.frame.width * PinView.GAP
         
         let widthImage = height
         let heightImage = widthImage

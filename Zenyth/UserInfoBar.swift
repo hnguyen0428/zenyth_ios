@@ -18,6 +18,9 @@ class UserInfoBar: UIToolbar {
     var followerButton: InfoAsset?
     var pinButton: InfoAsset?
     
+    // UI Sizing
+    static let WIDTH_OF_BUTTON: CGFloat = 0.33
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.clear
@@ -26,7 +29,7 @@ class UserInfoBar: UIToolbar {
         
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         
-        let widthButton = frame.width * 0.33
+        let widthButton = frame.width * UserInfoBar.WIDTH_OF_BUTTON
         let heightButton = frame.height
         let buttonFrame = CGRect(x: 0, y: 0, width: widthButton, height: heightButton)
         

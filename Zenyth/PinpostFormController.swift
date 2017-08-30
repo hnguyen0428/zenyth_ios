@@ -64,7 +64,7 @@ class PinpostFormController: UIViewController, UITextViewDelegate,
             textView.text = "Give a description"
             textView.textColor = UIColor.lightGray
         }
-        fieldCheck()
+        _ = fieldCheck()
     }
     
     override func viewDidAppear(_ animated: Bool) {

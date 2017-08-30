@@ -36,6 +36,7 @@ typealias TagCallback = (Tag) -> Void
 typealias TagsCallback = ([Tag]) -> Void
 
 typealias RelationshipCallback = (Relationship) -> Void
+typealias OptionalRelationshipCallback = (Relationship?) -> Void
 typealias RelationshipsCallback = ([Relationship]) -> Void
 
 
