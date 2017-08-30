@@ -261,6 +261,7 @@ class EditProfileController: HomeController, UIImagePickerControllerDelegate,
     }
     
     func transitionToProfile(renderImage: Bool = false) {
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.navigationController?.popViewController(animated: true)
         let controller = self.navigationController?.topViewController as! ProfileController
         

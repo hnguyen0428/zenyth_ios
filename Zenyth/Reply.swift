@@ -16,7 +16,7 @@ struct Reply: APIObject {
     var onCommentId: UInt32
     var createdAt: String
     var updatedAt: String
-    var likes: UInt32
+    var likes: [Like] = [Like]()
     var images: [Image] = [Image]()
     
     init(json: JSON) {
@@ -26,7 +26,11 @@ struct Reply: APIObject {
         self.onCommentId = json["comment_id"].uInt32Value
         self.createdAt = json["created_at"].stringValue
         self.updatedAt = json["updated_at"].stringValue
-        self.likes = json["likes"].uInt32Value
+        
+        let likesJSON = json["likes"].arrayValue
+        for likeJSON in likesJSON {
+            self.likes.append(Like(json: likeJSON))
+        }
         
         let imagesJSON = json["images"].arrayValue
         for imageJSON in imagesJSON {
@@ -40,6 +44,11 @@ struct Reply: APIObject {
             imagesJSON.append(image.toJSON())
         }
         
+        var likesJSON = [JSON]()
+        for like in likes {
+            likesJSON.append(like.toJSON())
+        }
+        
         return [
             "id": id,
             "text": text,
@@ -47,7 +56,8 @@ struct Reply: APIObject {
             "comment_id": onCommentId,
             "created_at": createdAt,
             "updated_at": updatedAt,
-            "images": imagesJSON
+            "images": imagesJSON,
+            "likes": likesJSON
         ]
     }
     

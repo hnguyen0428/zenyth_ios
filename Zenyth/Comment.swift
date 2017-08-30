@@ -17,8 +17,8 @@ struct Comment: APIObject {
     var commentableType: String
     var createdAt: String
     var updatedAt: String
-    var replies: UInt32
-    var likes: UInt32
+    var replies: [Reply] = [Reply]()
+    var likes: [Like] = [Like]()
     var images: [Image] = [Image]()
     
     init(json: JSON) {
@@ -29,8 +29,16 @@ struct Comment: APIObject {
         self.commentableType = json["commentable_type"].stringValue
         self.createdAt = json["created_at"].stringValue
         self.updatedAt = json["updated_at"].stringValue
-        self.replies = json["replies"].uInt32Value
-        self.likes = json["likes"].uInt32Value
+        
+        let repliesJSON = json["replies"].arrayValue
+        for replyJSON in repliesJSON {
+            self.replies.append(Reply(json: replyJSON))
+        }
+        
+        let likesJSON = json["likes"].arrayValue
+        for likeJSON in likesJSON {
+            self.likes.append(Like(json: likeJSON))
+        }
         
         let imagesJSON = json["images"].arrayValue
         for imageJSON in imagesJSON {
@@ -44,6 +52,18 @@ struct Comment: APIObject {
             imagesJSON.append(image.toJSON())
         }
         
+        var repliesJSON = [JSON]()
+        for reply in replies {
+            repliesJSON.append(reply.toJSON())
+        }
+
+        
+        var likesJSON = [JSON]()
+        for like in likes {
+            likesJSON.append(like.toJSON())
+        }
+
+        
         return [
             "id": id,
             "text": text,
@@ -52,7 +72,9 @@ struct Comment: APIObject {
             "commentable_type": commentableType,
             "created_at": createdAt,
             "updated_at": updatedAt,
-            "images": imagesJSON
+            "images": imagesJSON,
+            "replies": repliesJSON,
+            "likes": likesJSON
         ]
     }
     
