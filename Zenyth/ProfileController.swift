@@ -28,6 +28,7 @@ class ProfileController: HomeController {
         toolbar?.notificationButton?.addTarget(self, action: #selector(transitionToNotification), for: .touchUpInside)
         toolbar?.profileButton?.addTarget(self, action: #selector(transitionToProfile), for: .touchUpInside)
         profileView?.settingsButton?.addTarget(self, action: #selector(transitionToSettings), for: .touchUpInside)
+        profileView?.userInfoBar?.followerButton?.addTarget(self, action: #selector(transitionToFollowersList), for: .touchUpInside)
     }
     
     override func setupViews() {
@@ -248,6 +249,11 @@ class ProfileController: HomeController {
     func transitionToSettings() {
         let controller = SettingsController()
         self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    func transitionToFollowersList() {
+//        let controller = FollowersListController()
+//        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
