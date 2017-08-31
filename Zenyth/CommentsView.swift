@@ -45,5 +45,6 @@ class CommentsView: UIView {
         
         numComments += 1
         maxHeight += commentFrame.height
+        commentCell.renderProfilePic()
     }
 }

@@ -14,9 +14,10 @@ class FeedInfoView: UIView {
     var titleLabel: UILabel?
     var creatorLabel: UILabel?
     var descriptionText: UITextView?
+    var pinpost: Pinpost!
     
     // Pinpost actions
-    var actionBar: UIToolbar?
+    var actionBar: PostActionBar?
     
     var maxHeight: CGFloat = 0.0
     
@@ -42,10 +43,25 @@ class FeedInfoView: UIView {
     static let WIDTH_OF_DESCRIPTION_TEXT: CGFloat = 0.95
     static let WIDTH_OF_ACTION_BAR: CGFloat = 0.50
     
-    init(frame: CGRect, title: String, description: String,
-         name: String? = nil, username: String) {
+    init(_ controller: UIViewController, frame: CGRect, pinpost: Pinpost) {
+        self.pinpost = pinpost
         super.init(frame: frame)
         self.backgroundColor = UIColor.white
+        
+        let title = pinpost.title
+        let description = pinpost.pinpostDescription
+        let creator = pinpost.creator!
+        let username = creator.username
+        var name: String? = nil
+        if let firstName = creator.firstName,
+            let lastName = creator.lastName {
+            name = "\(firstName) \(lastName)"
+        } else if let firstName = creator.firstName {
+            name = firstName
+        } else if let lastName = creator.lastName {
+            name = lastName
+        }
+        
         self.setupTitleLabel(title: title)
         self.setupCreatorLabel(name: name, username: username)
         self.setupDescriptionText(description: description)

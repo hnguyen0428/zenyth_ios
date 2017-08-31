@@ -12,9 +12,9 @@ import Alamofire
 
 class CommentManager: CommentManagerProtocol {
     func createComment(onPinpostId pinpostId: UInt32, text: String,
-                       onSuccess: CommentCallback?,
-                       onFailure: JSONCallback?,
-                       onRequestError: ErrorCallback?) {
+                       onSuccess: CommentCallback? = nil,
+                       onFailure: JSONCallback? = nil,
+                       onRequestError: ErrorCallback? = nil) {
         let route = Endpoint.CreateCommentOnPinpost(pinpostId).route()
         APIClient.sharedClient.setAuthorization()
         

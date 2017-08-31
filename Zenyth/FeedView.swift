@@ -19,6 +19,7 @@ class FeedView: UIView {
     var tgExpandPost: UITapGestureRecognizer!
     var tgProfile: UITapGestureRecognizer!
     var pinpost: Pinpost!
+    var controller: UIViewController?
     
     var topY: CGFloat = 0
     
@@ -33,28 +34,15 @@ class FeedView: UIView {
     static let ROUNDED_TOP_RADIUS: CGFloat = 40.0
     
     init(_ controller: UIViewController, frame: CGRect, pinpost: Pinpost) {
+        self.controller = controller
         tgExpandPost = UITapGestureRecognizer(target: controller, action: #selector(FeedController.expandPost))
         tgProfile = UITapGestureRecognizer(target: controller, action: #selector(FeedController.showProfile))
         self.pinpost = pinpost
         super.init(frame: frame)
         
-        let title = pinpost.title
-        let description = pinpost.pinpostDescription
-        let creator = pinpost.creator!
-        let username = creator.username
-        var name: String? = nil
-        if let firstName = creator.firstName,
-            let lastName = creator.lastName {
-            name = "\(firstName) \(lastName)"
-        } else if let firstName = creator.firstName {
-            name = firstName
-        } else if let lastName = creator.lastName {
-            name = lastName
-        }
         let hasThumbnail = pinpost.images.count > 0
         self.hasThumbnail = hasThumbnail
-        self.setupFeedInfoView(title: title, description: description,
-                               name: name, username: username)
+        self.setupFeedInfoView(pinpost: pinpost)
         
         if hasThumbnail {
             self.setupThumbnailView()
@@ -91,16 +79,13 @@ class FeedView: UIView {
         super.init(coder: aDecoder)
     }
     
-    func setupFeedInfoView(title: String, description: String,
-                           name: String? = nil, username: String) {
+    func setupFeedInfoView(pinpost: Pinpost) {
         let width = self.frame.width
         let height = self.frame.height * FeedView.HEIGHT_OF_FEEDINFOVIEW
         let x: CGFloat = 0
         let y = self.frame.height - height
         let frame = CGRect(x: x, y: y, width: width, height: height)
-        feedInfoView = FeedInfoView(frame: frame, title: title,
-                                    description: description, name: name,
-                                    username: username)
+        feedInfoView = FeedInfoView(controller!, frame: frame, pinpost: pinpost)
         
         let shrunkenHeight = feedInfoView!.frame.height - feedInfoView!.maxHeight
         let newY = feedInfoView!.frame.origin.y + shrunkenHeight

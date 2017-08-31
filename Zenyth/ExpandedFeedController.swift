@@ -14,6 +14,10 @@ class ExpandedFeedController: HomeController {
     var expandedFeedView: ExpandedFeedView!
     var pinpostId: UInt32!
     var pinpost: Pinpost?
+    var commentCreateView: CommentCreateView?
+    var defaultFrame: CGRect?
+    
+    static let COMMENT_CREATE_VIEW_HEIGHT: CGFloat = 0.07
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +25,11 @@ class ExpandedFeedController: HomeController {
         toolbar?.homeButton?.addTarget(self, action: #selector(transitionToFeed), for: .touchUpInside)
         toolbar?.notificationButton?.addTarget(self, action: #selector(transitionToNotification), for: .touchUpInside)
         toolbar?.profileButton?.addTarget(self, action: #selector(transitionToProfile), for: .touchUpInside)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
+                                               name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
+                                               name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     override func setupViews() {
@@ -37,6 +46,21 @@ class ExpandedFeedController: HomeController {
         transition.type = kCATransitionFromTop
         self.navigationController?.view.layer.add(transition, forKey: nil)
         self.navigationController?.popViewController(animated: false)
+    }
+    
+    func setupCommentCreateView() {
+        let width = view.frame.width
+        let height = view.frame.height * ExpandedFeedController.COMMENT_CREATE_VIEW_HEIGHT
+        let x = CGFloat(0)
+        let y = toolbar!.frame.origin.y - height
+        let frame = CGRect(x: x, y: y, width: width, height: height)
+        self.defaultFrame = frame
+        commentCreateView = CommentCreateView(frame: frame)
+        
+        commentCreateView?.postButton.addTarget(self, action: #selector(createComment),
+                                                for: .touchUpInside)
+        
+        view.addSubview(commentCreateView!)
     }
     
     func readPinpost(handler: @escaping (Pinpost) -> Void) {
@@ -62,7 +86,12 @@ class ExpandedFeedController: HomeController {
                 
                 self.renderProfileImage(user: pinpost.creator!)
                 self.renderPinpostImages(images: pinpost.images)
-                self.renderCommentProfileImages()
+                
+                self.setupCommentCreateView()
+                self.hideKeyboardWhenTappedAround()
+                
+                let commentButton = self.expandedFeedView.feedInfoView.actionBar?.commentButton
+                commentButton?.addTarget(self, action: #selector(self.showKeyboard), for: .touchUpInside)
         })
     }
     
@@ -85,11 +114,38 @@ class ExpandedFeedController: HomeController {
         }
     }
     
-    func renderCommentProfileImages() {
-        let commentsView = expandedFeedView.commentsView
-        let commentCells = commentsView!.commentCells
-        for commentCell in commentCells {
-            commentCell.renderProfilePic()
+    func createComment(_ button: UIButton) {
+        if let text = commentCreateView?.textfield.text {
+            CommentManager().createComment(onPinpostId: pinpostId,
+                                           text: text,
+                                           onSuccess:
+                { comment in
+                    self.expandedFeedView.addComment(comment: comment)
+                    self.commentCreateView?.textfield.resignFirstResponder()
+                    self.commentCreateView?.textfield.text = ""
+            })
         }
+    }
+    
+    override func hideKeyboardWhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = true
+        expandedFeedView.addGestureRecognizer(tap)
+    }
+    
+    func showKeyboard() {
+        commentCreateView?.textfield.becomeFirstResponder()
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        let frame = (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let newY = frame.origin.y - defaultFrame!.height
+        let newFrame = CGRect(x: defaultFrame!.origin.x, y: newY,
+                              width: defaultFrame!.width, height: defaultFrame!.height)
+        commentCreateView!.frame = newFrame
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        commentCreateView!.frame = defaultFrame!
     }
 }

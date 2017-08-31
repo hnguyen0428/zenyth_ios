@@ -19,6 +19,7 @@ class ExpandedFeedView: UIScrollView {
     var returnButton: UIButton!
     
     var maxHeight: CGFloat = 0
+    var controller: UIViewController?
     
     // Constants for UI sizing
     static let CELL_HEIGHT: CGFloat = 0.08
@@ -30,6 +31,7 @@ class ExpandedFeedView: UIScrollView {
     static let WIDTH_OF_RETURN_BUTTON: CGFloat = 0.11
     
     init(controller: UIViewController, frame: CGRect, pinpost: Pinpost) {
+        self.controller = controller
         super.init(frame: frame)
         self.pinpost = pinpost
         
@@ -88,9 +90,7 @@ class ExpandedFeedView: UIScrollView {
         let y = imagesScroller.frame.maxY
         let frame = CGRect(x: x, y: y, width: width, height: height)
         
-        feedInfoView = FeedInfoView(frame: frame, title: pinpost.title,
-                                    description: pinpost.pinpostDescription,
-                                    username: pinpost.creator!.username)
+        feedInfoView = FeedInfoView(controller!, frame: frame, pinpost: pinpost)
         
         feedInfoView!.frame = CGRect(x: feedInfoView!.frame.origin.x,
                                      y: feedInfoView!.frame.origin.y,
@@ -124,6 +124,11 @@ class ExpandedFeedView: UIScrollView {
         returnButton.setImage(#imageLiteral(resourceName: "down_icon"), for: .normal)
         
         self.addSubview(returnButton)
+    }
+    
+    func addComment(comment: Comment) {
+        commentsView.append(comment: comment)
+        self.contentSize.height += self.frame.height * ExpandedFeedView.CELL_HEIGHT
     }
     
     required init?(coder aDecoder: NSCoder) {
