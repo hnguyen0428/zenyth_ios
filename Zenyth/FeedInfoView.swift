@@ -53,12 +53,7 @@ class FeedInfoView: UIView {
         
         // Resize
         let bottomGap = self.frame.height * FeedInfoView.GAP_B_BOTTOM_A_ACTIONBAR
-        let newHeight = maxHeight + bottomGap
-        
-        let shrunkenHeight = self.frame.height - newHeight
-        let newY = self.frame.origin.y + shrunkenHeight
-        self.frame = CGRect(x: self.frame.origin.x, y: newY,
-                            width: self.frame.width, height: newHeight)
+        maxHeight = maxHeight + bottomGap
     }
     
     required init?(coder aDecoder: NSCoder) {

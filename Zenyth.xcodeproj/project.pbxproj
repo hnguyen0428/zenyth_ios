@@ -106,6 +106,11 @@
 		47D838CC1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */; };
 		47D9ECB71F19755A00E3EEE4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECB61F19755A00E3EEE4 /* User.swift */; };
 		47D9ECC01F19E3D300E3EEE4 /* RegistrationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D9ECBF1F19E3D300E3EEE4 /* RegistrationModule.swift */; };
+		47EBDFBA1F57809B002099E2 /* ExpandedFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EBDFB91F57809B002099E2 /* ExpandedFeedView.swift */; };
+		47EBDFBC1F578738002099E2 /* ImagesScroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EBDFBB1F578738002099E2 /* ImagesScroller.swift */; };
+		47EBDFBE1F57877A002099E2 /* CommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EBDFBD1F57877A002099E2 /* CommentsView.swift */; };
+		47EBDFC01F578BD0002099E2 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EBDFBF1F578BD0002099E2 /* CommentCell.swift */; };
+		47EBDFC21F579CA9002099E2 /* ExpandedFeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EBDFC11F579CA9002099E2 /* ExpandedFeedController.swift */; };
 		47FE3D051F47AFD300EC62EC /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE3D041F47AFD300EC62EC /* ProfileView.swift */; };
 		47FE3D081F47B63100EC62EC /* UIColor+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE3D071F47B63100EC62EC /* UIColor+Helpers.swift */; };
 		47FE3D0A1F47B66900EC62EC /* UIView+Anchors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE3D091F47B66900EC62EC /* UIView+Anchors.swift */; };
@@ -240,6 +245,11 @@
 		47D838CB1F10A99F000E9668 /* ModelViewController+KeyboardHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModelViewController+KeyboardHandler.swift"; sourceTree = "<group>"; };
 		47D9ECB61F19755A00E3EEE4 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		47D9ECBF1F19E3D300E3EEE4 /* RegistrationModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationModule.swift; sourceTree = "<group>"; };
+		47EBDFB91F57809B002099E2 /* ExpandedFeedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandedFeedView.swift; sourceTree = "<group>"; };
+		47EBDFBB1F578738002099E2 /* ImagesScroller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagesScroller.swift; sourceTree = "<group>"; };
+		47EBDFBD1F57877A002099E2 /* CommentsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsView.swift; sourceTree = "<group>"; };
+		47EBDFBF1F578BD0002099E2 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
+		47EBDFC11F579CA9002099E2 /* ExpandedFeedController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandedFeedController.swift; sourceTree = "<group>"; };
 		47FE3D041F47AFD300EC62EC /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		47FE3D071F47B63100EC62EC /* UIColor+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Helpers.swift"; sourceTree = "<group>"; };
 		47FE3D091F47B66900EC62EC /* UIView+Anchors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Anchors.swift"; sourceTree = "<group>"; };
@@ -412,12 +422,13 @@
 		47B088DA1F4CFBE900F4E4BB /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				47D683FD1F4E83C200F8EA23 /* PinpostForm */,
-				478006321F218A380064F9E7 /* FeedController.swift */,
-				47B088DB1F4CFCC500F4E4BB /* FeedView.swift */,
-				47C6CB331F4D058700053218 /* FeedInfoView.swift */,
-				47C6CB351F4D0F8A00053218 /* PostActionBar.swift */,
 				47C6CB371F4D75B000053218 /* FeedScrollView.swift */,
+				47C6CB351F4D0F8A00053218 /* PostActionBar.swift */,
+				47C6CB331F4D058700053218 /* FeedInfoView.swift */,
+				47B088DB1F4CFCC500F4E4BB /* FeedView.swift */,
+				478006321F218A380064F9E7 /* FeedController.swift */,
+				47EBDFB81F578065002099E2 /* ExpandedFeed */,
+				47D683FD1F4E83C200F8EA23 /* PinpostForm */,
 			);
 			name = Feed;
 			sourceTree = "<group>";
@@ -538,6 +549,18 @@
 				47C622CC1F0A341A003BBC16 /* Main.storyboard */,
 			);
 			name = RegisterControllers;
+			sourceTree = "<group>";
+		};
+		47EBDFB81F578065002099E2 /* ExpandedFeed */ = {
+			isa = PBXGroup;
+			children = (
+				47EBDFB91F57809B002099E2 /* ExpandedFeedView.swift */,
+				47EBDFBB1F578738002099E2 /* ImagesScroller.swift */,
+				47EBDFBD1F57877A002099E2 /* CommentsView.swift */,
+				47EBDFBF1F578BD0002099E2 /* CommentCell.swift */,
+				47EBDFC11F579CA9002099E2 /* ExpandedFeedController.swift */,
+			);
+			name = ExpandedFeed;
 			sourceTree = "<group>";
 		};
 		47FE3D061F47B61900EC62EC /* UIHelpers */ = {
@@ -887,8 +910,10 @@
 				47D683F41F4D90F400F8EA23 /* Paginate.swift in Sources */,
 				47D683F61F4E4D9900F8EA23 /* ImageGalleryController.swift in Sources */,
 				470A17ED1F3E93310067046F /* PasswordController.swift in Sources */,
+				47EBDFBA1F57809B002099E2 /* ExpandedFeedView.swift in Sources */,
 				47C6CB381F4D75B000053218 /* FeedScrollView.swift in Sources */,
 				477FF69A1F39D99900FD66B4 /* RegistrationManagerProtocol.swift in Sources */,
+				47EBDFBE1F57877A002099E2 /* CommentsView.swift in Sources */,
 				47C9D4471F3EC08500E93079 /* UIExtensions.swift in Sources */,
 				471280941F398576006FE796 /* RelationshipManagerProtocol.swift in Sources */,
 				471280961F398876006FE796 /* ImageManagerProtocol.swift in Sources */,
@@ -904,6 +929,7 @@
 				47CB2D6B1F4FA22500C8B59E /* PHAsset+getURL.swift in Sources */,
 				47A745E91F16F7D000A88D5D /* ModelViewController.swift in Sources */,
 				47A488E01F22C96D006B0453 /* NotificationController.swift in Sources */,
+				47EBDFBC1F578738002099E2 /* ImagesScroller.swift in Sources */,
 				4712809C1F398D30006FE796 /* LikeManagerProtocol.swift in Sources */,
 				47C622F71F0A347F003BBC16 /* UsernameController.swift in Sources */,
 				471280AC1F3992FC006FE796 /* ImageManager.swift in Sources */,
@@ -911,10 +937,12 @@
 				47D683FF1F4E854100F8EA23 /* PinpostFormView.swift in Sources */,
 				47A9024C1F0B1F4400A1CEE8 /* LoginController.swift in Sources */,
 				471280861F3977D3006FE796 /* PinpostManagerProtocol.swift in Sources */,
+				47EBDFC21F579CA9002099E2 /* ExpandedFeedController.swift in Sources */,
 				47FE3D101F47CD0100EC62EC /* InfoAsset.swift in Sources */,
 				47C6CB341F4D058700053218 /* FeedInfoView.swift in Sources */,
 				471280981F3989CF006FE796 /* CommentManagerProtocol.swift in Sources */,
 				47C6CB361F4D0F8A00053218 /* PostActionBar.swift in Sources */,
+				47EBDFC01F578BD0002099E2 /* CommentCell.swift in Sources */,
 				47D683FC1F4E837B00F8EA23 /* PinpostFormController.swift in Sources */,
 				471280A01F3992C6006FE796 /* UserManager.swift in Sources */,
 				477FF6981F39D98C00FD66B4 /* LoginManagerProtocol.swift in Sources */,

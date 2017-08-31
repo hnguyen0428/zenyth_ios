@@ -96,4 +96,14 @@ extension UIView {
         maskLayer.path = maskPath.cgPath
         self.layer.mask = maskLayer
     }
+    
+    func topBorder(color: CGColor, width: CGFloat) {
+        let border = CALayer()
+        border.frame = CGRect(x: 0, y: 0,
+                              width:  self.frame.size.width,
+                              height: width)
+        
+        border.backgroundColor = color
+        self.layer.addSublayer(border)
+    }
 }

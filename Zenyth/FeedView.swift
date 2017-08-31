@@ -102,6 +102,12 @@ class FeedView: UIView {
                                     description: description, name: name,
                                     username: username)
         
+        let shrunkenHeight = feedInfoView!.frame.height - feedInfoView!.maxHeight
+        let newY = feedInfoView!.frame.origin.y + shrunkenHeight
+        feedInfoView!.frame = CGRect(x: feedInfoView!.frame.origin.x, y: newY,
+                                     width: feedInfoView!.frame.width,
+                                     height: feedInfoView!.maxHeight)
+        
         self.addSubview(feedInfoView!)
     }
     
