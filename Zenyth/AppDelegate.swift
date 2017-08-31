@@ -59,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         GMSServices.provideAPIKey("AIzaSyDbce3U3e0teGEnQM54kBu_r2kDGEGcOz0")
         GMSPlacesClient.provideAPIKey("AIzaSyAM71tm5Rgc1Z7TbIOqHhQvESu7gjqmcFI")
         
-        var navbarAppearance = UINavigationBar.appearance()
+        let navbarAppearance = UINavigationBar.appearance()
         navbarAppearance.tintColor = UIColor.white
         navbarAppearance.barTintColor = UIColor.white
         
