@@ -35,7 +35,6 @@ class FeedView: UIView {
     
     init(_ controller: UIViewController, frame: CGRect, pinpost: Pinpost) {
         self.controller = controller
-        tgExpandPost = UITapGestureRecognizer(target: controller, action: #selector(FeedController.expandPost))
         tgProfile = UITapGestureRecognizer(target: controller, action: #selector(FeedController.showProfile))
         self.pinpost = pinpost
         super.init(frame: frame)
@@ -70,6 +69,7 @@ class FeedView: UIView {
             imageContainer.frame = newProfileFrame
         }
         
+        tgExpandPost = UITapGestureRecognizer(target: self, action: #selector(self.expandPinpost))
         feedInfoView!.descriptionText!.addGestureRecognizer(tgExpandPost)
         profilePicView!.addGestureRecognizer(tgProfile)
         profilePicView!.isUserInteractionEnabled = true
@@ -136,6 +136,22 @@ class FeedView: UIView {
     
     func setProfileImage(image: UIImage) {
         self.profilePicView?.image = image
+    }
+    
+    func expandPinpost(_ tg: UITapGestureRecognizer) {
+        let controller = ExpandedFeedController()
+        print(pinpost.id)
+        controller.pinpostId = pinpost.id
+        
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        transition.type = kCATransitionFromBottom
+        
+        if let nc = self.window?.rootViewController as? UINavigationController {
+            nc.view.layer.add(transition, forKey: nil)
+            nc.pushViewController(controller, animated: false)
+        }
     }
     
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {

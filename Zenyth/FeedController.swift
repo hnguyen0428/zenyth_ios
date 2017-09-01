@@ -380,23 +380,6 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
     }
     
     /**
-     Expand the post into an expanded feed view
-     */
-    func expandPost(_ sender: UITapGestureRecognizer) {
-        let controller = ExpandedFeedController()
-        let currentFeedView = feedScrollView!.feedViews[feedScrollView!.currentPinpostIndex]
-        let pinpost = currentFeedView.pinpost
-        controller.pinpostId = pinpost!.id
-        
-        let transition = CATransition()
-        transition.duration = 0.5
-        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        transition.type = kCATransitionFromBottom
-        self.navigationController?.view.layer.add(transition, forKey: nil)
-        self.navigationController?.pushViewController(controller, animated: false)
-    }
-    
-    /**
      Show the profile of the creator of this post
      */
     func showProfile(_ sender: UITapGestureRecognizer) {
