@@ -31,5 +31,6 @@ class PinpostForm {
         description = String()
         privacy = String()
         location = GMSAddress()
+        usePressedCoordinate = true
     }
 }

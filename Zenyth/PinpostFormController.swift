@@ -17,7 +17,7 @@ class PinpostFormController: UIViewController, UITextViewDelegate,
     
     var pinpostFormView: PinpostFormView!
     
-    let privacyOptions = ["", "Only for yourself", "For you and your friends",
+    let privacyOptions = ["", "Only for yourself", "For you and your followers",
                           "Everyone"]
     
     override func viewDidLoad() {
@@ -179,7 +179,7 @@ class PinpostFormController: UIViewController, UITextViewDelegate,
         case 1:
             PinpostForm.shared.privacy = "self"
         case 2:
-            PinpostForm.shared.privacy = "friends"
+            PinpostForm.shared.privacy = "followers"
         case 3:
             PinpostForm.shared.privacy = "public"
         default:
