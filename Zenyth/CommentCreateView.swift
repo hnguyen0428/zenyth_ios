@@ -14,7 +14,7 @@ import UIKit
  */
 class CommentCreateView: UIView {
     
-    var textfield: UITextField!
+    var textfield: PaddedTextField!
     var postButton: UIButton!
     
     static let GAP: CGFloat = 0.03
@@ -43,11 +43,12 @@ class CommentCreateView: UIView {
         let x = self.frame.width * CommentCreateView.GAP
         let y = self.frame.height * CommentCreateView.TOP_INSET
         let frame = CGRect(x: x, y: y, width: width, height: height)
-        textfield = UITextField(frame: frame)
+        textfield = PaddedTextField(frame: frame)
         textfield.placeholder = "Add a comment ..."
         textfield.layer.borderColor = UIColor.darkGray.cgColor
         textfield.layer.borderWidth = 1.0
         textfield.layer.cornerRadius = 10.0
+        
         self.backgroundColor = .white
         self.addSubview(textfield)
     }

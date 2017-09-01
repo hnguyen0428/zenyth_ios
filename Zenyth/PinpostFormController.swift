@@ -191,11 +191,6 @@ class PinpostFormController: UIViewController, UITextViewDelegate,
     
     // Handle the user's selection.
     public func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-        // Print place info to the console.
-        print("Place name: \(place.name)")
-        print("Place address: \(place.formattedAddress)")
-        print("Place attributions: \(place.attributions)")
-        
         pinpostFormView.locationField.text = place.name
         PinpostForm.shared.coordinate = place.coordinate
         PinpostForm.shared.usePressedCoordinate = false
