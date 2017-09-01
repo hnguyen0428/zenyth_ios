@@ -112,6 +112,8 @@
 		47EBDFC01F578BD0002099E2 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EBDFBF1F578BD0002099E2 /* CommentCell.swift */; };
 		47EBDFC21F579CA9002099E2 /* ExpandedFeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EBDFC11F579CA9002099E2 /* ExpandedFeedController.swift */; };
 		47EBDFC41F57BA69002099E2 /* CommentCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EBDFC31F57BA69002099E2 /* CommentCreateView.swift */; };
+		47EBDFC61F58FE22002099E2 /* PinThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EBDFC51F58FE22002099E2 /* PinThumbnail.swift */; };
+		47EBDFC81F5918B0002099E2 /* PaddedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EBDFC71F5918B0002099E2 /* PaddedTextField.swift */; };
 		47FE3D051F47AFD300EC62EC /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE3D041F47AFD300EC62EC /* ProfileView.swift */; };
 		47FE3D081F47B63100EC62EC /* UIColor+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE3D071F47B63100EC62EC /* UIColor+Helpers.swift */; };
 		47FE3D0A1F47B66900EC62EC /* UIView+Anchors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE3D091F47B66900EC62EC /* UIView+Anchors.swift */; };
@@ -252,6 +254,8 @@
 		47EBDFBF1F578BD0002099E2 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		47EBDFC11F579CA9002099E2 /* ExpandedFeedController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandedFeedController.swift; sourceTree = "<group>"; };
 		47EBDFC31F57BA69002099E2 /* CommentCreateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCreateView.swift; sourceTree = "<group>"; };
+		47EBDFC51F58FE22002099E2 /* PinThumbnail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinThumbnail.swift; sourceTree = "<group>"; };
+		47EBDFC71F5918B0002099E2 /* PaddedTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddedTextField.swift; sourceTree = "<group>"; };
 		47FE3D041F47AFD300EC62EC /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		47FE3D071F47B63100EC62EC /* UIColor+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Helpers.swift"; sourceTree = "<group>"; };
 		47FE3D091F47B66900EC62EC /* UIView+Anchors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Anchors.swift"; sourceTree = "<group>"; };
@@ -411,6 +415,7 @@
 				47A488E11F22C97B006B0453 /* ProfileController.swift */,
 				47FE3D041F47AFD300EC62EC /* ProfileView.swift */,
 				47FE3D0D1F47CCE100EC62EC /* PinView.swift */,
+				47EBDFC51F58FE22002099E2 /* PinThumbnail.swift */,
 				47FE3D0F1F47CD0100EC62EC /* InfoAsset.swift */,
 				477D94301F47D1FB0043A957 /* UserInfoBar.swift */,
 				47B088CB1F48EFA500F4E4BB /* EditProfileController.swift */,
@@ -442,6 +447,7 @@
 				477D94321F4808160043A957 /* MapView.swift */,
 				47B088D41F49255A00F4E4BB /* ImageTextFieldView.swift */,
 				47EBDFC31F57BA69002099E2 /* CommentCreateView.swift */,
+				47EBDFC71F5918B0002099E2 /* PaddedTextField.swift */,
 			);
 			name = UIObjects;
 			sourceTree = "<group>";
@@ -893,7 +899,9 @@
 				47A488E41F22C98C006B0453 /* HomeController.swift in Sources */,
 				470A17EF1F3E93470067046F /* PersonalInfoController.swift in Sources */,
 				47FE3D0E1F47CCE100EC62EC /* PinView.swift in Sources */,
+				47EBDFC81F5918B0002099E2 /* PaddedTextField.swift in Sources */,
 				47D9ECC01F19E3D300E3EEE4 /* RegistrationModule.swift in Sources */,
+				47EBDFC61F58FE22002099E2 /* PinThumbnail.swift in Sources */,
 				471280881F397EC5006FE796 /* Comment.swift in Sources */,
 				4712808E1F39841A006FE796 /* Like.swift in Sources */,
 				471280A41F3992D8006FE796 /* CommentManager.swift in Sources */,

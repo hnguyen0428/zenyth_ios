@@ -9,6 +9,9 @@
 import Foundation
 import UIKit
 
+/**
+ Each of comment cell
+ */
 class CommentCell: UIView {
     
     var profilePicView: UIImageView!
@@ -55,6 +58,8 @@ class CommentCell: UIView {
         let frame = CGRect(x: x, y: y, width: width, height: height)
         
         profilePicView = UIImageView(frame: frame)
+        
+        // Setting the default profile image
         profilePicView.image = #imageLiteral(resourceName: "default_profile")
         let container = profilePicView.roundedImageWithShadow(frame: frame)
         self.addSubview(container)
@@ -98,7 +103,4 @@ class CommentCell: UIView {
         }
     }
     
-    func setProfilePic(image: UIImage) {
-        self.profilePicView.image = image
-    }
 }

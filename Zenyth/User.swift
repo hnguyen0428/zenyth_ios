@@ -81,6 +81,19 @@ struct User : APIObject {
         ]
     }
     
+    func name() -> String? {
+        var name: String? = nil
+        if let firstName = self.firstName,
+            let lastName = self.lastName {
+            name = "\(firstName) \(lastName)"
+        } else if let firstName = self.firstName {
+            name = firstName
+        } else if let lastName = self.lastName {
+            name = lastName
+        }
+        return name
+    }
+    
     var description: String {
         return String(describing: toJSON())
     }

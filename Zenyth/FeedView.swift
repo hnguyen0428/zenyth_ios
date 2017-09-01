@@ -45,13 +45,13 @@ class FeedView: UIView {
         self.setupFeedInfoView(pinpost: pinpost)
         
         if hasThumbnail {
-            self.setupThumbnailView()
-            _ = self.setupProfilePic()
+            self.setupThumbnailView(image: pinpost.images.first!)
+            _ = self.setupProfilePic(user: pinpost.creator!)
             self.topRounded(radius: FeedView.ROUNDED_TOP_RADIUS)
             self.topY = frame.origin.y
         }
         else {
-            let imageContainer = self.setupProfilePic()
+            let imageContainer = self.setupProfilePic(user: pinpost.creator!)
             let extraHeight = profilePicView!.frame.height/2
             
             let newHeight = feedInfoView!.frame.height + extraHeight
@@ -96,7 +96,7 @@ class FeedView: UIView {
         self.addSubview(feedInfoView!)
     }
     
-    func setupThumbnailView() {
+    func setupThumbnailView(image: Image) {
         let width = self.frame.width
         let height = self.frame.height - feedInfoView!.frame.height
         let y: CGFloat = 0
@@ -106,11 +106,12 @@ class FeedView: UIView {
         thumbnailView?.contentMode = .scaleAspectFill
         thumbnailView?.clipsToBounds = true
         thumbnailView?.isUserInteractionEnabled = true
+        thumbnailView?.imageFromUrl(withUrl: image.url)
         
         self.addSubview(thumbnailView!)
     }
     
-    func setupProfilePic() -> UIView {
+    func setupProfilePic(user: User) -> UIView {
         let width = self.frame.width * FeedView.PROFILE_PIC_SIZE
         let height = width
         let margin = self.frame.width * FeedView.MARGIN
@@ -118,6 +119,12 @@ class FeedView: UIView {
         let y = feedInfoView!.frame.origin.y - height/2
         let frame = CGRect(x: x, y: y, width: width, height: height)
         profilePicView = UIImageView()
+        if let image = user.profilePicture {
+            profilePicView?.imageFromUrl(withUrl: image.url)
+        }
+        else {
+            profilePicView?.image = #imageLiteral(resourceName: "default_profile")
+        }
         let container = profilePicView!.roundedImageWithShadow(frame: frame)
         self.addSubview(container)
         return container

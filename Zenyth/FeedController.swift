@@ -55,6 +55,9 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
         self.setupFeedView()
     }
     
+    /**
+     Loading the map
+     */
     func loadMap() {
         mapView = MapView(frame: view.frame, controller: self)
         view.insertSubview(mapView!, at: 0)
@@ -101,6 +104,9 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
         view.insertSubview(feedDragger!, belowSubview: feedScrollView!)
     }
     
+    /**
+     Rendering the feed at the beginning
+     */
     func setupFeedView() {
         self.fetchFeed(handler:
             { pinposts in
@@ -108,49 +114,34 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
         })
     }
     
+    /**
+     Add FeedView objects to the FeedScrollView
+     */
     func renderFeedScrollView(pinposts: [Pinpost], handler: Handler? = nil) {
         // Set loading to true so that only one request to render the feed
         // can fire at a time
-        self.loading = true
+        
         let feedWidth = self.view.frame.width
         let feedHeight = self.view.frame.height * FeedController.HEIGHT_OF_FEED
         
-        // Dispatch group for handling completion
-        let group = DispatchGroup()
         for i in 0..<pinposts.count {
             let x = CGFloat(i + startIndex) * self.feedScrollView!.frame.width
             self.feedScrollView!.contentSize.width += self.feedScrollView!.frame.width
             let frame = CGRect(x: x, y: 0, width: feedWidth, height: feedHeight)
             
             let pinpost = pinposts[i]
-            let creator = pinpost.creator!
             
             let feedView = FeedView(self, frame: frame, pinpost: pinpost)
             self.feedScrollView?.addSubview(feedView)
             self.feedScrollView?.feedViews.append(feedView)
             
-            group.enter()
-            self.renderPinImage(pinpost: pinpost, handler:
-                { image in
-                    if let img = image {
-                        feedView.setThumbnailImage(image: img)
-                    }
-                    group.leave()
-            })
-            
-            group.enter()
-            self.renderProfileImage(creator: creator, handler:
-                { image in
-                    feedView.setProfileImage(image: image)
-                    group.leave()
-            })
         }
-        group.notify(queue: .main) {
-            self.loading = false
-            self.startIndex += pinposts.count
-        }
+        self.startIndex += pinposts.count
     }
     
+    /**
+     Render the next page of pinposts
+     */
     func loadNextPage() {
         let scrollView = feedScrollView!
         if scrollView.currentPinpostIndex == scrollView.feedViews.count - 1 {
@@ -161,6 +152,9 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
         }
     }
     
+    /**
+     Handling pin snapping while scrolling
+     */
     func snapToPin(_ sender: UIPanGestureRecognizer) {
         let scrollView = feedScrollView!
         
@@ -286,12 +280,16 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
         }
     }
     
-    /** Used to prevent deceleration animation
+    /** 
+     Used to prevent deceleration animation
      */
     func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
         scrollView.setContentOffset(scrollView.contentOffset, animated: true)
     }
     
+    /**
+     Get more pinposts on the next page
+     */
     func fetchNextPage(handler: PinpostsCallback? = nil) {
         if let url = paginateObject?.nextPageUrl {
             PinpostManager().fetchPinposts(fromURL: url,
@@ -307,6 +305,9 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
         }
     }
     
+    /**
+     Fetch the previous page of pinposts
+     */
     func fetchPrevPage(handler: PinpostsCallback? = nil) {
         if let url = paginateObject?.prevPageUrl {
             PinpostManager().fetchPinposts(fromURL: url,
@@ -322,7 +323,9 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
         }
     }
     
-    
+    /**
+     Fetching the pinposts
+     */
     func fetchFeed(handler: PinpostsCallback? = nil) {
         PinpostManager().fetchPinpostsFeed(paginate: FeedController.paginate,
                                            scope: "public",
@@ -333,40 +336,9 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
         })
     }
     
-    func renderProfileImage(creator: User, handler: @escaping (UIImage) -> Void) {
-        if let profilePic = creator.profilePicture {
-            let url = profilePic.getURL(size: "medium")
-            ImageManager().getImageData(withUrl: url,
-                                        onSuccess:
-                { data in
-                    if let image = UIImage(data: data) {
-                        handler(image)
-                    }
-                    else {
-                        handler(#imageLiteral(resourceName: "default_profile"))
-                    }
-            })
-        }
-        else {
-            handler(#imageLiteral(resourceName: "default_profile"))
-        }
-        
-    }
-    
-    func renderPinImage(pinpost: Pinpost, handler: @escaping (UIImage?) -> Void) {
-        if let image = pinpost.images.first {
-            let url = image.getURL()
-            ImageManager().getImageData(withUrl: url,
-                                        onSuccess:
-                { data in
-                    handler(UIImage(data: data))
-            })
-        }
-        else {
-            handler(nil)
-        }
-    }
-    
+    /**
+     Closing/Showing the feed
+     */
     func toggleFeed(_ button: UIButton) {
         if feedScrollView?.feedViews.count == 0 { // if there is no pinpost do nothing
             return
@@ -407,6 +379,9 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
         }
     }
     
+    /**
+     Expand the post into an expanded feed view
+     */
     func expandPost(_ sender: UITapGestureRecognizer) {
         let controller = ExpandedFeedController()
         let currentFeedView = feedScrollView!.feedViews[feedScrollView!.currentPinpostIndex]
@@ -421,6 +396,9 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
         self.navigationController?.pushViewController(controller, animated: false)
     }
     
+    /**
+     Show the profile of the creator of this post
+     */
     func showProfile(_ sender: UITapGestureRecognizer) {
         let currentFeedView = feedScrollView!.feedViews[feedScrollView!.currentPinpostIndex]
         let pinpost = currentFeedView.pinpost
@@ -431,6 +409,9 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
         self.navigationController?.pushViewController(profileController, animated: true)
     }
     
+    /**
+     Handling long press
+     */
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
         PinpostForm.shared.pressedCoordinate = coordinate
         let geocoder = GMSGeocoder()

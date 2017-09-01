@@ -62,6 +62,9 @@ class ProfileView: UIView {
     static let TOP_PINS_FONT: String = "MarkerFelt-Wide"
     static let TOP_PINS_FONT_SIZE: CGFloat = 20.0
     
+    // Pin view
+    static let HEIGHT_OF_PIN_VIEW: CGFloat = 0.15
+    
     // User info bar
     static let HEIGHT_OF_BAR: CGFloat = 0.08
     static let WIDTH_OF_BAR: CGFloat = 0.75
@@ -77,14 +80,12 @@ class ProfileView: UIView {
     var requestLoadingMask: UIView?
     var indicator: UIActivityIndicatorView?
     
-    init(_ controller: UIViewController, frame: CGRect, name: String? = nil, bio: String? = nil,
-         username: String, pinpostImages: [UIImage]? = nil, followers: UInt32, likes: UInt32,
-         numberOfPinposts: UInt32, profilePicture: UIImage, foreign: Bool = false,
-         followStatus: String? = nil) {
+    init(_ controller: UIViewController, frame: CGRect, user: User,
+         foreign: Bool = false, followStatus: String? = nil) {
         super.init(frame: frame)
         
-        self.setupProfilePicture(profileImage: profilePicture)
-        self.setupUsernameLabel(username: username)
+        self.setupProfilePicture(user: user)
+        self.setupUsernameLabel(username: user.username)
         
         self.setupActionButton(foreign: foreign, followStatus: followStatus,
                                controller: controller)
@@ -92,20 +93,20 @@ class ProfileView: UIView {
             self.setupSettingsButton()
         }
         
-        if name != nil {
-            self.setupNameLabel(name: name!)
+        if let name = user.name() {
+            self.setupNameLabel(name: name)
         }
-        if bio != nil {
-            self.setupBioText(bio: bio!)
+        if let bio = user.biography {
+            self.setupBioText(bio: bio)
         }
-        if let images = pinpostImages {
+        if user.pinposts.count > 0 {
             self.setupTopPinLabel()
-            self.setupPinView(images: images)
+            self.setupPinView(pinposts: user.pinposts)
         }
-        self.setupUserInfoBar(followers: followers, likes: likes,
-                              numberOfPinposts: numberOfPinposts)
+        self.setupUserInfoBar(followers: user.followers, likes: user.likes!,
+                              numberOfPinposts: user.numberOfPinposts!)
         
-
+        
         maxHeight = maxHeight + 15.0
         let size = CGSize(width: self.frame.width, height: maxHeight)
         self.frame = CGRect(origin: self.frame.origin, size: size)
@@ -118,7 +119,7 @@ class ProfileView: UIView {
         
         if !foreign {
             actionButton?.addTarget(controller, action: #selector(ProfileController.transitionToEditProfile),
-                                         for: .touchUpInside)
+                                    for: .touchUpInside)
         }
     }
     
@@ -126,14 +127,20 @@ class ProfileView: UIView {
         super.init(coder: aDecoder)
     }
     
-    func setupProfilePicture(profileImage: UIImage) {
+    func setupProfilePicture(user: User) {
         let heightPicture = self.frame.height * ProfileView.HEIGHT_OF_PICTURE
         let widthPicture = heightPicture
         let profilePictureFrame = CGRect(x: 0, y: 0, width: widthPicture,
                                          height: heightPicture)
         
         self.profilePicture = UIImageView()
-        profilePicture!.image = profileImage
+        if let image = user.profilePicture {
+            profilePicture?.imageFromUrl(withUrl: image.url)
+        }
+        else {
+            profilePicture?.image = #imageLiteral(resourceName: "default_profile")
+        }
+        
         let container = profilePicture!.roundedImageWithShadow(frame: profilePictureFrame)
         self.addSubview(container)
         
@@ -313,15 +320,12 @@ class ProfileView: UIView {
         maxHeight = maxHeight + height
     }
     
-    func setupPinView(images: [UIImage]) {
-        pinView = PinView(view: self)
+    func setupPinView(pinposts: [Pinpost]) {
+        let height = self.frame.width * ProfileView.HEIGHT_OF_PIN_VIEW
+        let width = self.frame.width
+        let frame = CGRect(x: 0, y: 0, width: width, height: height)
         
-        for i in 0..<images.count {
-            if i > 4 {
-                break
-            }
-            pinView?.pinImages[i].image = images[i]
-        }
+        pinView = PinView(frame: frame, pinposts: pinposts)
         
         self.addSubview(pinView!)
         pinView?.anchor(topPinLabel?.bottomAnchor, left: nil, bottom: nil,
@@ -369,12 +373,6 @@ class ProfileView: UIView {
                             heightConstant: height)
         
         maxHeight = maxHeight + height + topConstant
-    }
-    
-    func setImages(images: [UIImage]) {
-        for i in 0..<images.count {
-            pinView?.pinImages[i].image = images[i]
-        }
     }
     
 }

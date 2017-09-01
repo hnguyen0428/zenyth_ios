@@ -13,8 +13,6 @@ class ProfileController: HomeController {
     var profileView: ProfileView?
     var mapView: MapView?
     var user: User? = nil
-    var profileImage: UIImage? = nil
-    var pinpostImages: [UIImage]? = nil
     var userId: UInt32 = 0
     var shouldSetProfileSelected: Bool = false
     
@@ -58,35 +56,6 @@ class ProfileController: HomeController {
                 self.navigationItem.title = user.username
                 let group = DispatchGroup()
                 
-                if user.profilePicture != nil {
-                    group.enter()
-                    self.renderProfileImage(handler:
-                        { image in
-                            group.leave()
-                            self.profileImage = image
-                    })
-                } else {
-                    let defaultProfile = #imageLiteral(resourceName: "default_profile")
-                    self.profileImage = defaultProfile
-                }
-                
-                var pinImages: [UIImage]? = nil
-                if user.pinposts.count > 0 {
-                    // Used to send in to the constructor of ProfileView so that
-                    // it creates the pin view
-                    pinImages = [UIImage]()
-                }
-                
-                var name: String? = nil
-                if let firstName = user.firstName,
-                    let lastName = user.lastName {
-                    name = "\(firstName) \(lastName)"
-                } else if let firstName = user.firstName {
-                    name = firstName
-                } else if let lastName = user.lastName {
-                    name = lastName
-                }
-                
                 var foreign = false
                 var status: String? = nil
                 if loggedInUserId != self.userId {
@@ -117,25 +86,9 @@ class ProfileController: HomeController {
                     }
                     
                     self.profileView = ProfileView(self, frame: frame,
-                                                   name: name,
-                                                   bio: user.biography,
-                                                   username: user.username,
-                                                   pinpostImages: pinImages,
-                                                   followers: user.followers, likes: user.likes!,
-                                                   numberOfPinposts: user.numberOfPinposts!,
-                                                   profilePicture: self.profileImage!,
-                                                   foreign: foreign, followStatus: status)
+                                                   user: user, foreign: foreign,
+                                                   followStatus: status)
                     
-                    // Detecting if the images have already been rendered before
-                    if self.pinpostImages == nil {
-                        self.renderPinImages(pinposts: user.pinposts, handler:
-                            { images in
-                                self.pinpostImages = images
-                                self.profileView?.setImages(images: self.pinpostImages!)
-                        })
-                    } else {
-                        self.profileView?.setImages(images: self.pinpostImages!)
-                    }
                     
                     self.view.addSubview(self.profileView!)
                     self.requestDoneLoading(view: self.view, indicator: indicator)
@@ -154,53 +107,6 @@ class ProfileController: HomeController {
                     self.user = user
                     handler(user)
             })
-        }
-    }
-    
-    func renderProfileImage(handler: @escaping (UIImage) -> Void) {
-        if profileImage == nil {
-            ImageManager().getImageData(withUrl: user!.profilePicture!.getURL(size: "small"),
-                                        onSuccess:
-                { data in
-                    handler(UIImage(data: data)!)
-            })
-        } else {
-            self.profileView?.profilePicture!.image = profileImage!
-            handler(profileImage!)
-        }
-    }
-    
-    func renderPinImages(pinposts: [Pinpost], handler: @escaping ([UIImage]) -> Void) {
-        var images: [Image] = [Image]()
-        var uiimages: [UIImage] = [UIImage](repeating: UIImage(), count: 5)
-        
-        for pinpost in pinposts {
-            if let image = pinpost.images.first {
-                images.append(image)
-            }
-        }
-        
-        let group = DispatchGroup()
-        
-        for i in 0..<images.count {
-            if i > 4 {
-                break
-            }
-            let url = images[i].getURL(size: "medium")
-            
-            group.enter()
-            ImageManager().getImageData(withUrl: url, onSuccess:
-                { data in
-                    let image = UIImage(data: data)
-                    if let img = image {
-                        uiimages[i] = img
-                    }
-                    group.leave()
-            })
-        }
-        
-        group.notify(queue: .main) {
-            handler(uiimages)
         }
     }
     
@@ -243,7 +149,7 @@ class ProfileController: HomeController {
         let controller = EditProfileController()
         self.navigationController?.pushViewController(controller, animated: true)
         controller.user = self.user
-        controller.profileImage = self.profileImage
+        controller.profileImage = self.profileView?.profilePicture?.image
     }
     
     func transitionToSettings() {

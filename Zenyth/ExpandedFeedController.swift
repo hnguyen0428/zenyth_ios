@@ -39,6 +39,9 @@ class ExpandedFeedController: HomeController {
         renderPinpostView()
     }
     
+    /**
+     Action for the button at the top to pop back to the previous page
+     */
     func popBack(_ pg: UIPanGestureRecognizer) {
         let transition = CATransition()
         transition.duration = 0.5
@@ -48,6 +51,9 @@ class ExpandedFeedController: HomeController {
         self.navigationController?.popViewController(animated: false)
     }
     
+    /**
+     Setting up the comment field at the bottom used to create a comment
+     */
     func setupCommentCreateView() {
         let width = view.frame.width
         let height = view.frame.height * ExpandedFeedController.COMMENT_CREATE_VIEW_HEIGHT
@@ -63,6 +69,9 @@ class ExpandedFeedController: HomeController {
         view.addSubview(commentCreateView!)
     }
     
+    /**
+     Network request for getting pinpost information
+     */
     func readPinpost(handler: @escaping (Pinpost) -> Void) {
         PinpostManager().readPinpostInfo(withPinpostId: self.pinpostId,
                                          onSuccess:
@@ -71,6 +80,9 @@ class ExpandedFeedController: HomeController {
         })
     }
     
+    /**
+     Render the whole expanded feed view
+     */
     func renderPinpostView() {
         self.readPinpost(handler:
             { pinpost in
@@ -84,7 +96,6 @@ class ExpandedFeedController: HomeController {
                 
                 self.view.addSubview(self.expandedFeedView)
                 
-                self.renderProfileImage(user: pinpost.creator!)
                 self.renderPinpostImages(images: pinpost.images)
                 
                 self.setupCommentCreateView()
@@ -95,12 +106,9 @@ class ExpandedFeedController: HomeController {
         })
     }
     
-    func renderProfileImage(user: User) {
-        if let image = user.profilePicture {
-            expandedFeedView.profilePicView.imageFromUrl(withUrl: image.getURL(size: "small"))
-        }
-    }
-    
+    /**
+     Rendering the images of the pinpost
+     */
     func renderPinpostImages(images: [Image]) {
         let imagesScroller = expandedFeedView.imagesScroller
         for image in images {
@@ -114,6 +122,9 @@ class ExpandedFeedController: HomeController {
         }
     }
     
+    /**
+     Network request for creating a comment
+     */
     func createComment(_ button: UIButton) {
         if let text = commentCreateView?.textfield.text {
             CommentManager().createComment(onPinpostId: pinpostId,
@@ -127,16 +138,25 @@ class ExpandedFeedController: HomeController {
         }
     }
     
+    /**
+     Hide the keyboard when tapped outside
+     */
     override func hideKeyboardWhenTappedAround() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = true
         expandedFeedView.addGestureRecognizer(tap)
     }
     
+    /**
+     Show the keyboard
+     */
     func showKeyboard() {
         commentCreateView?.textfield.becomeFirstResponder()
     }
     
+    /**
+     When keyboard is shown, push up the comment field
+     */
     func keyboardWillShow(notification: NSNotification) {
         let frame = (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         let newY = frame.origin.y - defaultFrame!.height
@@ -147,5 +167,13 @@ class ExpandedFeedController: HomeController {
     
     func keyboardWillHide(notification: NSNotification) {
         commentCreateView!.frame = defaultFrame!
+    }
+    
+    /**
+     Execute these actions when the view is about to appear
+     */
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
 }
