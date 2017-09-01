@@ -76,7 +76,6 @@ class ExpandedFeedController: HomeController {
         PinpostManager().readPinpostInfo(withPinpostId: self.pinpostId,
                                          onSuccess:
             { pinpost in
-                print(pinpost)
                 handler(pinpost)
         })
     }

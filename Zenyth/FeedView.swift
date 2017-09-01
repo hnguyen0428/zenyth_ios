@@ -140,7 +140,6 @@ class FeedView: UIView {
     
     func expandPinpost(_ tg: UITapGestureRecognizer) {
         let controller = ExpandedFeedController()
-        print(pinpost.id)
         controller.pinpostId = pinpost.id
         
         let transition = CATransition()
