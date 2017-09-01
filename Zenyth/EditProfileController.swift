@@ -70,23 +70,10 @@ class EditProfileController: HomeController, UIImagePickerControllerDelegate,
         let imageY: CGFloat = 20.0
         let imageFrame = CGRect(x: imageX, y: imageY, width: imageWidth, height: imageHeight)
         
-        let container = UIView(frame: imageFrame)
-        container.clipsToBounds = false
-        container.layer.masksToBounds = false
-        container.layer.shadowPath = UIBezierPath(roundedRect: container.bounds,
-                                                  cornerRadius: imageFrame.height/2).cgPath
-        container.layer.shadowColor = UIColor.lightGray.cgColor
-        container.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
-        container.layer.shadowRadius = 2.0
-        container.layer.shadowOpacity = 0.5
-        
-        let image = UIImageView(frame: container.bounds)
-        image.layer.cornerRadius = imageFrame.height/2
-        image.clipsToBounds = true
-        image.backgroundColor = UIColor.clear
+        let image = UIImageView(frame: imageFrame)
+        let container = image.roundedImageWithShadow(frame: imageFrame)
         
         profileImageView = image
-        container.addSubview(profileImageView!)
         
         // If the profile image has not been rendered, render it
         if let image = profileImage {
