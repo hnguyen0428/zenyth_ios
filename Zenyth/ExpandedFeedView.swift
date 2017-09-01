@@ -42,7 +42,7 @@ class ExpandedFeedView: UIScrollView {
             setupCommentsView(comments: comments)
         }
         
-        setupProfilePicView()
+        setupProfilePicView(user: pinpost.creator!)
         setupReturnButton()
         
         maxHeight += imagesScroller.frame.height
@@ -70,7 +70,7 @@ class ExpandedFeedView: UIScrollView {
         self.addSubview(imagesScroller)
     }
     
-    func setupProfilePicView() {
+    func setupProfilePicView(user: User) {
         let width = self.frame.width * ExpandedFeedView.WIDTH_OF_PROFILE_PIC
         let height = width
         let x = self.frame.width * ExpandedFeedView.PIC_LEFT_INSET
@@ -78,7 +78,12 @@ class ExpandedFeedView: UIScrollView {
         let frame = CGRect(x: x, y: y, width: width, height: height)
         
         profilePicView = UIImageView(frame: frame)
-        profilePicView.image = #imageLiteral(resourceName: "default_profile")
+        if let image = user.profilePicture {
+            profilePicView.imageFromUrl(withUrl: image.url)
+        }
+        else {
+            profilePicView.image = #imageLiteral(resourceName: "default_profile")
+        }
         let container = profilePicView.roundedImageWithShadow(frame: frame)
         self.addSubview(container)
     }

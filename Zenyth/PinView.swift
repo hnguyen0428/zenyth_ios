@@ -8,31 +8,29 @@
 
 import UIKit
 
-class PinView: UIView {
+class PinView: UIScrollView {
     
-    var pinImages: [UIImageView] = [UIImageView]()
+    var pinThumbnails: [PinThumbnail] = [PinThumbnail]()
+    var numPins = 0
     
     // UI Sizing
-    static let HEIGHT_OF_PIN_VIEW: CGFloat = 0.15
     static let LEFT_INSET: CGFloat = 0.025
     static let GAP: CGFloat = 0.05
+    static let HEIGHT_IMAGE: CGFloat = 0.95
     
-    init(view: UIView) {
-        let height = view.frame.width * PinView.HEIGHT_OF_PIN_VIEW
-        let width = view.frame.width
-        let frame = CGRect(x: 0, y: 0, width: width, height: height)
+    init(frame: CGRect, pinposts: [Pinpost]) {
         super.init(frame: frame)
         
-        let margin = view.frame.width * PinView.LEFT_INSET
-        let gap = view.frame.width * PinView.GAP
+        self.backgroundColor = .clear
+        self.showsHorizontalScrollIndicator = false
+        self.showsVerticalScrollIndicator = false
+        self.contentSize.width = 0
+        self.contentSize.height = self.frame.height
         
-        let widthImage = height
-        let heightImage = widthImage
-        
-        for i in 0..<5 {
-            let x = margin + CGFloat(i) * gap + CGFloat(i) * widthImage
-            let pinImage = self.setupImageView(x: x, y: 0, width: widthImage, height: heightImage)
-            pinImages.append(pinImage)
+        for pinpost in pinposts {
+            if let image = pinpost.images.first {
+                self.appendPinImage(image: image)
+            }
         }
     }
     
@@ -40,12 +38,21 @@ class PinView: UIView {
         super.init(coder: aDecoder)
     }
     
-    func setupImageView(x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat) -> UIImageView {
+    func appendPinImage(image: Image) {
+        let leftInset = self.frame.width * PinView.LEFT_INSET
+        // width of image is the same as height of the pinview
+        let numPins = CGFloat(self.numPins)
+        let height = self.frame.height * PinView.HEIGHT_IMAGE
+        let width = height
+        let x = leftInset + (numPins * width) +
+            (numPins * self.frame.width * PinView.GAP)
+        let y = CGFloat(0)
         let frame = CGRect(x: x, y: y, width: width, height: height)
-        let image = UIImageView()
-        let container = image.roundedImageWithShadow(frame: frame)
         
+        let image = PinThumbnail(frame: frame, image: image)
+        let container = image.roundedImageWithShadow(frame: frame)
         self.addSubview(container)
-        return image
+        self.contentSize.width = container.frame.maxX + leftInset
+        self.numPins += 1
     }
 }

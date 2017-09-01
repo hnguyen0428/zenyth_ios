@@ -84,7 +84,6 @@ class ExpandedFeedController: HomeController {
                 
                 self.view.addSubview(self.expandedFeedView)
                 
-                self.renderProfileImage(user: pinpost.creator!)
                 self.renderPinpostImages(images: pinpost.images)
                 
                 self.setupCommentCreateView()
@@ -95,11 +94,6 @@ class ExpandedFeedController: HomeController {
         })
     }
     
-    func renderProfileImage(user: User) {
-        if let image = user.profilePicture {
-            expandedFeedView.profilePicView.imageFromUrl(withUrl: image.getURL(size: "small"))
-        }
-    }
     
     func renderPinpostImages(images: [Image]) {
         let imagesScroller = expandedFeedView.imagesScroller
@@ -147,5 +141,10 @@ class ExpandedFeedController: HomeController {
     
     func keyboardWillHide(notification: NSNotification) {
         commentCreateView!.frame = defaultFrame!
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
 }

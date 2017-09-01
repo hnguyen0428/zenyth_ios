@@ -111,44 +111,23 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
     func renderFeedScrollView(pinposts: [Pinpost], handler: Handler? = nil) {
         // Set loading to true so that only one request to render the feed
         // can fire at a time
-        self.loading = true
+        
         let feedWidth = self.view.frame.width
         let feedHeight = self.view.frame.height * FeedController.HEIGHT_OF_FEED
         
-        // Dispatch group for handling completion
-        let group = DispatchGroup()
         for i in 0..<pinposts.count {
             let x = CGFloat(i + startIndex) * self.feedScrollView!.frame.width
             self.feedScrollView!.contentSize.width += self.feedScrollView!.frame.width
             let frame = CGRect(x: x, y: 0, width: feedWidth, height: feedHeight)
             
             let pinpost = pinposts[i]
-            let creator = pinpost.creator!
             
             let feedView = FeedView(self, frame: frame, pinpost: pinpost)
             self.feedScrollView?.addSubview(feedView)
             self.feedScrollView?.feedViews.append(feedView)
             
-            group.enter()
-            self.renderPinImage(pinpost: pinpost, handler:
-                { image in
-                    if let img = image {
-                        feedView.setThumbnailImage(image: img)
-                    }
-                    group.leave()
-            })
-            
-            group.enter()
-            self.renderProfileImage(creator: creator, handler:
-                { image in
-                    feedView.setProfileImage(image: image)
-                    group.leave()
-            })
         }
-        group.notify(queue: .main) {
-            self.loading = false
-            self.startIndex += pinposts.count
-        }
+        self.startIndex += pinposts.count
     }
     
     func loadNextPage() {
@@ -331,40 +310,6 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
                 self.paginateObject = paginate
                 handler?(pinposts)
         })
-    }
-    
-    func renderProfileImage(creator: User, handler: @escaping (UIImage) -> Void) {
-        if let profilePic = creator.profilePicture {
-            let url = profilePic.getURL(size: "medium")
-            ImageManager().getImageData(withUrl: url,
-                                        onSuccess:
-                { data in
-                    if let image = UIImage(data: data) {
-                        handler(image)
-                    }
-                    else {
-                        handler(#imageLiteral(resourceName: "default_profile"))
-                    }
-            })
-        }
-        else {
-            handler(#imageLiteral(resourceName: "default_profile"))
-        }
-        
-    }
-    
-    func renderPinImage(pinpost: Pinpost, handler: @escaping (UIImage?) -> Void) {
-        if let image = pinpost.images.first {
-            let url = image.getURL()
-            ImageManager().getImageData(withUrl: url,
-                                        onSuccess:
-                { data in
-                    handler(UIImage(data: data))
-            })
-        }
-        else {
-            handler(nil)
-        }
     }
     
     func toggleFeed(_ button: UIButton) {
