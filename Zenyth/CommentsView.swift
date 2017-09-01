@@ -9,6 +9,9 @@
 import Foundation
 import UIKit
 
+/**
+ The bottom section of expanded feed view containing comments
+ */
 class CommentsView: UIView {
     
     var comments: [Comment] = [Comment]()

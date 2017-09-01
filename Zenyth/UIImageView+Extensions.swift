@@ -20,6 +20,11 @@ extension UIImageView {
         })
     }
     
+    /**
+     Method used to create a rounded image with a shadow
+     - Parameters: Frame of the image
+     - Returns: The container that contains the image
+     */
     func roundedImageWithShadow(frame: CGRect) -> UIView {
         let container = UIView(frame: frame)
         container.clipsToBounds = false

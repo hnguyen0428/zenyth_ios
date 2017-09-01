@@ -9,6 +9,9 @@
 import Foundation
 import UIKit
 
+/**
+ View for making a comment
+ */
 class CommentCreateView: UIView {
     
     var textfield: UITextField!

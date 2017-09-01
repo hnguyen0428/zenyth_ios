@@ -9,6 +9,9 @@
 import Foundation
 import UIKit
 
+/**
+ The whole expanded feed view
+ */
 class ExpandedFeedView: UIScrollView {
     
     var imagesScroller: ImagesScroller!

@@ -9,6 +9,9 @@
 import UIKit
 import GoogleMaps
 
+/**
+ The customized GMSMapView
+ */
 class MapView: GMSMapView {
     var searchButton: UIButton?
     var recenterButton: UIButton?

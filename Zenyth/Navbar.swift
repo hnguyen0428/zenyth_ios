@@ -8,6 +8,9 @@
 
 import UIKit
 
+/**
+ The toolbar used to navigate the app at the bottom
+ */
 class Navbar: UIToolbar {
     
     var home: UIBarButtonItem?
