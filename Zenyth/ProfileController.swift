@@ -53,6 +53,10 @@ class ProfileController: HomeController {
         let indicator = requestLoading(view: self.view)
         self.readProfile(userId: userId, handler:
             { user in
+                // Render the pins onto the map
+                let pinposts = user.pinposts
+                self.mapView?.loadMarkers(pinposts: pinposts)
+                
                 self.navigationItem.title = user.username
                 let group = DispatchGroup()
                 

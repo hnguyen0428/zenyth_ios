@@ -448,9 +448,7 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
                                              bottomRightLong: southEast.longitude,
                                              onSuccess:
             { pinposts in
-                self.mapView?.loadMarkers(pinposts: pinposts,
-                                          northWest: northWest,
-                                          southEast: southEast)
+                self.mapView?.loadMarkers(pinposts: pinposts)
         })
     }
     

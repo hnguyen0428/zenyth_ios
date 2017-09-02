@@ -52,8 +52,7 @@ class MapView: GMSMapView {
         self.addSubview(recenterButton!)
     }
     
-    func loadMarkers(pinposts: [Pinpost], northWest: CLLocationCoordinate2D,
-                     southEast: CLLocationCoordinate2D) {
+    func loadMarkers(pinposts: [Pinpost]) {
         let filteredPinposts = self.filterOutLoadedPinposts(pinposts: pinposts)
         
         for pinpost in filteredPinposts {
