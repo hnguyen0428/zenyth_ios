@@ -178,6 +178,7 @@ class ImageGalleryController: UIViewController, UICollectionViewDelegate,
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         let controller = UINavigationController(rootViewController: FeedController())
+        NavigationStacks.shared.feedNC = controller
         UIView.animate(withDuration: 0.5, animations:
             { animation in
                 appDelegate.window!.rootViewController = controller
