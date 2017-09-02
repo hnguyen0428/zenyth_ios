@@ -11,16 +11,24 @@ import UIKit
 
 class PinThumbnail: UIImageView {
     
-    var imageObj: Image!
+    var pinpost: Pinpost!
+    var delegate: PinThumbnailDelegate?
     
-    init(frame: CGRect, image: Image) {
-        self.imageObj = image
+    static let LONG_PRESS_DURATION: Double = 0.8
+    
+    init(frame: CGRect, pinpost: Pinpost) {
+        self.pinpost = pinpost
         super.init(frame: frame)
         
-        self.imageFromUrl(withUrl: image.getURL(size: "medium"))
+        if let image = pinpost.images.first {
+            self.imageFromUrl(withUrl: image.getURL(size: "medium"))
+        }
         self.isUserInteractionEnabled = true
         let tg = UITapGestureRecognizer(target: self, action: #selector(self.expandPinpost))
+        let lp = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress))
+        lp.minimumPressDuration = PinThumbnail.LONG_PRESS_DURATION
         self.addGestureRecognizer(tg)
+        self.addGestureRecognizer(lp)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -29,7 +37,7 @@ class PinThumbnail: UIImageView {
     
     func expandPinpost(_ tg: UITapGestureRecognizer) {
         let controller = ExpandedFeedController()
-        controller.pinpostId = imageObj.imageableId
+        controller.pinpostId = pinpost.id
         
         let transition = CATransition()
         transition.duration = 0.5
@@ -41,4 +49,12 @@ class PinThumbnail: UIImageView {
             nc.pushViewController(controller, animated: false)
         }
     }
+    
+    func didLongPress(_ lp: UILongPressGestureRecognizer) {
+        delegate?.didLongPress(on: pinpost)
+    }
+}
+
+protocol PinThumbnailDelegate: class {
+    func didLongPress(on pinpost: Pinpost)
 }

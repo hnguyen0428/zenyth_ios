@@ -11,6 +11,7 @@ import UIKit
 typealias Handler = (Void) -> Void
 
 extension UIImageView {
+    
     func imageFromUrl(withUrl url: String, handler: DataCallback? = nil) {
         ImageManager().getImageData(withUrl: url,
                                     onSuccess:
