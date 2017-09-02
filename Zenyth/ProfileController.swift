@@ -16,7 +16,6 @@ class ProfileController: HomeController, GMSMapViewDelegate, PinThumbnailDelegat
     var mapView: MapView?
     var user: User? = nil
     var userId: UInt32 = 0
-    var shouldSetProfileSelected: Bool = false
     
     var feedDragger: UIButton?
     var profileShown: Bool = true
@@ -43,11 +42,9 @@ class ProfileController: HomeController, GMSMapViewDelegate, PinThumbnailDelegat
     
     override func setupViews() {
         super.setupViews()
-        
-        if shouldSetProfileSelected {
-            toolbar?.setProfileSelected()
-        }
-        
+    }
+    
+    func setupMap() {
         mapView = MapView(frame: view.frame, controller: self)
         mapView?.center.y = view.frame.height * ProfileController.READJUSTED_CENTER_Y
         mapView?.delegate = self
@@ -84,7 +81,6 @@ class ProfileController: HomeController, GMSMapViewDelegate, PinThumbnailDelegat
             { user in
                 // Render the pins onto the map
                 let pinposts = user.pinposts
-                self.mapView?.loadMarkers(pinposts: pinposts)
                 
                 self.navigationItem.title = user.username
                 let group = DispatchGroup()
@@ -126,6 +122,10 @@ class ProfileController: HomeController, GMSMapViewDelegate, PinThumbnailDelegat
                     self.view.addSubview(self.profileView!)
                     self.profileViewDefaultFrame = self.profileView!.frame
                     self.setupFeedDragger()
+                    
+                    self.setupMap()
+                    self.mapView?.loadMarkers(pinposts: pinposts)
+                    
                     self.requestDoneLoading(view: self.view, indicator: indicator)
                 }
         })

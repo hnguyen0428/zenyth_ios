@@ -102,7 +102,7 @@ class Navbar: UIToolbar {
         super.init(coder: aDecoder)
     }
     
-    func setHomeSelected(_ selected: Bool = true) {
+    func setHomeSelected() {
         homeButton?.setImage(#imageLiteral(resourceName: "home_icon_selected"), for: .normal)
         notificationButton?.setImage(#imageLiteral(resourceName: "notification_icon_black"), for: .normal)
         profileButton?.setImage(#imageLiteral(resourceName: "follower_icon_black"), for: .normal)

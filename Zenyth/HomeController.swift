@@ -141,7 +141,6 @@ class HomeController: UIViewController {
                 NavigationStacks.shared.profileNC = controller
                 let userId = UserDefaults.standard.object(forKey: "id") as! UInt32
                 profileController.userId = userId
-                profileController.shouldSetProfileSelected = true
                 
                 appDelegate.window!.rootViewController = controller
             }
@@ -155,11 +154,27 @@ class HomeController: UIViewController {
                 NavigationStacks.shared.profileNC = controller
                 let userId = UserDefaults.standard.object(forKey: "id") as! UInt32
                 profileController.userId = userId
-                profileController.shouldSetProfileSelected = true
                 
                 appDelegate.window!.rootViewController = controller
             }
         }
         NavigationStacks.shared.stackIndex = 2
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setToolbarSelected()
+    }
+    
+    func setToolbarSelected() {
+        if NavigationStacks.shared.stackIndex == 0 {
+            toolbar?.setHomeSelected()
+        }
+        if NavigationStacks.shared.stackIndex == 1 {
+            toolbar?.setHomeSelected()
+        }
+        if NavigationStacks.shared.stackIndex == 2 {
+            toolbar?.setProfileSelected()
+        }
     }
 }
