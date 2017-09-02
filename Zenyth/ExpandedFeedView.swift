@@ -38,7 +38,7 @@ class ExpandedFeedView: UIScrollView {
         super.init(frame: frame)
         self.pinpost = pinpost
         
-        setupImagesScroller()
+        setupImagesScroller(pinpost: pinpost)
         setupFeedInfoView(pinpost: pinpost)
         
         if let comments = pinpost.comments {
@@ -62,14 +62,14 @@ class ExpandedFeedView: UIScrollView {
                                for: .touchUpInside)
     }
     
-    func setupImagesScroller() {
+    func setupImagesScroller(pinpost: Pinpost) {
         let width = self.frame.width
         let height = width
         let x = CGFloat(0)
         let y = CGFloat(0)
         let frame = CGRect(x: x, y: y, width: width, height: height)
         
-        imagesScroller = ImagesScroller(frame: frame)
+        imagesScroller = ImagesScroller(frame: frame, images: pinpost.images)
         self.addSubview(imagesScroller)
     }
     

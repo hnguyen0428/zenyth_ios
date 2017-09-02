@@ -91,6 +91,9 @@
 		47C6CB341F4D058700053218 /* FeedInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C6CB331F4D058700053218 /* FeedInfoView.swift */; };
 		47C6CB361F4D0F8A00053218 /* PostActionBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C6CB351F4D0F8A00053218 /* PostActionBar.swift */; };
 		47C6CB381F4D75B000053218 /* FeedScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C6CB371F4D75B000053218 /* FeedScrollView.swift */; };
+		47C85D361F5A117E00CA67E5 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C85D351F5A117E00CA67E5 /* ImageViewController.swift */; };
+		47C85D381F5A131200CA67E5 /* ImageViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C85D371F5A131200CA67E5 /* ImageViewControllerDelegate.swift */; };
+		47C85D3A1F5A371700CA67E5 /* CustomMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C85D391F5A371700CA67E5 /* CustomMarkerView.swift */; };
 		47C9D4471F3EC08500E93079 /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C9D4461F3EC08500E93079 /* UIExtensions.swift */; };
 		47CB2D691F4F948100C8B59E /* ImageCropper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CB2D681F4F948100C8B59E /* ImageCropper.swift */; };
 		47CB2D6B1F4FA22500C8B59E /* PHAsset+getURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CB2D6A1F4FA22500C8B59E /* PHAsset+getURL.swift */; };
@@ -114,6 +117,7 @@
 		47EBDFC41F57BA69002099E2 /* CommentCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EBDFC31F57BA69002099E2 /* CommentCreateView.swift */; };
 		47EBDFC61F58FE22002099E2 /* PinThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EBDFC51F58FE22002099E2 /* PinThumbnail.swift */; };
 		47EBDFC81F5918B0002099E2 /* PaddedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EBDFC71F5918B0002099E2 /* PaddedTextField.swift */; };
+		47EBDFCA1F5A0DD1002099E2 /* ImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EBDFC91F5A0DD1002099E2 /* ImageViewer.swift */; };
 		47FE3D051F47AFD300EC62EC /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE3D041F47AFD300EC62EC /* ProfileView.swift */; };
 		47FE3D081F47B63100EC62EC /* UIColor+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE3D071F47B63100EC62EC /* UIColor+Helpers.swift */; };
 		47FE3D0A1F47B66900EC62EC /* UIView+Anchors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE3D091F47B66900EC62EC /* UIView+Anchors.swift */; };
@@ -233,6 +237,9 @@
 		47C6CB331F4D058700053218 /* FeedInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedInfoView.swift; sourceTree = "<group>"; };
 		47C6CB351F4D0F8A00053218 /* PostActionBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostActionBar.swift; sourceTree = "<group>"; };
 		47C6CB371F4D75B000053218 /* FeedScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedScrollView.swift; sourceTree = "<group>"; };
+		47C85D351F5A117E00CA67E5 /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
+		47C85D371F5A131200CA67E5 /* ImageViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewControllerDelegate.swift; sourceTree = "<group>"; };
+		47C85D391F5A371700CA67E5 /* CustomMarkerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomMarkerView.swift; sourceTree = "<group>"; };
 		47C9D4461F3EC08500E93079 /* UIExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
 		47CB2D681F4F948100C8B59E /* ImageCropper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCropper.swift; sourceTree = "<group>"; };
 		47CB2D6A1F4FA22500C8B59E /* PHAsset+getURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PHAsset+getURL.swift"; sourceTree = "<group>"; };
@@ -256,6 +263,7 @@
 		47EBDFC31F57BA69002099E2 /* CommentCreateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCreateView.swift; sourceTree = "<group>"; };
 		47EBDFC51F58FE22002099E2 /* PinThumbnail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinThumbnail.swift; sourceTree = "<group>"; };
 		47EBDFC71F5918B0002099E2 /* PaddedTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddedTextField.swift; sourceTree = "<group>"; };
+		47EBDFC91F5A0DD1002099E2 /* ImageViewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewer.swift; sourceTree = "<group>"; };
 		47FE3D041F47AFD300EC62EC /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		47FE3D071F47B63100EC62EC /* UIColor+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Helpers.swift"; sourceTree = "<group>"; };
 		47FE3D091F47B66900EC62EC /* UIView+Anchors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Anchors.swift"; sourceTree = "<group>"; };
@@ -389,6 +397,7 @@
 		478006311F218A100064F9E7 /* HomeControllers */ = {
 			isa = PBXGroup;
 			children = (
+				47C85D341F5A116F00CA67E5 /* ModalViewController */,
 				47B088DA1F4CFBE900F4E4BB /* Feed */,
 				47B088CD1F49025300F4E4BB /* Profile */,
 				47B47D441F4799D9003C8189 /* UIObjects */,
@@ -448,6 +457,8 @@
 				47B088D41F49255A00F4E4BB /* ImageTextFieldView.swift */,
 				47EBDFC31F57BA69002099E2 /* CommentCreateView.swift */,
 				47EBDFC71F5918B0002099E2 /* PaddedTextField.swift */,
+				47EBDFC91F5A0DD1002099E2 /* ImageViewer.swift */,
+				47C85D391F5A371700CA67E5 /* CustomMarkerView.swift */,
 			);
 			name = UIObjects;
 			sourceTree = "<group>";
@@ -515,6 +526,15 @@
 				47C622EA1F0A341A003BBC16 /* Info.plist */,
 			);
 			path = ZenythUITests;
+			sourceTree = "<group>";
+		};
+		47C85D341F5A116F00CA67E5 /* ModalViewController */ = {
+			isa = PBXGroup;
+			children = (
+				47C85D351F5A117E00CA67E5 /* ImageViewController.swift */,
+				47C85D371F5A131200CA67E5 /* ImageViewControllerDelegate.swift */,
+			);
+			name = ModalViewController;
 			sourceTree = "<group>";
 		};
 		47D683FD1F4E83C200F8EA23 /* PinpostForm */ = {
@@ -909,7 +929,9 @@
 				4712808A1F398403006FE796 /* Image.swift in Sources */,
 				471280921F39844C006FE796 /* Tag.swift in Sources */,
 				4712809E1F3990DF006FE796 /* TagManagerProtocol.swift in Sources */,
+				47C85D381F5A131200CA67E5 /* ImageViewControllerDelegate.swift in Sources */,
 				477FF6941F39D92F00FD66B4 /* Endpoint.swift in Sources */,
+				47EBDFCA1F5A0DD1002099E2 /* ImageViewer.swift in Sources */,
 				47D684031F4EB3D200F8EA23 /* UIViewController+GMSAutocomplete.swift in Sources */,
 				4712808C1F39840D006FE796 /* Reply.swift in Sources */,
 				47A2DFB81F42C3F9001CFAA3 /* GlobalHelperFunctions.swift in Sources */,
@@ -977,8 +999,10 @@
 				47C622C91F0A341A003BBC16 /* AppDelegate.swift in Sources */,
 				47B47D461F479A04003C8189 /* Navbar.swift in Sources */,
 				47FE3D051F47AFD300EC62EC /* ProfileView.swift in Sources */,
+				47C85D361F5A117E00CA67E5 /* ImageViewController.swift in Sources */,
 				4712807C1F3921DA006FE796 /* CredentialManager.swift in Sources */,
 				477D94351F4826E50043A957 /* UIImageView+Extensions.swift in Sources */,
+				47C85D3A1F5A371700CA67E5 /* CustomMarkerView.swift in Sources */,
 				471280821F396F85006FE796 /* UserManagerProtocol.swift in Sources */,
 				47D9ECB71F19755A00E3EEE4 /* User.swift in Sources */,
 				D23722701F1C8813004FFCFA /* ResetPasswordController.swift in Sources */,

@@ -2,60 +2,36 @@
     "success": true,
     "data": {
         "comment": {
-            "user_id": 1,
+            "id": 6,
+            "text": "I've never been to this beach before!!!",
+            "commentable_id": 4,
             "commentable_type": "Pinpost",
-            "text": "test comment",
-            "commentable_id": 1,
-            "updated_at": "2000-01-01 00:00:00",
-            "created_at": "2000-01-01 00:00:00",
-            "id": 1,
+            "user_id": 6,
+            "replies": [],
+            "likes_count": 0,
+            "images": [],
             "creator": {
-                "id": 1,
-                "email": "testiosuser@zenyth.com",
-                "username": "testiosuse",
-                "created_at": "2000-01-01 00:00:00",
-                "first_name": "Test",
-                "last_name": "Man",
-                "gender": "non-binary",
-                "birthday": "1998-04-28",
+                "id": 6,
+                "email": "robertjchango@gmail.com",
+                "username": "robert",
+                "created_at": "2017-08-30 22:35:35",
+                "first_name": "Robert",
+                "last_name": "Koepp",
+                "gender": "male",
+                "birthday": "2023-08-27",
+                "biography": "Doo doo doo dooo",
                 "picture": {
-                    "id": 1,
-                    "filename": "file.jpg",
-                    "user_id": 1,
+                    "id": 10,
+                    "user_id": 6,
+                    "filename": "t8sU3qLVui3Km9FiPyMXR74T4vRrvH8I.jpeg",
+                    "imageable_id": 6,
                     "imageable_type": "Profile",
-                    "imageable_id": 1,
-                    "directory": "profile_pictures"
+                    "directory": "profile_pictures",
+                    "created_at": "2017-08-30 22:35:36",
+                    "url": "http://54.219.134.56/api/image/t8sU3qLVui3Km9FiPyMXR74T4vRrvH8I.jpeg"
                 },
-                "friends": 0
-            },
-            "replies": 100,
-            "likes": 100,
-            "images": [
-                       {
-                       "id": 1,
-                       "filename": "file1.jpg",
-                       "user_id": 1,
-                       "imageable_type": "Comment",
-                       "imageable_id": 1,
-                       "directory": "images"
-                       },
-                       {
-                       "id": 2,
-                       "filename": "file2.jpg",
-                       "user_id": 1,
-                       "imageable_type": "Comment",
-                       "imageable_id": 1,
-                       "directory": "images"
-                       },
-                       {
-                       "id": 3,
-                       "filename": "file3.jpg",
-                       "user_id": 1,
-                       "imageable_type": "Comment",
-                       "imageable_id": 1,
-                       "directory": "images"
-                       }
-                       ]
+                "followers": 0
+            }
         }
     }
 }

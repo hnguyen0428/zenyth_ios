@@ -21,7 +21,7 @@
                     "imageable_id": 1,
                     "directory": "profile_pictures"
                 },
-                "friends": 1
+                "followers": 1
             },
             "requestee": {
                 "id": 2,
@@ -33,7 +33,7 @@
                 "gender": "non-binary",
                 "birthday": "1998-04-28",
                 "picture": null,
-                "friends": 1
+                "followers": 1
             },
             "id": 1
         }

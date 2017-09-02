@@ -15,54 +15,54 @@ import UIKit
 class ImagesScroller: UIScrollView {
     
     var imageViews: [UIImageView] = [UIImageView]()
+    var images: [Image] = [Image]()
     var currIndex = 0
     var numImageSet = 0
+    var tg: UITapGestureRecognizer!
     
-    override init(frame: CGRect) {
+    weak var customDelegate: ImagesScrollerDelegate?
+    
+    init(frame: CGRect, images: [Image]) {
         super.init(frame: frame)
-        setupImageView()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    func setupImageView() {
-        let frame = self.frame
+        self.backgroundColor = .black
+        tg = UITapGestureRecognizer(target: self, action: #selector(self.didTappedOnImage))
         
-        // This is the first image view, always available no matter what
-        let imageView = UIImageView(frame: frame)
-        imageView.backgroundColor = .black
-        self.imageViews.append(imageView)
-        self.addSubview(imageView)
+        for image in images {
+            self.append(image: image)
+            self.images.append(image)
+        }
         
-        // Setting the content size in order for the scroll view to know how much
-        // it can scroll to
-        self.contentSize.width = imageView.frame.width
-        self.contentSize.height = imageView.frame.height
+        self.addGestureRecognizer(tg)
     }
     
     /**
      Append an image to the scroller
      */
-    func append(image: UIImage) {
-        if numImageSet == 0 {
-            if let imageView = imageViews.first {
-                imageView.image = image
-                numImageSet += 1
-            }
-        }
-        else {
-            let frame = CGRect(x: self.frame.origin.x * CGFloat(numImageSet),
-                               y: self.frame.origin.y,
-                               width: self.frame.width,
-                               height: self.frame.height)
-            let imageView = UIImageView(frame: frame)
-            imageView.image = image
-            imageViews.append(imageView)
-            
-            // Resize the content size so that you can scroll further
-            self.contentSize.width += imageView.frame.width
-        }
+    func append(image: Image) {
+        let frame = CGRect(x: self.frame.origin.x * CGFloat(numImageSet),
+                           y: self.frame.origin.y,
+                           width: self.frame.width,
+                           height: self.frame.height)
+        let imageView = UIImageView(frame: frame)
+        imageView.backgroundColor = .black
+        imageView.imageFromUrl(withUrl: image.getURL(size: "large"))
+        imageViews.append(imageView)
+        
+        // Resize the content size so that you can scroll further
+        self.contentSize.width += imageView.frame.width
+        self.addSubview(imageView)
     }
+    
+    func didTappedOnImage(_ sender: UITapGestureRecognizer) {
+        let image = images[currIndex]
+        customDelegate?.didTapped(on: image, sender: self)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+}
+
+protocol ImagesScrollerDelegate: class {
+    func didTapped(on image: Image, sender: ImagesScroller)
 }

@@ -15,6 +15,7 @@ import GoogleMaps
 class MapView: GMSMapView {
     var searchButton: UIButton?
     var recenterButton: UIButton?
+    var loadedPins: [UInt32] = [UInt32]()
     
     static let LONG_PRESS_DURATION = 1.5
     
@@ -49,6 +50,38 @@ class MapView: GMSMapView {
         
         self.addSubview(searchButton!)
         self.addSubview(recenterButton!)
+    }
+    
+    func loadMarkers(pinposts: [Pinpost], northWest: CLLocationCoordinate2D,
+                     southEast: CLLocationCoordinate2D) {
+        let filteredPinposts = self.filterOutLoadedPinposts(pinposts: pinposts)
+        
+        for pinpost in filteredPinposts {
+            let lat = pinpost.latitude
+            let long = pinpost.longitude
+            let position = CLLocationCoordinate2D(latitude: lat, longitude: long)
+            let marker = GMSMarker(position: position)
+            
+            marker.map = self
+            let width = self.frame.width * FeedController.WIDTH_OF_PIN
+            let height = width
+            let frame = CGRect(x: 0, y: 0, width: width, height: height)
+            if let image = pinpost.images.first {
+                let view = CustomMarkerView(frame: frame, image: image)
+                marker.iconView = view
+            }
+            self.loadedPins.append(pinpost.id)
+        }
+    }
+    
+    func filterOutLoadedPinposts(pinposts: [Pinpost]) -> [Pinpost] {
+        var filteredPinposts: [Pinpost] = [Pinpost]()
+        for pinpost in pinposts {
+            if !self.loadedPins.contains(pinpost.id) {
+                filteredPinposts.append(pinpost)
+            }
+        }
+        return filteredPinposts
     }
     
     required init?(coder aDecoder: NSCoder) {

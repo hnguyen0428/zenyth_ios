@@ -9,7 +9,8 @@
 import Foundation
 import UIKit
 
-class ExpandedFeedController: HomeController {
+class ExpandedFeedController: HomeController, ImageViewControllerDelegate,
+                            ImagesScrollerDelegate {
     
     var expandedFeedView: ExpandedFeedView!
     var pinpostId: UInt32!
@@ -93,10 +94,8 @@ class ExpandedFeedController: HomeController {
                 self.expandedFeedView = ExpandedFeedView(controller: self,
                                                          frame: frame,
                                                          pinpost: pinpost)
-                
+                self.expandedFeedView.imagesScroller.customDelegate = self
                 self.view.addSubview(self.expandedFeedView)
-                
-                self.renderPinpostImages(images: pinpost.images)
                 
                 self.setupCommentCreateView()
                 self.hideKeyboardWhenTappedAround()
@@ -104,22 +103,6 @@ class ExpandedFeedController: HomeController {
                 let commentButton = self.expandedFeedView.feedInfoView.actionBar?.commentButton
                 commentButton?.addTarget(self, action: #selector(self.showKeyboard), for: .touchUpInside)
         })
-    }
-    
-    /**
-     Rendering the images of the pinpost
-     */
-    func renderPinpostImages(images: [Image]) {
-        let imagesScroller = expandedFeedView.imagesScroller
-        for image in images {
-            ImageManager().getImageData(withUrl: image.getURL(size: "large"),
-                                        onSuccess:
-                { data in
-                    if let uiimage = UIImage(data: data) {
-                        imagesScroller?.append(image: uiimage)
-                    }
-            })
-        }
     }
     
     /**
@@ -175,5 +158,17 @@ class ExpandedFeedController: HomeController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    func didLongSwipeVertically(sender: ImageViewController) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func didTapped(on image: Image, sender: ImagesScroller) {
+        let imageVC = ImageViewController()
+        imageVC.delegate = self
+        imageVC.image = image
+        
+        self.present(imageVC, animated: true, completion: nil)
     }
 }

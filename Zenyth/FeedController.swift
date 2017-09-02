@@ -36,6 +36,12 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
     // Percent of dragger shown
     static let DRAGGER_SHOWN: CGFloat = 0.70
     
+    static let WIDTH_OF_PIN: CGFloat = 0.15
+    static let MIN_ZOOM_TO_LOAD: Float = 10.0
+
+    // Timer before loading the pins onto the map
+    var timer: Timer? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -405,6 +411,47 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
                 }
         })
         transitionToPinpostForm()
+    }
+    
+    func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
+        if mapView.camera.zoom < FeedController.MIN_ZOOM_TO_LOAD {
+            return
+        }
+        
+        if timer != nil {
+            timer!.invalidate()
+            timer = nil
+        }
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self,
+                                     selector: #selector(loadMarkers), userInfo: nil, repeats: false)
+    }
+    
+    func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
+        if timer != nil {
+            timer!.invalidate()
+            timer = nil
+        }
+    }
+    
+    func loadMarkers() {
+        let visibleRegion = mapView!.projection.visibleRegion()
+        let bounds = GMSCoordinateBounds(region: visibleRegion)
+        
+        let northWest = CLLocationCoordinate2DMake(bounds.northEast.latitude,
+                                                   bounds.southWest.longitude)
+        let southEast = CLLocationCoordinate2DMake(bounds.southWest.latitude,
+                                                   bounds.northEast.longitude)
+        
+        PinpostManager().fetchPinpostByFrame(withTopLeftLat: northWest.latitude,
+                                             topLeftLong: northWest.longitude,
+                                             bottomRightLat: southEast.latitude,
+                                             bottomRightLong: southEast.longitude,
+                                             onSuccess:
+            { pinposts in
+                self.mapView?.loadMarkers(pinposts: pinposts,
+                                          northWest: northWest,
+                                          southEast: southEast)
+        })
     }
     
     func transitionToPinpostForm() {
