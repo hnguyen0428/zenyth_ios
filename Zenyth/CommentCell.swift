@@ -31,7 +31,7 @@ class CommentCell: UIView {
     
     static let GAP_B_PIC_A_COMMENT: CGFloat = 0.05
     static let GAP_B_USERNAME_A_COMMENT: CGFloat = 0.05
-    static let TOP_BORDER_THICKNESS: CGFloat = 1.0
+    static let TOP_BORDER_THICKNESS: CGFloat = 0.5
     
     init(frame: CGRect, comment: Comment) {
         self.comment = comment
@@ -42,7 +42,7 @@ class CommentCell: UIView {
         setupUsernameLabel(username: comment.creator.username)
         setupCommentField(text: comment.text)
         
-        self.topBorder(color: UIColor.black.cgColor,
+        self.topBorder(color: UIColor.lightGray.cgColor,
                        width: CommentCell.TOP_BORDER_THICKNESS)
         
         let tg = UITapGestureRecognizer(target: self, action: #selector(gotoProfile))

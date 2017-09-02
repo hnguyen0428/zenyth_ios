@@ -106,7 +106,7 @@ class FeedView: UIView {
         thumbnailView?.contentMode = .scaleAspectFill
         thumbnailView?.clipsToBounds = true
         thumbnailView?.isUserInteractionEnabled = true
-        thumbnailView?.imageFromUrl(withUrl: image.url)
+        thumbnailView?.imageFromUrl(withUrl: image.getURL(size: "large"))
         
         self.addSubview(thumbnailView!)
     }
