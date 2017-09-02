@@ -64,34 +64,77 @@ class HomeController: UIViewController {
      Transition to FeedController
      */
     func transitionToFeed() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        let controller = UINavigationController(rootViewController: FeedController())
-        appDelegate.window!.rootViewController = controller
+        let nc = self.navigationController
+        let stackIndex = NavigationStacks.shared.stackIndex
+        // If the current stack is the feed stack, and we press on the feed
+        // button then we pop back to root
+        if stackIndex == 0 && nc?.topViewController != nc?.viewControllers.first {
+            nc?.popToRootViewController(animated: true)
+        } else {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            if let nc = NavigationStacks.shared.feedNC {
+                appDelegate.window!.rootViewController = nc
+            }
+            else {
+                let controller = UINavigationController(rootViewController: FeedController())
+                NavigationStacks.shared.feedNC = controller
+                appDelegate.window!.rootViewController = controller
+            }
+        }
+        NavigationStacks.shared.stackIndex = 0
     }
     
     /**
      Transition to NotificationController
      */
     func transitionToNotification() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        let controller = NotificationController()
-        appDelegate.window!.rootViewController = controller
+        let nc = self.navigationController
+        let stackIndex = NavigationStacks.shared.stackIndex
+        // If the current stack is the notification stack, and we press on the notification
+        // button then we pop back to root
+        if stackIndex == 1 && nc?.topViewController != nc?.viewControllers.first {
+            nc?.popToRootViewController(animated: true)
+        } else {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            if let nc = NavigationStacks.shared.notificationNC { // stack was saved
+                print("using saved stack")
+                appDelegate.window!.rootViewController = nc
+            }
+            else {
+                let controller = UINavigationController(rootViewController: NotificationController())
+                NavigationStacks.shared.notificationNC = controller
+                appDelegate.window!.rootViewController = controller
+            }
+        }
+        NavigationStacks.shared.stackIndex = 1
     }
     
     /**
      Transition to ProfileController
      */
     func transitionToProfile() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        let profileController = ProfileController()
-        let controller = UINavigationController(rootViewController: profileController)
-        let userId = UserDefaults.standard.object(forKey: "id") as! UInt32
-        profileController.userId = userId
-        profileController.shouldSetProfileSelected = true
-        
-        appDelegate.window!.rootViewController = controller
+        let nc = self.navigationController
+        let stackIndex = NavigationStacks.shared.stackIndex
+        // If the current stack is the profile stack, and we press on the profile
+        // button then we pop back to root
+        if stackIndex == 2 && nc?.topViewController != nc?.viewControllers.first {
+                nc?.popToRootViewController(animated: true)
+        } else { // If not then we transition to profile
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            if let nc = NavigationStacks.shared.profileNC { // if there was a saved stack use it
+                appDelegate.window!.rootViewController = nc
+            }
+            else {
+                let profileController = ProfileController()
+                let controller = UINavigationController(rootViewController: profileController)
+                NavigationStacks.shared.profileNC = controller
+                let userId = UserDefaults.standard.object(forKey: "id") as! UInt32
+                profileController.userId = userId
+                profileController.shouldSetProfileSelected = true
+                
+                appDelegate.window!.rootViewController = controller
+            }
+        }
+        NavigationStacks.shared.stackIndex = 2
     }
 }

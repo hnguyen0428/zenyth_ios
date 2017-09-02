@@ -259,6 +259,9 @@ class ProfileController: HomeController, GMSMapViewDelegate, PinThumbnailDelegat
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        
+        if profileShown {
+            self.navigationController?.setNavigationBarHidden(false, animated: false)
+        }
     }
 }
