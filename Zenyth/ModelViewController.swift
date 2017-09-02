@@ -116,6 +116,7 @@ class ModelViewController: UIViewController, UITextFieldDelegate {
         appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
         appDelegate.window?.makeKeyAndVisible()
         let feedController = UINavigationController(rootViewController: FeedController())
+        NavigationStacks.shared.feedNC = feedController
         
         UIView.transition(with: appDelegate.window!, duration: 0.3, options: .transitionCrossDissolve,
                           animations: {

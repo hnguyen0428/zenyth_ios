@@ -68,26 +68,26 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
     
     func rotated() {
         if UIDeviceOrientationIsLandscape(UIDevice.current.orientation) {
-            if let image = imageViewer.imageView.image {
+            if let image = imageViewer.imageView?.image {
                 let ratio = image.size.width / image.size.height
                 let height = self.view.frame.height
                 let width = height * ratio
-                imageViewer.imageView.frame.size = CGSize(width: width, height: height)
+                imageViewer.imageView?.frame.size = CGSize(width: width, height: height)
                 imageViewer.frame = self.view.frame
-                imageViewer.view.frame = imageViewer.frame
-                imageViewer.imageView.center = imageViewer.center
+                imageViewer.view?.frame = imageViewer.frame
+                imageViewer.imageView?.center = imageViewer.center
             }
         }
         
         if UIDeviceOrientationIsPortrait(UIDevice.current.orientation) {
-            if let image = imageViewer.imageView.image {
+            if let image = imageViewer.imageView?.image {
                 let ratio = image.size.height / image.size.width
                 let width = self.view.frame.width
                 let height = width * ratio
-                imageViewer.imageView.frame.size = CGSize(width: width, height: height)
+                imageViewer.imageView?.frame.size = CGSize(width: width, height: height)
                 imageViewer.frame = self.view.frame
-                imageViewer.view.frame = imageViewer.frame
-                imageViewer.imageView.center = imageViewer.center
+                imageViewer.view?.frame = imageViewer.frame
+                imageViewer.imageView?.center = imageViewer.center
             }
         }
         

@@ -19,7 +19,7 @@ class ProfileView: UIView {
     var pinView: PinView?
     var userInfoBar: UserInfoBar?
     
-    var controller: UIViewController!
+    var controller: UIViewController?
     
     var maxHeight: CGFloat = 0
     
@@ -328,7 +328,7 @@ class ProfileView: UIView {
         let width = self.frame.width
         let frame = CGRect(x: 0, y: 0, width: width, height: height)
         
-        pinView = PinView(controller, frame: frame, pinposts: pinposts)
+        pinView = PinView(controller!, frame: frame, pinposts: pinposts)
         
         self.addSubview(pinView!)
         pinView?.anchor(topPinLabel?.bottomAnchor, left: nil, bottom: nil,

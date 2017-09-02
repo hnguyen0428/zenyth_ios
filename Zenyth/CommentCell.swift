@@ -14,10 +14,10 @@ import UIKit
  */
 class CommentCell: UIView {
     
-    var profilePicView: UIImageView!
-    var usernameLabel: UILabel!
-    var commentField: UITextView!
-    var comment: Comment!
+    var profilePicView: UIImageView?
+    var usernameLabel: UILabel?
+    var commentField: UITextView?
+    var comment: Comment?
     
     // Constants for ui sizing
     static let LEFT_INSET: CGFloat = 0.03
@@ -46,8 +46,8 @@ class CommentCell: UIView {
                        width: CommentCell.TOP_BORDER_THICKNESS)
         
         let tg = UITapGestureRecognizer(target: self, action: #selector(gotoProfile))
-        profilePicView.isUserInteractionEnabled = true
-        profilePicView.addGestureRecognizer(tg)
+        profilePicView!.isUserInteractionEnabled = true
+        profilePicView!.addGestureRecognizer(tg)
     }
     
     func setupProfilePicView() {
@@ -60,8 +60,8 @@ class CommentCell: UIView {
         profilePicView = UIImageView(frame: frame)
         
         // Setting the default profile image
-        profilePicView.image = #imageLiteral(resourceName: "default_profile")
-        let container = profilePicView.roundedImageWithShadow(frame: frame)
+        profilePicView!.image = #imageLiteral(resourceName: "default_profile")
+        let container = profilePicView!.roundedImageWithShadow(frame: frame)
         self.addSubview(container)
     }
     
@@ -69,43 +69,43 @@ class CommentCell: UIView {
         let height = self.frame.height * CommentCell.USERNAME_HEIGHT
         let width = self.frame.width * CommentCell.USERNAME_WIDTH
         let gap = self.frame.width * CommentCell.GAP_B_PIC_A_COMMENT
-        let x = profilePicView.frame.maxX + gap
+        let x = profilePicView!.frame.maxX + gap
         let y = self.frame.height * CommentCell.TOP_INSET
         let frame = CGRect(x: x, y: y, width: width, height: height)
         
         usernameLabel = UILabel(frame: frame)
-        usernameLabel.text = username
-        usernameLabel.font = UIFont.boldSystemFont(ofSize: 13.0)
-        self.addSubview(usernameLabel)
+        usernameLabel!.text = username
+        usernameLabel!.font = UIFont.boldSystemFont(ofSize: 13.0)
+        self.addSubview(usernameLabel!)
     }
     
     func setupCommentField(text: String) {
         let height = self.frame.height * CommentCell.COMMENT_HEIGHT
         let width = self.frame.width * CommentCell.COMMENT_WIDTH
-        let x = usernameLabel.frame.origin.x
+        let x = usernameLabel!.frame.origin.x
         let gap = self.frame.height * CommentCell.GAP_B_USERNAME_A_COMMENT
-        let y = usernameLabel.frame.maxY + gap
+        let y = usernameLabel!.frame.maxY + gap
         let frame = CGRect(x: x, y: y, width: width, height: height)
         
         commentField = UITextView(frame: frame)
-        commentField.text = text
-        commentField.font = UIFont.systemFont(ofSize: 12.0)
-        commentField.isEditable = false
-        commentField.textContainerInset = UIEdgeInsets.zero
-        commentField.textContainer.lineFragmentPadding = 0
+        commentField!.text = text
+        commentField!.font = UIFont.systemFont(ofSize: 12.0)
+        commentField!.isEditable = false
+        commentField!.textContainerInset = UIEdgeInsets.zero
+        commentField!.textContainer.lineFragmentPadding = 0
         
-        self.addSubview(commentField)
+        self.addSubview(commentField!)
     }
     
     func renderProfilePic() {
-        if let image = comment.creator.profilePicture {
-            self.profilePicView.imageFromUrl(withUrl: image.getURL(size: "small"))
+        if let image = comment!.creator.profilePicture {
+            self.profilePicView!.imageFromUrl(withUrl: image.getURL(size: "small"))
         }
     }
     
     func gotoProfile(_ tg: UITapGestureRecognizer) {
         let controller = ProfileController()
-        controller.userId = comment.creator.id
+        controller.userId = comment!.creator.id
         
         let transition = CATransition()
         transition.duration = 0.5

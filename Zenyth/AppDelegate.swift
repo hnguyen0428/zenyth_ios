@@ -202,6 +202,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.makeKeyAndVisible()
         let feedController = UINavigationController(rootViewController: FeedController())
+        NavigationStacks.shared.feedNC = feedController
+        
         UIView.transition(with: self.window!, duration: 0.3, options: .transitionCrossDissolve,
                           animations: {
             self.window!.rootViewController = feedController
