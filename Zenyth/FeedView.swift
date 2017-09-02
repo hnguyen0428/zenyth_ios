@@ -119,12 +119,11 @@ class FeedView: UIView {
         let y = feedInfoView!.frame.origin.y - height/2
         let frame = CGRect(x: x, y: y, width: width, height: height)
         profilePicView = UIImageView()
+        profilePicView?.image = #imageLiteral(resourceName: "default_profile")
         if let image = user.profilePicture {
-            profilePicView?.imageFromUrl(withUrl: image.url)
+            profilePicView?.imageFromUrl(withUrl: image.getURL(size: "small"))
         }
-        else {
-            profilePicView?.image = #imageLiteral(resourceName: "default_profile")
-        }
+        
         let container = profilePicView!.roundedImageWithShadow(frame: frame)
         self.addSubview(container)
         return container

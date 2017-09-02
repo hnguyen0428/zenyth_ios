@@ -44,10 +44,10 @@ class CommentCell: UIView {
         
         self.topBorder(color: UIColor.black.cgColor,
                        width: CommentCell.TOP_BORDER_THICKNESS)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        
+        let tg = UITapGestureRecognizer(target: self, action: #selector(gotoProfile))
+        profilePicView.isUserInteractionEnabled = true
+        profilePicView.addGestureRecognizer(tg)
     }
     
     func setupProfilePicView() {
@@ -101,6 +101,25 @@ class CommentCell: UIView {
         if let image = comment.creator.profilePicture {
             self.profilePicView.imageFromUrl(withUrl: image.getURL(size: "small"))
         }
+    }
+    
+    func gotoProfile(_ tg: UITapGestureRecognizer) {
+        let controller = ProfileController()
+        controller.userId = comment.creator.id
+        
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        transition.type = kCATransitionFromBottom
+        
+        if let nc = self.window?.rootViewController as? UINavigationController {
+            nc.view.layer.add(transition, forKey: nil)
+            nc.pushViewController(controller, animated: false)
+        }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
     
 }

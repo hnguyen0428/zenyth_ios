@@ -44,7 +44,9 @@ class ProfileController: HomeController {
         let loggedInUserId = UserDefaults.standard.object(forKey: "id") as! UInt32
         var frame: CGRect!
         if loggedInUserId == self.userId {
-            self.navigationItem.leftBarButtonItem = nil
+            if self.navigationController?.viewControllers.first == self {
+                self.navigationItem.leftBarButtonItem = nil
+            }
         }
         let bar = self.navigationController?.navigationBar
         frame = CGRect(x: 0, y: bar!.frame.maxY, width: view.frame.width,

@@ -135,7 +135,7 @@ class ProfileView: UIView {
         
         self.profilePicture = UIImageView()
         if let image = user.profilePicture {
-            profilePicture?.imageFromUrl(withUrl: image.url)
+            profilePicture?.imageFromUrl(withUrl: image.getURL(size: "small"))
         }
         else {
             profilePicture?.image = #imageLiteral(resourceName: "default_profile")

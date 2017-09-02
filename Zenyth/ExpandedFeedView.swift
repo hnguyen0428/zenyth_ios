@@ -60,6 +60,10 @@ class ExpandedFeedView: UIScrollView {
         returnButton.addTarget(controller,
                                action: #selector(ExpandedFeedController.popBack),
                                for: .touchUpInside)
+        
+        let tg = UITapGestureRecognizer(target: self, action: #selector(gotoProfile))
+        profilePicView.isUserInteractionEnabled = true
+        profilePicView.addGestureRecognizer(tg)
     }
     
     func setupImagesScroller(pinpost: Pinpost) {
@@ -81,11 +85,9 @@ class ExpandedFeedView: UIScrollView {
         let frame = CGRect(x: x, y: y, width: width, height: height)
         
         profilePicView = UIImageView(frame: frame)
+        profilePicView.image = #imageLiteral(resourceName: "default_profile")
         if let image = user.profilePicture {
-            profilePicView.imageFromUrl(withUrl: image.url)
-        }
-        else {
-            profilePicView.image = #imageLiteral(resourceName: "default_profile")
+            profilePicView.imageFromUrl(withUrl: image.getURL(size: "small"))
         }
         let container = profilePicView.roundedImageWithShadow(frame: frame)
         self.addSubview(container)
@@ -137,6 +139,21 @@ class ExpandedFeedView: UIScrollView {
     func addComment(comment: Comment) {
         commentsView.append(comment: comment)
         self.contentSize.height += self.frame.height * ExpandedFeedView.CELL_HEIGHT
+    }
+    
+    func gotoProfile(_ tg: UITapGestureRecognizer) {
+        let controller = ProfileController()
+        controller.userId = pinpost.creator!.id
+        
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        transition.type = kCATransitionFromBottom
+        
+        if let nc = self.window?.rootViewController as? UINavigationController {
+            nc.view.layer.add(transition, forKey: nil)
+            nc.pushViewController(controller, animated: false)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
