@@ -19,6 +19,8 @@ class ProfileView: UIView {
     var pinView: PinView?
     var userInfoBar: UserInfoBar?
     
+    var controller: UIViewController!
+    
     var maxHeight: CGFloat = 0
     
     // Constants for ui sizing
@@ -82,6 +84,7 @@ class ProfileView: UIView {
     
     init(_ controller: UIViewController, frame: CGRect, user: User,
          foreign: Bool = false, followStatus: String? = nil) {
+        self.controller = controller
         super.init(frame: frame)
         
         self.setupProfilePicture(user: user)
@@ -135,7 +138,7 @@ class ProfileView: UIView {
         
         self.profilePicture = UIImageView()
         if let image = user.profilePicture {
-            profilePicture?.imageFromUrl(withUrl: image.url)
+            profilePicture?.imageFromUrl(withUrl: image.getURL(size: "small"))
         }
         else {
             profilePicture?.image = #imageLiteral(resourceName: "default_profile")
@@ -325,7 +328,7 @@ class ProfileView: UIView {
         let width = self.frame.width
         let frame = CGRect(x: 0, y: 0, width: width, height: height)
         
-        pinView = PinView(frame: frame, pinposts: pinposts)
+        pinView = PinView(controller, frame: frame, pinposts: pinposts)
         
         self.addSubview(pinView!)
         pinView?.anchor(topPinLabel?.bottomAnchor, left: nil, bottom: nil,

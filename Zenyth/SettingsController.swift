@@ -65,6 +65,7 @@ class SettingsController: HomeController {
         
         UIView.transition(with: appDelegate.window!, duration: 0.5, options: .transitionCrossDissolve,
                           animations: {
+                            NavigationStacks.shared.clearStacks()
                             appDelegate.window!.rootViewController = loginController
         }, completion: nil)
     }

@@ -12,13 +12,15 @@ class PinView: UIScrollView {
     
     var pinThumbnails: [PinThumbnail] = [PinThumbnail]()
     var numPins = 0
+    var controller: UIViewController!
     
     // UI Sizing
     static let LEFT_INSET: CGFloat = 0.025
     static let GAP: CGFloat = 0.05
     static let HEIGHT_IMAGE: CGFloat = 0.95
     
-    init(frame: CGRect, pinposts: [Pinpost]) {
+    init(_ controller: UIViewController, frame: CGRect, pinposts: [Pinpost]) {
+        self.controller = controller
         super.init(frame: frame)
         
         self.backgroundColor = .clear
@@ -28,8 +30,9 @@ class PinView: UIScrollView {
         self.contentSize.height = self.frame.height
         
         for pinpost in pinposts {
-            if let image = pinpost.images.first {
-                self.appendPinImage(image: image)
+            // Only append pin image if the pinpost has an image
+            if let _ = pinpost.images.first {
+                self.appendPinImage(pinpost: pinpost)
             }
         }
     }
@@ -38,7 +41,7 @@ class PinView: UIScrollView {
         super.init(coder: aDecoder)
     }
     
-    func appendPinImage(image: Image) {
+    func appendPinImage(pinpost: Pinpost) {
         let leftInset = self.frame.width * PinView.LEFT_INSET
         // width of image is the same as height of the pinview
         let numPins = CGFloat(self.numPins)
@@ -49,7 +52,8 @@ class PinView: UIScrollView {
         let y = CGFloat(0)
         let frame = CGRect(x: x, y: y, width: width, height: height)
         
-        let image = PinThumbnail(frame: frame, image: image)
+        let image = PinThumbnail(frame: frame, pinpost: pinpost)
+        image.delegate = self.controller as? PinThumbnailDelegate
         let container = image.roundedImageWithShadow(frame: frame)
         self.addSubview(container)
         self.contentSize.width = container.frame.maxX + leftInset
