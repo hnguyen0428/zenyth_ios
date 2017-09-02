@@ -29,6 +29,7 @@ class CustomMarkerView: UIView {
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.imageFromUrl(withUrl: image.getURL(size: "small"))
+        imageView.isUserInteractionEnabled = true
         
         self.addSubview(imageView)
     }

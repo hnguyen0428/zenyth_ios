@@ -63,6 +63,7 @@ class MapView: GMSMapView {
             let marker = GMSMarker(position: position)
             
             marker.map = self
+            marker.userData = pinpost.id
             let width = self.frame.width * FeedController.WIDTH_OF_PIN
             let height = width
             let frame = CGRect(x: 0, y: 0, width: width, height: height)

@@ -454,6 +454,25 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
         })
     }
     
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        let id = marker.userData as! UInt32
+        transitionToExpandedPin(id: id)
+        return true
+    }
+    
+    func transitionToExpandedPin(id: UInt32) {
+        let controller = ExpandedFeedController()
+        controller.pinpostId = id
+        
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        transition.type = kCATransitionFromBottom
+        
+        self.navigationController?.view.layer.add(transition, forKey: nil)
+        self.navigationController?.pushViewController(controller, animated: false)
+    }
+    
     func transitionToPinpostForm() {
         let controller = PinpostFormController()
         self.navigationController?.pushViewController(controller, animated: true)
