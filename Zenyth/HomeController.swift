@@ -65,13 +65,20 @@ class HomeController: UIViewController {
      */
     func transitionToFeed() {
         let nc = self.navigationController
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let stackIndex = NavigationStacks.shared.stackIndex
         // If the current stack is the feed stack, and we press on the feed
         // button then we pop back to root
-        if stackIndex == 0 && nc?.topViewController != nc?.viewControllers.first {
-            nc?.popToRootViewController(animated: true)
+        if stackIndex == 0 {
+            if nc?.topViewController != nc?.viewControllers.first {
+                nc?.popToRootViewController(animated: true)
+            }
+            else {
+                let controller = UINavigationController(rootViewController: FeedController())
+                NavigationStacks.shared.feedNC = controller
+                appDelegate.window!.rootViewController = controller
+            }
         } else {
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
             if let nc = NavigationStacks.shared.feedNC {
                 appDelegate.window!.rootViewController = nc
             }
@@ -89,15 +96,21 @@ class HomeController: UIViewController {
      */
     func transitionToNotification() {
         let nc = self.navigationController
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let stackIndex = NavigationStacks.shared.stackIndex
         // If the current stack is the notification stack, and we press on the notification
-        // button then we pop back to root
-        if stackIndex == 1 && nc?.topViewController != nc?.viewControllers.first {
-            nc?.popToRootViewController(animated: true)
+        // button then we pop back to root, else we reload
+        if stackIndex == 1 {
+            if nc?.topViewController != nc?.viewControllers.first {
+                nc?.popToRootViewController(animated: true)
+            }
+            else {
+                let controller = UINavigationController(rootViewController: NotificationController())
+                NavigationStacks.shared.notificationNC = controller
+                appDelegate.window!.rootViewController = controller
+            }
         } else {
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
             if let nc = NavigationStacks.shared.notificationNC { // stack was saved
-                print("using saved stack")
                 appDelegate.window!.rootViewController = nc
             }
             else {
@@ -114,13 +127,25 @@ class HomeController: UIViewController {
      */
     func transitionToProfile() {
         let nc = self.navigationController
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let stackIndex = NavigationStacks.shared.stackIndex
         // If the current stack is the profile stack, and we press on the profile
         // button then we pop back to root
-        if stackIndex == 2 && nc?.topViewController != nc?.viewControllers.first {
+        if stackIndex == 2 {
+            if nc?.topViewController != nc?.viewControllers.first {
                 nc?.popToRootViewController(animated: true)
+            }
+            else {
+                let profileController = ProfileController()
+                let controller = UINavigationController(rootViewController: profileController)
+                NavigationStacks.shared.profileNC = controller
+                let userId = UserDefaults.standard.object(forKey: "id") as! UInt32
+                profileController.userId = userId
+                profileController.shouldSetProfileSelected = true
+                
+                appDelegate.window!.rootViewController = controller
+            }
         } else { // If not then we transition to profile
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
             if let nc = NavigationStacks.shared.profileNC { // if there was a saved stack use it
                 appDelegate.window!.rootViewController = nc
             }
