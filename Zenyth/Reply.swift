@@ -12,7 +12,7 @@ import SwiftyJSON
 struct Reply: APIObject {
     var id: UInt32
     var text: String
-    var creator: User
+    var creator: User?
     var onCommentId: UInt32
     var createdAt: String
     var updatedAt: String
@@ -52,7 +52,7 @@ struct Reply: APIObject {
         return [
             "id": id,
             "text": text,
-            "creator": creator.toJSON(),
+            "creator": creator?.toJSON(),
             "comment_id": onCommentId,
             "created_at": createdAt,
             "updated_at": updatedAt,

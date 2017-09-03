@@ -39,7 +39,7 @@ class CommentCell: UIView {
         self.backgroundColor = .white
         
         setupProfilePicView()
-        setupUsernameLabel(username: comment.creator.username)
+        setupUsernameLabel(username: comment.creator!.username)
         setupCommentField(text: comment.text)
         
         self.topBorder(color: UIColor.lightGray.cgColor,
@@ -98,14 +98,14 @@ class CommentCell: UIView {
     }
     
     func renderProfilePic() {
-        if let image = comment!.creator.profilePicture {
+        if let image = comment!.creator!.profilePicture {
             self.profilePicView!.imageFromUrl(withUrl: image.getURL(size: "small"))
         }
     }
     
     func gotoProfile(_ tg: UITapGestureRecognizer) {
         let controller = ProfileController()
-        controller.userId = comment!.creator.id
+        controller.userId = comment!.creator!.id
         
         let transition = CATransition()
         transition.duration = 0.5
