@@ -171,7 +171,7 @@ class HomeController: UIViewController {
             toolbar?.setHomeSelected()
         }
         if NavigationStacks.shared.stackIndex == 1 {
-            toolbar?.setHomeSelected()
+            toolbar?.setNotificationSelected()
         }
         if NavigationStacks.shared.stackIndex == 2 {
             toolbar?.setProfileSelected()
