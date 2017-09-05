@@ -37,4 +37,8 @@ class FeedScrollView: UIScrollView {
         }
         return false
     }
+    
+    deinit {
+        debugPrint("Deinitializing \(self)")
+    }
 }

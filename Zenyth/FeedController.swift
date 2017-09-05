@@ -11,9 +11,9 @@ import GoogleMaps
 
 class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
     
-    var mapView: MapView?
-    var feedScrollView: FeedScrollView?
-    var feedDragger: UIButton?
+    weak var mapView: MapView?
+    weak var feedScrollView: FeedScrollView?
+    weak var feedDragger: UIButton?
     
     // Save the next page and prev page of pagination
     var paginateObject: Paginate?
@@ -42,6 +42,9 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
     // Timer before loading the pins onto the map
     var timer: Timer? = nil
     
+    var savedZoom: Float?
+    var savedCoord: CLLocationCoordinate2D?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,7 +59,6 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
         super.setupViews()
         toolbar?.setHomeSelected()
         
-        self.loadMap()
         self.setupScrollView()
         self.setupFeedView()
     }
@@ -64,27 +66,35 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
     /**
      Loading the map
      */
-    func loadMap() {
-        mapView = MapView(frame: view.frame, controller: self)
-        view.insertSubview(mapView!, at: 0)
+    func setupMap() {
+        var mapView: MapView!
+        if let zoom = self.savedZoom,
+            let coord = self.savedCoord {
+            mapView = MapView(frame: view.frame, controller: self, zoom: zoom, coord: coord)
+        }
+        else {
+            mapView = MapView(frame: view.frame, controller: self, zoom: defaultZoom)
+        }
+        self.mapView = mapView
+        view.insertSubview(mapView, at: 0)
         
-        let recenterButtonSize = mapView!.recenterButton!.frame.size
-        let recenterButtonX = mapView!.recenterButton!.frame.origin.x
+        let recenterButtonSize = mapView.recenterButton!.frame.size
+        let recenterButtonX = mapView.recenterButton!.frame.origin.x
         let recenterButtonY = view.frame.height * 0.1
         let recenterButtonNewOrigin = CGPoint(x: recenterButtonX,
                                               y: recenterButtonY)
-        mapView!.recenterButton!.frame = CGRect(origin: recenterButtonNewOrigin,
+        mapView.recenterButton!.frame = CGRect(origin: recenterButtonNewOrigin,
                                                 size: recenterButtonSize)
         
-        let searchButtonSize = mapView!.searchButton!.frame.size
-        let searchButtonX = mapView!.searchButton!.frame.origin.x
+        let searchButtonSize = mapView.searchButton!.frame.size
+        let searchButtonX = mapView.searchButton!.frame.origin.x
         let searchButtonY = recenterButtonY + recenterButtonSize.height +
             view.frame.height * 0.02
         let searchButtonNewOrigin = CGPoint(x: searchButtonX,
                                             y: searchButtonY)
-        mapView!.searchButton!.frame = CGRect(origin: searchButtonNewOrigin,
+        mapView.searchButton!.frame = CGRect(origin: searchButtonNewOrigin,
                                               size: searchButtonSize)
-        mapView?.delegate = self
+        mapView.delegate = self
     }
     
     func setupScrollView() {
@@ -93,21 +103,23 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
         let y = toolbar!.frame.origin.y
         let feedHeight = self.view.frame.height * FeedController.HEIGHT_OF_FEED
         let frame = CGRect(x: x, y: y, width: feedWidth, height: feedHeight)
-        feedScrollView = FeedScrollView(frame: frame, controller: self)
-        feedScrollView!.delegate = self
-        view.insertSubview(feedScrollView!, belowSubview: toolbar!)
+        let feedScrollView = FeedScrollView(frame: frame, controller: self)
+        self.feedScrollView = feedScrollView
+        feedScrollView.delegate = self
+        view.insertSubview(feedScrollView, belowSubview: toolbar!)
         
         let draggerWidth = view.frame.width * FeedController.WIDTH_OF_DRAGGER
         let draggerHeight = draggerWidth
-        let draggerX = feedScrollView!.center.x - draggerWidth/2
+        let draggerX = feedScrollView.center.x - draggerWidth/2
         let draggerY = toolbar!.frame.origin.y - draggerHeight * FeedController.DRAGGER_SHOWN
 
         let draggerFrame = CGRect(x: draggerX, y: draggerY,
                                   width: draggerWidth, height: draggerHeight)
-        feedDragger = UIButton(frame: draggerFrame)
-        feedDragger!.setImage(#imageLiteral(resourceName: "up_icon"), for: .normal)
+        let feedDragger = UIButton(frame: draggerFrame)
+        self.feedDragger = feedDragger
+        feedDragger.setImage(#imageLiteral(resourceName: "up_icon"), for: .normal)
 
-        view.insertSubview(feedDragger!, belowSubview: feedScrollView!)
+        view.insertSubview(feedDragger, belowSubview: feedScrollView)
     }
     
     /**
@@ -423,7 +435,7 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
             timer = nil
         }
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self,
-                                     selector: #selector(loadMarkers), userInfo: nil, repeats: false)
+                                     selector: #selector(fetchMarkers), userInfo: nil, repeats: false)
     }
     
     func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
@@ -433,7 +445,8 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
         }
     }
     
-    func loadMarkers() {
+    func fetchMarkers() {
+        guard mapView != nil else {return}
         let visibleRegion = mapView!.projection.visibleRegion()
         let bounds = GMSCoordinateBounds(region: visibleRegion)
         
@@ -448,8 +461,12 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
                                              bottomRightLong: southEast.longitude,
                                              onSuccess:
             { pinposts in
-                self.mapView?.loadMarkers(pinposts: pinposts)
+                self.loadMarkers(pinposts: pinposts)
         })
+    }
+    
+    func loadMarkers(pinposts: [Pinpost]) {
+        self.mapView?.loadMarkers(pinposts: pinposts)
     }
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
@@ -483,5 +500,25 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        if mapView == nil {
+            self.setupMap()
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        mapView?.removeFromSuperview()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.savedZoom = mapView?.camera.zoom
+        self.savedCoord = mapView?.camera.target
+    }
+    
+    deinit {
+        print("Deinitializing")
     }
 }

@@ -12,14 +12,9 @@ import UIKit
  The toolbar used to navigate the app at the bottom
  */
 class Navbar: UIToolbar {
-    
-    var home: UIBarButtonItem?
-    var notification: UIBarButtonItem?
-    var profile: UIBarButtonItem?
-    
-    var homeButton: UIButton?
-    var notificationButton: UIButton?
-    var profileButton: UIButton?
+    weak var homeButton: UIButton?
+    weak var notificationButton: UIButton?
+    weak var profileButton: UIButton?
     
     init(view: UIView) {
         let viewFrame = view.frame
@@ -42,7 +37,7 @@ class Navbar: UIToolbar {
         let widthToHeightFollowerIcon: CGFloat = 48.0/54.0
         
         // Create home button
-        home = {
+        let home: UIBarButtonItem = {
             let heightOfButton = height * buttonHeightToBarHeightRatio
             let widthOfButton = heightOfButton * widthToHeightHomeIcon
             let buttonFrame = CGRect(x: 0, y: 0, width: widthOfButton,
@@ -56,7 +51,7 @@ class Navbar: UIToolbar {
         }()
         
         // Create notification button
-        notification = {
+        let notification: UIBarButtonItem = {
             let heightOfButton = height * buttonHeightToBarHeightRatio
             let widthOfButton = heightOfButton * widthToHeightNotificationIcon
             let buttonFrame = CGRect(x: 0, y: 0, width: widthOfButton,
@@ -70,7 +65,7 @@ class Navbar: UIToolbar {
         }()
         
         // Create profile button
-        profile = {
+        let profile: UIBarButtonItem = {
             let heightOfButton = height * buttonHeightToBarHeightRatio
             let widthOfButton = heightOfButton * widthToHeightFollowerIcon
             let buttonFrame = CGRect(x: 0, y: 0, width: widthOfButton,
@@ -85,8 +80,8 @@ class Navbar: UIToolbar {
         
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         
-        let items: [UIBarButtonItem] = [flexibleSpace, home!, flexibleSpace, notification!,
-                                        flexibleSpace, profile!, flexibleSpace]
+        let items: [UIBarButtonItem] = [flexibleSpace, home, flexibleSpace, notification,
+                                        flexibleSpace, profile, flexibleSpace]
         
         self.setItems(items, animated: false)
         

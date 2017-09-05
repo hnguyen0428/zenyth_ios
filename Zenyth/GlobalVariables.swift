@@ -26,3 +26,5 @@ let minimumPasswordLength = 8
 let maximumPasswordLength = 16
 let minimumUsernameLength = 3
 let maximumUsernameLength = 20
+
+let defaultZoom: Float = 13.0

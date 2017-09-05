@@ -27,4 +27,8 @@ class InfoAsset: UIButton {
     func setCount(count: Int) {
         self.setTitle(String(count), for: .normal)
     }
+    
+    deinit {
+        debugPrint("Deinitializing \(self)")
+    }
 }

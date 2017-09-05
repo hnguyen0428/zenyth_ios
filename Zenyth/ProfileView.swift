@@ -9,17 +9,17 @@
 import UIKit
 
 class ProfileView: UIView {
-    var profilePicture: UIImageView?
-    var nameLabel: UILabel?
-    var bioText: UITextView?
-    var usernameLabel: UILabel?
-    var actionButton: UIButton? // Either edit profile or follow
-    var settingsButton: UIButton?
-    var topPinLabel: UILabel?
-    var pinView: PinView?
-    var userInfoBar: UserInfoBar?
+    weak var profilePicture: UIImageView?
+    weak var nameLabel: UILabel?
+    weak var bioText: UITextView?
+    weak var usernameLabel: UILabel?
+    weak var actionButton: UIButton? // Either edit profile or follow
+    weak var settingsButton: UIButton?
+    weak var topPinLabel: UILabel?
+    weak var pinView: PinView?
+    weak var userInfoBar: UserInfoBar?
     
-    var controller: UIViewController?
+    weak var controller: UIViewController?
     
     var maxHeight: CGFloat = 0
     
@@ -78,10 +78,6 @@ class ProfileView: UIView {
     static let RIGHT_INSET: CGFloat = 0.02
     static let TOP_INSET: CGFloat = 0.04
     
-    // Used for simulating request loading
-    var requestLoadingMask: UIView?
-    var indicator: UIActivityIndicatorView?
-    
     init(_ controller: UIViewController, frame: CGRect, user: User,
          foreign: Bool = false, followStatus: String? = nil) {
         self.controller = controller
@@ -136,15 +132,16 @@ class ProfileView: UIView {
         let profilePictureFrame = CGRect(x: 0, y: 0, width: widthPicture,
                                          height: heightPicture)
         
-        self.profilePicture = UIImageView()
+        let profilePicture = UIImageView()
+        self.profilePicture = profilePicture
         if let image = user.profilePicture {
-            profilePicture?.imageFromUrl(withUrl: image.getURL(size: "small"))
+            profilePicture.imageFromUrl(withUrl: image.getURL(size: "small"))
         }
         else {
-            profilePicture?.image = #imageLiteral(resourceName: "default_profile")
+            profilePicture.image = #imageLiteral(resourceName: "default_profile")
         }
         
-        let container = profilePicture!.roundedImageWithShadow(frame: profilePictureFrame)
+        let container = profilePicture.roundedImageWithShadow(frame: profilePictureFrame)
         self.addSubview(container)
         
         let topConstant: CGFloat = self.frame.height * ProfileView.TOP_INSET
@@ -161,14 +158,15 @@ class ProfileView: UIView {
     func setupUsernameLabel(username: String) {
         let height = self.frame.height * ProfileView.HEIGHT_OF_USERNAME_LABEL
         let width = self.frame.width * ProfileView.WIDTH_OF_USERNAME_LABEL
-        usernameLabel = UILabel()
-        usernameLabel!.text = username
+        let usernameLabel = UILabel()
+        self.usernameLabel = usernameLabel
+        usernameLabel.text = username
         
-        self.addSubview(usernameLabel!)
+        self.addSubview(usernameLabel)
         
         let topConstant: CGFloat = self.frame.height * ProfileView.USERNAME_TOP_INSET
         let leftConstant: CGFloat = self.frame.width * ProfileView.USERNAME_LEFT_INSET
-        usernameLabel?.anchor(topAnchor,
+        usernameLabel.anchor(topAnchor,
                               left: profilePicture?.rightAnchor, bottom: nil,
                               right: nil, topConstant: topConstant, leftConstant: leftConstant,
                               bottomConstant: 0, rightConstant: 0,
@@ -179,23 +177,24 @@ class ProfileView: UIView {
                            controller: UIViewController) {
         let height = self.frame.height * ProfileView.HEIGHT_OF_ACTION_BUTTON
         let width = self.frame.width * ProfileView.WIDTH_OF_ACTION_BUTTON
-        actionButton = UIButton()
+        let actionButton = UIButton()
+        self.actionButton = actionButton
         if !foreign {
-            actionButton!.setTitle("Edit Profile", for: .normal)
-            actionButton!.setTitleColor(UIColor.black, for: .normal)
-            actionButton!.titleLabel?.font = UIFont.boldSystemFont(ofSize: ProfileView.TITLE_FONT_SIZE)
+            actionButton.setTitle("Edit Profile", for: .normal)
+            actionButton.setTitleColor(UIColor.black, for: .normal)
+            actionButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: ProfileView.TITLE_FONT_SIZE)
             
-            actionButton!.layer.cornerRadius = ProfileView.EDIT_PROFILE_CORNER_RADIUS
-            actionButton!.layer.borderWidth = ProfileView.BORDER_WIDTH
-            actionButton!.layer.borderColor = UIColor.lightGray.cgColor
+            actionButton.layer.cornerRadius = ProfileView.EDIT_PROFILE_CORNER_RADIUS
+            actionButton.layer.borderWidth = ProfileView.BORDER_WIDTH
+            actionButton.layer.borderColor = UIColor.lightGray.cgColor
         } else {
             if let status = followStatus {
                 configureActionButton(status: status, controller: controller)
             }
         }
         
-        self.addSubview(actionButton!)
-        actionButton!.anchor(usernameLabel?.bottomAnchor, left: usernameLabel?.leftAnchor,
+        self.addSubview(actionButton)
+        actionButton.anchor(usernameLabel?.bottomAnchor, left: usernameLabel?.leftAnchor,
                              bottom: nil, right: nil, topConstant: 0, leftConstant: 0,
                              bottomConstant: 0, rightConstant: 0,
                              widthConstant: width, heightConstant: height)
@@ -235,13 +234,14 @@ class ProfileView: UIView {
         let image = #imageLiteral(resourceName: "settings_icon")
         let height = self.frame.height * ProfileView.HEIGHT_OF_SETTINGS_BUTTON
         let width = height
-        settingsButton = UIButton()
-        settingsButton?.setImage(image, for: .normal)
+        let settingsButton = UIButton()
+        self.settingsButton = settingsButton
+        settingsButton.setImage(image, for: .normal)
         
-        self.addSubview(settingsButton!)
+        self.addSubview(settingsButton)
         let topConstant = self.frame.height * ProfileView.TOP_INSET
         let rightConstant = self.frame.width * ProfileView.RIGHT_INSET
-        settingsButton?.anchor(topAnchor, left: nil, bottom: nil,
+        settingsButton.anchor(topAnchor, left: nil, bottom: nil,
                                right: rightAnchor, topConstant: topConstant,
                                leftConstant: 0, bottomConstant: 0,
                                rightConstant: rightConstant, widthConstant: width,
@@ -251,14 +251,15 @@ class ProfileView: UIView {
     func setupNameLabel(name: String) {
         let height = self.frame.height * ProfileView.HEIGHT_OF_NAME_LABEL
         let width = self.frame.width * ProfileView.WIDTH_OF_NAME_LABEL
-        nameLabel = UILabel()
-        nameLabel!.font = UIFont.boldSystemFont(ofSize: ProfileView.NAME_FONT_SIZE)
-        nameLabel!.text = name
+        let nameLabel = UILabel()
+        self.nameLabel = nameLabel
+        nameLabel.font = UIFont.boldSystemFont(ofSize: ProfileView.NAME_FONT_SIZE)
+        nameLabel.text = name
         
-        self.addSubview(nameLabel!)
+        self.addSubview(nameLabel)
         let leftConstant: CGFloat = self.frame.width * ProfileView.NAME_LEFT_INSET
         let topConstant: CGFloat = self.frame.height * ProfileView.NAME_TOP_INSET
-        nameLabel?.anchor(profilePicture?.bottomAnchor,
+        nameLabel.anchor(profilePicture?.bottomAnchor,
                           left: leftAnchor, bottom: nil,
                           right: nil, topConstant: topConstant, leftConstant: leftConstant,
                           bottomConstant: 0, rightConstant: 0,
@@ -271,19 +272,20 @@ class ProfileView: UIView {
         let height = self.frame.height * ProfileView.HEIGHT_OF_BIO
         let width = self.frame.width * ProfileView.WIDTH_OF_BIO
         let frame = CGRect(x: 0, y: 0, width: width, height: height)
-        bioText = UITextView(frame: frame)
-        bioText!.isUserInteractionEnabled = false
-        bioText!.font = UIFont(name: ProfileView.BIO_FONT, size: ProfileView.BIO_FONT_SIZE)
-        bioText?.text = bio
-        bioText?.backgroundColor = UIColor.clear
+        let bioText = UITextView(frame: frame)
+        self.bioText = bioText
+        bioText.isUserInteractionEnabled = false
+        bioText.font = UIFont(name: ProfileView.BIO_FONT, size: ProfileView.BIO_FONT_SIZE)
+        bioText.text = bio
+        bioText.backgroundColor = UIColor.clear
         
-        self.addSubview(bioText!)
+        self.addSubview(bioText)
         
         let leftConstant: CGFloat = self.frame.width * ProfileView.BIO_LEFT_INSET
         let rightConstant = leftConstant
-        let textHeight = bioText!.contentSize.height
+        let textHeight = bioText.contentSize.height
         let topAnchor = nameLabel == nil ? profilePicture?.bottomAnchor : nameLabel?.bottomAnchor
-        bioText?.anchor(topAnchor,
+        bioText.anchor(topAnchor,
                         left: leftAnchor,
                         bottom: nil, right: rightAnchor, topConstant: 0,
                         leftConstant: leftConstant, bottomConstant: 0, rightConstant: rightConstant,
@@ -296,13 +298,14 @@ class ProfileView: UIView {
         let width = self.frame.width * ProfileView.WIDTH_OF_TOP_PINS
         let height = self.frame.height * ProfileView.HEIGHT_OF_TOP_PINS
         
-        topPinLabel = UILabel()
-        topPinLabel!.text = "Top Pins"
-        topPinLabel!.textAlignment = NSTextAlignment.center
-        topPinLabel!.font = UIFont(name: ProfileView.TOP_PINS_FONT,
+        let topPinLabel = UILabel()
+        self.topPinLabel = topPinLabel
+        topPinLabel.text = "Top Pins"
+        topPinLabel.textAlignment = NSTextAlignment.center
+        topPinLabel.font = UIFont(name: ProfileView.TOP_PINS_FONT,
                                    size: ProfileView.TOP_PINS_FONT_SIZE)
         
-        self.addSubview(topPinLabel!)
+        self.addSubview(topPinLabel)
         
         var topAnchor: NSLayoutYAxisAnchor? = nil
         if bioText != nil {
@@ -315,7 +318,7 @@ class ProfileView: UIView {
             topAnchor = profilePicture?.bottomAnchor
         }
         
-        topPinLabel?.anchor(topAnchor!, left: centerXAnchor, bottom: nil,
+        topPinLabel.anchor(topAnchor!, left: centerXAnchor, bottom: nil,
                             right: nil, topConstant: 0, leftConstant: -(width/2),
                             bottomConstant: 0, rightConstant: 0,
                             widthConstant: width, heightConstant: height)
@@ -328,28 +331,29 @@ class ProfileView: UIView {
         let width = self.frame.width
         let frame = CGRect(x: 0, y: 0, width: width, height: height)
         
-        pinView = PinView(controller!, frame: frame, pinposts: pinposts)
-        
-        self.addSubview(pinView!)
-        pinView?.anchor(topPinLabel?.bottomAnchor, left: nil, bottom: nil,
+        let pinView = PinView(controller!, frame: frame, pinposts: pinposts)
+        self.pinView = pinView
+        self.addSubview(pinView)
+        pinView.anchor(topPinLabel?.bottomAnchor, left: nil, bottom: nil,
                         right: nil, topConstant: 0, leftConstant: 0,
                         bottomConstant: 0, rightConstant: 0,
-                        widthConstant: pinView!.frame.width,
-                        heightConstant: pinView!.frame.height)
+                        widthConstant: width,
+                        heightConstant: height)
         
-        maxHeight = maxHeight + pinView!.frame.height
+        maxHeight = maxHeight + pinView.frame.height
     }
     
     func setupUserInfoBar(followers: UInt32, likes: UInt32, numberOfPinposts: UInt32) {
         let width = self.frame.width * ProfileView.WIDTH_OF_BAR
         let height = self.frame.height * ProfileView.HEIGHT_OF_BAR
         let frame = CGRect(x: 0, y: 0, width: width, height: height)
-        userInfoBar = UserInfoBar(frame: frame)
-        userInfoBar!.likeButton?.setTitle(String(likes), for: .normal)
-        userInfoBar!.pinButton?.setTitle(String(numberOfPinposts), for: .normal)
-        userInfoBar!.followerButton?.setTitle(String(followers), for: .normal)
+        let userInfoBar = UserInfoBar(frame: frame)
+        self.userInfoBar = userInfoBar
+        userInfoBar.likeButton?.setTitle(String(likes), for: .normal)
+        userInfoBar.pinButton?.setTitle(String(numberOfPinposts), for: .normal)
+        userInfoBar.followerButton?.setTitle(String(followers), for: .normal)
         
-        self.addSubview(userInfoBar!)
+        self.addSubview(userInfoBar)
         
         
         var topAnchor: NSLayoutYAxisAnchor? = nil
@@ -369,7 +373,7 @@ class ProfileView: UIView {
         let topConstant: CGFloat = self.frame.height * ProfileView.BAR_TOP_INSET
         let leftConstant: CGFloat = self.frame.width * ProfileView.BAR_LEFT_INSET
         
-        userInfoBar!.anchor(topAnchor, left: pinView?.leftAnchor,
+        userInfoBar.anchor(topAnchor, left: pinView?.leftAnchor,
                             bottom: nil, right: nil, topConstant: topConstant,
                             leftConstant: leftConstant, bottomConstant: 0,
                             rightConstant: 0, widthConstant: width,
@@ -378,4 +382,7 @@ class ProfileView: UIView {
         maxHeight = maxHeight + height + topConstant
     }
     
+    deinit {
+        debugPrint("Deinitializing \(self)")
+    }
 }

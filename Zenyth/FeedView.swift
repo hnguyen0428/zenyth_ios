@@ -19,7 +19,7 @@ class FeedView: UIView {
     var tgExpandPost: UITapGestureRecognizer!
     var tgProfile: UITapGestureRecognizer!
     var pinpost: Pinpost!
-    var controller: UIViewController?
+    weak var controller: UIViewController?
     
     var topY: CGFloat = 0
     
@@ -160,6 +160,10 @@ class FeedView: UIView {
             }
         }
         return false
+    }
+    
+    deinit {
+        debugPrint("Deinitializing \(self)")
     }
     
 }

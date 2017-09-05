@@ -13,7 +13,6 @@ class ImageCell: UICollectionViewCell {
     
     var imageView: UIImageView!
     var picked: Bool = false
-    var shade: UIView?
     
     override var isSelected: Bool {
         willSet {

@@ -244,4 +244,8 @@ class ImageGalleryController: UIViewController, UICollectionViewDelegate,
         return self.imageCropper?.imageView
     }
     
+    
+    deinit {
+        print("Deinitializing")
+    }
 }

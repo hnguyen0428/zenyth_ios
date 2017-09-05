@@ -12,7 +12,7 @@ import UIKit
 class PinThumbnail: UIImageView {
     
     var pinpost: Pinpost!
-    var delegate: PinThumbnailDelegate?
+    weak var delegate: PinThumbnailDelegate?
     
     static let LONG_PRESS_DURATION: Double = 0.8
     
@@ -52,6 +52,10 @@ class PinThumbnail: UIImageView {
     
     func didLongPress(_ lp: UILongPressGestureRecognizer) {
         delegate?.didLongPress(on: pinpost)
+    }
+    
+    deinit {
+        debugPrint("Deinitializing \(self)")
     }
 }
 

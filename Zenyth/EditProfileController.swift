@@ -265,4 +265,8 @@ class EditProfileController: HomeController, UIImagePickerControllerDelegate,
     func popBackToProfile() {
         self.navigationController?.popViewController(animated: true)
     }
+    
+    deinit {
+        print("Deinitializing")
+    }
 }

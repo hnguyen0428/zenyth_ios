@@ -14,7 +14,6 @@ import UIKit
  */
 class ImagesScroller: UIScrollView {
     
-    var imageViews: [UIImageView] = [UIImageView]()
     var images: [Image] = [Image]()
     var currIndex = 0
     var numImageSet = 0
@@ -46,7 +45,6 @@ class ImagesScroller: UIScrollView {
         let imageView = UIImageView(frame: frame)
         imageView.backgroundColor = .black
         imageView.imageFromUrl(withUrl: image.getURL(size: "large"))
-        imageViews.append(imageView)
         
         // Resize the content size so that you can scroll further
         self.contentSize.width += imageView.frame.width
@@ -60,6 +58,10 @@ class ImagesScroller: UIScrollView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    deinit {
+        debugPrint("Deinitializing \(self)")
     }
 }
 

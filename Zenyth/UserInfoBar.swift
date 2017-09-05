@@ -10,13 +10,9 @@ import UIKit
 
 class UserInfoBar: UIToolbar {
     
-    var likeBarButton: UIBarButtonItem?
-    var followerBarButton: UIBarButtonItem?
-    var pinBarButton: UIBarButtonItem?
-    
-    var likeButton: InfoAsset?
-    var followerButton: InfoAsset?
-    var pinButton: InfoAsset?
+    weak var likeButton: InfoAsset?
+    weak var followerButton: InfoAsset?
+    weak var pinButton: InfoAsset?
     
     // UI Sizing
     static let WIDTH_OF_BUTTON: CGFloat = 0.33
@@ -33,31 +29,38 @@ class UserInfoBar: UIToolbar {
         let heightButton = frame.height
         let buttonFrame = CGRect(x: 0, y: 0, width: widthButton, height: heightButton)
         
-        likeButton = InfoAsset(image: #imageLiteral(resourceName: "like_icon"), frame: buttonFrame)
-        followerButton = InfoAsset(image: #imageLiteral(resourceName: "followers_icon"), frame: buttonFrame)
-        pinButton = InfoAsset(image: #imageLiteral(resourceName: "pin_icon"), frame: buttonFrame)
+        let likeButton = InfoAsset(image: #imageLiteral(resourceName: "like_icon"), frame: buttonFrame)
+        self.likeButton = likeButton
+        let followerButton = InfoAsset(image: #imageLiteral(resourceName: "followers_icon"), frame: buttonFrame)
+        self.followerButton = followerButton
+        let pinButton = InfoAsset(image: #imageLiteral(resourceName: "pin_icon"), frame: buttonFrame)
+        self.pinButton = pinButton
         
-        likeBarButton = {
-            let button = UIBarButtonItem(customView: likeButton!)
+        let likeBarButton: UIBarButtonItem = {
+            let button = UIBarButtonItem(customView: likeButton)
             return button
         }()
         
-        followerBarButton = {
-            let button = UIBarButtonItem(customView: followerButton!)
+        let followerBarButton: UIBarButtonItem = {
+            let button = UIBarButtonItem(customView: followerButton)
             return button
         }()
         
-        pinBarButton = {
-            let button = UIBarButtonItem(customView: pinButton!)
+        let pinBarButton: UIBarButtonItem = {
+            let button = UIBarButtonItem(customView: pinButton)
             return button
         }()
         
-        let items: [UIBarButtonItem] = [likeBarButton!, flexibleSpace, followerBarButton!,
-                                        flexibleSpace, pinBarButton!]
+        let items: [UIBarButtonItem] = [likeBarButton, flexibleSpace, followerBarButton,
+                                        flexibleSpace, pinBarButton]
         self.setItems(items, animated: false)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    deinit {
+        debugPrint("Deinitializing \(self)")
     }
 }

@@ -219,4 +219,8 @@ class PinpostFormController: UIViewController, UITextViewDelegate,
     public func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
+    
+    deinit {
+        print("Deinitializing")
+    }
 }

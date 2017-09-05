@@ -155,7 +155,10 @@ class FeedInfoView: UIView {
         
         let frame = CGRect(x: x, y: y, width: width, height: height)
         actionBar = PostActionBar(frame: frame)
-        
         self.addSubview(actionBar!)
+    }
+    
+    deinit {
+        debugPrint("Deinitializing \(self)")
     }
 }

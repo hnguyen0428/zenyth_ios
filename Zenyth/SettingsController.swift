@@ -74,4 +74,8 @@ class SettingsController: HomeController {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
+    
+    deinit {
+        print("Deinitializing")
+    }
 }

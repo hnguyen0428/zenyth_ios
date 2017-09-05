@@ -14,7 +14,6 @@ class ImageViewer: UIScrollView {
     var image: Image?
     var view: UIView?
     var imageView: UIImageView?
-    var tg: UITapGestureRecognizer?
     
     static let MIN_ZOOM_SCALE: CGFloat = 1.0
     static let MAX_ZOOM_SCALE: CGFloat = 10.0

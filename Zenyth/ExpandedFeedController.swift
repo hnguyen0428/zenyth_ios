@@ -12,10 +12,10 @@ import UIKit
 class ExpandedFeedController: HomeController, ImageViewControllerDelegate,
                             ImagesScrollerDelegate {
     
-    var expandedFeedView: ExpandedFeedView!
+    weak var expandedFeedView: ExpandedFeedView?
+    weak var commentCreateView: CommentCreateView?
     var pinpostId: UInt32!
     var pinpost: Pinpost?
-    var commentCreateView: CommentCreateView?
     var defaultFrame: CGRect?
     
     static let COMMENT_CREATE_VIEW_HEIGHT: CGFloat = 0.07
@@ -62,12 +62,13 @@ class ExpandedFeedController: HomeController, ImageViewControllerDelegate,
         let y = toolbar!.frame.origin.y - height
         let frame = CGRect(x: x, y: y, width: width, height: height)
         self.defaultFrame = frame
-        commentCreateView = CommentCreateView(frame: frame)
+        let commentCreateView = CommentCreateView(frame: frame)
+        self.commentCreateView = commentCreateView
         
-        commentCreateView?.postButton.addTarget(self, action: #selector(createComment),
+        commentCreateView.postButton.addTarget(self, action: #selector(createComment),
                                                 for: .touchUpInside)
         
-        view.addSubview(commentCreateView!)
+        view.addSubview(commentCreateView)
     }
     
     /**
@@ -91,16 +92,17 @@ class ExpandedFeedController: HomeController, ImageViewControllerDelegate,
                 let height = self.view.frame.height - self.toolbar!.frame.height
                 let frame = CGRect(x: 0, y: 0,
                                    width: self.view.frame.width, height: height)
-                self.expandedFeedView = ExpandedFeedView(controller: self,
-                                                         frame: frame,
-                                                         pinpost: pinpost)
-                self.expandedFeedView.imagesScroller.customDelegate = self
-                self.view.addSubview(self.expandedFeedView)
+                let expandedFeedView = ExpandedFeedView(controller: self,
+                                                        frame: frame,
+                                                        pinpost: pinpost)
+                expandedFeedView.imagesScroller.customDelegate = self
+                self.expandedFeedView = expandedFeedView
+                self.view.addSubview(expandedFeedView)
                 
                 self.setupCommentCreateView()
                 self.hideKeyboardWhenTappedAround()
                 
-                let commentButton = self.expandedFeedView.feedInfoView.actionBar?.commentButton
+                let commentButton = expandedFeedView.feedInfoView.actionBar?.commentButton
                 commentButton?.addTarget(self, action: #selector(self.showKeyboard), for: .touchUpInside)
         })
     }
@@ -114,7 +116,7 @@ class ExpandedFeedController: HomeController, ImageViewControllerDelegate,
                                            text: text,
                                            onSuccess:
                 { comment in
-                    self.expandedFeedView.addComment(comment: comment)
+                    self.expandedFeedView!.addComment(comment: comment)
                     self.commentCreateView?.textfield.resignFirstResponder()
                     self.commentCreateView?.textfield.text = ""
             })
@@ -127,7 +129,7 @@ class ExpandedFeedController: HomeController, ImageViewControllerDelegate,
     override func hideKeyboardWhenTappedAround() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = true
-        expandedFeedView.addGestureRecognizer(tap)
+        expandedFeedView!.addGestureRecognizer(tap)
     }
     
     /**
@@ -170,5 +172,9 @@ class ExpandedFeedController: HomeController, ImageViewControllerDelegate,
         imageVC.image = image
         
         self.present(imageVC, animated: true, completion: nil)
+    }
+    
+    deinit {
+        print("Deinitializing")
     }
 }

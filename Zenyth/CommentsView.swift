@@ -15,7 +15,6 @@ import UIKit
 class CommentsView: UIView {
     
     var comments: [Comment] = [Comment]()
-    var commentCells: [CommentCell] = [CommentCell]()
     var commentFrame: CGRect!
     var numComments = 0
     var maxHeight: CGFloat = 0
@@ -40,7 +39,6 @@ class CommentsView: UIView {
                            width: commentFrame.width, height: commentFrame.height)
         let commentCell = CommentCell(frame: frame,
                                       comment: comment)
-        self.commentCells.append(commentCell)
         self.addSubview(commentCell)
         let newHeight = self.frame.height + commentFrame.height
         self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y,
@@ -48,6 +46,9 @@ class CommentsView: UIView {
         
         numComments += 1
         maxHeight += commentFrame.height
-        commentCell.renderProfilePic()
+    }
+    
+    deinit {
+        debugPrint("Deinitializing \(self)")
     }
 }

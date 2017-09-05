@@ -11,13 +11,9 @@ import UIKit
 
 class PostActionBar: UIToolbar {
     
-    var likeButton: UIButton?
-    var bookmarkButton: UIButton?
-    var commentButton: UIButton?
-    
-    var likeBarButton: UIBarButtonItem?
-    var bookmarkBarButton: UIBarButtonItem?
-    var commentBarButton: UIBarButtonItem?
+    weak var likeButton: UIButton?
+    weak var bookmarkButton: UIButton?
+    weak var commentButton: UIButton?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,7 +30,7 @@ class PostActionBar: UIToolbar {
         
         let buttonHeight = self.frame.height * 0.80
         
-        likeBarButton = {
+        let likeBarButton: UIBarButtonItem = {
             let buttonWidth = buttonHeight * ratioLikeIcon
             let buttonFrame = CGRect(x: 0, y: 0,
                                      width: buttonWidth, height: buttonHeight)
@@ -47,7 +43,7 @@ class PostActionBar: UIToolbar {
             return barbutton
         }()
         
-        bookmarkBarButton = {
+        let bookmarkBarButton: UIBarButtonItem = {
             let buttonWidth = buttonHeight * ratioBookmarkIcon
             let buttonFrame = CGRect(x: 0, y: 0,
                                      width: buttonWidth, height: buttonHeight)
@@ -60,7 +56,7 @@ class PostActionBar: UIToolbar {
             return barbutton
         }()
         
-        commentBarButton = {
+        let commentBarButton: UIBarButtonItem = {
             let buttonWidth = buttonHeight * ratioCommentIcon
             let buttonFrame = CGRect(x: 0, y: 0,
                                      width: buttonWidth, height: buttonHeight)
@@ -74,8 +70,8 @@ class PostActionBar: UIToolbar {
         }()
         
         let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let items: [UIBarButtonItem] = [likeBarButton!, flex, bookmarkBarButton!,
-                                        flex, commentBarButton!]
+        let items: [UIBarButtonItem] = [likeBarButton, flex, bookmarkBarButton,
+                                        flex, commentBarButton]
         self.setItems(items, animated: false)
         self.backgroundColor = UIColor.clear
         self.setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
@@ -84,5 +80,9 @@ class PostActionBar: UIToolbar {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    deinit {
+        debugPrint("Deinitializing \(self)")
     }
 }
