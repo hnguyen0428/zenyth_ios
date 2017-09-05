@@ -93,4 +93,9 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
         
     }
     
+    deinit {
+        pg = nil
+        print("Deinitializing")
+    }
+    
 }

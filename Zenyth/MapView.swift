@@ -13,16 +13,27 @@ import GoogleMaps
  The customized GMSMapView
  */
 class MapView: GMSMapView {
-    var searchButton: UIButton?
-    var recenterButton: UIButton?
+    weak var searchButton: UIButton?
+    weak var recenterButton: UIButton?
     var loadedPins: [UInt32] = [UInt32]()
     
     static let LONG_PRESS_DURATION = 1.5
     
-    init(frame: CGRect, controller: UIViewController) {
+    init(frame: CGRect, controller: UIViewController, zoom: Float,
+         coord: CLLocationCoordinate2D? = nil) {
         super.init(frame: frame)
         let view = controller.view!
-        let camera = GMSCameraPosition.camera(withLatitude: 33.81, longitude: -117.94, zoom: 13.0)
+        
+        var camera: GMSCameraPosition!
+        if let camCoord = coord {
+            camera = GMSCameraPosition.camera(withLatitude: camCoord.latitude,
+                                                  longitude: camCoord.longitude,
+                                                  zoom: zoom)
+        }
+        else {
+            camera = GMSCameraPosition.camera(withLatitude: 33.81, longitude: -117.94,
+                                                  zoom: zoom)
+        }
         self.camera = camera
         
         let buttonHeight = view.frame.height * 0.06
@@ -42,14 +53,16 @@ class MapView: GMSMapView {
         let recenterButtonFrame = CGRect(x: recenterButtonX, y: recenterButtonY,
                                          width: buttonWidth, height: buttonHeight)
         
-        searchButton = UIButton(frame: searchButtonFrame)
-        recenterButton = UIButton(frame: recenterButtonFrame)
+        let searchButton = UIButton(frame: searchButtonFrame)
+        self.searchButton = searchButton
+        let recenterButton = UIButton(frame: recenterButtonFrame)
+        self.recenterButton = recenterButton
         
-        searchButton!.setImage(#imageLiteral(resourceName: "search_icon"), for: .normal)
-        recenterButton!.setImage(#imageLiteral(resourceName: "recenter_icon"), for: .normal)
+        searchButton.setImage(#imageLiteral(resourceName: "search_icon"), for: .normal)
+        recenterButton.setImage(#imageLiteral(resourceName: "recenter_icon"), for: .normal)
         
-        self.addSubview(searchButton!)
-        self.addSubview(recenterButton!)
+        self.addSubview(searchButton)
+        self.addSubview(recenterButton)
     }
     
     func loadMarkers(pinposts: [Pinpost]) {

@@ -13,12 +13,12 @@ import Photos
 class EditProfileController: HomeController, UIImagePickerControllerDelegate,
                             UINavigationControllerDelegate {
     
-    var navbar: EditProfileToolbar?
-    var scrollView: UIScrollView?
+    weak var navbar: EditProfileToolbar?
+    weak var scrollView: UIScrollView?
     var user: User?
-    var profileImageView: UIImageView?
-    var profileImage: UIImage?
-    var profileEditView: ProfileEditView?
+    weak var profileImageView: UIImageView?
+    weak var profileImage: UIImage?
+    weak var profileEditView: ProfileEditView?
     
     let galleryPicker = UIImagePickerController()
     
@@ -44,17 +44,19 @@ class EditProfileController: HomeController, UIImagePickerControllerDelegate,
         let navbarWidth = view.frame.width
         let navbarHeight = view.frame.height * 0.09
         let navbarFrame = CGRect(x: 0, y: 0, width: navbarWidth, height: navbarHeight)
-        navbar = EditProfileToolbar(frame: navbarFrame)
-        view.addSubview(navbar!)
+        let navbar = EditProfileToolbar(frame: navbarFrame)
+        self.navbar = navbar
+        view.addSubview(navbar)
         
         let scrollViewWidth: CGFloat = view.frame.width
         let scrollViewHeight: CGFloat = view.frame.height - navbarFrame.height
         let scrollViewFrame = CGRect(x: 0, y: navbarFrame.height,
                                      width: scrollViewWidth, height: scrollViewHeight)
-        scrollView = UIScrollView(frame: scrollViewFrame)
-        scrollView?.contentSize.height = view.frame.height
-        scrollView?.backgroundColor = UIColor(r: 240, g: 240, b: 240)
-        view.insertSubview(scrollView!, at: 0)
+        let scrollView = UIScrollView(frame: scrollViewFrame)
+        self.scrollView = scrollView
+        scrollView.contentSize.height = view.frame.height
+        scrollView.backgroundColor = UIColor(r: 240, g: 240, b: 240)
+        view.insertSubview(scrollView, at: 0)
         
         self.setupProfileImageView()
         self.setupProfileEditView()
@@ -70,16 +72,18 @@ class EditProfileController: HomeController, UIImagePickerControllerDelegate,
         let imageY: CGFloat = 20.0
         let imageFrame = CGRect(x: imageX, y: imageY, width: imageWidth, height: imageHeight)
         
-        let image = UIImageView(frame: imageFrame)
-        let container = image.roundedImageWithShadow(frame: imageFrame)
+        let imageView = UIImageView(frame: imageFrame)
+        let container = imageView.roundedImageWithShadow(frame: imageFrame)
         
-        profileImageView = image
+        profileImageView = imageView
         
         // If the profile image has not been rendered, render it
         if let image = profileImage {
-            profileImageView?.image = image
-        } else {
-            profileImageView?.imageFromUrl(withUrl: (user?.profilePicture?.getURL(size: "medium"))!)
+            imageView.image = image
+        } else if let image = user?.profilePicture {
+            let url = URL(string: image.getURL(size: .small))
+            imageView.sd_setImage(with: url,
+                                  placeholderImage: #imageLiteral(resourceName: "default_profile"))
         }
         scrollView?.addSubview(container)
 
@@ -96,8 +100,9 @@ class EditProfileController: HomeController, UIImagePickerControllerDelegate,
         let height = view.frame.height * 0.28
         let frame = CGRect(x: x, y: y, width: view.frame.width, height: height)
         
-        profileEditView = ProfileEditView(frame: frame)
-        scrollView?.addSubview(profileEditView!)
+        let profileEditView = ProfileEditView(frame: frame)
+        self.profileEditView = profileEditView
+        scrollView?.addSubview(profileEditView)
     }
     
     func setupDatePicker() {
@@ -264,5 +269,9 @@ class EditProfileController: HomeController, UIImagePickerControllerDelegate,
     
     func popBackToProfile() {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    deinit {
+        print("Deinitializing")
     }
 }

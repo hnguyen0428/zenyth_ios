@@ -11,14 +11,12 @@ import UIKit
 
 class ImageCropper: UIScrollView {
     
-    var image: UIImage!
-    var imageView: UIImageView!
+    weak var imageView: UIImageView?
     
     static let MIN_ZOOM_SCALE: CGFloat = 1.0
     static let MAX_ZOOM_SCALE: CGFloat = 10.0
     
     init(frame: CGRect, image: UIImage) {
-        self.image = image
         super.init(frame: frame)
         
         self.minimumZoomScale = ImageCropper.MIN_ZOOM_SCALE
@@ -45,7 +43,8 @@ class ImageCropper: UIScrollView {
             let origin = CGPoint.zero
             let frame = CGRect(x: origin.x, y: origin.y,
                                width: width, height: height)
-            imageView = UIImageView(frame: frame)
+            let imageView = UIImageView(frame: frame)
+            self.imageView = imageView
         }
         else { // landscape image
             let height = self.frame.height
@@ -53,17 +52,18 @@ class ImageCropper: UIScrollView {
             let origin = CGPoint.zero
             let frame = CGRect(x: origin.x, y: origin.y,
                                width: width, height: height)
-            imageView = UIImageView(frame: frame)
+            let imageView = UIImageView(frame: frame)
+            self.imageView = imageView
         }
-        imageView.image = image
-        self.addSubview(imageView)
-        self.contentSize.height = imageView.frame.height
-        self.contentSize.width = imageView.frame.width
+        imageView!.image = image
+        self.addSubview(imageView!)
+        self.contentSize.height = imageView!.frame.height
+        self.contentSize.width = imageView!.frame.width
     }
     
     func cropImage() -> UIImage {
         let cropArea = calculateCropArea()
-        let croppedCGImage = imageView.image?.cgImage?.cropping(to: cropArea)
+        let croppedCGImage = imageView?.image?.cgImage?.cropping(to: cropArea)
         let croppedImage = UIImage(cgImage: croppedCGImage!)
         
         return croppedImage
@@ -72,6 +72,8 @@ class ImageCropper: UIScrollView {
     func calculateCropArea() -> CGRect {
         let scale = 1 / self.zoomScale
         
+        guard let imageView = self.imageView else {return CGRect.zero}
+        guard let image = imageView.image else {return CGRect.zero}
         let heightRatio = image.size.height / imageView.frame.height
         let widthRatio = image.size.width / imageView.frame.width
         

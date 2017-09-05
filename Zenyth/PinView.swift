@@ -12,7 +12,7 @@ class PinView: UIScrollView {
     
     var pinThumbnails: [PinThumbnail] = [PinThumbnail]()
     var numPins = 0
-    var controller: UIViewController!
+    weak var controller: UIViewController!
     
     // UI Sizing
     static let LEFT_INSET: CGFloat = 0.025
@@ -58,5 +58,9 @@ class PinView: UIScrollView {
         self.addSubview(container)
         self.contentSize.width = container.frame.maxX + leftInset
         self.numPins += 1
+    }
+    
+    deinit {
+        debugPrint("Deinitializing \(self)")
     }
 }

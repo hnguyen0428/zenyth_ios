@@ -14,15 +14,16 @@ import UIKit
  */
 class ExpandedFeedView: UIScrollView {
     
-    var imagesScroller: ImagesScroller!
-    var commentsView: CommentsView!
+    weak var imagesScroller: ImagesScroller!
+    weak var commentsView: CommentsView!
+    weak var feedInfoView: FeedInfoView!
+    weak var profilePicView: UIImageView!
+    weak var returnButton: UIButton!
+    
     var pinpost: Pinpost!
-    var feedInfoView: FeedInfoView!
-    var profilePicView: UIImageView!
-    var returnButton: UIButton!
     
     var maxHeight: CGFloat = 0
-    var controller: UIViewController?
+    weak var controller: UIViewController?
     
     // Constants for UI sizing
     static let CELL_HEIGHT: CGFloat = 0.08
@@ -73,7 +74,8 @@ class ExpandedFeedView: UIScrollView {
         let y = CGFloat(0)
         let frame = CGRect(x: x, y: y, width: width, height: height)
         
-        imagesScroller = ImagesScroller(frame: frame, images: pinpost.images)
+        let imagesScroller = ImagesScroller(frame: frame, images: pinpost.images)
+        self.imagesScroller = imagesScroller
         self.addSubview(imagesScroller)
     }
     
@@ -84,11 +86,18 @@ class ExpandedFeedView: UIScrollView {
         let y = feedInfoView.frame.origin.y - height/2
         let frame = CGRect(x: x, y: y, width: width, height: height)
         
-        profilePicView = UIImageView(frame: frame)
-        profilePicView.image = #imageLiteral(resourceName: "default_profile")
+        let profilePicView = UIImageView(frame: frame)
+        self.profilePicView = profilePicView
+        
         if let image = user.profilePicture {
-            profilePicView.imageFromUrl(withUrl: image.getURL(size: "small"))
+            let url = URL(string: image.getURL(size: .small))
+            profilePicView.sd_setImage(with: url,
+                                       placeholderImage: #imageLiteral(resourceName: "default_profile"))
         }
+        else {
+            profilePicView.image = #imageLiteral(resourceName: "default_profile")
+        }
+        
         let container = profilePicView.roundedImageWithShadow(frame: frame)
         self.addSubview(container)
     }
@@ -100,12 +109,12 @@ class ExpandedFeedView: UIScrollView {
         let y = imagesScroller.frame.maxY
         let frame = CGRect(x: x, y: y, width: width, height: height)
         
-        feedInfoView = FeedInfoView(controller!, frame: frame, pinpost: pinpost)
-        
-        feedInfoView!.frame = CGRect(x: feedInfoView!.frame.origin.x,
-                                     y: feedInfoView!.frame.origin.y,
-                                     width: feedInfoView!.frame.width,
-                                     height: feedInfoView!.maxHeight)
+        let feedInfoView = FeedInfoView(controller!, frame: frame, pinpost: pinpost)
+        self.feedInfoView = feedInfoView
+        feedInfoView.frame = CGRect(x: feedInfoView.frame.origin.x,
+                                     y: feedInfoView.frame.origin.y,
+                                     width: feedInfoView.frame.width,
+                                     height: feedInfoView.maxHeight)
         
         self.addSubview(feedInfoView)
     }
@@ -117,8 +126,8 @@ class ExpandedFeedView: UIScrollView {
         let y = feedInfoView.frame.maxY
         let frame = CGRect(x: x, y: y, width: width, height: height)
         
-        commentsView = CommentsView(commentFrame: frame, comments: comments)
-        
+        let commentsView = CommentsView(commentFrame: frame, comments: comments)
+        self.commentsView = commentsView
         self.addSubview(commentsView)
     }
     
@@ -130,7 +139,8 @@ class ExpandedFeedView: UIScrollView {
         
         let frame = CGRect(x: x, y: y, width: width, height: height)
 
-        returnButton = UIButton(frame: frame)
+        let returnButton = UIButton(frame: frame)
+        self.returnButton = returnButton
         returnButton.setImage(#imageLiteral(resourceName: "down_icon"), for: .normal)
         
         self.addSubview(returnButton)
@@ -154,6 +164,10 @@ class ExpandedFeedView: UIScrollView {
             nc.view.layer.add(transition, forKey: nil)
             nc.pushViewController(controller, animated: false)
         }
+    }
+    
+    deinit {
+        debugPrint("Deinitializing \(self)")
     }
     
     required init?(coder aDecoder: NSCoder) {

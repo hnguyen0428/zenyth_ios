@@ -14,7 +14,6 @@ import UIKit
  */
 class ImagesScroller: UIScrollView {
     
-    var imageViews: [UIImageView] = [UIImageView]()
     var images: [Image] = [Image]()
     var currIndex = 0
     var numImageSet = 0
@@ -45,8 +44,9 @@ class ImagesScroller: UIScrollView {
                            height: self.frame.height)
         let imageView = UIImageView(frame: frame)
         imageView.backgroundColor = .black
-        imageView.imageFromUrl(withUrl: image.getURL(size: "large"))
-        imageViews.append(imageView)
+        
+        let url = URL(string: image.getURL(size: .large))
+        imageView.sd_setImage(with: url)
         
         // Resize the content size so that you can scroll further
         self.contentSize.width += imageView.frame.width
@@ -54,12 +54,18 @@ class ImagesScroller: UIScrollView {
     }
     
     func didTappedOnImage(_ sender: UITapGestureRecognizer) {
-        let image = images[currIndex]
-        customDelegate?.didTapped(on: image, sender: self)
+        if images.count > 0 {
+            let image = images[currIndex]
+            customDelegate?.didTapped(on: image, sender: self)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    deinit {
+        debugPrint("Deinitializing \(self)")
     }
 }
 

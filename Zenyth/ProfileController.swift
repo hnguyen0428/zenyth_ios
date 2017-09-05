@@ -11,13 +11,13 @@ import GoogleMaps
 
 class ProfileController: HomeController, GMSMapViewDelegate, PinThumbnailDelegate {
     
-    var profileView: ProfileView?
+    weak var profileView: ProfileView?
     var profileViewDefaultFrame: CGRect?
-    var mapView: MapView?
+    weak var mapView: MapView?
     var user: User? = nil
     var userId: UInt32 = 0
     
-    var feedDragger: UIButton?
+    weak var feedDragger: UIButton?
     var profileShown: Bool = true
     
     static let WIDTH_OF_DRAGGER: CGFloat = 0.11
@@ -26,6 +26,11 @@ class ProfileController: HomeController, GMSMapViewDelegate, PinThumbnailDelegat
     
     // This is to readjust the center of the map when profile view is shown
     static let READJUSTED_CENTER_Y: CGFloat = 0.75
+    
+    var pinposts: [Pinpost]? = nil
+    var savedZoom: Float?
+    var savedCoord: CLLocationCoordinate2D?
+    var mapOrigin: CGPoint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,10 +50,23 @@ class ProfileController: HomeController, GMSMapViewDelegate, PinThumbnailDelegat
     }
     
     func setupMap() {
-        mapView = MapView(frame: view.frame, controller: self)
-        mapView?.center.y = view.frame.height * ProfileController.READJUSTED_CENTER_Y
-        mapView?.delegate = self
-        view.insertSubview(mapView!, at: 0)
+        var mapView: MapView!
+        if let zoom = self.savedZoom,
+            let coord = self.savedCoord {
+            mapView = MapView(frame: view.frame, controller: self, zoom: zoom, coord: coord)
+        }
+        else {
+            mapView = MapView(frame: view.frame, controller: self, zoom: defaultZoom)
+        }
+        self.mapView = mapView
+        if let origin = self.mapOrigin {
+            mapView.frame.origin = origin
+        }
+        else {
+            mapView.center.y = view.frame.height * ProfileController.READJUSTED_CENTER_Y
+        }
+        mapView.delegate = self
+        view.insertSubview(mapView, at: 0)
     }
     
     func setupFeedDragger() {
@@ -58,10 +76,11 @@ class ProfileController: HomeController, GMSMapViewDelegate, PinThumbnailDelegat
         let y = self.profileView!.frame.maxY - height * ProfileController.DRAGGER_HIDDEN
         let frame = CGRect(x: x, y: y, width: width, height: height)
         
-        feedDragger = UIButton(frame: frame)
-        feedDragger!.setImage(#imageLiteral(resourceName: "up_icon"), for: .normal)
-        feedDragger?.addTarget(self, action: #selector(toggleFeed), for: .touchUpInside)
-        view.insertSubview(feedDragger!, belowSubview: profileView!)
+        let feedDragger = UIButton(frame: frame)
+        self.feedDragger = feedDragger
+        feedDragger.setImage(#imageLiteral(resourceName: "up_icon"), for: .normal)
+        feedDragger.addTarget(self, action: #selector(toggleFeed), for: .touchUpInside)
+        view.insertSubview(feedDragger, belowSubview: profileView!)
     }
     
     func renderView() {
@@ -114,16 +133,16 @@ class ProfileController: HomeController, GMSMapViewDelegate, PinThumbnailDelegat
                         self.profileView = nil
                     }
                     
-                    self.profileView = ProfileView(self, frame: frame,
+                    let profileView = ProfileView(self, frame: frame,
                                                    user: user, foreign: foreign,
                                                    followStatus: status)
+                    self.profileView = profileView
                     
-                    
-                    self.view.addSubview(self.profileView!)
-                    self.profileViewDefaultFrame = self.profileView!.frame
+                    self.view.addSubview(profileView)
+                    self.profileViewDefaultFrame = profileView.frame
                     self.setupFeedDragger()
                     
-                    self.setupMap()
+                    self.pinposts = pinposts
                     self.mapView?.loadMarkers(pinposts: pinposts)
                     
                     self.requestDoneLoading(view: self.view, indicator: indicator)
@@ -263,5 +282,30 @@ class ProfileController: HomeController, GMSMapViewDelegate, PinThumbnailDelegat
         if profileShown {
             self.navigationController?.setNavigationBarHidden(false, animated: false)
         }
+        
+        if self.mapView == nil {
+            self.setupMap()
+            if let pinposts = self.pinposts {
+                self.mapView?.loadMarkers(pinposts: pinposts)
+            }
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        mapView?.removeFromSuperview()
+        mapView = nil
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.savedZoom = mapView?.camera.zoom
+        self.savedCoord = mapView?.camera.target
+        self.mapOrigin = mapView?.frame.origin
+    }
+    
+    deinit {
+        print("Deinitializing")
     }
 }

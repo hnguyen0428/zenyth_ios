@@ -11,11 +11,11 @@ import UIKit
 
 class PinpostFormView: UIView {
     
-    var titleField: UITextField!
-    var descriptionField: UITextView!
-    var locationField: UITextField!
-    var usePressedLocationButton: UIButton!
-    var privacyField: UITextField!
+    weak var titleField: UITextField!
+    weak var descriptionField: UITextView!
+    weak var locationField: UITextField!
+    weak var usePressedLocationButton: UIButton!
+    weak var privacyField: UITextField!
     
     // Height Dimension in percentage of the frames height
     static let HEIGHT_OF_TITLE: CGFloat = 0.08
@@ -45,7 +45,8 @@ class PinpostFormView: UIView {
         let x: CGFloat = 0
         let y = self.frame.height * PinpostFormView.TOP_MARGIN
         let frame = CGRect(x: x, y: y, width: width, height: height)
-        titleField = UITextField(frame: frame)
+        let titleField = UITextField(frame: frame)
+        self.titleField = titleField
         titleField.placeholder = "Title"
         titleField.backgroundColor = UIColor.white
         self.addSubview(titleField)
@@ -58,7 +59,8 @@ class PinpostFormView: UIView {
         let gap = self.frame.height * PinpostFormView.GAP
         let y = titleField.frame.maxY + gap
         let frame = CGRect(x: x, y: y, width: width, height: height)
-        descriptionField = UITextView(frame: frame)
+        let descriptionField = UITextView(frame: frame)
+        self.descriptionField = descriptionField
         descriptionField.text = "Give a description"
         descriptionField.textColor = UIColor.lightGray
         descriptionField.backgroundColor = UIColor.white
@@ -73,7 +75,8 @@ class PinpostFormView: UIView {
         let gap = self.frame.height * PinpostFormView.GAP
         let y = descriptionField.frame.maxY + gap
         let frame = CGRect(x: x, y: y, width: width, height: height)
-        locationField = UITextField(frame: frame)
+        let locationField = UITextField(frame: frame)
+        self.locationField = locationField
         locationField.placeholder = "Add a location"
         locationField.backgroundColor = UIColor.white
         locationField.tintColor = UIColor.clear
@@ -86,7 +89,8 @@ class PinpostFormView: UIView {
         let x: CGFloat = self.frame.width * PinpostFormView.LEFT_MARGIN
         let y = locationField.frame.maxY
         let frame = CGRect(x: x, y: y, width: width, height: height)
-        usePressedLocationButton = UIButton(type: .system)
+        let usePressedLocationButton = UIButton(type: .system)
+        self.usePressedLocationButton = usePressedLocationButton
         usePressedLocationButton.frame = frame
         usePressedLocationButton.setTitle("or use the location of where you pressed",
                                            for: .normal)
@@ -103,7 +107,8 @@ class PinpostFormView: UIView {
         let gap = self.frame.height * PinpostFormView.GAP
         let y = usePressedLocationButton.frame.maxY + gap
         let frame = CGRect(x: x, y: y, width: width, height: height)
-        privacyField = UITextField(frame: frame)
+        let privacyField = UITextField(frame: frame)
+        self.privacyField = privacyField
         privacyField.placeholder = "Who do you want to see this pinpost?"
         privacyField.tintColor = UIColor.clear
         privacyField.backgroundColor = UIColor.white

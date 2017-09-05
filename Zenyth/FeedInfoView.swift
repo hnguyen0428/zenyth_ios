@@ -11,13 +11,13 @@ import UIKit
 
 class FeedInfoView: UIView {
     
-    var titleLabel: UILabel?
-    var creatorLabel: UILabel?
-    var descriptionText: UITextView?
+    weak var titleLabel: UILabel?
+    weak var creatorLabel: UILabel?
+    weak var descriptionText: UITextView?
     var pinpost: Pinpost!
     
     // Pinpost actions
-    var actionBar: PostActionBar?
+    weak var actionBar: PostActionBar?
     
     var maxHeight: CGFloat = 0.0
     
@@ -86,11 +86,12 @@ class FeedInfoView: UIView {
         maxHeight = maxHeight + height + gap
         
         let frame = CGRect(x: x, y: y, width: width, height: height)
-        titleLabel = UILabel(frame: frame)
-        titleLabel?.font = UIFont.boldSystemFont(ofSize: 20.0)
-        titleLabel?.text = title
-        titleLabel?.textAlignment = .center
-        self.addSubview(titleLabel!)
+        let titleLabel = UILabel(frame: frame)
+        self.titleLabel = titleLabel
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 20.0)
+        titleLabel.text = title
+        titleLabel.textAlignment = .center
+        self.addSubview(titleLabel)
     }
     
     func setupCreatorLabel(name: String?, username: String) {
@@ -103,18 +104,19 @@ class FeedInfoView: UIView {
         maxHeight = maxHeight + height + gap
         
         let frame = CGRect(x: x, y: y, width: width, height: height)
-        creatorLabel = UILabel(frame: frame)
-        creatorLabel?.font = UIFont.italicSystemFont(ofSize: 12.0)
-        creatorLabel?.textAlignment = .center
+        let creatorLabel = UILabel(frame: frame)
+        self.creatorLabel = creatorLabel
+        creatorLabel.font = UIFont.italicSystemFont(ofSize: 12.0)
+        creatorLabel.textAlignment = .center
         
         if let str = name {
-            creatorLabel!.text = "By: \(str)"
+            creatorLabel.text = "By: \(str)"
         }
         else {
-            creatorLabel!.text = "By: \(username)"
+            creatorLabel.text = "By: \(username)"
         }
         
-        self.addSubview(creatorLabel!)
+        self.addSubview(creatorLabel)
     }
     
     func setupDescriptionText(description: String) {
@@ -127,19 +129,20 @@ class FeedInfoView: UIView {
         let y = creatorLabel!.frame.maxY + gap
         
         let frame = CGRect(x: x, y: y, width: width, height: height)
-        descriptionText = UITextView(frame: frame)
-        descriptionText?.font = UIFont(name: "Verdana", size: 16.0)
-        descriptionText?.text = description
-        descriptionText?.isEditable = false
+        let descriptionText = UITextView(frame: frame)
+        self.descriptionText = descriptionText
+        descriptionText.font = UIFont(name: "Verdana", size: 16.0)
+        descriptionText.text = description
+        descriptionText.isEditable = false
         
-        self.addSubview(descriptionText!)
+        self.addSubview(descriptionText)
         
         // Resizing based on length of text
-        let contentHeight = descriptionText!.contentSize.height
+        let contentHeight = descriptionText.contentSize.height
         let newHeight = contentHeight < height ? contentHeight : height
-        descriptionText!.frame = CGRect(x: x, y: y, width: width, height: newHeight)
-        descriptionText?.isScrollEnabled = false
-        descriptionText?.textContainer.lineBreakMode = NSLineBreakMode.byTruncatingTail
+        descriptionText.frame = CGRect(x: x, y: y, width: width, height: newHeight)
+        descriptionText.isScrollEnabled = false
+        descriptionText.textContainer.lineBreakMode = NSLineBreakMode.byTruncatingTail
         
         maxHeight = maxHeight + newHeight + gap
     }
@@ -154,8 +157,12 @@ class FeedInfoView: UIView {
         maxHeight = maxHeight + height + gap
         
         let frame = CGRect(x: x, y: y, width: width, height: height)
-        actionBar = PostActionBar(frame: frame)
-        
-        self.addSubview(actionBar!)
+        let actionBar = PostActionBar(frame: frame)
+        self.actionBar = actionBar
+        self.addSubview(actionBar)
+    }
+    
+    deinit {
+        debugPrint("Deinitializing \(self)")
     }
 }

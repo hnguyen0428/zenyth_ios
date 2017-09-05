@@ -380,4 +380,8 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         UserDefaults.standard.set(user.username, forKey: "username")
         UserDefaults.standard.synchronize()
     }
+    
+    deinit {
+        debugPrint("Deinitializing \(self)")
+    }
 }

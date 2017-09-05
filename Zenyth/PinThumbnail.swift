@@ -12,7 +12,7 @@ import UIKit
 class PinThumbnail: UIImageView {
     
     var pinpost: Pinpost!
-    var delegate: PinThumbnailDelegate?
+    weak var delegate: PinThumbnailDelegate?
     
     static let LONG_PRESS_DURATION: Double = 0.8
     
@@ -21,7 +21,8 @@ class PinThumbnail: UIImageView {
         super.init(frame: frame)
         
         if let image = pinpost.images.first {
-            self.imageFromUrl(withUrl: image.getURL(size: "medium"))
+            let url = URL(string: image.getURL(size: .small))
+            self.sd_setImage(with: url)
         }
         self.isUserInteractionEnabled = true
         let tg = UITapGestureRecognizer(target: self, action: #selector(self.expandPinpost))
@@ -52,6 +53,10 @@ class PinThumbnail: UIImageView {
     
     func didLongPress(_ lp: UILongPressGestureRecognizer) {
         delegate?.didLongPress(on: pinpost)
+    }
+    
+    deinit {
+        debugPrint("Deinitializing \(self)")
     }
 }
 
