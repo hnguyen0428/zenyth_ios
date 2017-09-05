@@ -9,7 +9,8 @@
 import UIKit
 import GoogleMaps
 
-class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
+class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate,
+                    FeedScrollViewDelegate {
     
     weak var mapView: MapView?
     weak var feedScrollView: FeedScrollView?
@@ -51,7 +52,7 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
         toolbar?.homeButton?.addTarget(self, action: #selector(transitionToFeed), for: .touchUpInside)
         toolbar?.notificationButton?.addTarget(self, action: #selector(transitionToNotification), for: .touchUpInside)
         toolbar?.profileButton?.addTarget(self, action: #selector(transitionToProfile), for: .touchUpInside)
-        feedScrollView!.panGestureRecognizer.addTarget(self, action: #selector(snapToPin))
+
         feedDragger?.addTarget(self, action: #selector(toggleFeed), for: .touchUpInside)
     }
     
@@ -106,6 +107,7 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
         let feedScrollView = FeedScrollView(frame: frame, controller: self)
         self.feedScrollView = feedScrollView
         feedScrollView.delegate = self
+        feedScrollView.customDelegate = self
         view.insertSubview(feedScrollView, belowSubview: toolbar!)
         
         let draggerWidth = view.frame.width * FeedController.WIDTH_OF_DRAGGER
@@ -136,25 +138,9 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
      Add FeedView objects to the FeedScrollView
      */
     func renderFeedScrollView(pinposts: [Pinpost], handler: Handler? = nil) {
-        // Set loading to true so that only one request to render the feed
-        // can fire at a time
-        
-        let feedWidth = self.view.frame.width
-        let feedHeight = self.view.frame.height * FeedController.HEIGHT_OF_FEED
-        
-        for i in 0..<pinposts.count {
-            let x = CGFloat(i + startIndex) * self.feedScrollView!.frame.width
-            self.feedScrollView!.contentSize.width += self.feedScrollView!.frame.width
-            let frame = CGRect(x: x, y: 0, width: feedWidth, height: feedHeight)
-            
-            let pinpost = pinposts[i]
-            
-            let feedView = FeedView(self, frame: frame, pinpost: pinpost)
-            self.feedScrollView?.addSubview(feedView)
-            self.feedScrollView?.feedViews.append(feedView)
-            
+        for pinpost in pinposts {
+            self.feedScrollView?.addNewPost(pinpost: pinpost)
         }
-        self.startIndex += pinposts.count
     }
     
     /**
@@ -162,139 +148,13 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
      */
     func loadNextPage() {
         let scrollView = feedScrollView!
-        if scrollView.currentPinpostIndex == scrollView.feedViews.count - 1 {
+        let currPinpostIndex = scrollView.calculateCurrentIndex()
+        
+        if currPinpostIndex == scrollView.numPinposts - 1 {
             self.fetchNextPage(handler:
                 { pinposts in
                     self.renderFeedScrollView(pinposts: pinposts)
             })
-        }
-    }
-    
-    /**
-     Handling pin snapping while scrolling
-     */
-    func snapToPin(_ sender: UIPanGestureRecognizer) {
-        let scrollView = feedScrollView!
-        
-        // If the pinpost currently on is the last pinpost in the scrollview
-        // load the next page
-        
-        let velocity = sender.velocity(in: scrollView)
-        var snapRight: Bool = false
-        var snapLeft: Bool = false
-        if velocity.x < -FeedScrollView.VELOCITY_TO_SWITCH {
-            snapRight = true
-        }
-        if velocity.x > FeedScrollView.VELOCITY_TO_SWITCH {
-            snapLeft = true
-        }
-        
-        if sender.state == .ended {
-            let contentOffset = scrollView.contentOffset
-            let x = contentOffset.x
-            let y = contentOffset.y
-            
-            let feedWidth = scrollView.frame.width
-            let index = floor(x/feedWidth)
-            let minX = index * feedWidth
-            let maxX = (index + 1) * feedWidth
-            
-            // Duration of animation
-            let duration: Double = FeedScrollView.SWITCH_DURATION
-            
-            if x > scrollView.contentSize.width - feedWidth { // snap back to the left
-                UIView.animate(withDuration: duration, animations:
-                    { animation in
-                        scrollView.contentOffset = CGPoint(x: minX, y: y)
-                })
-                return
-            }
-            if x < 0 { // snap back to the right
-                UIView.animate(withDuration: duration, animations:
-                    { animation in
-                        scrollView.contentOffset = CGPoint(x: maxX, y: y)
-                })
-                return
-            }
-            
-            let swipingRight = sender.translation(in: scrollView).x > 0
-            
-            let enoughOfRightShown = (maxX - x)/scrollView.frame.width < 0.70
-            let enoughOfLeftShown = (maxX - x)/scrollView.frame.width > 0.30
-            
-            if snapRight { // snap right if swiping left fast enough
-                scrollView.currentPinpostIndex += 1
-                let feedView = scrollView.feedViews[scrollView.currentPinpostIndex]
-                let topY = feedView.topY + scrollView.frame.origin.y
-                let newDraggerY = topY - feedDragger!.frame.height * FeedController.DRAGGER_SHOWN
-
-                UIView.animate(withDuration: duration, animations:
-                    { animation in
-                        scrollView.contentOffset = CGPoint(x: maxX, y: y)
-                        self.feedDragger!.frame.origin.y = newDraggerY
-                }, completion:
-                    { action in
-                        self.loadNextPage()
-                })
-                return
-            }
-            if snapLeft { // snap left if swiping right fast enough
-                scrollView.currentPinpostIndex -= 1
-                let feedView = scrollView.feedViews[scrollView.currentPinpostIndex]
-                let topY = feedView.topY + scrollView.frame.origin.y
-                let newDraggerY = topY - feedDragger!.frame.height * FeedController.DRAGGER_SHOWN
-                UIView.animate(withDuration: duration, animations:
-                    { animation in
-                        scrollView.contentOffset = CGPoint(x: minX, y: y)
-                        self.feedDragger!.frame.origin.y = newDraggerY
-                })
-                return
-            }
-            
-            // snap right if enough of right is shown, else snap back left
-            if !swipingRight {
-                if enoughOfRightShown {
-                    scrollView.currentPinpostIndex += 1
-                    let feedView = scrollView.feedViews[scrollView.currentPinpostIndex]
-                    let topY = feedView.topY + scrollView.frame.origin.y
-                    let newDraggerY = topY - feedDragger!.frame.height * FeedController.DRAGGER_SHOWN
-
-                    UIView.animate(withDuration: duration, animations:
-                        { animation in
-                            scrollView.contentOffset = CGPoint(x: maxX, y: y)
-                            self.feedDragger!.frame.origin.y = newDraggerY
-                    }, completion:
-                        { action in
-                            self.loadNextPage()
-                    })
-                } else {
-                    UIView.animate(withDuration: duration, animations:
-                        { animation in
-                            scrollView.contentOffset = CGPoint(x: minX, y: y)
-                    })
-                }
-                return
-            }
-            else {
-                // snap left if enough of left is shown, else snap back right
-                if enoughOfLeftShown {
-                    scrollView.currentPinpostIndex -= 1
-                    let feedView = scrollView.feedViews[scrollView.currentPinpostIndex]
-                    let topY = feedView.topY + scrollView.frame.origin.y
-                    let newDraggerY = topY - feedDragger!.frame.height * FeedController.DRAGGER_SHOWN
-
-                    UIView.animate(withDuration: duration, animations:
-                        { animation in
-                            scrollView.contentOffset = CGPoint(x: minX, y: y)
-                            self.feedDragger!.frame.origin.y = newDraggerY
-                    })
-                } else {
-                    UIView.animate(withDuration: duration, animations:
-                        { animation in
-                            scrollView.contentOffset = CGPoint(x: maxX, y: y)
-                    })
-                }
-            }
         }
     }
     
@@ -358,7 +218,7 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
      Closing/Showing the feed
      */
     func toggleFeed(_ button: UIButton) {
-        if feedScrollView?.feedViews.count == 0 { // if there is no pinpost do nothing
+        if feedScrollView?.numPinposts == 0 { // if there is no pinpost do nothing
             return
         }
         
@@ -380,7 +240,8 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
             let feedY = feedScrollView!.frame.origin.y
             let buttonY = feedDragger!.frame.origin.y
             let height = feedScrollView!.frame.height
-            let currentFeedView = feedScrollView!.feedViews[feedScrollView!.currentPinpostIndex]
+            let index = feedScrollView!.calculateCurrentIndex()
+            let currentFeedView = feedScrollView!.feedViews[index]
             let feedViewHeight = currentFeedView.hasThumbnail ?
                 currentFeedView.frame.height :
                 currentFeedView.frame.height - currentFeedView.profilePicView!.frame.height/2
@@ -401,7 +262,8 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
      Show the profile of the creator of this post
      */
     func showProfile(_ sender: UITapGestureRecognizer) {
-        let currentFeedView = feedScrollView!.feedViews[feedScrollView!.currentPinpostIndex]
+        let index = feedScrollView!.calculateCurrentIndex()
+        let currentFeedView = feedScrollView!.feedViews[index]
         let pinpost = currentFeedView.pinpost
         let userId = pinpost!.creator!.id
         
@@ -473,6 +335,21 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate {
         let id = marker.userData as! UInt32
         transitionToExpandedPin(id: id)
         return true
+    }
+    
+    func didSnap(toNewFeedView feedView: FeedView, feedScrollView: FeedScrollView,
+                 index: Int) {
+        print(index)
+        self.loadNextPage()
+        
+        if feedShown {
+            let topY = feedView.topY + feedScrollView.frame.origin.y
+            let newDraggerY = topY - feedDragger!.frame.height * FeedController.DRAGGER_SHOWN
+            UIView.animate(withDuration: 0.3, animations:
+                { _ in
+                    self.feedDragger?.frame.origin.y = newDraggerY
+            })
+        }
     }
     
     func transitionToExpandedPin(id: UInt32) {
