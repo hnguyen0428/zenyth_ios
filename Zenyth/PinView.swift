@@ -26,8 +26,9 @@ class PinView: UIScrollView {
         self.backgroundColor = .clear
         self.showsHorizontalScrollIndicator = false
         self.showsVerticalScrollIndicator = false
+        
         self.contentSize.width = 0
-        self.contentSize.height = self.frame.height
+        self.contentSize.height = 0
         
         for pinpost in pinposts {
             // Only append pin image if the pinpost has an image
