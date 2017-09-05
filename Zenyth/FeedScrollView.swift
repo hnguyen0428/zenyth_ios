@@ -119,7 +119,6 @@ class FeedScrollView: UIScrollView {
                     UIView.animate(withDuration: duration, animations:
                         { _ in
                             self.contentOffset = CGPoint(x: maxX, y: y)
-                            //self.feedDragger!.frame.origin.y = newDraggerY
                     }, completion: snappedRight)
                 } else {
                     UIView.animate(withDuration: duration, animations:
@@ -135,7 +134,6 @@ class FeedScrollView: UIScrollView {
                     UIView.animate(withDuration: duration, animations:
                         { _ in
                             self.contentOffset = CGPoint(x: minX, y: y)
-                            //self.feedDragger!.frame.origin.y = newDraggerY
                     }, completion: snappedLeft)
                 } else {
                     UIView.animate(withDuration: duration, animations:
