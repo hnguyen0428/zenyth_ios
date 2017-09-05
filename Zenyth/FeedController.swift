@@ -240,8 +240,7 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate,
             let feedY = feedScrollView!.frame.origin.y
             let buttonY = feedDragger!.frame.origin.y
             let height = feedScrollView!.frame.height
-            let index = feedScrollView!.calculateCurrentIndex()
-            let currentFeedView = feedScrollView!.feedViews[index]
+            let currentFeedView = feedScrollView!.getCurrentFeedView()
             let feedViewHeight = currentFeedView.hasThumbnail ?
                 currentFeedView.frame.height :
                 currentFeedView.frame.height - currentFeedView.profilePicView!.frame.height/2
@@ -262,8 +261,7 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate,
      Show the profile of the creator of this post
      */
     func showProfile(_ sender: UITapGestureRecognizer) {
-        let index = feedScrollView!.calculateCurrentIndex()
-        let currentFeedView = feedScrollView!.feedViews[index]
+        let currentFeedView = feedScrollView!.getCurrentFeedView()
         let pinpost = currentFeedView.pinpost
         let userId = pinpost!.creator!.id
         
@@ -339,7 +337,6 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate,
     
     func didSnap(toNewFeedView feedView: FeedView, feedScrollView: FeedScrollView,
                  index: Int) {
-        print(index)
         self.loadNextPage()
         
         if feedShown {

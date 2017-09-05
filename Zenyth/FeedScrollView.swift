@@ -41,6 +41,11 @@ class FeedScrollView: UIScrollView {
         self.addSubview(feedView)
         self.contentSize.width += width
         numPinposts += 1
+        
+        // Adding target for comment button
+        let commentButton = feedView.feedInfoView?.actionBar?.commentButton
+        commentButton?.addTarget(self, action: #selector(transitionToExpandedPinpost),
+                                 for: .touchUpInside)
     }
     
     /**
@@ -151,9 +156,13 @@ class FeedScrollView: UIScrollView {
         return Int(index)
     }
     
+    func getCurrentFeedView() -> FeedView {
+        return feedViews[calculateCurrentIndex()]
+    }
+    
     func snappedBack(_: Bool) {
         let index = calculateCurrentIndex()
-        let feedView = self.feedViews[index]
+        let feedView = feedViews[index]
         customDelegate?.didSnapBack?(toFeedView: feedView,
                                      feedScrollView: self,
                                      index: index)
@@ -173,6 +182,23 @@ class FeedScrollView: UIScrollView {
         customDelegate?.didSnap(toNewFeedView: feedView,
                                 feedScrollView: self,
                                 index: index)
+    }
+    
+    func transitionToExpandedPinpost(_ button: UIButton) {
+        let feedView = getCurrentFeedView()
+        let controller = ExpandedFeedController()
+        controller.pinpostId = feedView.pinpost.id
+        controller.shouldShowKeyboard = true
+        
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        transition.type = kCATransitionFromBottom
+        
+        if let nc = self.window?.rootViewController as? UINavigationController {
+            nc.view.layer.add(transition, forKey: nil)
+            nc.pushViewController(controller, animated: false)
+        }
     }
     
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {

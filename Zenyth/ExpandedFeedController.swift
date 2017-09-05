@@ -18,6 +18,8 @@ class ExpandedFeedController: HomeController, ImageViewControllerDelegate,
     var pinpost: Pinpost?
     var defaultFrame: CGRect?
     
+    var shouldShowKeyboard = false
+    
     static let COMMENT_CREATE_VIEW_HEIGHT: CGFloat = 0.07
     
     override func viewDidLoad() {
@@ -31,6 +33,7 @@ class ExpandedFeedController: HomeController, ImageViewControllerDelegate,
                                                name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
                                                name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
     }
     
     override func setupViews() {
@@ -69,6 +72,10 @@ class ExpandedFeedController: HomeController, ImageViewControllerDelegate,
                                                 for: .touchUpInside)
         
         view.addSubview(commentCreateView)
+        
+        if shouldShowKeyboard {
+            commentCreateView.textfield?.becomeFirstResponder()
+        }
     }
     
     /**
@@ -148,10 +155,13 @@ class ExpandedFeedController: HomeController, ImageViewControllerDelegate,
         let newFrame = CGRect(x: defaultFrame!.origin.x, y: newY,
                               width: defaultFrame!.width, height: defaultFrame!.height)
         commentCreateView!.frame = newFrame
+        expandedFeedView!.contentSize.height += frame.height
     }
     
     func keyboardWillHide(notification: NSNotification) {
+        let frame = (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         commentCreateView!.frame = defaultFrame!
+        expandedFeedView!.contentSize.height -= frame.height
     }
     
     /**

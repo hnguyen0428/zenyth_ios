@@ -54,8 +54,10 @@ class ImagesScroller: UIScrollView {
     }
     
     func didTappedOnImage(_ sender: UITapGestureRecognizer) {
-        let image = images[currIndex]
-        customDelegate?.didTapped(on: image, sender: self)
+        if images.count > 0 {
+            let image = images[currIndex]
+            customDelegate?.didTapped(on: image, sender: self)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
