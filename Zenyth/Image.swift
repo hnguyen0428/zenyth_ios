@@ -40,9 +40,9 @@ struct Image: APIObject {
         ]
     }
     
-    func getURL(size: String? = nil) -> String {
-        if let str = size {
-            return "\(url)?size=\(str.lowercased())"
+    func getURL(size: ImageSize? = nil) -> String {
+        if let type = size {
+            return "\(url)?size=\(type.name())"
         }
         else {
             return url
@@ -51,5 +51,22 @@ struct Image: APIObject {
     
     var description: String {
         return String(describing: toJSON())
+    }
+}
+
+enum ImageSize {
+    case small
+    case medium
+    case large
+    
+    func name() -> String {
+        switch self {
+        case .small:
+            return "small"
+        case .medium:
+            return "medium"
+        case .large:
+            return "large"
+        }
     }
 }

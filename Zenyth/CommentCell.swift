@@ -59,9 +59,14 @@ class CommentCell: UIView {
         
         let profilePicView = UIImageView(frame: frame)
         self.profilePicView = profilePicView
-        profilePicView.image = #imageLiteral(resourceName: "default_profile")
+        
         if let image = user.profilePicture {
-            profilePicView.imageFromUrl(withUrl: image.getURL(size: "small"))
+            let url = URL(string: image.getURL(size: .small))
+            profilePicView.sd_setImage(with: url,
+                                       placeholderImage: #imageLiteral(resourceName: "default_profile"))
+        }
+        else {
+            profilePicView.image = #imageLiteral(resourceName: "default_profile")
         }
         
         let container = profilePicView.roundedImageWithShadow(frame: frame)

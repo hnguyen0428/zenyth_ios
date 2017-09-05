@@ -195,7 +195,7 @@ class ImageGalleryController: UIViewController, UICollectionViewDelegate,
                                                       for: indexPath)
         
         let imageCell = cell as! ImageCell
-        imageCell.imageView.frame = imageCell.bounds
+        imageCell.imageView?.frame = imageCell.bounds
         imageCell.setImage(image: imageArray[indexPath.row])
         
         return imageCell

@@ -135,7 +135,9 @@ class ProfileView: UIView {
         let profilePicture = UIImageView()
         self.profilePicture = profilePicture
         if let image = user.profilePicture {
-            profilePicture.imageFromUrl(withUrl: image.getURL(size: "small"))
+            let url = URL(string: image.getURL(size: .small))
+            profilePicture.sd_setImage(with: url,
+                                       placeholderImage: #imageLiteral(resourceName: "default_profile"))
         }
         else {
             profilePicture.image = #imageLiteral(resourceName: "default_profile")

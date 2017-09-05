@@ -21,7 +21,8 @@ class PinThumbnail: UIImageView {
         super.init(frame: frame)
         
         if let image = pinpost.images.first {
-            self.imageFromUrl(withUrl: image.getURL(size: "medium"))
+            let url = URL(string: image.getURL(size: .small))
+            self.sd_setImage(with: url)
         }
         self.isUserInteractionEnabled = true
         let tg = UITapGestureRecognizer(target: self, action: #selector(self.expandPinpost))

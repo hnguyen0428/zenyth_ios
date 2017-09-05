@@ -30,6 +30,7 @@ class ProfileController: HomeController, GMSMapViewDelegate, PinThumbnailDelegat
     var pinposts: [Pinpost]? = nil
     var savedZoom: Float?
     var savedCoord: CLLocationCoordinate2D?
+    var mapOrigin: CGPoint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +59,12 @@ class ProfileController: HomeController, GMSMapViewDelegate, PinThumbnailDelegat
             mapView = MapView(frame: view.frame, controller: self, zoom: defaultZoom)
         }
         self.mapView = mapView
-        mapView.center.y = view.frame.height * ProfileController.READJUSTED_CENTER_Y
+        if let origin = self.mapOrigin {
+            mapView.frame.origin = origin
+        }
+        else {
+            mapView.center.y = view.frame.height * ProfileController.READJUSTED_CENTER_Y
+        }
         mapView.delegate = self
         view.insertSubview(mapView, at: 0)
     }
@@ -296,6 +302,7 @@ class ProfileController: HomeController, GMSMapViewDelegate, PinThumbnailDelegat
         super.viewWillDisappear(animated)
         self.savedZoom = mapView?.camera.zoom
         self.savedCoord = mapView?.camera.target
+        self.mapOrigin = mapView?.frame.origin
     }
     
     deinit {

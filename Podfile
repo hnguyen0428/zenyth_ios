@@ -34,4 +34,6 @@ target 'Zenyth' do
 	pod 'GooglePlacePicker'
   pod 'GooglePlaces'
 
+	pod 'SDWebImage'
+
 end

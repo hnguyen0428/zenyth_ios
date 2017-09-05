@@ -10,8 +10,8 @@ import UIKit
 
 class EditProfileToolbar: UIToolbar {
     
-    var cancelButton: UIButton?
-    var saveButton: UIButton?
+    weak var cancelButton: UIButton?
+    weak var saveButton: UIButton?
     
     // UI Sizing
     static let HEIGHT_OF_BUTTON: CGFloat = 0.75
@@ -27,33 +27,35 @@ class EditProfileToolbar: UIToolbar {
         let buttonFrame = CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight)
         let fontSize = EditProfileToolbar.FONT_SIZE
         
-        saveButton = UIButton(type: .system)
-        saveButton!.frame = buttonFrame
-        saveButton!.setTitle("Save", for: .normal)
-        saveButton!.setTitleColor(UIColor.black, for: .normal)
-        saveButton?.contentHorizontalAlignment = .right
-        saveButton!.titleLabel?.font = UIFont.boldSystemFont(ofSize: fontSize)
+        let saveButton = UIButton(type: .system)
+        self.saveButton = saveButton
+        saveButton.frame = buttonFrame
+        saveButton.setTitle("Save", for: .normal)
+        saveButton.setTitleColor(UIColor.black, for: .normal)
+        saveButton.contentHorizontalAlignment = .right
+        saveButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: fontSize)
         
-        cancelButton = UIButton(type: .system)
-        cancelButton!.frame = buttonFrame
-        cancelButton!.setTitle("Cancel", for: .normal)
-        cancelButton!.setTitleColor(UIColor.black, for: .normal)
-        cancelButton?.contentHorizontalAlignment = .left
-        cancelButton!.titleLabel?.font = UIFont.boldSystemFont(ofSize: fontSize)
+        let cancelButton = UIButton(type: .system)
+        self.cancelButton = cancelButton
+        cancelButton.frame = buttonFrame
+        cancelButton.setTitle("Cancel", for: .normal)
+        cancelButton.setTitleColor(UIColor.black, for: .normal)
+        cancelButton.contentHorizontalAlignment = .left
+        cancelButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: fontSize)
         
         let horizontalInset: CGFloat = self.frame.width * EditProfileToolbar.LEFT_INSET
         let container = UIView(frame: frame)
         container.backgroundColor = UIColor.clear
-        container.addSubview(saveButton!)
-        container.addSubview(cancelButton!)
+        container.addSubview(saveButton)
+        container.addSubview(cancelButton)
         
-        saveButton?.anchor(nil, left: nil, bottom: container.bottomAnchor,
+        saveButton.anchor(nil, left: nil, bottom: container.bottomAnchor,
                            right: container.rightAnchor, topConstant: 0,
                            leftConstant: 0, bottomConstant: 0,
                            rightConstant: horizontalInset, widthConstant: buttonWidth,
                            heightConstant: buttonHeight)
         
-        cancelButton?.anchor(nil, left: container.leftAnchor, bottom: container.bottomAnchor,
+        cancelButton.anchor(nil, left: container.leftAnchor, bottom: container.bottomAnchor,
                              right: nil, topConstant: 0,
                              leftConstant: horizontalInset, bottomConstant: 0,
                              rightConstant: 0, widthConstant: buttonWidth,

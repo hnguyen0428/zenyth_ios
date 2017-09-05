@@ -15,7 +15,7 @@ class PinpostFormController: UIViewController, UITextViewDelegate,
                             UIPickerViewDelegate,
                             GMSAutocompleteViewControllerDelegate {
     
-    var pinpostFormView: PinpostFormView!
+    weak var pinpostFormView: PinpostFormView!
     
     let privacyOptions = ["", "Only for yourself", "For you and your followers",
                           "Everyone"]
@@ -39,7 +39,8 @@ class PinpostFormController: UIViewController, UITextViewDelegate,
         let y = heightNavbar
         let frame = CGRect(x: 0, y: y, width: view.frame.width,
                            height: view.frame.height - heightNavbar)
-        pinpostFormView = PinpostFormView(frame: frame)
+        let pinpostFormView = PinpostFormView(frame: frame)
+        self.pinpostFormView = pinpostFormView
         pinpostFormView.descriptionField.delegate = self
         
         view.addSubview(pinpostFormView)

@@ -11,8 +11,7 @@ import UIKit
 
 class ImageCell: UICollectionViewCell {
     
-    var imageView: UIImageView!
-    var picked: Bool = false
+    weak var imageView: UIImageView?
     
     override var isSelected: Bool {
         willSet {
@@ -22,24 +21,23 @@ class ImageCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.imageView = UIImageView(frame: frame)
-        self.imageView.clipsToBounds = true
-        self.imageView.contentMode = .scaleAspectFill
+        let imageView = UIImageView(frame: frame)
+        self.imageView = imageView
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
         self.addSubview(imageView)
     }
     
     func setImage(image: UIImage) {
-        self.imageView.image = image
+        self.imageView?.image = image
     }
     
     func turnonShade() {
-        self.picked = true
-        self.imageView.alpha = 0.5
+        self.imageView?.alpha = 0.5
     }
     
     func turnoffShade() {
-        self.imageView.alpha = 1.0
-        self.picked = false
+        self.imageView?.alpha = 1.0
     }
     
     func onSelected(_ newValue: Bool) {

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "97D9888CECB04CDCA3EE40EE0C91E971"
+               BlueprintIdentifier = "FF76D57208129C44D54E564C9CA99829"
                BuildableName = "Pods_Zenyth.framework"
                BlueprintName = "Pods-Zenyth"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "97D9888CECB04CDCA3EE40EE0C91E971"
+            BlueprintIdentifier = "FF76D57208129C44D54E564C9CA99829"
             BuildableName = "Pods_Zenyth.framework"
             BlueprintName = "Pods-Zenyth"
             ReferencedContainer = "container:Pods.xcodeproj">

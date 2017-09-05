@@ -12,12 +12,11 @@ import UIKit
 
 class FeedView: UIView {
     
-    var feedInfoView: FeedInfoView?
-    var profilePicView: UIImageView?
-    var thumbnailView: UIImageView?
+    weak var feedInfoView: FeedInfoView?
+    weak var profilePicView: UIImageView?
+    weak var thumbnailView: UIImageView?
     var hasThumbnail: Bool = false
-    var tgExpandPost: UITapGestureRecognizer!
-    var tgProfile: UITapGestureRecognizer!
+    
     var pinpost: Pinpost!
     weak var controller: UIViewController?
     
@@ -35,7 +34,7 @@ class FeedView: UIView {
     
     init(_ controller: UIViewController, frame: CGRect, pinpost: Pinpost) {
         self.controller = controller
-        tgProfile = UITapGestureRecognizer(target: controller, action: #selector(FeedController.showProfile))
+        
         self.pinpost = pinpost
         super.init(frame: frame)
         
@@ -69,7 +68,10 @@ class FeedView: UIView {
             imageContainer.frame = newProfileFrame
         }
         
-        tgExpandPost = UITapGestureRecognizer(target: self, action: #selector(self.expandPinpost))
+        let tgProfile = UITapGestureRecognizer(target: controller,
+                                               action: #selector(FeedController.showProfile))
+        let tgExpandPost = UITapGestureRecognizer(target: self,
+                                                  action: #selector(self.expandPinpost))
         feedInfoView!.descriptionText!.addGestureRecognizer(tgExpandPost)
         profilePicView!.addGestureRecognizer(tgProfile)
         profilePicView!.isUserInteractionEnabled = true
@@ -85,15 +87,16 @@ class FeedView: UIView {
         let x: CGFloat = 0
         let y = self.frame.height - height
         let frame = CGRect(x: x, y: y, width: width, height: height)
-        feedInfoView = FeedInfoView(controller!, frame: frame, pinpost: pinpost)
+        let feedInfoView = FeedInfoView(controller!, frame: frame, pinpost: pinpost)
+        self.feedInfoView = feedInfoView
         
-        let shrunkenHeight = feedInfoView!.frame.height - feedInfoView!.maxHeight
-        let newY = feedInfoView!.frame.origin.y + shrunkenHeight
-        feedInfoView!.frame = CGRect(x: feedInfoView!.frame.origin.x, y: newY,
-                                     width: feedInfoView!.frame.width,
-                                     height: feedInfoView!.maxHeight)
+        let shrunkenHeight = feedInfoView.frame.height - feedInfoView.maxHeight
+        let newY = feedInfoView.frame.origin.y + shrunkenHeight
+        feedInfoView.frame = CGRect(x: feedInfoView.frame.origin.x, y: newY,
+                                     width: feedInfoView.frame.width,
+                                     height: feedInfoView.maxHeight)
         
-        self.addSubview(feedInfoView!)
+        self.addSubview(feedInfoView)
     }
     
     func setupThumbnailView(image: Image) {
@@ -102,13 +105,16 @@ class FeedView: UIView {
         let y: CGFloat = 0
         let x: CGFloat = 0
         let frame = CGRect(x: x, y: y, width: width, height: height)
-        thumbnailView = UIImageView(frame: frame)
-        thumbnailView?.contentMode = .scaleAspectFill
-        thumbnailView?.clipsToBounds = true
-        thumbnailView?.isUserInteractionEnabled = true
-        thumbnailView?.imageFromUrl(withUrl: image.getURL(size: "large"))
+        let thumbnailView = UIImageView(frame: frame)
+        self.thumbnailView = thumbnailView
+        thumbnailView.contentMode = .scaleAspectFill
+        thumbnailView.clipsToBounds = true
+        thumbnailView.isUserInteractionEnabled = true
         
-        self.addSubview(thumbnailView!)
+        let url = URL(string: image.getURL(size: .large))
+        thumbnailView.sd_setImage(with: url)
+        
+        self.addSubview(thumbnailView)
     }
     
     func setupProfilePic(user: User) -> UIView {
@@ -118,13 +124,19 @@ class FeedView: UIView {
         let x = margin
         let y = feedInfoView!.frame.origin.y - height/2
         let frame = CGRect(x: x, y: y, width: width, height: height)
-        profilePicView = UIImageView()
-        profilePicView?.image = #imageLiteral(resourceName: "default_profile")
+        let profilePicView = UIImageView()
+        self.profilePicView = profilePicView
+        
         if let image = user.profilePicture {
-            profilePicView?.imageFromUrl(withUrl: image.getURL(size: "small"))
+            let url = URL(string: image.getURL(size: .small))
+            profilePicView.sd_setImage(with: url,
+                                       placeholderImage: #imageLiteral(resourceName: "default_profile"))
+        }
+        else {
+            profilePicView.image = #imageLiteral(resourceName: "default_profile")
         }
         
-        let container = profilePicView!.roundedImageWithShadow(frame: frame)
+        let container = profilePicView.roundedImageWithShadow(frame: frame)
         self.addSubview(container)
         return container
     }

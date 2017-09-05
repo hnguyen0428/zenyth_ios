@@ -44,7 +44,9 @@ class ImagesScroller: UIScrollView {
                            height: self.frame.height)
         let imageView = UIImageView(frame: frame)
         imageView.backgroundColor = .black
-        imageView.imageFromUrl(withUrl: image.getURL(size: "large"))
+        
+        let url = URL(string: image.getURL(size: .large))
+        imageView.sd_setImage(with: url)
         
         // Resize the content size so that you can scroll further
         self.contentSize.width += imageView.frame.width

@@ -65,7 +65,7 @@ class ExpandedFeedController: HomeController, ImageViewControllerDelegate,
         let commentCreateView = CommentCreateView(frame: frame)
         self.commentCreateView = commentCreateView
         
-        commentCreateView.postButton.addTarget(self, action: #selector(createComment),
+        commentCreateView.postButton!.addTarget(self, action: #selector(createComment),
                                                 for: .touchUpInside)
         
         view.addSubview(commentCreateView)
@@ -111,14 +111,14 @@ class ExpandedFeedController: HomeController, ImageViewControllerDelegate,
      Network request for creating a comment
      */
     func createComment(_ button: UIButton) {
-        if let text = commentCreateView?.textfield.text {
+        if let text = commentCreateView?.textfield?.text {
             CommentManager().createComment(onPinpostId: pinpostId,
                                            text: text,
                                            onSuccess:
                 { comment in
                     self.expandedFeedView!.addComment(comment: comment)
-                    self.commentCreateView?.textfield.resignFirstResponder()
-                    self.commentCreateView?.textfield.text = ""
+                    self.commentCreateView?.textfield?.resignFirstResponder()
+                    self.commentCreateView?.textfield?.text = ""
             })
         }
     }
@@ -136,7 +136,7 @@ class ExpandedFeedController: HomeController, ImageViewControllerDelegate,
      Show the keyboard
      */
     func showKeyboard() {
-        commentCreateView?.textfield.becomeFirstResponder()
+        commentCreateView?.textfield?.becomeFirstResponder()
     }
     
     /**

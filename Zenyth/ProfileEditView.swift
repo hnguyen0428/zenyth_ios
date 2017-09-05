@@ -10,11 +10,11 @@ import UIKit
 
 class ProfileEditView: UIView {
     
-    var firstNameField: UITextField?
-    var lastNameField: UITextField?
-    var genderField: UITextField?
-    var birthdayField: UITextField?
-    var biographyField: UITextField?
+    weak var firstNameField: UITextField?
+    weak var lastNameField: UITextField?
+    weak var genderField: UITextField?
+    weak var birthdayField: UITextField?
+    weak var biographyField: UITextField?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,9 +36,9 @@ class ProfileEditView: UIView {
         let frame = CGRect(x: 0, y: 0, width: fieldWidth, height: fieldHeight)
         let field = DoubleTextFieldView(frame: frame, image: #imageLiteral(resourceName: "name-icon"))
         firstNameField = field.textfieldOne!
-        firstNameField?.placeholder = "First Name"
+        firstNameField!.placeholder = "First Name"
         lastNameField = field.textfieldTwo!
-        lastNameField?.placeholder = "Last Name"
+        lastNameField!.placeholder = "Last Name"
         self.addSubview(field)
     }
     
@@ -49,7 +49,7 @@ class ProfileEditView: UIView {
         
         let field = ImageTextFieldView(frame: frame, image: #imageLiteral(resourceName: "gendericon"))
         genderField = field.textfield!
-        genderField?.placeholder = "Gender"
+        genderField!.placeholder = "Gender"
         self.addSubview(field)
     }
     
@@ -60,8 +60,8 @@ class ProfileEditView: UIView {
         
         let field = ImageTextFieldView(frame: frame, image: #imageLiteral(resourceName: "calendar"))
         birthdayField = field.textfield!
-        birthdayField?.tintColor = UIColor.clear
-        birthdayField?.placeholder = "Birthday"
+        birthdayField!.tintColor = UIColor.clear
+        birthdayField!.placeholder = "Birthday"
         self.addSubview(field)
     }
     
@@ -72,7 +72,7 @@ class ProfileEditView: UIView {
         
         let field = ImageTextFieldView(frame: frame, image: #imageLiteral(resourceName: "biography_icon"))
         biographyField = field.textfield!
-        biographyField?.placeholder = "Biography"
+        biographyField!.placeholder = "Biography"
         self.addSubview(field)
     }
     

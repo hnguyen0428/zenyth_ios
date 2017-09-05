@@ -12,8 +12,8 @@ import UIKit
 class ImageViewer: UIScrollView {
     
     var image: Image?
-    var view: UIView?
-    var imageView: UIImageView?
+    weak var view: UIView?
+    weak var imageView: UIImageView?
     
     static let MIN_ZOOM_SCALE: CGFloat = 1.0
     static let MAX_ZOOM_SCALE: CGFloat = 10.0
@@ -29,14 +29,16 @@ class ImageViewer: UIScrollView {
         self.showsHorizontalScrollIndicator = false
         self.showsVerticalScrollIndicator = false
         
-        view = UIView(frame: self.frame)
-        view!.backgroundColor = self.backgroundColor
-        self.addSubview(view!)
+        let view = UIView(frame: self.frame)
+        self.view = view
+        view.backgroundColor = self.backgroundColor
+        self.addSubview(view)
         
-        imageView = UIImageView()
-        imageView!.contentMode = .scaleAspectFill
-        imageView!.clipsToBounds = true
-        view!.addSubview(imageView!)
+        let imageView = UIImageView()
+        self.imageView = imageView
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        view.addSubview(imageView)
         loadImage()
         
         self.contentSize = self.frame.size
@@ -44,9 +46,10 @@ class ImageViewer: UIScrollView {
     }
     
     func loadImage() {
-        ImageManager().getImageData(withUrl: image!.url, onSuccess:
-            { data in
-                if let uiimage = UIImage(data: data) {
+        let url = URL(string: self.image!.getURL())
+        self.imageView?.sd_setImage(with: url, completed:
+            { _ in
+                if let uiimage = self.imageView?.image {
                     let ratio = uiimage.size.height / uiimage.size.width
                     let width = self.frame.width
                     let height = width * ratio
