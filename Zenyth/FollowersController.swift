@@ -70,7 +70,6 @@ class FollowersController: UITableViewController, UISearchResultsUpdating {
         }
         
         if followStatuses.count == users?.count {
-            print("here")
             cell.followStatus = followStatuses[indexPath.row]
         }
         
