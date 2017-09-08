@@ -102,7 +102,7 @@ class ProfileView: UIView {
             self.setupTopPinLabel()
             self.setupPinView(pinposts: user.pinposts)
         }
-        self.setupUserInfoBar(followers: user.followers, likes: user.likes!,
+        self.setupUserInfoBar(followers: user.followers!, likes: user.likes!,
                               numberOfPinposts: user.numberOfPinposts!)
         
         

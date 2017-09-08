@@ -61,6 +61,14 @@ class UserCell: UITableViewCell {
         }
     }
     
+    var noFollowButton: Bool? {
+        didSet {
+            if noFollowButton! {
+                followButton.removeFromSuperview()
+            }
+        }
+    }
+    
     // Simple way of defining a constant, non-mutable object
     // Curly braces indicates closure, and you execute the closure with () at the end,
     // gives you back the return value inside.

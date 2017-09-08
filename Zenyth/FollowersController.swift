@@ -35,7 +35,6 @@ class FollowersController: UITableViewController, UISearchResultsUpdating {
         
         // called everytime view controller is instantiated
         setupUsers()
-        
         setupSearch()
     }
     
