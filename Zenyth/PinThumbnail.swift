@@ -55,9 +55,6 @@ class PinThumbnail: UIImageView {
         delegate?.didLongPress(on: pinpost)
     }
     
-    deinit {
-        debugPrint("Deinitializing \(self)")
-    }
 }
 
 protocol PinThumbnailDelegate: class {

@@ -381,7 +381,4 @@ class LoginController: ModelViewController, GIDSignInUIDelegate {
         UserDefaults.standard.synchronize()
     }
     
-    deinit {
-        debugPrint("Deinitializing \(self)")
-    }
 }

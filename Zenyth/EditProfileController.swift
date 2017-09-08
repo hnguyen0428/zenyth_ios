@@ -271,7 +271,4 @@ class EditProfileController: HomeController, UIImagePickerControllerDelegate,
         self.navigationController?.popViewController(animated: true)
     }
     
-    deinit {
-        print("Deinitializing")
-    }
 }

@@ -28,7 +28,4 @@ class InfoAsset: UIButton {
         self.setTitle(String(count), for: .normal)
     }
     
-    deinit {
-        debugPrint("Deinitializing \(self)")
-    }
 }

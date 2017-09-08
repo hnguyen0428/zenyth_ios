@@ -162,7 +162,4 @@ class FeedInfoView: UIView {
         self.addSubview(actionBar)
     }
     
-    deinit {
-        debugPrint("Deinitializing \(self)")
-    }
 }

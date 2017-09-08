@@ -388,7 +388,4 @@ class ProfileView: UIView {
         maxHeight = maxHeight + height + topConstant
     }
     
-    deinit {
-        debugPrint("Deinitializing \(self)")
-    }
 }

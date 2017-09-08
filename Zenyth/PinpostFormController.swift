@@ -221,7 +221,4 @@ class PinpostFormController: UIViewController, UITextViewDelegate,
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
-    deinit {
-        print("Deinitializing")
-    }
 }

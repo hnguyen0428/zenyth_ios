@@ -213,9 +213,6 @@ class FeedScrollView: UIScrollView {
         super.init(coder: aDecoder)
     }
     
-    deinit {
-        debugPrint("Deinitializing \(self)")
-    }
 }
 
 @objc protocol FeedScrollViewDelegate: class {

@@ -61,7 +61,4 @@ class PinView: UIScrollView {
         self.numPins += 1
     }
     
-    deinit {
-        debugPrint("Deinitializing \(self)")
-    }
 }

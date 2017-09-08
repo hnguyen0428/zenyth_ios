@@ -310,7 +310,4 @@ class ProfileController: HomeController, GMSMapViewDelegate, PinThumbnailDelegat
         self.mapOrigin = mapView?.frame.origin
     }
     
-    deinit {
-        print("Deinitializing")
-    }
 }

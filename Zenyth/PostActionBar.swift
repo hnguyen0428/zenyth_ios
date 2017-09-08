@@ -82,7 +82,4 @@ class PostActionBar: UIToolbar {
         super.init(coder: aDecoder)
     }
     
-    deinit {
-        debugPrint("Deinitializing \(self)")
-    }
 }

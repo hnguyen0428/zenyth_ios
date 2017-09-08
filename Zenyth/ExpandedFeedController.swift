@@ -184,7 +184,4 @@ class ExpandedFeedController: HomeController, ImageViewControllerDelegate,
         self.present(imageVC, animated: true, completion: nil)
     }
     
-    deinit {
-        print("Deinitializing")
-    }
 }

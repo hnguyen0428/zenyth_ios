@@ -174,8 +174,4 @@ class FeedView: UIView {
         return false
     }
     
-    deinit {
-        debugPrint("Deinitializing \(self)")
-    }
-    
 }

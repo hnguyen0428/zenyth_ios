@@ -64,9 +64,6 @@ class ImagesScroller: UIScrollView {
         super.init(coder: aDecoder)
     }
     
-    deinit {
-        debugPrint("Deinitializing \(self)")
-    }
 }
 
 protocol ImagesScrollerDelegate: class {

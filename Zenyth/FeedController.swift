@@ -398,7 +398,4 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate,
         self.savedCoord = mapView?.camera.target
     }
     
-    deinit {
-        print("Deinitializing")
-    }
 }

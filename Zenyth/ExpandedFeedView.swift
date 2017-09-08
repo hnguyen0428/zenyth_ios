@@ -166,10 +166,6 @@ class ExpandedFeedView: UIScrollView {
         }
     }
     
-    deinit {
-        debugPrint("Deinitializing \(self)")
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }

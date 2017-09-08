@@ -48,7 +48,4 @@ class CommentsView: UIView {
         maxHeight += commentFrame.height
     }
     
-    deinit {
-        debugPrint("Deinitializing \(self)")
-    }
 }

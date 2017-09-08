@@ -60,7 +60,4 @@ class UserInfoBar: UIToolbar {
         super.init(coder: aDecoder)
     }
     
-    deinit {
-        debugPrint("Deinitializing \(self)")
-    }
 }
