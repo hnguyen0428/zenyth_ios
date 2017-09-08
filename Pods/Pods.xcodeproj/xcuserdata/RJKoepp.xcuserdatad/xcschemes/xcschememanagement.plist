@@ -8,66 +8,97 @@
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>1</integer>
 		</dict>
 		<key>Bolts.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>2</integer>
 		</dict>
 		<key>FBSDKCoreKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>3</integer>
 		</dict>
 		<key>FBSDKLoginKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>4</integer>
 		</dict>
 		<key>FBSDKShareKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>5</integer>
 		</dict>
 		<key>GTMOAuth2.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>7</integer>
 		</dict>
 		<key>GTMSessionFetcher.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>8</integer>
 		</dict>
 		<key>GoogleToolboxForMac.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>6</integer>
 		</dict>
 		<key>LBTAComponents.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>9</integer>
 		</dict>
 		<key>Pods-Zenyth.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>10</integer>
 		</dict>
 		<key>Pods-ZenythTests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>11</integer>
 		</dict>
 		<key>Pods-ZenythUITests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>12</integer>
+		</dict>
+		<key>SDWebImage.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>14</integer>
 		</dict>
 		<key>SwiftyJSON.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>13</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -87,12 +118,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>1237CDF90A4CB57CF079CE75ACCB8DAE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>1A196107BC8DB338FC11C9CE9510573C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>21FBDF0568E52B56D40D7591046C8E02</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3764D0252CB33E0BB099226C9E100FA2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3CB815339C3CB65E71DCBF116E41CEA7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -108,6 +154,11 @@
 			<true/>
 		</dict>
 		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>97D9888CECB04CDCA3EE40EE0C91E971</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -133,6 +184,16 @@
 			<true/>
 		</dict>
 		<key>E396A93E4C79B22B7816E9F02F62ECED</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F05BBF0ABCBAB1D55C2FE0C052A8CF62</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FF76D57208129C44D54E564C9CA99829</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -120,6 +120,10 @@ class ProfileView: UIView {
             actionButton?.addTarget(controller, action: #selector(ProfileController.transitionToEditProfile),
                                     for: .touchUpInside)
         }
+        
+        self.userInfoBar?.followerButton?.addTarget(controller, action: #selector(ProfileController.transitionToFollowersList), for: .touchUpInside)
+
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

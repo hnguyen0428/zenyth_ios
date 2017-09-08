@@ -42,7 +42,9 @@ class ProfileController: HomeController, GMSMapViewDelegate, PinThumbnailDelegat
         toolbar?.notificationButton?.addTarget(self, action: #selector(transitionToNotification), for: .touchUpInside)
         toolbar?.profileButton?.addTarget(self, action: #selector(transitionToProfile), for: .touchUpInside)
         profileView?.settingsButton?.addTarget(self, action: #selector(transitionToSettings), for: .touchUpInside)
-        profileView?.userInfoBar?.followerButton?.addTarget(self, action: #selector(transitionToFollowersList), for: .touchUpInside)
+    
+//        profileView?.userInfoBar?.followerButton?.addTarget(self, action: #selector(transitionToFollowersList), for: .touchUpInside)
+
     }
     
     override func setupViews() {
@@ -272,8 +274,11 @@ class ProfileController: HomeController, GMSMapViewDelegate, PinThumbnailDelegat
     }
     
     func transitionToFollowersList() {
-//        let controller = FollowersListController()
-//        self.navigationController?.pushViewController(controller, animated: true)
+        
+        let controller = FollowersController()
+        
+        controller.userId = self.userId
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
