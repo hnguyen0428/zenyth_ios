@@ -27,6 +27,7 @@
 		4701280F1F3C6FA600A8E5AE /* RelationshipJSON.json in Resources */ = {isa = PBXBuildFile; fileRef = 4701280E1F3C6FA600A8E5AE /* RelationshipJSON.json */; };
 		470A17ED1F3E93310067046F /* PasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470A17EC1F3E93310067046F /* PasswordController.swift */; };
 		470A17EF1F3E93470067046F /* PersonalInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470A17EE1F3E93470067046F /* PersonalInfoController.swift */; };
+		470DB0FF1F624325005C1811 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470DB0FE1F624325005C1811 /* SearchController.swift */; };
 		471280781F391A4B006FE796 /* CredentialManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471280771F391A4B006FE796 /* CredentialManagerProtocol.swift */; };
 		4712807C1F3921DA006FE796 /* CredentialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712807B1F3921DA006FE796 /* CredentialManager.swift */; };
 		4712807E1F3929B2006FE796 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712807D1F3929B2006FE796 /* APIClient.swift */; };
@@ -169,6 +170,7 @@
 		4701280E1F3C6FA600A8E5AE /* RelationshipJSON.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RelationshipJSON.json; sourceTree = "<group>"; };
 		470A17EC1F3E93310067046F /* PasswordController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordController.swift; sourceTree = "<group>"; };
 		470A17EE1F3E93470067046F /* PersonalInfoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalInfoController.swift; sourceTree = "<group>"; };
+		470DB0FE1F624325005C1811 /* SearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		471280771F391A4B006FE796 /* CredentialManagerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialManagerProtocol.swift; sourceTree = "<group>"; };
 		4712807B1F3921DA006FE796 /* CredentialManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialManager.swift; sourceTree = "<group>"; };
 		4712807D1F3929B2006FE796 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
@@ -411,6 +413,7 @@
 				47A488E31F22C98C006B0453 /* HomeController.swift */,
 				47A488DF1F22C96D006B0453 /* NotificationController.swift */,
 				47F49D491F5AE6A100012FBB /* NavigationStacks.swift */,
+				470DB0FE1F624325005C1811 /* SearchController.swift */,
 			);
 			name = HomeControllers;
 			sourceTree = "<group>";
@@ -715,7 +718,7 @@
 				TargetAttributes = {
 					47C622C41F0A341A003BBC16 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = JGM83HBADX;
+						DevelopmentTeam = 4B5PEQM7U2;
 						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -1017,6 +1020,7 @@
 				47B088DC1F4CFCC500F4E4BB /* FeedView.swift in Sources */,
 				47FE3D0A1F47B66900EC62EC /* UIView+Anchors.swift in Sources */,
 				47B088D71F49A81C00F4E4BB /* String+CapitalizeFirstLetter.swift in Sources */,
+				470DB0FF1F624325005C1811 /* SearchController.swift in Sources */,
 				471280A81F3992E8006FE796 /* LikeManager.swift in Sources */,
 				47CB2D6B1F4FA22500C8B59E /* PHAsset+getURL.swift in Sources */,
 				47A745E91F16F7D000A88D5D /* ModelViewController.swift in Sources */,
@@ -1235,7 +1239,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Zenyth/Zenyth.entitlements;
-				DEVELOPMENT_TEAM = JGM83HBADX;
+				DEVELOPMENT_TEAM = 4B5PEQM7U2;
 				INFOPLIST_FILE = Zenyth/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "-05Industries.Zenyth.Hoang";
@@ -1253,7 +1257,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Zenyth/Zenyth.entitlements;
-				DEVELOPMENT_TEAM = JGM83HBADX;
+				DEVELOPMENT_TEAM = 4B5PEQM7U2;
 				INFOPLIST_FILE = Zenyth/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "-05Industries.Zenyth.Hoang";

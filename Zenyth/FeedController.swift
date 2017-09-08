@@ -96,6 +96,7 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate,
         mapView.searchButton!.frame = CGRect(origin: searchButtonNewOrigin,
                                               size: searchButtonSize)
         mapView.delegate = self
+        mapView.searchButton?.addTarget(self, action: #selector(transitionToSearch), for: .touchUpInside)
     }
     
     func setupScrollView() {
@@ -364,6 +365,11 @@ class FeedController: HomeController, UIScrollViewDelegate, GMSMapViewDelegate,
     
     func transitionToPinpostForm() {
         let controller = PinpostFormController()
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    func transitionToSearch() {
+        let controller = SearchController()
         self.navigationController?.pushViewController(controller, animated: true)
     }
     
