@@ -71,6 +71,10 @@ class FollowersController: UITableViewController, UISearchResultsUpdating {
         if let statuses = followStatuses {
             cell.followStatus = statuses[indexPath.row]
         }
+        let loggedInUserId = UserDefaults.standard.object(forKey: "id") as! UInt32
+        if cell.user?.id == loggedInUserId {
+            cell.followButton.removeFromSuperview()
+        }
         
         return cell
     }
