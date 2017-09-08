@@ -715,7 +715,7 @@
 				TargetAttributes = {
 					47C622C41F0A341A003BBC16 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = JGM83HBADX;
+						DevelopmentTeam = 4B5PEQM7U2;
 						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -1235,7 +1235,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Zenyth/Zenyth.entitlements;
-				DEVELOPMENT_TEAM = JGM83HBADX;
+				DEVELOPMENT_TEAM = 4B5PEQM7U2;
 				INFOPLIST_FILE = Zenyth/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "-05Industries.Zenyth.Hoang";
@@ -1253,7 +1253,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Zenyth/Zenyth.entitlements;
-				DEVELOPMENT_TEAM = JGM83HBADX;
+				DEVELOPMENT_TEAM = 4B5PEQM7U2;
 				INFOPLIST_FILE = Zenyth/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "-05Industries.Zenyth.Hoang";
