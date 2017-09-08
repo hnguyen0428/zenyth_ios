@@ -13,7 +13,7 @@ class FollowersController: UITableViewController, UISearchResultsUpdating {
     var userId: UInt32?
     
     var users: [User]?
-    var followStatuses: [String] = [String]()
+    var followStatuses: [String]?
     // var filteredUsers: [User]?
     var filteredUsers = [User]()
     
@@ -68,8 +68,8 @@ class FollowersController: UITableViewController, UISearchResultsUpdating {
             cell.user = user
         }
         
-        if followStatuses.count == users?.count {
-            cell.followStatus = followStatuses[indexPath.row]
+        if let statuses = followStatuses {
+            cell.followStatus = statuses[indexPath.row]
         }
         
         return cell
@@ -94,24 +94,26 @@ class FollowersController: UITableViewController, UISearchResultsUpdating {
         UserManager().getFollowers(ofUserId: self.userId!, onSuccess:
             { users in
                 self.users = users
+                self.followStatuses = [String].init(repeating: "", count: users.count)
                 self.tableView.reloadData()
                 
                 let group = DispatchGroup()
-                for user in users {
+                for i in 0..<users.count {
+                    let user = users[i]
                     group.enter()
                     UserManager().getRelationship(withUserHavingUserId: user.id,
                                                   onSuccess:
                         { relationship in
                             if let rel = relationship {
                                 if rel.status {
-                                    self.followStatuses.append("Following")
+                                    self.followStatuses?[i] = "Following"
                                 }
                                 else {
-                                    self.followStatuses.append("Request sent")
+                                    self.followStatuses?[i] = "Request sent"
                                 }
                             }
                             else {
-                                self.followStatuses.append("Not following")
+                                self.followStatuses?[i] = "Not following"
                             }
                             group.leave()
                     })
