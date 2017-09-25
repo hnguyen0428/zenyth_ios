@@ -340,8 +340,8 @@ class ProfileView: UIView {
         let pinView = PinView(controller!, frame: frame, pinposts: pinposts)
         self.pinView = pinView
         self.addSubview(pinView)
-        pinView.anchor(topPinLabel?.bottomAnchor, left: nil, bottom: nil,
-                        right: nil, topConstant: 0, leftConstant: 0,
+        pinView.anchor(topPinLabel?.bottomAnchor, left: self.leftAnchor, bottom: nil,
+                        right: self.rightAnchor, topConstant: 0, leftConstant: 0,
                         bottomConstant: 0, rightConstant: 0,
                         widthConstant: width,
                         heightConstant: height)

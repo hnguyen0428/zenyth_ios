@@ -8,7 +8,7 @@
 
 import UIKit
 
-typealias Handler = (Void) -> Void
+typealias Handler = () -> Void
 
 extension UIImageView {
     
