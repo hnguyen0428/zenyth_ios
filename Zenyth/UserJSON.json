@@ -1,0 +1,66 @@
+{
+    "success": true,
+    "data": {
+        "user": {
+            "email": "testiosuser@zenyth.com",
+            "username": "testiosuser",
+            "api_token": "QXVDdJHuATtnPWcgNjoZHirWVzX5AgeRQZrwORZonTRbZxeyVqkAOc0pakvy",
+            "id": 1,
+            "first_name": "Test",
+            "last_name": "Man",
+            "gender": "non-binary",
+            "birthday": "2000-01-01",
+            "picture": {
+                "id": 1,
+                "filename": "file.jpg",
+                "user_id": 1,
+                "imageable_type": "Profile",
+                "imageable_id": 1,
+                "directory": "profile_pictures"
+            },
+            "pinposts": [
+                         {
+                         "title": "test pinpost title",
+                         "description": "test pinpost description",
+                         "latitude": 0.0,
+                         "longitude": 0.0,
+                         "privacy": "public",
+                         "updated_at": "2000-01-01 00:00:00",
+                         "created_at": "2000-01-01 00:00:00",
+                         "id": 1,
+                         "comments": 100,
+                         "likes": 100,
+                         "images": [
+                                    {
+                                    "id": 1,
+                                    "filename": "file1.jpg",
+                                    "user_id": 1,
+                                    "imageable_type": "Pinpost",
+                                    "imageable_id": 1,
+                                    "directory": "images"
+                                    },
+                                    {
+                                    "id": 2,
+                                    "filename": "file2.jpg",
+                                    "user_id": 1,
+                                    "imageable_type": "Pinpost",
+                                    "imageable_id": 1,
+                                    "directory": "images"
+                                    },
+                                    {
+                                    "id": 3,
+                                    "filename": "file3.jpg",
+                                    "user_id": 1,
+                                    "imageable_type": "Pinpost",
+                                    "imageable_id": 1,
+                                    "directory": "images"
+                                    }
+                                    ]
+                         }
+            ],
+            "friends": 0,
+            "number_of_pinposts": 1,
+            "likes": 100
+        }
+    }
+}

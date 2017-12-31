@@ -1,0 +1,9 @@
+{
+    "success": true,
+    "data": {
+        "tag": {
+            "id": 1,
+            "name": "test tag name"
+        }
+    }
+}

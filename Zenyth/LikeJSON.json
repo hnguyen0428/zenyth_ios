@@ -1,0 +1,32 @@
+{
+    "success": true,
+    "data": {
+        "like": {
+            "likeable_type": "Pinpost",
+            "likeable_id": 1,
+            "user_id": 1,
+            "id": 1,
+            "user": {
+                "id": 1,
+                "email": "testiosuser@zenyth.com",
+                "username": "testiosuser",
+                "created_at": "2000-01-01 00:00:00",
+                "first_name": "Test",
+                "last_name": "Man",
+                "gender": "non-binary",
+                "birthday": "1998-04-28",
+                "picture": {
+                    "id": 10,
+                    "user_id": 1,
+                    "filename": "t8sU3qLVui3Km9FiPyMXR74T4vRrvH8I.jpeg",
+                    "imageable_id": 1,
+                    "imageable_type": "Profile",
+                    "directory": "profile_pictures",
+                    "created_at": "2017-08-30 22:35:36",
+                    "url": "http://54.219.134.56/api/image/t8sU3qLVui3Km9FiPyMXR74T4vRrvH8I.jpeg"
+                },
+                "friends": 0
+            }
+        }
+    }
+}

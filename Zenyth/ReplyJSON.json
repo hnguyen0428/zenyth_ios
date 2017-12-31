@@ -1,0 +1,35 @@
+{
+    "success": true,
+    "data": {
+        "reply": {
+            "id": 1,
+            "text": "lies",
+            "comment_id": 6,
+            "user_id": 1,
+            "likes_count": 0,
+            "images": [],
+            "creator": {
+                "id": 1,
+                "email": "hnguyen0428@yahoo.com",
+                "username": "hnguyen0428",
+                "created_at": "2017-08-29 07:04:06",
+                "first_name": "Hoang",
+                "last_name": "Nguyen",
+                "gender": "male",
+                "birthday": "1998-04-28",
+                "biography": "Yay",
+                "picture": {
+                    "id": 24,
+                    "user_id": 1,
+                    "filename": "RXFjRiWO5AticvWQUkbPxPHW8tJX4Pc9.jpeg",
+                    "imageable_id": 1,
+                    "imageable_type": "Profile",
+                    "directory": "profile_pictures",
+                    "created_at": "2017-09-01 03:15:04",
+                    "url": "http://54.219.134.56/api/image/RXFjRiWO5AticvWQUkbPxPHW8tJX4Pc9.jpeg"
+                },
+                "followers": 1
+            }
+        }
+    }
+}

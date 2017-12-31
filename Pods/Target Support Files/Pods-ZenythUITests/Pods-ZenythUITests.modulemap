@@ -1,0 +1,6 @@
+framework module Pods_ZenythUITests {
+  umbrella header "Pods-ZenythUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
